@@ -1,0 +1,12 @@
+
+  songs:
+  <div ng-repeat="song in Songs.getSongs()">{{song.name}} ({{song.url}})</div>
+  new song:<br/>
+  <input placeholder="name" ng-model="newSong.name"> <input placeholder="url" ng-model="newSong.url">
+  <button ng-click="Songs.add(newSong)">add</button>
+
+
+  <hr>
+  <pre>
+    {{Songs.getSongs() | json}}
+  </pre>
