@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.json({type:'application/vnd.api+json'}));
 app.use(methodOverride());
 
-console.log('DB CONNECT:'+process.env.MONGODB_URL);
+//console.log('DB CONNECT:'+process.env.MONGODB_URL);
 mongoose.connect(process.env.MONGODB_URL? process.env.MONGODB_URL : 'mongodb://localhost/resources');
 
 var Song = app.resource = restful.model('song', mongoose.Schema({

@@ -56,7 +56,7 @@ DELETE /songs/:id
             })
       },
 
-      
+
       add: function (song) {
         $http.post('/songs',song)
             .then( updateView )
