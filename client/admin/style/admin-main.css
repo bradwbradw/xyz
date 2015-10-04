@@ -8,7 +8,8 @@
     background-color: white; }
 .admin .song-attribute {
   display: table-cell;
-  padding: 0.7em; }
+  padding: 0.7em;
+  max-width: 200px; }
   .admin .song-attribute input {
     width: 100%; }
 .admin button {

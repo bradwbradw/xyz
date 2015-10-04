@@ -31,12 +31,12 @@
         </span>
         <input ng-show="song.editing"
              ng-model="song.attrs[field]"
-             ng-blur="Songs.update(song.id, song.attrs)"
         />
 
     </span>
 
-    <button ng-hide="song.editing" ng-click="song.editing = !song.editing">edit</button>
+    <button ng-click="song.editing = !song.editing">edit</button>
+    <button ng-show="song.editing" ng-click="Songs.update(song.id, song.attrs)">save</button>
     <button ng-show="song.editing" ng-click="Songs.remove(song.id)">delete</button>
 
   </div>
