@@ -27,7 +27,9 @@ mongoose.connect(process.env.MONGODB_URL? process.env.MONGODB_URL : 'mongodb://l
 var Song = app.resource = restful.model('song', mongoose.Schema({
     name: String,
     length: Number,
-    url: String
+    url: String,
+    x: Number,
+    y: Number
   }))
   .methods(['get', 'post', 'put', 'delete']);
 
@@ -105,8 +107,8 @@ var soundcloudEmbed = '<iframe width="100%" height="450" scrolling="no" framebor
 
 });
 
-app.get('/', function(request,response){
-  response.sendFile(__dirname + '/client/index.html');
+app.get('/admin', function(request,response){
+  response.sendFile(__dirname + '/client/admin/index.html');
 });
 
 

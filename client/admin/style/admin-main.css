@@ -1,0 +1,19 @@
+.admin .song-table {
+  display: table;
+  background-color: lightblue; }
+.admin .song-row {
+  display: table-row;
+  padding: 0.4em; }
+  .admin .song-row.editing {
+    background-color: white; }
+.admin .song-attribute {
+  display: table-cell;
+  padding: 0.7em; }
+  .admin .song-attribute input {
+    width: 100%; }
+.admin button {
+  background-color: black;
+  color: white;
+  text-blink: 5cm; }
+
+/*# sourceMappingURL=admin-main.css.map */

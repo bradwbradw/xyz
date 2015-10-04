@@ -1,0 +1,34 @@
+.admin {
+
+  .song-table {
+    display:table;
+    background-color:lightblue;
+  }
+
+  .song-row {
+    display:table-row;
+
+    padding:0.4em;
+
+    &.editing{
+      background-color:white;
+    }
+  }
+
+
+  .song-attribute {
+    display:table-cell;
+    padding:0.7em;
+    input{
+      width:100%;
+    }
+  }
+
+
+  button {
+    background-color:black;
+    color:white;
+    text-blink: 5cm;
+  }
+
+}
