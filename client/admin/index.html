@@ -2,7 +2,7 @@
 <head>
 
   <base href="/admin/">
-  <link rel="stylesheet" href="style/admin-main.css">
+  <link rel="stylesheet" href="style/main.css">
 
 
   <style type="text/css">
@@ -16,8 +16,9 @@
 
 <body ng-app="songApp">
 
-<h2>xyz admin</h2>
+<h2>xyz functional prototype</h2>
 
+<div class="navigation"><a ui-sref="list"> list </a> | <a ui-sref="embeds"> embeds </a></div>
 
 <div ui-view="main" class="admin">
 
@@ -30,7 +31,10 @@
 
 <script src="scripts/app.js"></script>
 <script src="scripts/service/song.js"></script>
+<script src="scripts/service/global-players.js"></script>
 <script src="scripts/controller/song.js"></script>
+<script src="scripts/controller/embed.js"></script>
 
+<script src="scripts/player-api/youtube.js"></script>
 </body>
 </html>

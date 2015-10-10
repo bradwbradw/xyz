@@ -17,4 +17,8 @@
   color: white;
   text-blink: 5cm; }
 
-/*# sourceMappingURL=admin-main.css.map */
+.song {
+  height: 200px;
+  width: 200px; }
+
+/*# sourceMappingURL=main.css.map */

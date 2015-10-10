@@ -1,7 +1,7 @@
 
   angular.module('songApp')
 
-    .controller('songsCtrl', function ($scope, Songs, songs) {
+    .controller('songListCtrl', function ($scope, Songs, songs) {
 
     var newSong;
 
