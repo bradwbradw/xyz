@@ -1,6 +1,10 @@
 .admin .song-table {
   display: table;
   background-color: lightblue; }
+.admin .header {
+  background-color: darkcyan;
+  color: white;
+  font-weight: 600; }
 .admin .song-row {
   display: table-row;
   padding: 0.4em; }

@@ -1,8 +1,16 @@
 <h3>Songs</h3>
 
-<div class="song-table">
+<div class="song-table admin">
 
 
+
+
+
+  <div class="header song-row">
+      <span class="song-attribute" ng-repeat="field in Songs.fields">
+        {{field}}
+      </span>
+  </div>
 
   <div class="song-row">
       <span class="song-attribute" ng-repeat="field in Songs.fields">
@@ -10,12 +18,6 @@
       </span>
       <button class="song-row" ng-click="Songs.add(newSong)">add</button>
 
-  </div>
-
-  <div class="header song-row">
-      <span class="song-attribute" ng-repeat="field in Songs.fields">
-        {{field}}
-      </span>
   </div>
 
   <div ng-repeat="song in Songs.getSongs()"
@@ -45,6 +47,9 @@
 </div>
 
 <hr>
+<pre>new song:<br/>
+  {{newSong | json}}
+</pre>
 <pre>
     {{Songs.getSongs() | json}}
   </pre>

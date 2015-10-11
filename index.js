@@ -1,5 +1,6 @@
 var express = require('express');
 var _ = require('lodash'),
+    http = require('http'),
     bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
     morgan = require('morgan'),
@@ -24,10 +25,15 @@ app.use(methodOverride());
 //console.log('DB CONNECT:'+process.env.MONGODB_URL);
 mongoose.connect(process.env.MONGODB_URL? process.env.MONGODB_URL : 'mongodb://localhost/resources');
 
+// should be the same as in client/scripts/service/song.js Songs fields
+
 var Song = app.resource = restful.model('song', mongoose.Schema({
-    name: String,
+    artist: String,
+    title: String,
     length: Number,
     url: String,
+    provider: String,
+    provider_id: String,
     x: Number,
     y: Number
   }))
@@ -44,10 +50,7 @@ DELETE /songs/:id
 
 
 
-var songs = [
-  {name: 'dookie', length: 40, mixPosition: 0, url:'https%3A//api.soundcloud.com/tracks/210507981'},
-  {name: 'fred', length: 30, mixPosition: 0, url:'https%3A//api.soundcloud.com/tracks/191682864'}
-];
+var songs = [];
 
 var playhead = 0;
 var mixLength;
@@ -70,6 +73,7 @@ var refreshMix = function () {
   });
 
   console.log('refreshing the mix. new length: ' + mixLength);
+  console.log('all songs :\n ', songs);
 };
 
 var radioTimer = setInterval(incrementStream, 1000);
@@ -93,22 +97,51 @@ var getCurrentSong = function () {
   return currentSong;
 };
 
-refreshMix();
+
+var getSongsLocation = {
+  host: 'localhost',
+  port: app.get('port'),
+  path: '/songs'
+};
+
+getSongsCallback = function(response) {
+  var str = '';
+
+  //another chunk of data has been recieved, so append it to `str`
+  response.on('data', function (chunk) {
+    str += chunk;
+  });
+
+  //the whole response has been recieved, so we just print it out here
+  response.on('end', function () {
+    console.log(str);
+    songs = JSON.parse(str);
+    refreshMix();
+  });
+};
+
+http.request(getSongsLocation, getSongsCallback).end();
 
 app.get('/currentSong', function (request, response) {
   var song = getCurrentSong();
 
-var soundcloudEmbed = '<iframe width="100%" height="450" scrolling="no" frameborder="no" ' +
-  'src="https://w.soundcloud.com/player/?url='+song.url +
-  '&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>';
-
-  response.send(song + soundcloudEmbed);
+  response.send(song);
 
 
 });
 
 app.get('/admin', function(request,response){
   response.sendFile(__dirname + '/client/admin/index.html');
+});
+
+
+app.get('/', function(request,response){
+  response.sendFile(__dirname + '/client/admin/index.html');
+
+});
+
+app.get('/ytsample', function(request,response){
+  response.sendFile(__dirname + '/client/misc/youtubesample.html');
 });
 
 

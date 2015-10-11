@@ -1,15 +1,18 @@
 
   angular.module('songApp')
 
-    .service('Songs', function ($http, $log, $q) {
+    .service('Songs', function ( $log, $q, Server) {
 
 
     Songs = {
       // should be same as in index.js database model
       fields:[
-        'name',
+        'artist',
+        'title',
         'length',
         'url',
+        'provider',
+        'provider_id',
         'x',
         'y'
       ],/* after test
@@ -26,6 +29,7 @@
       ],*/
       songs: [],
 
+
       /*
 
 GET /songs
@@ -38,15 +42,13 @@ DELETE /songs/:id
 
 
       getSongs: function () {
-        if(_.isEmpty(Songs.songs) ){
-          return Songs.loadSongs();
-        } else {
+
           return Songs.songs;
-        }
+
       },
       loadSongs: function () {
         $log.log('loading songs');
-        return $http.get('/songs')
+        return Server.getSongs()
             .then(function (response) {
               Songs.songs = prepareSongs(response.data);
               return Songs.songs;
@@ -58,19 +60,19 @@ DELETE /songs/:id
 
 
       add: function (song) {
-        $http.post('/songs',song)
+        Server.addSong(song)
             .then( updateView )
             .catch(reportError);
       },
       update:function(id, data){
         $log.log('update',data);
-        $http.put('/songs/'+id, data )
+        Server.updateSong(id, data )
           .then( updateView )
           .catch(reportError)
           .finally( updateView)
       },
       remove: function(id){
-        $http.delete('/songs/'+id)
+        Server.deleteSong(id)
           .then(updateView)
           .catch(reportError)
       }
@@ -102,7 +104,7 @@ DELETE /songs/:id
           );
         });
         return preparedSongs;
-      }
+      };
 
     return Songs;
 

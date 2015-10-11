@@ -1,84 +1,92 @@
+var SongApp = angular.module("songApp", ['ui.router']);
 
-  var SongApp = angular.module("songApp", ['ui.router']);
+SongApp.constant('YT_event', {
+  STOP: 0,
+  PLAY: 1,
+  PAUSE: 2,
+  STATUS_CHANGE: 3
+});
 
 
-  SongApp.config(function ($stateProvider, $urlRouterProvider) {
+SongApp.config(function ($stateProvider, $urlRouterProvider) {
 
 
-    $stateProvider
-        .state('list', {
-          url: '/list',
-          views: {
-            'main': {
-              templateUrl: 'views/song-table.html',
-              controller: 'songListCtrl',
-              resolve:{
-                songs: function(Songs){
-                  console.log('songs resolve');
-                  return Songs.getSongs();
-                }
-              }
-            }
-          }
-        })
-      .state('embeds', {
-        url: '/embeds',
-        views: {
-          'main':{
-            templateUrl: 'views/embed-tester.html',
-            controller: 'embedTesterCtrl',
-            resolve:{
-
+  $stateProvider
+    .state('list', {
+      url: '/list',
+      views: {
+        'main': {
+          templateUrl: 'views/song-table.html',
+          controller: 'songTableCtrl',
+          resolve: {
+            songs: function (Songs) {
+              console.log('songs resolve');
+              return Songs.loadSongs();
             }
           }
         }
+      }
+    })
+    .state('stream', {
+      url: '/stream',
+      views: {
+        'main': {
+          templateUrl: 'views/stream.html',
+          controller: 'streamCtrl as stream'
+        }
+      },
+      resolve:{
+        currentSong: function(Stream){
+          return Stream.getCurrentSong();
+        }
+      }
 
     })
-      .state('embeds.youtube',{
-        url: '/youtube',
-        views: {
-          'embed-container':{
-            templateUrl:'views/embeds/youtube.html'
-          },
-          onEnter:function(Player){
-
-          }
+    .state('embeds.youtube', {
+      url: '/youtube',
+      views: {
+        'embed-container': {
+          templateUrl: 'views/embeds/youtube.html'
+        },
+        onEnter: function (Player) {
 
         }
 
-      })
-      .state('embeds.soundcloud',{
-        url: '/soundcloud',
-        views: {
-          'embed-container':{
-            templateUrl:'views/embeds/soundcloud.html'
-          }
+      }
 
+    })
+    .state('embeds.soundcloud', {
+      url: '/soundcloud',
+      views: {
+        'embed-container': {
+          templateUrl: 'views/embeds/soundcloud.html'
         }
 
+      }
 
-      })
-      .state('embeds.bandcamp',{
-        url: '/bandcamp',
-        views: {
-          'embed-container':{
-            templateUrl:'views/embeds/bandcamp.html'
-          }
 
+    })
+    .state('embeds.bandcamp', {
+      url: '/bandcamp',
+      views: {
+        'embed-container': {
+          templateUrl: 'views/embeds/bandcamp.html'
         }
 
+      }
 
-      })
-      .state('xyzSpace',{
-        url:'/space',
-        views: {
-          'main':{
-            templateUrl: 'views/xyzspa'
-          }
+
+    })
+    .state('xyzSpace', {
+      url: '/space',
+      views: {
+        'main': {
+          templateUrl: 'views/xyzspa'
         }
-      });
+      }
+    });
 
-    $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/');
 
 
-  });
+});
