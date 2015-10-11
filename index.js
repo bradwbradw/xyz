@@ -134,14 +134,15 @@ app.get('/admin', function(request,response){
   response.sendFile(__dirname + '/client/admin/index.html');
 });
 
-
 app.get('/', function(request,response){
   response.sendFile(__dirname + '/client/admin/index.html');
 
 });
 
-app.get('/ytsample', function(request,response){
-  response.sendFile(__dirname + '/client/misc/youtubesample.html');
+app.get('/refresh', function(request,response){
+    refreshMix();
+
+  response.send('refreshing the mix. new length: ' + mixLength +'.  \nall songs :\n <pre>'+ JSON.stringify(songs));
 });
 
 
