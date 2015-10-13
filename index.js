@@ -71,7 +71,7 @@ var refreshMix = function () {
     return song.length;
   });
 
-  if(mixLength === 0) return;
+  if(mixLength === 0) return 'no active songs found';
 
   var timeMeasure = 0;
   _.each(activeSongs(), function (song) {
@@ -79,8 +79,11 @@ var refreshMix = function () {
     timeMeasure = song.length;
   });
 
-  console.log('refreshing the mix. new length: ' + mixLength);
-  console.log('all active songs :\n ', activeSongs());
+  var result = 'refreshed the mix. new length: ' + mixLength +
+    '.  \n all active songs :\n '+ JSON.stringify( activeSongs());
+
+  console.log(result);
+  return result;
 };
 
 
@@ -125,7 +128,7 @@ getSongsCallback = function(response) {
   response.on('end', function () {
     console.log(str);
     songs = JSON.parse(str);
-    refreshMix();
+    console.log ( refreshMix() );
   });
 };
 
@@ -149,9 +152,9 @@ app.get('/', function(request,response){
 });
 
 app.get('/refresh', function(request,response){
-    refreshMix();
+  var output = refreshMix();
 
-  response.send('refreshing the mix. new length: ' + mixLength +'.  \n all active songs :\n <pre>'+ JSON.stringify(activeSongs()));
+  response.send(output);
 });
 
 
