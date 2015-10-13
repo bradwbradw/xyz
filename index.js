@@ -83,9 +83,11 @@ var refreshMix = function () {
   console.log('all active songs :\n ', activeSongs());
 };
 
+
 var radioTimer = setInterval(incrementStream, 1000);
 
 var getCurrentSong = function () {
+  if(_.empty(activeSongs())) return false;
 
   var currentSong;
   _.each(activeSongs(), function (song, index) {
