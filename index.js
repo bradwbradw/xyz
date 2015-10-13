@@ -71,6 +71,8 @@ var refreshMix = function () {
     return song.length;
   });
 
+  if(mixLength === 0) return;
+
   var timeMeasure = 0;
   _.each(activeSongs(), function (song) {
     song.mixPosition = timeMeasure;

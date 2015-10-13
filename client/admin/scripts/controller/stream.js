@@ -17,7 +17,7 @@ angular.module('songApp')
       $scope.$broadcast(ctrlEvent);
     };
 
-    
+
     var playedFromStartOnce = false;
 
     $scope.$on(YT_event.STATUS_CHANGE, function (event, data) {
