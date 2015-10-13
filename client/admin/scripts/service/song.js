@@ -14,7 +14,9 @@
         'provider',
         'provider_id',
         'x',
-        'y'
+        'y',
+        'active'
+
       ],/* after test
       fields:[
 

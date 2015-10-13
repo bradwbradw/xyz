@@ -1,4 +1,4 @@
-var SongApp = angular.module("songApp", ['ui.router']);
+var SongApp = angular.module("songApp", ['ui.router', 'ngSanitize']);
 
 SongApp.constant('YT_event', {
   STOP: 0,
@@ -42,6 +42,15 @@ SongApp.config(function ($stateProvider, $urlRouterProvider) {
       }
 
     })
+    .state('embeds', {
+      url:'/embeds',
+      views: {
+        'main':{
+          templateUrl: 'views/embed-tester.html'
+        }
+      }
+
+    })
     .state('embeds.youtube', {
       url: '/youtube',
       views: {
@@ -70,7 +79,8 @@ SongApp.config(function ($stateProvider, $urlRouterProvider) {
       url: '/bandcamp',
       views: {
         'embed-container': {
-          templateUrl: 'views/embeds/bandcamp.html'
+          templateUrl: 'views/embeds/bandcamp.html',
+          controller:'bancampHackAutoplay'
         }
 
       }

@@ -26,6 +26,7 @@
   .song-attribute {
     display:table-cell;
     padding:0.7em;
+    overflow:scroll;
 
     max-width:200px;
     input{

@@ -35,7 +35,8 @@ var Song = app.resource = restful.model('song', mongoose.Schema({
     provider: String,
     provider_id: String,
     x: Number,
-    y: Number
+    y: Number,
+  active:Boolean
   }))
   .methods(['get', 'post', 'put', 'delete']);
 
@@ -52,6 +53,10 @@ DELETE /songs/:id
 
 var songs = [];
 
+var activeSongs = function(){
+  return _.filter(songs,'active', true);
+};
+
 var playhead = 0;
 var mixLength;
 
@@ -62,18 +67,18 @@ var incrementStream = function () {
 };
 
 var refreshMix = function () {
-  mixLength = _.sum(songs, function (song) {
+  mixLength = _.sum(activeSongs(), function (song) {
     return song.length;
   });
 
   var timeMeasure = 0;
-  _.each(songs, function (song) {
+  _.each(activeSongs(), function (song) {
     song.mixPosition = timeMeasure;
     timeMeasure = song.length;
   });
 
   console.log('refreshing the mix. new length: ' + mixLength);
-  console.log('all songs :\n ', songs);
+  console.log('all active songs :\n ', activeSongs());
 };
 
 var radioTimer = setInterval(incrementStream, 1000);
@@ -81,9 +86,9 @@ var radioTimer = setInterval(incrementStream, 1000);
 var getCurrentSong = function () {
 
   var currentSong;
-  _.each(songs, function (song, index) {
+  _.each(activeSongs(), function (song, index) {
     if (song.mixPosition > playhead) {
-      currentSong = songs[index - 1];
+      currentSong = activeSongs()[index - 1];
 
       currentSong.playPosition = playhead - currentSong.mixPosition;
       return false;
@@ -91,7 +96,7 @@ var getCurrentSong = function () {
   });
 
   if (!currentSong) {
-    currentSong = _.last(songs);
+    currentSong = _.last(activeSongs());
     currentSong.playPosition = playhead - currentSong.mixPosition;
   }
   return currentSong;
@@ -142,7 +147,7 @@ app.get('/', function(request,response){
 app.get('/refresh', function(request,response){
     refreshMix();
 
-  response.send('refreshing the mix. new length: ' + mixLength +'.  \nall songs :\n <pre>'+ JSON.stringify(songs));
+  response.send('refreshing the mix. new length: ' + mixLength +'.  \n all active songs :\n <pre>'+ JSON.stringify(activeSongs()));
 });
 
 

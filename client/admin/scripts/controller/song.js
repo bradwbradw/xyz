@@ -3,7 +3,7 @@
 
     .controller('songTableCtrl', function ($scope, Songs, songs) {
 
-    var newSong =  {};
+    var newSong =  {active:true};
 
     Songs.songs = songs;
 

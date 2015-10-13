@@ -68,6 +68,7 @@ angular.module("songApp")
                 }
 
                 scope.$apply(function () {
+                  console.log('emitting message from youtube directive:')
                   scope.$emit(message.event, message.data);
                 });
               }
@@ -85,6 +86,7 @@ angular.module("songApp")
         });
 
         scope.$watch('videoid', function (newValue, oldValue) {
+          console.log('videoid watch hit');
           if (newValue == oldValue) {
             return;
           }
@@ -92,6 +94,7 @@ angular.module("songApp")
           player.cueVideoById(scope.videoid);
 
         });
+
 
         scope.$on(YT_event.STOP, function () {
           player.seekTo(0);
@@ -106,6 +109,10 @@ angular.module("songApp")
         scope.$on(YT_event.PAUSE, function () {
           player.pauseVideo();
         });
+
+        scope.$on('jump', function(){
+          console.log('jumpin');
+        })
 
       }
     };

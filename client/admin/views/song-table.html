@@ -7,14 +7,17 @@
 
 
   <div class="header song-row">
-      <span class="song-attribute" ng-repeat="field in Songs.fields">
+      <span class="song-attribute" ng-repeat="field in Songs.fields" >
         {{field}}
       </span>
   </div>
 
   <div class="song-row">
-      <span class="song-attribute" ng-repeat="field in Songs.fields">
+      <span class="song-attribute" ng-repeat="field in Songs.fields" ng-if="field !== 'active'">
         <input placeholder="{{field}}" ng-model="newSong[field]">
+      </span>
+      <span class="song-attribute" >
+        <input type="checkbox" ng-model="newSong['active']" >
       </span>
       <button class="song-row" ng-click="Songs.add(newSong)">add</button>
 
@@ -26,7 +29,7 @@
 
     <span
       class="song-attribute"
-      ng-repeat="field in Songs.fields">
+      ng-repeat="field in Songs.fields" ng-if="field !== 'active'">
 
         <span ng-hide="song.editing">
           {{song.attrs[field]}}
@@ -36,6 +39,9 @@
         />
 
     </span>
+      <span class="song-attribute" >
+        <input type="checkbox" ng-model="song.attrs['active']"  >
+      </span>
 
     <button ng-click="song.editing = !song.editing">edit</button>
     <button ng-show="song.editing" ng-click="Songs.update(song.id, song.attrs)">save</button>
