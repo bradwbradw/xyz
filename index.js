@@ -1,12 +1,11 @@
 var express = require('express');
 var _ = require('lodash'),
-    http = require('http'),
-    bodyParser = require('body-parser'),
-    methodOverride = require('method-override'),
-    morgan = require('morgan'),
-    restful = require('node-restful'),
-    mongoose = restful.mongoose;
-
+  http = require('http'),
+  bodyParser = require('body-parser'),
+  methodOverride = require('method-override'),
+  morgan = require('morgan'),
+  restful = require('node-restful'),
+  mongoose = restful.mongoose;
 
 
 var app = express();
@@ -14,153 +13,132 @@ app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/client'));
 
 
-
-
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({'extended':'true'}));
+app.use(bodyParser.urlencoded({'extended': 'true'}));
 app.use(bodyParser.json());
-app.use(bodyParser.json({type:'application/vnd.api+json'}));
+app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 app.use(methodOverride());
 
 //console.log('DB CONNECT:'+process.env.MONGODB_URL);
-mongoose.connect(process.env.MONGODB_URL? process.env.MONGODB_URL : 'mongodb://localhost/resources');
+mongoose.connect(process.env.MONGODB_URL ? process.env.MONGODB_URL : 'mongodb://localhost/resources');
 
 // should be the same as in client/scripts/service/song.js Songs fields
 
 var Song = app.resource = restful.model('song', mongoose.Schema({
-    artist: String,
-    title: String,
-    length: Number,
-    url: String,
-    provider: String,
-    provider_id: String,
-    x: Number,
-    y: Number,
-  active:Boolean
-  }))
+  artist: String,
+  title: String,
+  length: Number,
+  url: String,
+  provider: String,
+  provider_id: String,
+  x: Number,
+  y: Number,
+  active: Boolean
+}))
   .methods(['get', 'post', 'put', 'delete']);
 
 Song.register(app, '/songs');
 /* ^^^ registers these routes:
-GET /songs
-GET /songs/:id
-POST /songs
-PUT /songs/:id
-DELETE /songs/:id
-*/
+ GET /songs
+ GET /songs/:id
+ POST /songs
+ PUT /songs/:id
+ DELETE /songs/:id
+ */
 
 
-
-var songs = [];
-
-var activeSongs = function(){
-  return _.filter(songs,'active', true);
-};
+var allSongs = [];
+var playlist = [];
 
 var playhead = 0;
 var mixLength;
 
 var incrementStream = function () {
-  playhead = (playhead + 1) % mixLength;
-  var song = getCurrentSong();
+  if (_.isEmpty(playlist)) {
+    console.log('playlist is empty.  not sure why');
+    return;
+  }
+
+  playhead += 1;
+  if (playhead >= playlist[0].length) {
+    console.log('playhead reached '+playhead+'. changing songs.');
+    playlist.push(playlist[0]);
+    playlist = _.rest(playlist);
+    playhead = 0;
+
+  }
 //  console.log(playhead + ' ' + song.name + '(' + song.playPosition + ') started at ' + song.mixPosition);
 };
 
+
 var refreshMix = function () {
-  mixLength = _.sum(activeSongs(), function (song) {
-    return song.length;
+  playlist = _.filter(allSongs, 'active', true);
+  mixLength = _.sum(playlist, 'length');
+
+  if (mixLength === 0) return 'no active songs found';
+
+  var outputJson = JSON.stringify({
+    newLength: mixLength,
+    playlist: playlist
   });
 
-  if(mixLength === 0) return 'no active songs found';
-
-  var timeMeasure = 0;
-  _.each(activeSongs(), function (song) {
-    song.mixPosition = timeMeasure;
-    timeMeasure = song.length;
-  });
-
-  var result = 'refreshed the mix. new length: ' + mixLength +
-    '.  \n all active songs :\n '+ JSON.stringify( activeSongs());
-
-  console.log(result);
-  return result;
+  console.log('refreshed the mix: \n ' + outputJson);
+  return outputJson;
 };
 
 
 var radioTimer = setInterval(incrementStream, 1000);
 
-var getCurrentSong = function () {
-  if(_.isEmpty(activeSongs())) return false;
 
-  var currentSong;
-  _.each(activeSongs(), function (song, index) {
-    if (song.mixPosition > playhead) {
-      currentSong = activeSongs()[index - 1];
+var populateAllSongs = function () {
 
-      currentSong.playPosition = playhead - currentSong.mixPosition;
-      return false;
-    }
-  });
+  var getSongsLocation = {
+    host: 'localhost',
+    port: app.get('port'),
+    path: '/songs'
+  };
 
-  if (!currentSong) {
-    currentSong = _.last(activeSongs());
-    currentSong.playPosition = playhead - currentSong.mixPosition;
-  }
-  return currentSong;
+  getSongsCallback = function (response) {
+    var str = '';
+
+    //another chunk of data has been recieved, so append it to `str`
+    response.on('data', function (chunk) {str += chunk;});
+
+    //the whole response has been recieved, so we just print it out here
+    response.on('end', function () {
+      console.log(str);
+      allSongs = JSON.parse(str);
+      return refreshMix();
+    });
+  };
+
+  http.request(getSongsLocation, getSongsCallback).end();
 };
 
+populateAllSongs();
 
-var getSongsLocation = {
-  host: 'localhost',
-  port: app.get('port'),
-  path: '/songs'
-};
+app.get('/library', function (request, response) {
 
-getSongsCallback = function(response) {
-  var str = '';
-
-  //another chunk of data has been recieved, so append it to `str`
-  response.on('data', function (chunk) {
-    str += chunk;
-  });
-
-  //the whole response has been recieved, so we just print it out here
-  response.on('end', function () {
-    console.log(str);
-    songs = JSON.parse(str);
-    console.log ( refreshMix() );
-  });
-};
-
-http.request(getSongsLocation, getSongsCallback).end();
-
-app.get('/currentSong', function (request, response) {
-  var song = getCurrentSong();
-
-  response.send(song);
-
+  response.send(allSongs);
 
 });
 
-app.get('/admin', function(request,response){
-  response.sendFile(__dirname + '/client/admin/index.html');
+app.get('/playlist', function (request, response) {
+
+  response.send(playlist);
+
 });
 
-app.get('/', function(request,response){
+app.get('/', function (request, response) {
   response.sendFile(__dirname + '/client/admin/index.html');
 
 });
 
-app.get('/refresh', function(request,response){
-  var output = refreshMix();
+app.get('/refresh', function (request, response) {
 
-  response.send(output);
+  response.send(populateAllSongs());
 });
-
-
 
 app.listen(app.get('port'), function () {
   console.log("Node app is running at localhost:" + app.get('port'));
-
-
 });

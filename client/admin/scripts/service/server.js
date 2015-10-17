@@ -5,14 +5,14 @@ angular.module('songApp')
     return {
 
 
-      getCurrentSong: function(){
-        return $http.get('/currentSong');
+      getPlaylist: function(){
+        return $http.get('/playlist');
       },
 
 
 
       getSongs: function () {
-        return $http.get('/songs');
+        return $http.get('/library');
       },
       addSong: function (song) {
         return $http.post('/songs', song);

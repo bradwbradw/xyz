@@ -1,28 +1,55 @@
+angular.module('songApp')
 
-  angular.module('songApp')
+  .service('Stream', function ($log, $q, Server) {
 
-    .service('Stream', function ($log, $q, Server) {
+    Stream = {
 
-      return {
+      currentSong: {
+        lastUpdated: '',
+        songData: {}
+      },
+      playlist: [],
+      lastUpdated: '',
 
-        currentSong: {
-          lastUpdated:'',
-          songData:{}
-        },
+      reloadPlaylist: function () {
+        return Server.getPlaylist();
+      },
 
-        getCurrentSong: function(){
-          return Server.getCurrentSong()
-            .then(function(response){
-              var currentSong = {
-                lastUpdated:new Date(),
-                songData:response.data
+      getCurrentSong: function () {
+        if (_.isEmpty(playlist)) {
+
+          return Stream.reloadPlaylist()
+            .then(function (response) {
+              Stream.playlist = response.data();
+
+              return Stream.playlist[0];
+            });
+        } else {
+          return playlist[0];
+        }
+      },
+      getNextSong: function () {
+
+        if (_.isEmpty(playlist)) {
+
+          return Stream.reloadPlaylist()
+            .then(function (response) {
+              var nextSong = {
+                lastUpdated: new Date(),
+                songData: response.data
               };
 
-              return currentSong;
-            } );
+              return nextSong;
+            });
+        } else if (playlist.length >1) {
+          return playlist[1];
+        } else {
+          return false;
         }
       }
+    };
+
+    return Stream;
 
 
-
-    });
+  });

@@ -1,6 +1,7 @@
 angular.module("songApp")
   .directive('youtube', function ($window, YT_event, youTubeApiService) {
-    // IN CODE
+
+    // from http://plnkr.co/edit/8lxuN8?p=info
     return {
       restrict: "E",
 
