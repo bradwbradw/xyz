@@ -5,6 +5,8 @@ var _ = require('lodash'),
   methodOverride = require('method-override'),
   morgan = require('morgan'),
   restful = require('node-restful'),
+  request = require('request'),
+  logger = require('logger'),
   mongoose = restful.mongoose;
 
 
@@ -90,8 +92,10 @@ var refreshMix = function () {
 var radioTimer = setInterval(incrementStream, 1000);
 
 
-var populateAllSongs = function () {
+var populateAllSongs = function (callback) {
 
+  // USE OTHER REQUEST w/ proper callback from work
+  // require('request')
   var getSongsLocation = {
     host: 'localhost',
     port: app.get('port'),
@@ -119,13 +123,22 @@ populateAllSongs();
 
 app.get('/library', function (request, response) {
 
-  response.send(allSongs);
+  populateAllSongs(function(){
+
+    response.send(allSongs);
+  });
 
 });
 
-app.get('/playlist', function (request, response) {
+app.get('/playlist', function (req, res) {
 
-  response.send(playlist);
+  request('/songs', function(error, response, body){
+    if (!error && response.statusCode == 200){
+      allSongs = JSON.parse(body);
+
+     res.send(refreshMix());
+    }
+  });
 
 });
 

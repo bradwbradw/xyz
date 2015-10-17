@@ -12,7 +12,7 @@ angular.module('songApp')
 
 
       getSongs: function () {
-        return $http.get('/library');
+        return $http.get('/songs');
       },
       addSong: function (song) {
         return $http.post('/songs', song);
