@@ -1,4 +1,4 @@
-<div ng-if="Stream.currentSong.songData.provider === 'youtube'">
+<div ng-if="playlist[0].provider === 'youtube'">
   <youtube width="{{stream.width}}"
            height="{{stream.height}}"
            videoid="{{stream.videoid}}"
@@ -14,7 +14,7 @@
   <p>Player status is: {{yt.playerStatus}}</p>
 </div>
 
-<div ng-if="Stream.currentSong.songData.provider === 'soundcloud'">
+<div ng-if="playlist[0].provider === 'soundcloud'">
 
   <iframe
     width="100%"
@@ -25,11 +25,11 @@
 
 </iframe>
 
-  id: [{{Stream.currentSong.songData.provider_id}}]
+  id: [{{playlist[0].provider_id}}]
 </div>
 
 
-<div ng-if="Stream.currentSong.songData.provider === 'bandcamp'">
+<div ng-if="playlist[0].provider === 'bandcamp'">
 
   bandcamp!
 </div>
@@ -37,20 +37,20 @@
 <hr/>
 current song:
 <pre>
-{{Stream.currentSong.songData | json}}
+{{playlist[0] | json}}
 </pre>
 <hr/>
 next song:
 <pre>
-{{Stream.nextSong.songData | json}}
+{{playlist[0] | json}}
 </pre>
 <br/>
 
 
 id<br/>
-<input ng-model="Stream.currentSong.songData.provider_id" />
+<input ng-model="playlist[0].provider_id" />
 url<br/>
-<input ng-model="Stream.currentSong.songData.url" />
+<input ng-model="playlist[0].url" />
 <br/>
 provider<br/>
-<input ng-model="Stream.currentSong.songData.provider" />
+<input ng-model="playlist[0].provider" />

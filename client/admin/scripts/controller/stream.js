@@ -1,12 +1,11 @@
 angular.module('songApp')
 
-  .controller('streamCtrl', function ($scope, YT_event, Stream, currentSong, nextSong, $sce) {
-
+  .controller('streamCtrl', function ($scope, YT_event, Stream, playlist, $sce) {
     //initial settings
     //borrowed from http://plnkr.co/edit/8lxuN8?p=info
     this.width = 400;
     this.height = 280;
-    this.videoid = currentSong.songData.provider_id;
+    this.videoid = playlist[0].provider_id;
     this.startSeconds= 20;
     this.playerStatus = "NOT PLAYING";
 
@@ -33,14 +32,12 @@ angular.module('songApp')
 
     });
 
-
-    Stream.currentSong = currentSong;
-    Stream.nextSong = nextSong;
     $scope.Stream = Stream;
+    $scope.playlist = playlist;
 
     $scope.soundcloudUrl = $sce.trustAsResourceUrl("https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/"
-    +Stream.currentSong.songData.provider_id+"&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true");
+    +playlist[0].provider_id+"&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true");
 
-    $scope.bandampUrl = $sce.trustAsResourceUrl("")
+    $scope.bandampUrl = $sce.trustAsResourceUrl("bandcamp.com/"+playlist[0].provider_id);
 
   });

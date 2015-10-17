@@ -62,6 +62,7 @@ var incrementStream = function () {
   }
 
   playhead += 1;
+  console.log('playhead ',playhead);
   if (playhead >= playlist[0].length) {
     console.log('playhead reached '+playhead+'. changing songs.');
     playlist.push(playlist[0]);
@@ -131,14 +132,17 @@ app.get('/library', function (request, response) {
 });
 
 app.get('/playlist', function (req, res) {
-
+/*
   request('/songs', function(error, response, body){
     if (!error && response.statusCode == 200){
       allSongs = JSON.parse(body);
 
      res.send(refreshMix());
+    } else {
+      res.send(error);
     }
-  });
+  });*/
+  res.send( playlist );
 
 });
 

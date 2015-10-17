@@ -12,25 +12,32 @@ angular.module('songApp')
       lastUpdated: '',
 
       reloadPlaylist: function () {
-        return Server.getPlaylist();
+        return Server.getPlaylist()
+          .then(function(response){
+            return response.data;
+          });
+      },
+
+      current: function(){
+        return Stream.playlist[0];
       },
 
       getCurrentSong: function () {
-        if (_.isEmpty(playlist)) {
+        if (_.isEmpty(Stream.playlist)) {
 
           return Stream.reloadPlaylist()
             .then(function (response) {
-              Stream.playlist = response.data();
+              Stream.playlist = response.data;
 
               return Stream.playlist[0];
             });
         } else {
-          return playlist[0];
+          return Stream.playlist[0];
         }
       },
       getNextSong: function () {
 
-        if (_.isEmpty(playlist)) {
+        if (_.isEmpty(Stream.playlist)) {
 
           return Stream.reloadPlaylist()
             .then(function (response) {
@@ -41,8 +48,8 @@ angular.module('songApp')
 
               return nextSong;
             });
-        } else if (playlist.length >1) {
-          return playlist[1];
+        } else if (Stream.playlist.length >1) {
+          return Stream.playlist[1];
         } else {
           return false;
         }

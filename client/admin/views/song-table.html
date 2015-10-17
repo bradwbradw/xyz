@@ -43,7 +43,7 @@
         <input type="checkbox" ng-model="song.attrs['active']"  >
       </span>
 
-    <button ng-click="song.editing = !song.editing">edit</button>
+    <button ng-hide="song.editing" ng-click="song.editing = !song.editing">edit</button>
     <button ng-show="song.editing" ng-click="Songs.update(song.id, song.attrs)">save</button>
     <button ng-show="song.editing" ng-click="Songs.remove(song.id)">delete</button>
 

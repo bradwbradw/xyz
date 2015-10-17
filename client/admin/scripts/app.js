@@ -36,11 +36,8 @@ SongApp.config(function ($stateProvider, $urlRouterProvider) {
         }
       },
       resolve:{
-        currentSong: function(Stream){
-          return Stream.getCurrentSong();
-        },
-        nextSong: function(Stream){
-          return Stream.getNextSong();
+        playlist: function(Stream){
+          return Stream.reloadPlaylist();
         }
       }
 
