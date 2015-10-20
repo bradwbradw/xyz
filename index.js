@@ -7,6 +7,7 @@ var _ = require('lodash'),
   restful = require('node-restful'),
   request = require('request'),
   logger = require('logger'),
+  Q = require('q'),
   mongoose = restful.mongoose;
 
 
@@ -93,31 +94,20 @@ var refreshMix = function () {
 var radioTimer = setInterval(incrementStream, 1000);
 
 
-var populateAllSongs = function (callback) {
+var populateAllSongs = function () {
 
-  // USE OTHER REQUEST w/ proper callback from work
-  // require('request')
-  var getSongsLocation = {
-    host: 'localhost',
-    port: app.get('port'),
-    path: '/songs'
-  };
+  request('http://l.h:5000/songs', function(error, response, body){
+    if (!error && response.statusCode == 200){
+      console.log('sucessfully loaded songs from db');
+      allSongs = JSON.parse(body);
 
-  getSongsCallback = function (response) {
-    var str = '';
-
-    //another chunk of data has been recieved, so append it to `str`
-    response.on('data', function (chunk) {str += chunk;});
-
-    //the whole response has been recieved, so we just print it out here
-    response.on('end', function () {
-      console.log(str);
-      allSongs = JSON.parse(str);
       return refreshMix();
-    });
-  };
+    } else {
+      console.log('error loading songs:', error);
+      return(error);
+    }
+  });
 
-  http.request(getSongsLocation, getSongsCallback).end();
 };
 
 populateAllSongs();
@@ -132,16 +122,7 @@ app.get('/library', function (request, response) {
 });
 
 app.get('/playlist', function (req, res) {
-/*
-  request('/songs', function(error, response, body){
-    if (!error && response.statusCode == 200){
-      allSongs = JSON.parse(body);
 
-     res.send(refreshMix());
-    } else {
-      res.send(error);
-    }
-  });*/
   res.send( playlist );
 
 });
@@ -152,8 +133,8 @@ app.get('/', function (request, response) {
 });
 
 app.get('/refresh', function (request, response) {
-
-  response.send(populateAllSongs());
+  populateAllSongs();
+  response.send('refreshin');
 });
 
 app.listen(app.get('port'), function () {

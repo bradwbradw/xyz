@@ -9,6 +9,10 @@ angular.module('songApp')
         return $http.get('/playlist');
       },
 
+      refresh: function(){
+        return $http.get('/refresh');
+      },
+
 
 
       getSongs: function () {

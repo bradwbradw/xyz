@@ -1,7 +1,7 @@
 <div ng-if="playlist[0].provider === 'youtube'">
   <youtube width="{{stream.width}}"
            height="{{stream.height}}"
-           videoid="{{stream.videoid}}"
+           videoid="{{playlist[0].provider_id}}"
            startSeconds="30">
 
   </youtube>
@@ -17,21 +17,32 @@
 <div ng-if="playlist[0].provider === 'soundcloud'">
 
   <iframe
-    width="100%"
-    height="450"
-    scrolling="no"
-    frameborder="no"
-    ng-src="{{soundcloudUrl}}">
+      width="100%"
+      height="450"
+      scrolling="no"
+      frameborder="no"
+      ng-src="{{$sce.trustAsResourceUrl('https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'
+    +playlist[0].provider_id+'&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true')}}">
 
-</iframe>
+  </iframe>
 
   id: [{{playlist[0].provider_id}}]
 </div>
 
 
 <div ng-if="playlist[0].provider === 'bandcamp'">
+<iframe bandcamp-autoplay
 
-  bandcamp!
+    style="border: 0; width: 350px; height: 470px;"
+
+    ng-src="{{$sce.trustAsResourceUrl('http://bandcamp.com/EmbeddedPlayer/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/track='+playlist[0].provider_id+'/transparent=true/')}}"
+    seamless>
+
+  <a href="http://1080pcollection.bandcamp.com/album/12-hours-full-relaxation">
+    &quot;12 Hours FULL RELAXATION&quot; by I Am Just A Pupil
+  </a>
+
+</iframe>
 </div>
 
 <hr/>
@@ -48,9 +59,16 @@ next song:
 
 
 id<br/>
-<input ng-model="playlist[0].provider_id" />
+<input ng-model="playlist[0].provider_id"/>
 url<br/>
-<input ng-model="playlist[0].url" />
+<input ng-model="playlist[0].url"/>
 <br/>
 provider<br/>
-<input ng-model="playlist[0].provider" />
+<input ng-model="playlist[0].provider"/>
+
+<div class="sidebar">
+  <div><button ng-click="Server.refresh()">refresh</button></div>
+  <div ng-repeat="entry in playlist ">
+    {{entry.artist}} - {{entry.title}} ({{entry.length}})
+  </div>
+</div>

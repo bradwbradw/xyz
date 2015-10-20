@@ -1,6 +1,6 @@
 angular.module('songApp')
 
-  .service('Stream', function ($log, $q, Server) {
+  .service('Stream', function ($log, $q, Server, $interval) {
 
     Stream = {
 
@@ -12,8 +12,10 @@ angular.module('songApp')
       lastUpdated: '',
 
       reloadPlaylist: function () {
+        $log.log('reloading playlist');
         return Server.getPlaylist()
           .then(function(response){
+            Stream.playlist = response.data;
             return response.data;
           });
       },
@@ -57,6 +59,8 @@ angular.module('songApp')
     };
 
     return Stream;
+
+
 
 
   });

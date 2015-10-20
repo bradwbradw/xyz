@@ -79,8 +79,7 @@ SongApp.config(function ($stateProvider, $urlRouterProvider) {
       url: '/bandcamp',
       views: {
         'embed-container': {
-          templateUrl: 'views/embeds/bandcamp.html',
-          controller:'bancampHackAutoplay'
+          templateUrl: 'views/embeds/bandcamp.html'
         }
 
       }
