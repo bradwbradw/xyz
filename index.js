@@ -10,11 +10,14 @@ var _ = require('lodash'),
   Q = require('q'),
   mongoose = restful.mongoose;
 
-
 var app = express();
 app.set('port', (process.env.PORT || 5000));
+app.set('db', process.env.MONGODB_URL || 'mongodb://localhost/resources');
+
+
 app.use(express.static(__dirname + '/client'));
 
+console.log('port is ',app.get('port'));
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({'extended': 'true'}));
@@ -22,11 +25,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 app.use(methodOverride());
 
-//console.log('DB CONNECT:'+process.env.MONGODB_URL);
-mongoose.connect(process.env.MONGODB_URL ? process.env.MONGODB_URL : 'mongodb://localhost/resources');
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  // Set custom headers for CORS
+  res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
+  next();
+});
+
+mongoose.connect(app.get('db'));
 
 // should be the same as in client/scripts/service/song.js Songs fields
-
 var Song = app.resource = restful.model('song', mongoose.Schema({
   artist: String,
   title: String,
@@ -48,6 +58,8 @@ Song.register(app, '/songs');
  PUT /songs/:id
  DELETE /songs/:id
  */
+
+
 
 
 var allSongs = [];
@@ -96,14 +108,18 @@ var radioTimer = setInterval(incrementStream, 1000);
 
 var populateAllSongs = function () {
 
-  request('http://l.h:5000/songs', function(error, response, body){
+  var apiLocation = 'http://localhost:'+app.get('port')+'/songs';
+  console.log('api location:',apiLocation);
+
+  request(apiLocation, function(error, response, body){
     if (!error && response.statusCode == 200){
       console.log('sucessfully loaded songs from db');
       allSongs = JSON.parse(body);
 
       return refreshMix();
     } else {
-      console.log('error loading songs:', error);
+      console.error('error loading songs: ', error);
+      console.error('response:', response);
       return(error);
     }
   });
@@ -115,7 +131,6 @@ populateAllSongs();
 app.get('/library', function (request, response) {
 
   populateAllSongs(function(){
-
     response.send(allSongs);
   });
 
@@ -124,11 +139,6 @@ app.get('/library', function (request, response) {
 app.get('/playlist', function (req, res) {
 
   res.send( playlist );
-
-});
-
-app.get('/', function (request, response) {
-  response.sendFile(__dirname + '/client/admin/index.html');
 
 });
 

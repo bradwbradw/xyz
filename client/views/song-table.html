@@ -1,0 +1,62 @@
+<h3>Songs</h3>
+<span ng-if="error">{{error}}</span>
+<div class="song-table admin">
+
+
+
+
+
+  <div class="header song-row">
+      <span class="song-attribute" ng-repeat="field in Songs.fields" >
+        {{field}}
+      </span>
+  </div>
+
+  <div class="song-row">
+      <span class="song-attribute" ng-repeat="field in Songs.fields" ng-if="field !== 'active'">
+        <input placeholder="{{field}}" ng-model="newSong[field]">
+      </span>
+      <span class="song-attribute" >
+        <input type="checkbox" ng-model="newSong['active']" >
+      </span>
+      <button class="song-row" ng-click="Songs.add(newSong)">add</button>
+
+  </div>
+
+
+  <div ng-repeat="song in Songs.getSongs()"
+       class="song-row"
+       ng-class="{'editing':song.editing}">
+
+    <span
+      class="song-attribute"
+      ng-repeat="field in Songs.fields" ng-if="field !== 'active'">
+
+        <span ng-hide="song.editing">
+          {{song.attrs[field]}}
+        </span>
+        <input ng-show="song.editing"
+             ng-model="song.attrs[field]"
+        />
+
+    </span>
+      <span class="song-attribute" >
+        <input type="checkbox" ng-model="song.attrs['active']"  >
+      </span>
+
+    <button ng-hide="song.editing" ng-click="song.editing = !song.editing">edit</button>
+    <button ng-show="song.editing" ng-click="Songs.update(song.id, song.attrs)">save</button>
+    <button ng-show="song.editing" ng-click="Songs.remove(song.id)">delete</button>
+
+  </div>
+
+
+</div>
+
+<hr>
+<pre>new song:<br/>
+  {{newSong | json}}
+</pre>
+<pre>
+    {{Songs.getSongs() | json}}
+  </pre>
