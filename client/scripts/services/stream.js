@@ -1,8 +1,17 @@
-angular.module('songApp')
+'use strict';
 
+/**
+ * @ngdoc service
+ * @name xyzApp.myService
+ * @description
+ * # myService
+ * Service in the xyzApp.
+ */
+angular.module('xyzApp')
   .service('Stream', function ($log, $q, Server, $interval) {
+    // AngularJS will instantiate a singleton by calling "new" on this function
 
-    Stream = {
+    var Stream = {
 
       currentSong: {
         lastUpdated: '',

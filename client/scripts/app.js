@@ -1,6 +1,6 @@
-var SongApp = angular.module("songApp", ['ui.router', 'ngSanitize']);
+var xyzApp = angular.module("xyzApp", ['ui.router', 'ngSanitize']);
 
-SongApp.constant('YT_event', {
+xyzApp.constant('YT_event', {
   STOP: 0,
   PLAY: 1,
   PAUSE: 2,
@@ -8,7 +8,7 @@ SongApp.constant('YT_event', {
 });
 
 
-SongApp.config(function ($stateProvider, $urlRouterProvider) {
+xyzApp.config(function ($stateProvider, $urlRouterProvider) {
 
 
   $stateProvider
@@ -19,9 +19,9 @@ SongApp.config(function ($stateProvider, $urlRouterProvider) {
           templateUrl: 'views/song-table.html',
           controller: 'songTableCtrl',
           resolve: {
-            songs: function (Songs) {
+            songs: function (Library) {
               console.log('songs resolve');
-              return Songs.loadSongs();
+              return Library.loadLibrary();
             }
           }
         }
@@ -37,6 +37,7 @@ SongApp.config(function ($stateProvider, $urlRouterProvider) {
       },
       resolve:{
         playlist: function(Stream){
+          console.log('stream resolve?');
           return Stream.reloadPlaylist();
         }
       }

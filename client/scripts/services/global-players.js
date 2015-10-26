@@ -1,5 +1,5 @@
 
-  angular.module('songApp')
+  angular.module('xyzApp')
 
     .service('Player', function ($http, $log, $q) {
 

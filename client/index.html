@@ -2,7 +2,14 @@
 <head>
 
   <base href="/">
+
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
   <link rel="stylesheet" href="style/main.css">
+    <!-- endbuild -->
 
 
   <style type="text/css">
@@ -17,7 +24,7 @@
   </style>
 </head>
 
-<body ng-app="songApp">
+<body ng-app="xyzApp">
 
 <h2>xyz functional prototype</h2>
 
@@ -41,17 +48,18 @@
 
         <script src="scripts/app.js"></script>
 
-        <script src="scripts/service/song.js"></script>
-        <script src="scripts/service/stream.js"></script>
-        <script src="scripts/service/global-players.js"></script>
-        <script src="scripts/service/ytApi.js"></script>
-        <script src="scripts/service/server.js"></script>
+        <script src="scripts/services/library.js"></script>
+        <script src="scripts/services/stream.js"></script>
+        <script src="scripts/services/global-players.js"></script>
+        <script src="scripts/services/ytApi.js"></script>
+        <script src="scripts/services/server.js"></script>
 
-        <script src="scripts/controller/song.js"></script>
-        <script src="scripts/controller/stream.js"></script>
+        <script src="scripts/controllers/song.js"></script>
+        <script src="scripts/controllers/stream.js"></script>
 
-        <script src="scripts/directive/youtube.js"></script>
-        <script src="scripts/directive/bandcamp.js"></script>
+        <script src="scripts/directives/youtube.js"></script>
+        <script src="scripts/directives/bandcamp.js"></script>
+        <script src="scripts/services/myservice.js"></script>
         <!-- endbuild -->
 
 

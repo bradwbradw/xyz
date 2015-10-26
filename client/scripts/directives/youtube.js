@@ -1,4 +1,4 @@
-angular.module("songApp")
+angular.module("xyzApp")
   .directive('youtube', function ($window, YT_event, youTubeApiService) {
 
     // from http://plnkr.co/edit/8lxuN8?p=info

@@ -1,4 +1,4 @@
-<h3>Songs</h3>
+<h3>Library</h3>
 <span ng-if="error">{{error}}</span>
 <div class="song-table admin">
 
@@ -7,30 +7,30 @@
 
 
   <div class="header song-row">
-      <span class="song-attribute" ng-repeat="field in Songs.fields" >
+      <span class="song-attribute" ng-repeat="field in Library.fields" >
         {{field}}
       </span>
   </div>
 
   <div class="song-row">
-      <span class="song-attribute" ng-repeat="field in Songs.fields" ng-if="field !== 'active'">
+      <span class="song-attribute" ng-repeat="field in Library.fields" ng-if="field !== 'active'">
         <input placeholder="{{field}}" ng-model="newSong[field]">
       </span>
       <span class="song-attribute" >
         <input type="checkbox" ng-model="newSong['active']" >
       </span>
-      <button class="song-row" ng-click="Songs.add(newSong)">add</button>
+      <button class="song-row" ng-click="Library.add(newSong)">add</button>
 
   </div>
 
 
-  <div ng-repeat="song in Songs.getSongs()"
+  <div ng-repeat="song in Library.getLibrary()"
        class="song-row"
        ng-class="{'editing':song.editing}">
 
     <span
       class="song-attribute"
-      ng-repeat="field in Songs.fields" ng-if="field !== 'active'">
+      ng-repeat="field in Library.fields" ng-if="field !== 'active'">
 
         <span ng-hide="song.editing">
           {{song.attrs[field]}}
@@ -45,8 +45,8 @@
       </span>
 
     <button ng-hide="song.editing" ng-click="song.editing = !song.editing">edit</button>
-    <button ng-show="song.editing" ng-click="Songs.update(song.id, song.attrs)">save</button>
-    <button ng-show="song.editing" ng-click="Songs.remove(song.id)">delete</button>
+    <button ng-show="song.editing" ng-click="Library.update(song.id, song.attrs)">save</button>
+    <button ng-show="song.editing" ng-click="Library.remove(song.id)">delete</button>
 
   </div>
 
@@ -57,6 +57,6 @@
 <pre>new song:<br/>
   {{newSong | json}}
 </pre>
-<pre>
-    {{Songs.getSongs() | json}}
+<pre>Library JSON:<br/>
+    {{Library.getLibrary() | json}}
   </pre>

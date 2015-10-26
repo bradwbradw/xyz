@@ -1,4 +1,4 @@
-angular.module('songApp')
+angular.module('xyzApp')
 
   .service('Server', function ($http, $log, $q) {
 
@@ -31,7 +31,7 @@ angular.module('songApp')
         return get('refresh');
       },
 
-      getSongs: function () {
+      getLibrary: function () {
         return get('songs');
       },
       addSong: function (song) {

@@ -1,10 +1,10 @@
 
-  angular.module('songApp')
+  angular.module('xyzApp')
 
-    .service('Songs', function ( $log, $q, Server) {
+    .service('Library', function ( $log, $q, Server) {
 
 
-    Songs = {
+    Library = {
       // should be same as in index.js database model
       fields:[
         'artist',
@@ -43,17 +43,17 @@ DELETE /songs/:id
 */
 
 
-      getSongs: function () {
+      getLibrary: function () {
 
-          return Songs.songs;
+          return Library.songs;
 
       },
-      loadSongs: function () {
+      loadLibrary: function () {
         $log.log('loading songs');
-        return Server.getSongs()
+        return Server.getLibrary()
             .then(function (response) {
-              Songs.songs = prepareSongs(response.data);
-              return Songs.songs;
+              Library.songs = prepareLibrary(response.data);
+              return Library.songs;
             })
             .catch(function (error) {
               $log.error(error);
@@ -82,7 +82,7 @@ DELETE /songs/:id
 
       var updateView = function(response){
         reportSuccess(response);
-        Songs.loadSongs();
+        Library.loadLibrary();
       };
       var reportSuccess = function(response){
         $log.log('success',response);
@@ -93,11 +93,11 @@ DELETE /songs/:id
         return $q.reject();
       };
 
-      var prepareSongs = function(rawSongs){
+      var prepareLibrary = function(rawLibrary){
 
-        var preparedSongs = [];
-        _.each(rawSongs, function(song){
-          preparedSongs.push(
+        var preparedLibrary = [];
+        _.each(rawLibrary, function(song){
+          preparedLibrary.push(
             {
             id:song._id,
             attrs:song,
@@ -105,11 +105,11 @@ DELETE /songs/:id
           }
           );
         });
-        return preparedSongs;
+        return preparedLibrary;
       };
 
 
 
-    return Songs;
+    return Library;
 
   });

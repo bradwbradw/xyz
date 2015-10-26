@@ -1,4 +1,4 @@
-angular.module('songApp')
+angular.module('xyzApp')
 
   .controller('streamCtrl', function ($scope, YT_event, Stream, playlist, $sce, $interval, Server) {
     //initial settings

@@ -1,7 +1,7 @@
 
-  angular.module('songApp')
+  angular.module('xyzApp')
 
-    .controller('songTableCtrl', function ($scope, Songs, songs) {
+    .controller('songTableCtrl', function ($scope, Library, songs) {
 
     var newSong =  {active:true};
     var error = '';
@@ -9,11 +9,11 @@
       $scope.showError = function(error){
         $scope.error = error;
       };
-    Songs.songs = songs;
+    Library.songs = songs;
 
       $scope.error = error;
     $scope.newSong = newSong;
-    $scope.Songs = Songs;
+    $scope.Library = Library;
 
 
   });

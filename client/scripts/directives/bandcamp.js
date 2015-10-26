@@ -1,4 +1,4 @@
-angular.module("songApp")
+angular.module("xyzApp")
   .directive('bandcampAutoplay', function ($timeout) {
 
 
