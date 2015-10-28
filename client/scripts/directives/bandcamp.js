@@ -1,5 +1,7 @@
+"use strict";
+
 angular.module("xyzApp")
-  .directive('bandcampAutoplay', function ($timeout) {
+  .directive('bandcampAutoplay', function () {
 
 
     return {
@@ -8,23 +10,11 @@ angular.module("xyzApp")
 
       },
       template:'',
-      link: function(scope, element, attrs, $rootScope) {
+      link: function() {
         console.log('linking bandcamp directive');
 
-        var clicky = function(){
-
-          console.log('tryin to click');
-
-        var playbutton = element[0].contentWindow.document.getElementById('big_play_button');
-
-        angular.element(playbutton).after('play ');
-
-        angular.element(playbutton).triggerHandler('click');
-
-        };
 
 
-        var timeoutPromise = $timeout(clicky, 3000);
 
 
       }

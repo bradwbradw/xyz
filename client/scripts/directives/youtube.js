@@ -1,3 +1,5 @@
+"use strict";
+
 angular.module("xyzApp")
   .directive('youtube', function ($window, YT_event, youTubeApiService) {
 
@@ -14,7 +16,7 @@ angular.module("xyzApp")
 
       template: '<div></div>',
 
-      link: function (scope, element, attrs, $rootScope) {
+      link: function (scope, element, attrs, $rootScope) { //jshint ignore:line
 
         console.log('linking youtube directive');
         var tag = document.createElement('script');
@@ -29,7 +31,7 @@ angular.module("xyzApp")
       });
 
       function setupPlayer(scope, element) {
-        return new YT.Player(element.children()[0], {
+        return new YT.Player(element.children()[0], { //jshint ignore:line
             playerVars: {
               autoplay: 1,
               html5: 1,
@@ -54,31 +56,31 @@ angular.module("xyzApp")
                 };
 
                 switch (event.data) {
-                  case YT.PlayerState.PLAYING:
+                  case YT.PlayerState.PLAYING: //jshint ignore:line
                     message.data = "PLAYING";
                     break;
-                  case YT.PlayerState.ENDED:
+                  case YT.PlayerState.ENDED: //jshint ignore:line
                     message.data = "ENDED";
                     break;
-                  case YT.PlayerState.UNSTARTED:
+                  case YT.PlayerState.UNSTARTED: //jshint ignore:line
                     message.data = "NOT PLAYING";
                     break;
-                  case YT.PlayerState.PAUSED:
+                  case YT.PlayerState.PAUSED: //jshint ignore:line
                     message.data = "PAUSED";
                     break;
                 }
 
                 scope.$apply(function () {
-                  console.log('emitting message from youtube directive:')
+                  console.log('emitting message from youtube directive:');
                   scope.$emit(message.event, message.data);
                 });
               }
             }
           });
-        };
+        }
 
         scope.$watch('height + width', function (newValue, oldValue) {
-          if (newValue == oldValue) {
+          if (newValue === oldValue) {
             return;
           }
 
@@ -88,7 +90,7 @@ angular.module("xyzApp")
 
         scope.$watch('videoid', function (newValue, oldValue) {
           console.log('videoid watch hit');
-          if (newValue == oldValue) {
+          if (newValue === oldValue) {
             return;
           }
 
@@ -113,7 +115,7 @@ angular.module("xyzApp")
 
         scope.$on('jump', function(){
           console.log('jumpin');
-        })
+        });
 
       }
     };

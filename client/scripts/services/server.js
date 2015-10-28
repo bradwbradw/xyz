@@ -1,15 +1,17 @@
+"use strict";
+
 angular.module('xyzApp')
 
-  .service('Server', function ($http, $log, $q) {
+  .service('Server', function ($http) {
 
     var API = 'http://l.h:5000/';
 
     var get = function(item){
-      return $http.get(API+item)
+      return $http.get(API+item);
     };
 
     var post = function(place,item){
-      return $http.post(API+place,item)
+      return $http.post(API+place,item);
 
     };
 
@@ -46,6 +48,5 @@ angular.module('xyzApp')
       }
 
 
-
-    }
+    };
   });

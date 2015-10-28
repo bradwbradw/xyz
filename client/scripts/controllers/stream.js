@@ -1,3 +1,5 @@
+"use strict";
+
 angular.module('xyzApp')
 
   .controller('streamCtrl', function ($scope, YT_event, Stream, playlist, $sce, $interval, Server) {
@@ -17,9 +19,6 @@ angular.module('xyzApp')
       $scope.$broadcast(ctrlEvent);
     };
 
-
-    var playedFromStartOnce = false;
-
     $scope.$on(YT_event.STATUS_CHANGE, function (event, data) {
       console.log('status change!');
       console.log(event, data);
@@ -37,8 +36,7 @@ angular.module('xyzApp')
     $scope.playlist = Stream.playlist;
     $scope.$sce = $sce;
 
-    $scope.soundcloudUrl = $sce.trustAsResourceUrl("https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/"
-    +playlist[0].provider_id+"&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true");
+    $scope.soundcloudUrl = $sce.trustAsResourceUrl("https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/" +playlist[0].provider_id+"&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true");
 
     $scope.bandampUrl = $sce.trustAsResourceUrl("bandcamp.com/"+playlist[0].provider_id);
 

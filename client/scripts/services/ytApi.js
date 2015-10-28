@@ -1,3 +1,5 @@
+"use strict";
+
 angular.module("xyzApp")
   .factory("youTubeApiService", function($q, $window) {
 
@@ -14,6 +16,6 @@ angular.module("xyzApp")
     onReady: function(callback) {
       apiReady.then(callback);
     }
-  }   
+  };
 
 });

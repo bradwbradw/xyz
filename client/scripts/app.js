@@ -1,3 +1,5 @@
+"use strict";
+
 var xyzApp = angular.module("xyzApp", ['ui.router', 'ngSanitize']);
 
 xyzApp.constant('YT_event', {
@@ -58,7 +60,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider) {
         'embed-container': {
           templateUrl: 'views/embeds/youtube.html'
         },
-        onEnter: function (Player) {
+        onEnter: function () {
 
         }
 

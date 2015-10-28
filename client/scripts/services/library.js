@@ -1,10 +1,11 @@
+"use strict";
 
   angular.module('xyzApp')
 
     .service('Library', function ( $log, $q, Server) {
 
 
-    Library = {
+    var Library = {
       // should be same as in index.js database model
       fields:[
         'artist',
@@ -52,31 +53,38 @@ DELETE /songs/:id
         $log.log('loading songs');
         return Server.getLibrary()
             .then(function (response) {
+              console.log('success loading');
               Library.songs = prepareLibrary(response.data);
               return Library.songs;
             })
             .catch(function (error) {
+              console.log('fail loading');
               $log.error(error);
-            })
+              return false;
+            });
       },
 
 
       add: function (song) {
-        Server.addSong(song)
-            .then( updateView )
+        return Server.addSong(song)
+            .then( function(result){
+            updateView(result);
+            return result;
+          } )
             .catch(reportError);
       },
       update:function(id, data){
         $log.log('update',data);
         Server.updateSong(id, data )
+
           .then( updateView )
           .catch(reportError)
-          .finally( updateView)
+          .finally( updateView);
       },
       remove: function(id){
         Server.deleteSong(id)
           .then(updateView)
-          .catch(reportError)
+          .catch(reportError);
       }
     };
 
@@ -96,7 +104,7 @@ DELETE /songs/:id
       var prepareLibrary = function(rawLibrary){
 
         var preparedLibrary = [];
-        _.each(rawLibrary, function(song){
+        _.each(rawLibrary, function(song){ //jshint ignore:line
           preparedLibrary.push(
             {
             id:song._id,
@@ -107,7 +115,6 @@ DELETE /songs/:id
         });
         return preparedLibrary;
       };
-
 
 
     return Library;

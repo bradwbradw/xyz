@@ -8,7 +8,7 @@
  * Service in the xyzApp.
  */
 angular.module('xyzApp')
-  .service('Stream', function ($log, $q, Server, $interval) {
+  .service('Stream', function ($log, $q, Server) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
     var Stream = {

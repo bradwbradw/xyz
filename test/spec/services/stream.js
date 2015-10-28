@@ -5,11 +5,8 @@ describe('Service: Stream', function () {
   // load the service's module
   beforeEach(module('xyzApp'));
 
-
   // instantiate service
   var Stream;
-
-  Stream.playlist =
 
   beforeEach(inject(function (_Stream_) {
     Stream = _Stream_;
@@ -20,6 +17,7 @@ describe('Service: Stream', function () {
   });
 
   it('should return current', function(){
+
 
   });
 
