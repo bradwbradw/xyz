@@ -97,7 +97,7 @@ describe('Service: Library', function () {
 
   var added_song_ids = [];
 
-  it('should save 3 songs', function (done) {
+  it('should save 3 songs and delete 3 songs', function (done) {
 
     Library.loadLibrary()
       .then(function () {
@@ -116,7 +116,22 @@ describe('Service: Library', function () {
           .then(function () {
             Library.loadLibrary().then(function () {
               expect(Library.getLibrary().length).toBe(num + testSongs.length);
-              $timeout(done);
+
+              var promises2 = [];
+              _.each(added_song_ids, function (id) {
+                promises2.push(Library.remove(id));
+              });
+
+              $q.all(promises2)
+                .then(function () {
+
+                  Library.loadLibrary().then(function (library) {
+
+                    expect(Library.getLibrary().length).toBe(num);
+                    $timeout(done);
+
+                  });
+                });
 
             });
           });
@@ -126,29 +141,5 @@ describe('Service: Library', function () {
 
 
   });
-/*
-  it('should delete the 3 songs i added', function (done) {
 
-    Library.loadLibrary()
-      .then(function () {
-
-        var num = Library.getLibrary().length;
-        var promises = [];
-        _.each(added_song_ids, function (id) {
-          promises.push(Library.remove(id));
-        });
-
-        $q.all(promises)
-          .then(function () {
-
-            Library.loadLibrary().then(function (library) {
-              expect(library.length).toBe(num - testSongs.length);
-              $timeout(done);
-
-            });
-          });
-      });
-
-
-  });*/
 });
