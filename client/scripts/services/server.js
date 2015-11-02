@@ -25,6 +25,10 @@ angular.module('xyzApp')
 
     return {
 
+      getBandcampId: function(url){
+        return get('bandcampHelper?url='+url);
+      },
+
       getPlaylist: function(){
         return get('playlist');
       },
@@ -40,7 +44,6 @@ angular.module('xyzApp')
         return post('songs', song);
       },
       updateSong: function (id, data) {
-
         return put('songs/' + id, data);
       },
       deleteSong: function(id){

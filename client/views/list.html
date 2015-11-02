@@ -4,7 +4,12 @@
 
 
 
-
+  <div><h4>add by url:</h4>
+    <input ng-model="newUrl" ng-change="recognized = Extract.determineService(newUrl)">
+    <span ng-if="recognized"> {{recognized}}
+      <button ng-click="Extract.getData(recognized,newUrl).then(Library.add)">add</button>
+    </span>
+    </div>
 
   <div class="header song-row">
       <span class="song-attribute" ng-repeat="field in Library.fields" >

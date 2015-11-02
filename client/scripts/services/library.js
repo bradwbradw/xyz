@@ -53,12 +53,10 @@ DELETE /songs/:id
         $log.log('loading songs');
         return Server.getLibrary()
             .then(function (response) {
-              console.log('success loading');
               Library.songs = prepareLibrary(response.data);
               return Library.songs;
             })
             .catch(function (error) {
-              console.log('fail loading');
               $log.error(error);
               return false;
             });

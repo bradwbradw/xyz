@@ -9,17 +9,24 @@ xyzApp.constant('YT_event', {
   STATUS_CHANGE: 3
 });
 
+xyzApp.config(function($httpProvider){// jshint ignore:line
+/*
+  $httpProvider.defaults.useXDomain = true;
+$httpProvider.defaults.withCredentials = true;
+delete $httpProvider.defaults.headers.common["X-Requested-With"];
+$httpProvider.defaults.headers.common["Accept"] = "application/json";
+$httpProvider.defaults.headers.common["Content-Type"] = "application/json";*/
+});
 
 xyzApp.config(function ($stateProvider, $urlRouterProvider) {
-
 
   $stateProvider
     .state('list', {
       url: '/list',
       views: {
         'main': {
-          templateUrl: 'views/song-table.html',
-          controller: 'songTableCtrl',
+          templateUrl: 'views/list.html',
+          controller: 'listCtrl',
           resolve: {
             songs: function (Library) {
               console.log('songs resolve');
@@ -38,9 +45,12 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider) {
         }
       },
       resolve:{
-        playlist: function(Stream){
+        playlist: function(Stream, Server){
           console.log('stream resolve?');
-          return Stream.reloadPlaylist();
+          return Server.refresh().then(function(){
+
+            return Stream.reloadPlaylist();
+          })
         }
       }
 

@@ -137,6 +137,20 @@ app.get('/library', function (request, response) {
 
 });
 
+app.get('/bandcampHelper', function(req,res){
+
+  console.log('request for bandcamp id of ',req.query.url);
+
+  request(req.query.url, function(error, response, body){
+
+            var stuff = body.split('<!-- track id ');
+            var id = stuff[1].split(' -->')[0];
+    console.log('found the id of bandcamp:',id);
+    res.send(id);
+  });
+
+});
+
 app.get('/playlist', function (req, res) {
 
   res.send( playlist );
