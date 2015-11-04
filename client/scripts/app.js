@@ -1,6 +1,9 @@
 "use strict";
 
-var xyzApp = angular.module("xyzApp", ['ui.router', 'ngSanitize']);
+var xyzApp = angular.module("xyzApp",
+  ['ui.router',
+    'ngSanitize',
+  'ezfb']);
 
 xyzApp.constant('YT_event', {
   STOP: 0,
@@ -50,7 +53,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider) {
           return Server.refresh().then(function(){
 
             return Stream.reloadPlaylist();
-          })
+          });
         }
       }
 
@@ -60,6 +63,16 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider) {
       views: {
         'main':{
           templateUrl: 'views/embed-tester.html'
+        }
+      }
+
+    })
+    .state('social', {
+      url:'/social',
+      views: {
+        'main':{
+          templateUrl: 'views/social.html',
+          controller:'SocialTestCtrl'
         }
       }
 

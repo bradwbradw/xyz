@@ -3,6 +3,10 @@
 
   <base href="/">
 
+    <script type="text/javascript">
+      document.write('<base href="' + document.location + '" />');
+    </script>
+
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <!-- endbower -->
@@ -28,7 +32,12 @@
 
 <h2>xyz functional prototype</h2>
 
-<div class="navigation"><a ui-sref="list"> list </a> | <a ui-sref="stream"> stream </a> | <a ui-sref="embeds"> embed test </a></div>
+<div class="navigation">
+  <a ui-sref="list"> list </a> |
+   <a ui-sref="stream"> stream </a> |
+  <a ui-sref="embeds"> embed test </a> |
+  <a ui-sref="social"> social test </a>
+</div>
 
 <div ui-view="main" >
 
@@ -41,6 +50,7 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/angular-easyfb/build/angular-easyfb.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -61,6 +71,9 @@
         <script src="scripts/directives/bandcamp.js"></script>
         <script src="scripts/services/myservice.js"></script>
         <script src="scripts/services/extract.js"></script>
+        <script src="scripts/services/social.js"></script>
+        <script src="scripts/controllers/socialtest.js"></script>
+        <script src="scripts/controllers/rename.js"></script>
         <!-- endbuild -->
 
 

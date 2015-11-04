@@ -5,7 +5,8 @@
     "angular": "1.4.1",
     "angular-sanitize": "1.4.1",
     "angular-ui-router": "0.2.15",
-    "lodash": "3.10.1"
+    "lodash": "3.10.1",
+    "angular-easyfb": "~1.4.1"
   },
   "devDependencies": {
     "angular-mocks": "1.4.1"
