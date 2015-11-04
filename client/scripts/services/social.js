@@ -48,7 +48,9 @@ angular.module('xyzApp')
 
         logout: ezfb.logout,
 
-        updateLoginStatus: ezfb.getLoginStatus,
+        updateLoginStatus: function(){
+          return ezfb.getLoginStatus()
+        },
 
         /*
 
@@ -60,7 +62,7 @@ angular.module('xyzApp')
          }),*/
 
         loadMe: function () {
-          return ezfb.api('/me')
+           ezfb.api('/me')
             .then(function(data){
               Social.FB.me = data;
             });

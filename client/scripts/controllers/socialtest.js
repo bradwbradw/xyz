@@ -17,7 +17,9 @@ angular.module('xyzApp')
         // https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus
         $scope.loginStatus = res;
       })
-      .then(Social.FB.loadMe());
+      .then(function(data ){
+        Social.FB.loadMe()
+      });
 
     $scope.getYoutube = function(){
 
