@@ -17,7 +17,4 @@ describe('Controller: RenameCtrl', function () {
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(RenameCtrl.awesomeThings.length).toBe(3);
-  });
 });

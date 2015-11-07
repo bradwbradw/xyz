@@ -17,14 +17,11 @@ angular.module('xyzApp')
         // https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus
         $scope.loginStatus = res;
       })
-      .then(function(data ){
-        Social.FB.loadMe()
+      .then(function( ){
+        Social.FB.loadMe();
       });
 
-    $scope.getYoutube = function(){
-
-    };
-
     $scope.FB = Social.FB;
+
 
   });

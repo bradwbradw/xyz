@@ -1,17 +1,17 @@
 'use strict';
 
-describe('Controller: SocialtestctrlCtrl', function () {
+describe('Controller: ImportCtrl', function () {
 
   // load the controller's module
   beforeEach(module('xyzApp'));
 
-  var SocialtestctrlCtrl,
+  var ImportCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    SocialtestctrlCtrl = $controller('SocialtestctrlCtrl', {
+    ImportCtrl = $controller('ImportCtrl', {
       $scope: scope
       // place here mocked dependencies
     });

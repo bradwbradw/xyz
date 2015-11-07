@@ -1,13 +1,13 @@
 "use strict";
 
-  angular.module('xyzApp')
+angular.module('xyzApp')
 
-    .service('Library', function ( $log, $q, Server) {
+  .service('Library', function ($log, $q, Server, Social, Extract, localStorageService) {
 
 
     var Library = {
       // should be same as in index.js database model
-      fields:[
+      fields: [
         'artist',
         'title',
         'length',
@@ -18,101 +18,105 @@
         'y',
         'active'
 
-      ],/* after test
-      fields:[
+      ], /* after test
+       fields:[
 
-        'artist',
-        'title',
-        'provider',
-        'url',
-        'x',
-        'y',
-        'z',
+       'artist',
+       'title',
+       'provider',
+       'url',
+       'x',
+       'y',
+       'z',
 
-      ],*/
+       ],*/
       songs: [],
-
+      localItems:localStorageService.get('localItems') || [],
+      getLocalItems: function(){
+        return Library.localItems;
+      },
 
       /*
 
-GET /songs
-GET /songs/:id
-POST /songs
-PUT /songs/:id
-DELETE /songs/:id
+       GET /songs
+       GET /songs/:id
+       POST /songs
+       PUT /songs/:id
+       DELETE /songs/:id
 
-*/
+       */
 
 
       getLibrary: function () {
 
-          return Library.songs;
+        return Library.songs;
 
       },
       loadLibrary: function () {
         $log.log('loading songs');
         return Server.getLibrary()
-            .then(function (response) {
-              Library.songs = prepareLibrary(response.data);
-              return Library.songs;
-            })
-            .catch(function (error) {
-              $log.error(error);
-              return false;
-            });
+          .then(function (response) {
+            Library.songs = prepareLibrary(response.data);
+            return Library.songs;
+          })
+          .catch(function (error) {
+            $log.error(error);
+            return false;
+          });
       },
 
 
       add: function (song) {
         return Server.addSong(song)
-            .then( function(result){
+          .then(function (result) {
             updateView(result);
             return result;
-          } )
-            .catch(reportError);
+          })
+          .catch(reportError);
       },
-      update:function(id, data){
-        $log.log('update',data);
-        Server.updateSong(id, data )
+      update: function (id, data) {
+        $log.log('update', data);
+        Server.updateSong(id, data)
 
-          .then( updateView )
+          .then(updateView)
           .catch(reportError)
-          .finally( updateView);
+          .finally(updateView);
       },
-      remove: function(id){
+      remove: function (id) {
         Server.deleteSong(id)
           .then(updateView)
           .catch(reportError);
       }
+
     };
 
-      var updateView = function(response){
-        reportSuccess(response);
-        Library.loadLibrary();
-      };
-      var reportSuccess = function(response){
-        $log.log('success',response);
-      };
+    var updateView = function (response) {
+      reportSuccess(response);
+      Library.loadLibrary();
+    };
+    var reportSuccess = function (response) {
+      $log.log('success', response);
+    };
 
-      var reportError = function(error){
-        $log.error('error',error);
-        return $q.reject();
-      };
+    var reportError = function (error) {
+      $log.error('error', error);
+      return $q.reject();
+    };
 
-      var prepareLibrary = function(rawLibrary){
+    var prepareLibrary = function (rawLibrary) {
 
-        var preparedLibrary = [];
-        _.each(rawLibrary, function(song){ //jshint ignore:line
-          preparedLibrary.push(
-            {
-            id:song._id,
-            attrs:song,
-            editing:false
+      var preparedLibrary = [];
+      _.each(rawLibrary, function (song) { //jshint ignore:line
+        preparedLibrary.push(
+          {
+            id: song._id,
+            attrs: song,
+            editing: false
           }
-          );
-        });
-        return preparedLibrary;
-      };
+        );
+      });
+      return preparedLibrary;
+    };
 
 
     return Library;

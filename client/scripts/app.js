@@ -3,7 +3,8 @@
 var xyzApp = angular.module("xyzApp",
   ['ui.router',
     'ngSanitize',
-  'ezfb']);
+  'ezfb',
+  'LocalStorageModule']);
 
 xyzApp.constant('YT_event', {
   STOP: 0,
@@ -19,6 +20,11 @@ $httpProvider.defaults.withCredentials = true;
 delete $httpProvider.defaults.headers.common["X-Requested-With"];
 $httpProvider.defaults.headers.common["Accept"] = "application/json";
 $httpProvider.defaults.headers.common["Content-Type"] = "application/json";*/
+});
+
+xyzApp.config(function (localStorageServiceProvider) {
+  localStorageServiceProvider
+    .setStorageCookieDomain('');
 });
 
 xyzApp.config(function ($stateProvider, $urlRouterProvider) {
@@ -58,15 +64,6 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider) {
       }
 
     })
-    .state('embeds', {
-      url:'/embeds',
-      views: {
-        'main':{
-          templateUrl: 'views/embed-tester.html'
-        }
-      }
-
-    })
     .state('social', {
       url:'/social',
       views: {
@@ -77,18 +74,46 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider) {
       }
 
     })
+    .state('xyzSpace', {
+      url: '/space',
+      views: {
+        'main': {
+          templateUrl: 'views/xyzspace.html'
+        }
+      }
+    })
+    .state('import', {
+      url: '/import',
+      views: {
+        'top': {
+          templateUrl: 'views/import.html',
+          controller:'ImportCtrl'
+        },
+        'main': {
+          templateUrl: 'views/localItems.html',
+          controller:'LocalItemsCtrl'
+        }
+      }
+    })
+
+
+
+
+    .state('embeds', {
+      url:'/embeds',
+      views: {
+        'main':{
+          templateUrl: 'views/embed-tester.html'
+        }
+      }
+    })
     .state('embeds.youtube', {
       url: '/youtube',
       views: {
         'embed-container': {
           templateUrl: 'views/embeds/youtube.html'
-        },
-        onEnter: function () {
-
         }
-
       }
-
     })
     .state('embeds.soundcloud', {
       url: '/soundcloud',
@@ -96,27 +121,13 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider) {
         'embed-container': {
           templateUrl: 'views/embeds/soundcloud.html'
         }
-
       }
-
-
     })
     .state('embeds.bandcamp', {
       url: '/bandcamp',
       views: {
         'embed-container': {
           templateUrl: 'views/embeds/bandcamp.html'
-        }
-
-      }
-
-
-    })
-    .state('xyzSpace', {
-      url: '/space',
-      views: {
-        'main': {
-          templateUrl: 'views/xyzspa'
         }
       }
     });

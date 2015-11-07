@@ -50,9 +50,54 @@ angular.module('xyzApp')
 
         });
 
-        console.log('found result:', result);
-        return result;
+        if (result) {
+          console.log('found result:', result);
+          return result;
+
+        } else {
+          return false;
+        }
       },
+
+      findURL: function (mess) {
+
+      },
+
+      filterOutMusicUrls: function (posts) {
+        var found = [];
+        var service;
+        _.each(posts, function (item) {
+          _.each(item, function (attribute) {
+            _.each(attribute, function (inner) {
+
+              if (typeof inner === 'string') {
+                service = Extract.determineService(inner);
+                if (service) {
+                  var urlRegex = new RegExp("(^|[ \t\r\n])((|http|https|spotify|itunes):(([A-Za-z0-9$_.+!*(),;/?:@&~=-])|%[A-Fa-f0-9]{2}){2,}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*(),;/?:@&~=%-]*))?([A-Za-z0-9$_+!*();/?:~-]))","g");
+
+                  var parts = inner.match(urlRegex);
+                  console.log('parts:',parts);
+                  _.each(parts,function(part){
+                    var cleanParts = part.split('\n');
+                    if (cleanParts.length >1){
+                      found.push({service:service,url:cleanParts[1]});
+                    } else {
+                      found.push({service:service,url:part});
+                    }
+
+                  });
+
+                }
+              }
+
+            })
+          })
+        });
+        return _.unique(found, 'url');
+
+
+      },
+
       getData: function (service, url) {
         if (service === 'youtube') {
           return Extract.getDataFromYoutube(url);
@@ -70,7 +115,7 @@ angular.module('xyzApp')
       getDataFromYoutube: function (url) {
 
         return $timeout(function () {
-          var urlParts,id;
+          var urlParts, id;
 
           if (contains(url, 'youtube.com')) {
             // full url - expect "v=" parameter
@@ -78,12 +123,12 @@ angular.module('xyzApp')
             var usefulPart = urlParts[1];
             var idPartAlmost = usefulPart.split('v=');
             id = idPartAlmost[1].substr(0, 11);
-            return {provider:'youtube',  provider_id:id };
+            return {provider: 'youtube', provider_id: id};
           } else if (contains(url, 'youtu.be')) {
 
             urlParts = url.split('youtu.be/');
             id = urlParts[1].substr(0, 11);
-            return {provider:'youtube',  provider_id:id };
+            return {provider: 'youtube', provider_id: id};
 
           }
 
@@ -91,11 +136,15 @@ angular.module('xyzApp')
 
       },
 
-      getDataFromBandcamp: function(url){
-          return Server.getBandcampId(url)
-            .then(function (result) {
-              return {provider:'bandcamp',provider_id: result.data};
-            });
+      getDataFromBandcamp: function (url) {
+        return Server.getBandcampId(url)
+          .then(function (result) {
+            return {provider: 'bandcamp', provider_id: result.data};
+          });
+
+      },
+
+      getDataFromSoundcloud: function (url) {
 
       }
     };

@@ -1,4 +1,3 @@
-.admin {
 
   .song-table {
     display:table;
@@ -22,18 +21,20 @@
     }
   }
 
-
   .song-attribute {
     display:table-cell;
     padding:0.7em;
     overflow:scroll;
 
     max-width:200px;
+
+    &.few{
+      max-width:auto;
+    }
     input{
       width:100%;
     }
   }
-
 
   button {
     background-color:black;
@@ -41,4 +42,3 @@
     text-blink: 5cm;
   }
 
-}

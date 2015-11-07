@@ -1,23 +1,29 @@
-.admin .song-table {
+.song-table {
   display: table;
   background-color: lightblue; }
-.admin .header {
+
+.header {
   background-color: darkcyan;
   color: white;
   font-weight: 700; }
-.admin .song-row {
+
+.song-row {
   display: table-row;
   padding: 0.4em; }
-  .admin .song-row.editing {
+  .song-row.editing {
     background-color: white; }
-.admin .song-attribute {
+
+.song-attribute {
   display: table-cell;
   padding: 0.7em;
   overflow: scroll;
   max-width: 200px; }
-  .admin .song-attribute input {
+  .song-attribute.few {
+    max-width: auto; }
+  .song-attribute input {
     width: 100%; }
-.admin button {
+
+button {
   background-color: black;
   color: white;
   text-blink: 5cm; }

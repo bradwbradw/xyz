@@ -20,7 +20,7 @@ angular.module('xyzApp')
       // Module default is `v2.4`.
       // If you want to use Facebook platform `v2.3`, you'll have to add the following parameter.
       // https://developers.facebook.com/docs/javascript/reference/FB.init
-      version: 'v2.5'
+      version: 'v2.3'
     });
   });
 
@@ -76,9 +76,10 @@ angular.module('xyzApp')
         },
 
         loadPosts: function () {
-          ezfb.api('/me/posts')
+          return ezfb.api('/me/posts')
             .then(function (data) {
               Social.FB.posts = data;
+              return Social.FB.posts;
             })
         },
         loadLikes: function () {
