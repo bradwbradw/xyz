@@ -1,6 +1,11 @@
 
-  <button ng-click="downloadMorePosts(true)">load music from facebook posts (replace)</button>
-
+  <button ng-click="reDownloadPosts()">load music from facebook posts (replace)</button>
 
   <button ng-click="downloadMorePosts()">load more music from facebook posts</button>
 
+  <div><h4>add by url:</h4>
+    <input ng-model="newUrl" ng-change="recognized = Extract.determineService(newUrl)">
+    <span ng-if="recognized"> {{recognized}}
+      <button ng-click="Extract.getData(recognized,newUrl).then(Library.add)">add</button>
+    </span>
+  </div>

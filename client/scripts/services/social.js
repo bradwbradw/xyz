@@ -39,6 +39,8 @@ angular.module('xyzApp')
         likes: {},
         profile: {},
 
+        post_paging:false,
+
         login: function () {
           return ezfb.login(
             null,
@@ -76,8 +78,13 @@ angular.module('xyzApp')
         },
 
         loadPosts: function () {
-          return ezfb.api('/me/posts')
+          var endpoint = '/me/posts';
+          if(Social.FB.post_paging){
+            endpoint = Social.FB.post_paging.next;
+          }
+          return ezfb.api(endpoint)
             .then(function (data) {
+              Social.FB.post_paging = data.paging;
               Social.FB.posts = data;
               return Social.FB.posts;
             })

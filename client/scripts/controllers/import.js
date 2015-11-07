@@ -11,7 +11,7 @@ angular.module('xyzApp')
   .controller('ImportCtrl', function (Extract, Library, Social, localStorageService, $scope) {
 
     var addToLocalItems = function (newItems) {
-      Library.localItems.push(newItems);
+      Library.localItems = Library.localItems.concat(newItems);
       localStorageService.set('localItems', Library.localItems);
     };
 
@@ -20,24 +20,24 @@ angular.module('xyzApp')
       localStorageService.set('localItems', Library.localItems);
     };
 
-    var downloadMorePosts = function (replace) {
+    var downloadMorePosts = function () {
 
-      if(replace){
+      Social.FB.loadPosts()
+        .then(Extract.filterOutMusicUrls)
+        .then(addToLocalItems);
+    };
+
+    var reDownloadPosts = function(){
 
       Social.FB.loadPosts()
         .then(Extract.filterOutMusicUrls)
         .then(replaceLocalItems);
 
-      } else {
-
-      Social.FB.loadPosts()
-        .then(Extract.filterOutMusicUrls)
-        .then(addToLocalItems);
-      }
     };
 
 
 
     $scope.downloadMorePosts = downloadMorePosts;
+    $scope.reDownloadPosts = reDownloadPosts;
 
   });

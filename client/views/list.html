@@ -3,16 +3,8 @@
 <div class="song-table admin">
 
 
-
-  <div><h4>add by url:</h4>
-    <input ng-model="newUrl" ng-change="recognized = Extract.determineService(newUrl)">
-    <span ng-if="recognized"> {{recognized}}
-      <button ng-click="Extract.getData(recognized,newUrl).then(Library.add)">add</button>
-    </span>
-    </div>
-
   <div class="header song-row">
-      <span class="song-attribute" ng-repeat="field in Library.fields" >
+      <span class="song-attribute" ng-repeat="field in Library.fields">
         {{field}}
       </span>
   </div>
@@ -21,10 +13,10 @@
       <span class="song-attribute" ng-repeat="field in Library.fields" ng-if="field !== 'active'">
         <input placeholder="{{field}}" ng-model="newSong[field]">
       </span>
-      <span class="song-attribute" >
-        <input type="checkbox" ng-model="newSong['active']" >
+      <span class="song-attribute">
+        <input type="checkbox" ng-model="newSong['active']">
       </span>
-      <button class="song-row" ng-click="Library.add(newSong)">add</button>
+    <button class="song-row" ng-click="Library.add(newSong)">add</button>
 
   </div>
 
@@ -34,19 +26,19 @@
        ng-class="{'editing':song.editing}">
 
     <span
-      class="song-attribute"
-      ng-repeat="field in Library.fields" ng-if="field !== 'active'">
+        class="song-attribute"
+        ng-repeat="field in Library.fields" ng-if="field !== 'active'">
 
         <span ng-hide="song.editing">
           {{song.attrs[field]}}
         </span>
         <input ng-show="song.editing"
-             ng-model="song.attrs[field]"
-        />
+               ng-model="song.attrs[field]"
+            />
 
     </span>
-      <span class="song-attribute" >
-        <input type="checkbox" ng-model="song.attrs['active']"  >
+      <span class="song-attribute">
+        <input type="checkbox" ng-model="song.attrs['active']">
       </span>
 
     <button ng-hide="song.editing" ng-click="song.editing = !song.editing">edit</button>

@@ -3,5 +3,6 @@
   <div class="song-row" ng-repeat="item in Library.getLocalItems()">
     <div class="song-attribute few"> {{item.service}}</div>
     <div class="song-attribute few"> {{item.url | json}}</div>
+    <div class="song-attribute few"> {{item.post_id}}</div>
   </div>
 </div>

@@ -66,31 +66,33 @@ angular.module('xyzApp')
       filterOutMusicUrls: function (posts) {
         var found = [];
         var service;
-        _.each(posts, function (item) {
+
+        _.each(posts.data, function (item) {
           _.each(item, function (attribute) {
-            _.each(attribute, function (inner) {
 
-              if (typeof inner === 'string') {
-                service = Extract.determineService(inner);
-                if (service) {
-                  var urlRegex = new RegExp("(^|[ \t\r\n])((|http|https|spotify|itunes):(([A-Za-z0-9$_.+!*(),;/?:@&~=-])|%[A-Fa-f0-9]{2}){2,}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*(),;/?:@&~=%-]*))?([A-Za-z0-9$_+!*();/?:~-]))","g");
+            if (typeof attribute === 'string') {
+              var urlRegex = new RegExp("(^|[ \t\r\n])((|http|https|spotify|itunes):(([A-Za-z0-9$_.+!*(),;/?:@&~=-])|%[A-Fa-f0-9]{2}){2,}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*(),;/?:@&~=%-]*))?([A-Za-z0-9$_+!*();/?:~-]))", "g");
+              var parts = attribute.match(urlRegex); // array of urls in the post body
+              if (parts && parts.length > 0) {
+                console.log('parts:', parts);
+                _.each(parts, function (part) {
 
-                  var parts = inner.match(urlRegex);
-                  console.log('parts:',parts);
-                  _.each(parts,function(part){
+                  service = Extract.determineService(part);
+                  if (service) {
                     var cleanParts = part.split('\n');
-                    if (cleanParts.length >1){
-                      found.push({service:service,url:cleanParts[1]});
+                    if (cleanParts.length > 1) {
+                      found.push({service: service, url: cleanParts[1], post_id:item.id});
                     } else {
-                      found.push({service:service,url:part});
+                      found.push({service: service, url: part, post_id:item.id});
                     }
 
-                  });
+                  }
 
-                }
+                });
+
               }
+            }
 
-            })
           })
         });
         return _.unique(found, 'url');

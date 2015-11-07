@@ -19,7 +19,7 @@
   overflow: scroll;
   max-width: 200px; }
   .song-attribute.few {
-    max-width: auto; }
+    max-width: 50%; }
   .song-attribute input {
     width: 100%; }
 
