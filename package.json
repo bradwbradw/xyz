@@ -5,6 +5,7 @@
   "description": "xyz helps to organize music",
   "main": "index.js",
   "scripts": {
+    "postinstall": "bower install",
     "start": "node index.js"
   },
   "dependencies": {
