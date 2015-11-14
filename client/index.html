@@ -79,6 +79,31 @@
         <script src="scripts/controllers/import.js"></script>
         <!-- endbuild -->
 
+
+<!-- build:template -->
+<script>
+  angular.module('xyzApp')
+      .value('serverConfig', {
+        apiBaseUrl: '/'
+      });
+</script>
+<!-- /build -->
+
+<!-- build:remove -->
+<script>
+  /**
+   * this gets removed after grunt build - for debug/development only
+   */
+  angular.module('xyzApp')
+    .value('serverConfig', {
+      apiBaseUrl: '/',
+      developing: true
+    });
+
+</script>
+<!-- /build -->
+
+
 <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
 
 <script>

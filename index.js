@@ -17,6 +17,8 @@ app.set('mode', process.env.MODE || 'development');
 
 
 app.use(express.static(__dirname + '/client'));
+app.use('/bower_components',  express.static( __dirname + '/bower_components'));
+
 //app.use(express.static(__dirname + 'sc_callback.html'));
 
 console.log('port is %s, mode is %s',app.get('port'), app.get('mode'));

@@ -2,9 +2,9 @@
 
 angular.module('xyzApp')
 
-  .service('Server', function ($http) {
+  .service('Server', function ($http, serverConfig) {
 
-    var API = 'http://l.h:5000/';
+    var API = serverConfig.apiBaseUrl || 'http://l.h:5000/';
 
     var get = function(item){
       return $http.get(API+item);
