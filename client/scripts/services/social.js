@@ -28,7 +28,10 @@ angular.module('xyzApp')
   .service('Social', function ($window, ezfb) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
-
+// initiate auth popup
+//
+/*
+*/
     var Social = {
 
       FB: {
@@ -103,7 +106,7 @@ angular.module('xyzApp')
         }
       },
       YT: {},
-      SC: {},
+      SC: $window.SC,
       BC: {}
     };
 

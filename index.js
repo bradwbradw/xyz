@@ -17,6 +17,7 @@ app.set('mode', process.env.MODE || 'development');
 
 
 app.use(express.static(__dirname + '/client'));
+//app.use(express.static(__dirname + 'sc_callback.html'));
 
 console.log('port is %s, mode is %s',app.get('port'), app.get('mode'));
 
@@ -160,6 +161,10 @@ app.get('/playlist', function (req, res) {
 app.get('/refresh', function (request, response) {
   populateAllSongs();
   response.send('refreshin');
+});
+
+app.get('/sc_callback', function(request, response){
+  response.sendFile(__dirname + '/sc_callback.html');
 });
 
 app.listen(app.get('port'), function () {

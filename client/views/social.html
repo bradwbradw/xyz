@@ -1,12 +1,12 @@
 <div ng-if="!data">
   <button ng-click="FB.login().then(FB.loadMe())">login to FB</button>
+  <button ng-click="initSC()">log in to SC</button>
   <hr/>
   login status {{loginStatus}}
   <hr/>
 
   <button ng-click="FB.loadMe()">load me</button>
   {{FB.me }}
-
   <hr/>
 
   <button ng-click="FB.loadFriends()">load friends</button>
