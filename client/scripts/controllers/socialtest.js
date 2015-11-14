@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SocialTestCtrl', function ($scope, Social) {
+  .controller('SocialTestCtrl', function ($scope, Social, $window) {
 
     $scope.data = false;
 
@@ -34,7 +34,7 @@ angular.module('xyzApp')
 
     $scope.FB = Social.FB;
 
-    $scope.SC = Social.SC;
+    var SC = Social.SC;
 
    $scope.initSC = function(){
 
@@ -44,6 +44,8 @@ angular.module('xyzApp')
       alert('Hello, ' + me.username);
     });
    };
+
+    $scope.SC = SC;
 
 
   });
