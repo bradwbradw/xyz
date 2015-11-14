@@ -1,21 +1,6 @@
-<html>
-<head>
-  <base href="/">
-  <link rel="stylesheet" href="styles/main.d41d8cd9.css">
-  <style type="text/css">body {
+<html> <head> <base href="/"> <script type="text/javascript">document.write('<base href="' + document.location + '" />');</script> <link rel="stylesheet" href="styles/main.d41d8cd9.css"> <style type="text/css">body {
 
-  }
+    }
+    a {
 
-  a {
-
-  }</style>
-</head>
-<body ng-app="xyzApp"><h2>xyz functional prototype</h2>
-
-<div class="navigation"><a ui-sref="list"> list </a> | <a ui-sref="stream"> stream </a> | <a ui-sref="embeds"> embed
-  test </a></div>
-<div ui-view="main"></div>
-<script src="scripts/vendor.d62307aa.js"></script>
-<script src="scripts/scripts.6280099c.js"></script>
-</body>
-</html>
+    }</style> </head> <body ng-app="xyzApp"> <div ui-view="base"> <div class="navigation" ui-view="navigation"> </div> <div ui-view="top"> </div> <div ui-view="main"> </div> </div> <script src="scripts/vendor.b3493904.js"></script> <script src="scripts/scripts.2ba422bd.js"></script> </body> </html>

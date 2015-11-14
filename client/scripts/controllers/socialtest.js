@@ -10,6 +10,17 @@
 angular.module('xyzApp')
   .controller('SocialTestCtrl', function ($scope, Social) {
 
+    $scope.data = false;
+
+    $scope.show = function(request){
+     request.then(
+       function(data){
+         $scope.data = data;
+       })
+    };
+
+
+
 
     Social.FB.updateLoginStatus()
       .then(function (res) {

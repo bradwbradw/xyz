@@ -3,8 +3,8 @@
 var xyzApp = angular.module("xyzApp",
   ['ui.router',
     'ngSanitize',
-  'ezfb',
-  'LocalStorageModule']);
+    'ezfb',
+    'LocalStorageModule']);
 
 xyzApp.constant('YT_event', {
   STOP: 0,
@@ -13,13 +13,13 @@ xyzApp.constant('YT_event', {
   STATUS_CHANGE: 3
 });
 
-xyzApp.config(function($httpProvider){// jshint ignore:line
-/*
-  $httpProvider.defaults.useXDomain = true;
-$httpProvider.defaults.withCredentials = true;
-delete $httpProvider.defaults.headers.common["X-Requested-With"];
-$httpProvider.defaults.headers.common["Accept"] = "application/json";
-$httpProvider.defaults.headers.common["Content-Type"] = "application/json";*/
+xyzApp.config(function ($httpProvider) {// jshint ignore:line
+  /*
+   $httpProvider.defaults.useXDomain = true;
+   $httpProvider.defaults.withCredentials = true;
+   delete $httpProvider.defaults.headers.common["X-Requested-With"];
+   $httpProvider.defaults.headers.common["Accept"] = "application/json";
+   $httpProvider.defaults.headers.common["Content-Type"] = "application/json";*/
 });
 
 xyzApp.config(function (localStorageServiceProvider) {
@@ -30,8 +30,18 @@ xyzApp.config(function (localStorageServiceProvider) {
 xyzApp.config(function ($stateProvider, $urlRouterProvider) {
 
   $stateProvider
+    .state('base', {
+      url: '/',
+      views: {
+        'navigation': {
+          templateUrl: 'views/navigation.html'
+        },
+        'main': {}
+      }
+    })
     .state('list', {
-      url: '/list',
+      parent: 'base',
+      url: 'list',
       views: {
         'main': {
           templateUrl: 'views/list.html',
@@ -43,6 +53,10 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider) {
             }
           }
         }
+        ,
+        'navigation': {
+          templateUrl: 'views/navigation.html'
+        }
       }
     })
     .state('stream', {
@@ -51,12 +65,15 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider) {
         'main': {
           templateUrl: 'views/stream.html',
           controller: 'streamCtrl as stream'
+        },
+        'navigation': {
+          templateUrl: 'views/navigation.html'
         }
       },
-      resolve:{
-        playlist: function(Stream, Server){
+      resolve: {
+        playlist: function (Stream, Server) {
           console.log('stream resolve?');
-          return Server.refresh().then(function(){
+          return Server.refresh().then(function () {
 
             return Stream.reloadPlaylist();
           });
@@ -65,11 +82,11 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider) {
 
     })
     .state('social', {
-      url:'/social',
+      url: '/social',
       views: {
-        'main':{
+        'main': {
           templateUrl: 'views/social.html',
-          controller:'SocialTestCtrl'
+          controller: 'SocialTestCtrl'
         }
       }
 
@@ -87,23 +104,27 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider) {
       views: {
         'top': {
           templateUrl: 'views/import.html',
-          controller:'ImportCtrl'
+          controller: 'ImportCtrl'
         },
         'main': {
           templateUrl: 'views/localItems.html',
-          controller:'LocalItemsCtrl'
+          controller: 'LocalItemsCtrl'
+        },
+        'navigation': {
+          templateUrl: 'views/navigation.html'
         }
       }
     })
 
 
-
-
     .state('embeds', {
-      url:'/embeds',
+      url: '/embeds',
       views: {
-        'main':{
+        'main': {
           templateUrl: 'views/embed-tester.html'
+        },
+        'navigation': {
+          templateUrl: 'views/navigation.html'
         }
       }
     })

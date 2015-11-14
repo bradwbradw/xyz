@@ -3,4 +3,5 @@ dist
 dist/*
 .idea/
 .idea
+.tmp
 bower_components/

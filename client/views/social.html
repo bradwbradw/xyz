@@ -1,4 +1,4 @@
-
+<div ng-if="!data">
   <button ng-click="FB.login().then(FB.loadMe())">login to FB</button>
   <hr/>
   login status {{loginStatus}}
@@ -21,9 +21,18 @@
   <button ng-click="FB.loadFeed()">load feed</button>
   <pre>{{FB.feed | json}}</pre>
 
+
+
+  <button ng-click="show(FB.loadPosts())" ui-sref="rawdata(FB.loadPosts)">load posts into whole view</button>
+
   <button ng-click="FB.loadPosts()">load posts</button>
   <pre>{{FB.posts | json}}</pre>
 
 
   <button ng-click="FB.loadProfile()">load profile</button>
   <pre>{{FB.profile | json}}</pre>
+</div>
+
+<div ng-if="data">
+  <pre>{{data | json}}</pre>
+</div>

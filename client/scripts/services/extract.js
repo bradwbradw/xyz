@@ -80,11 +80,23 @@ angular.module('xyzApp')
                   service = Extract.determineService(part);
                   if (service) {
                     var cleanParts = part.split('\n');
+                    var newItem;
                     if (cleanParts.length > 1) {
-                      found.push({service: service, url: cleanParts[1], post_id:item.id});
+                      newItem = {service: service, url: cleanParts[1], post_id: item.id};
                     } else {
-                      found.push({service: service, url: part, post_id:item.id});
+                      newItem = {service: service, url: part, post_id: item.id};
                     }
+
+                    Extract.getData(newItem.service, newItem.url)
+                      .then(function (data) {
+                        newItem.data = data;
+                      })
+                      .catch(function (error) {
+                        newItem.data = error;
+                      })
+                      .finally(function () {
+                        found.push(newItem);
+                      })
 
                   }
 
@@ -100,18 +112,39 @@ angular.module('xyzApp')
 
       },
 
-      getData: function (service, url) {
-        if (service === 'youtube') {
-          return Extract.getDataFromYoutube(url);
-        }
+      // input: either a string (url) OR a larger object (FB post)
+      getData: function (input) {
 
-        if (service === 'bandcamp') {
-          return Extract.getDataFromBandcamp(url);
-        }
+        var url;
 
-        if (service === 'soundcloud') {
-          return Extract.getDataFromSoundcloud(url);
+        if (typeof input === 'string') {
+          // should be a url if it's a string
+          url = input;
+        } else if (input.source && input.link){
+          url = input.link;
+
+
         }
+          var service = Extract.determineService(url);
+
+          if (service === 'youtube') {
+            return Extract.getDataFromYoutube(url);
+          }
+
+          if (service === 'bandcamp') {
+            return Extract.getDataFromBandcamp(url);
+          }
+
+          if (service === 'soundcloud') {
+            return Extract.getDataFromSoundcloud(url);
+          } else {
+            // url could still be bandcamp if the artist has a pro account (custom url)
+            return Extract.getDataFromBandcamp(url);
+          }
+
+
+      },
+      gatDataAsFBPost:function(post){
 
       },
       getDataFromYoutube: function (url) {
@@ -147,6 +180,11 @@ angular.module('xyzApp')
       },
 
       getDataFromSoundcloud: function (url) {
+        return $timeout(
+          function () {
+            return 'no soundloud data yet';
+          }
+        )
 
       }
     };

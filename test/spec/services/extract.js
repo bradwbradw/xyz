@@ -114,7 +114,7 @@ describe('Service: Extract', function () {
 
     var correctData = {provider:'youtube', provider_id: 'eu2h9FfFAtQ'};
 
-    Extract.getData('youtube', youtubeUrl)
+    Extract.getData(youtubeUrl)
       .then(
       function (result) {
         expect(result).toEqual(correctData);
@@ -129,7 +129,7 @@ describe('Service: Extract', function () {
 
     var correctData = {provider:'youtube', provider_id: 'eu2h9FfFAtQ'};
 
-    Extract.getData('youtube', youtubeUrl)
+    Extract.getData(youtubeUrl)
       .then(
       function (result) {
         expect(result).toEqual(correctData);
@@ -142,7 +142,7 @@ describe('Service: Extract', function () {
 
     var correctData = { provider:'bandcamp', provider_id: '204637545'};
 
-    Extract.getData('bandcamp', url)
+    Extract.getData(url)
       .then(
       function (result) {
         console.log('bandcamp test returned');
@@ -158,7 +158,7 @@ describe('Service: Extract', function () {
     var correctData = {provider:'bandcamp', provider_id: '1972438495'};
 
 
-    Extract.getData('bandcamp', url)
+    Extract.getData(url)
       .then(
       function (result) {
         console.log('bandcamp test returned');
