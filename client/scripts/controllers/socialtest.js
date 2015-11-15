@@ -8,18 +8,16 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SocialTestCtrl', function ($scope, Social, $window) {
+  .controller('SocialTestCtrl', function ($scope, Social, $window, $log) {
 
     $scope.data = false;
 
-    $scope.show = function(request){
-     request.then(
-       function(data){
-         $scope.data = data;
-       })
+    $scope.show = function (request) {
+      request.then(
+        function (data) {
+          $scope.data = data;
+        })
     };
-
-
 
 
     Social.FB.updateLoginStatus()
@@ -28,22 +26,34 @@ angular.module('xyzApp')
         // https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus
         $scope.loginStatus = res;
       })
-      .then(function( ){
+      .then(function () {
         Social.FB.loadMe();
       });
 
     $scope.FB = Social.FB;
 
-    var SC = Social.SC;
+    var SC = window.SC;// Social.SC;
 
-   $scope.initSC = function(){
+    $scope.initSC = function () {
+/*
 
-    SC.connect().then(function() {
-      return SC.get('/me');
-    }).then(function(me) {
-      alert('Hello, ' + me.username);
-    });
-   };
+      // this does not work - don't know why..
+      SC.connectCallback = function (something) {
+        console.log(SC.isConnected());
+        return SC.get('/me?oauth_token=blabla');// <-- auth token appears in the URL of the popup while it's trying to close itself
+      };
+      // initiate auth popup
+      SC.connect().then(function () {
+        return SC.get('/me');
+      })
+        .then(function (me) {
+        alert('Hello, ' + me.username);
+      })
+        .catch(function (error) {
+          $log.error(error);
+        });*/
+
+    };
 
     $scope.SC = SC;
 

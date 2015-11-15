@@ -8,7 +8,7 @@
  * Gets the artist, title, id and length from a service song URL
  */
 angular.module('xyzApp')
-  .service('Extract', function ($timeout, Server) {
+  .service('Extract', function ($timeout, Server, $window) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
     var recognizedServices = [
@@ -182,7 +182,7 @@ angular.module('xyzApp')
       getDataFromSoundcloud: function (url) {
         return $timeout(
           function () {
-            return 'no soundloud data yet';
+            return {provider:'soundcloud', provider_id:'228009072'};
           }
         )
 

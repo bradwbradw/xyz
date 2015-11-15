@@ -1,6 +1,12 @@
 <div ng-if="!data">
-  <button ng-click="FB.login().then(FB.loadMe())">login to FB</button>
+  <hr/>
+  <h2>soundcloud social</h2>
+
   <button ng-click="initSC()">log in to SC</button>
+
+  <button ng-click="SC.get('/me')">get me</button>
+  <h2>facebook social</h2>
+  <button ng-click="FB.login().then(FB.loadMe())">login to FB</button>
   <hr/>
   login status {{loginStatus}}
   <hr/>

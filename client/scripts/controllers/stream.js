@@ -22,7 +22,7 @@ angular.module('xyzApp')
     $scope.$on(YT_event.STATUS_CHANGE, function (event, data) {
       console.log('status change!');
       console.log(event, data);
-      this.yt.playerStatus = data;
+//      this.yt.playerStatus = data;
 /*
       if (data === 'PLAYING' && !playedFromStartOnce){
         console.log('playin for first time');

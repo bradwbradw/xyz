@@ -1,6 +1,121 @@
-<html> <head> <base href="/"> <script type="text/javascript">document.write('<base href="' + document.location + '" />');</script> <link rel="stylesheet" href="styles/main.d41d8cd9.css"> <style type="text/css">body {
+<html>
+<head>
+
+  <base href="/">
+
+    <script type="text/javascript">
+      document.write('<base href="' + document.location + '" />');
+    </script>
+
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="style/main.css">
+    <!-- endbuild -->
+
+
+  <style type="text/css">
+
+    body {
 
     }
     a {
 
-    }</style> </head> <body ng-app="xyzApp"> <div ui-view="base"> <div class="navigation" ui-view="navigation"> </div> <div ui-view="top"> </div> <div ui-view="main"> </div> </div> <script src="scripts/vendor.b3493904.js"></script> <script src="scripts/scripts.2ba422bd.js"></script> </body> </html>
+    }
+
+  </style>
+</head>
+
+<body ng-app="xyzApp">
+
+<div ui-view="base">
+
+<div class="navigation" ui-view="navigation" >
+</div>
+
+<div ui-view="top" >
+
+</div>
+<div ui-view="main" >
+
+</div>
+
+
+</div>
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/angular-easyfb/build/angular-easyfb.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+
+        <script src="scripts/app.js"></script>
+
+        <script src="scripts/services/library.js"></script>
+        <script src="scripts/services/stream.js"></script>
+        <script src="scripts/services/global-players.js"></script>
+        <script src="scripts/services/ytApi.js"></script>
+        <script src="scripts/services/server.js"></script>
+
+        <script src="scripts/controllers/list.js"></script>
+        <script src="scripts/controllers/stream.js"></script>
+
+        <script src="scripts/directives/youtube.js"></script>
+        <script src="scripts/directives/bandcamp.js"></script>
+        <script src="scripts/services/myservice.js"></script>
+        <script src="scripts/services/extract.js"></script>
+        <script src="scripts/services/social.js"></script>
+        <script src="scripts/controllers/socialtest.js"></script>
+        <script src="scripts/controllers/rename.js"></script>
+        <script src="scripts/controllers/localitems.js"></script>
+        <script src="scripts/controllers/import.js"></script>
+        <!-- endbuild -->
+
+
+<!-- build:template -->
+<script >
+  angular.module('xyzApp')
+      .value('serverConfig', {
+        apiBaseUrl: '/'
+      });
+</script>
+<!-- /build -->
+
+<!-- build:remove -->
+<script >
+  /**
+   * this gets removed after grunt build - for debug/development only
+   *DEV MODE
+   */
+  angular.module('xyzApp')
+    .value('serverConfig', {
+      apiBaseUrl: 'http://localhost:5000/',
+      developing: true
+    });
+
+
+</script>
+<!-- /build -->
+
+
+<script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
+
+<script>
+  SC.initialize({
+    client_id: 'c29e4129f2bba3771a5472a65cad37e4',
+    redirect_uri: 'http://l.h:8080/sc_callback'
+  });
+
+
+</script>
+
+</body>
+</html>

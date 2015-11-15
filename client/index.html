@@ -80,8 +80,8 @@
         <!-- endbuild -->
 
 
-<!-- build:template -->
-<script>
+<!-- build:template  note: grunt build does not work -->
+<script >
   angular.module('xyzApp')
       .value('serverConfig', {
         apiBaseUrl: '/'
@@ -90,15 +90,17 @@
 <!-- /build -->
 
 <!-- build:remove -->
-<script>
+<script >
   /**
    * this gets removed after grunt build - for debug/development only
+   *DEV MODE
    */
   angular.module('xyzApp')
     .value('serverConfig', {
-      apiBaseUrl: '/',
+      apiBaseUrl: 'http://localhost:5000/',
       developing: true
     });
+
 
 </script>
 <!-- /build -->
@@ -109,8 +111,10 @@
 <script>
   SC.initialize({
     client_id: 'c29e4129f2bba3771a5472a65cad37e4',
-    redirect_uri: 'http://xyz.d2.xyz.gs/sc_callback'
+    redirect_uri: 'http://l.h:8080/sc_callback'
   });
+
+
 </script>
 
 </body>

@@ -9,12 +9,7 @@ describe('Service: Extract', function () {
   // load the service's module
   beforeEach(module('xyzApp'));
 
-
-
-  // instantiate service
-  var Extract, $q, $timeout;
   var $httpBackend, requestHandler;
-
 
   beforeEach(angular.mock.http.init);
   afterEach(angular.mock.http.reset);
@@ -31,21 +26,24 @@ describe('Service: Extract', function () {
       .passThrough();
   }));
 
+    // instantiate service
+  var Extract, $timeout, $window, Server, serverConfig, $q;
+
+  beforeEach(inject(function (_Extract_, _serverConfig_,_Server_, _$q_,_$timeout_, _$window_ ) {
+    Extract = _Extract_;
+    $timeout = _$timeout_;
+    $window = _$window_;
+    serverConfig = _serverConfig_;
+    Server = _Server_;
+    $q = _$q_;
+
+  }));
+
 
   afterEach(function () {
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
   });
-
-
-
-  beforeEach(inject(function (_Extract_, _$q_, _$timeout_) {
-    Extract = _Extract_;
-    $q = _$q_;
-    $timeout = _$timeout_;
-
-  }));
-
 
 
   it('should do something', function () {
@@ -166,5 +164,18 @@ describe('Service: Extract', function () {
         $timeout(done);
       });
   });
+
+  it('should get data from soundcloud url', function(done){
+    var url = 'https://soundcloud.com/cybersonicla/cybersonicla-009-retina-set';
+
+    var correctData = {provider:'soundcloud', provider_id:'228009072'};
+
+    Extract.getData(url)
+      .then( function(result){
+        expect(result).toEqual(correctData);
+        $timeout(done);
+      });
+  });
+
 
 });
