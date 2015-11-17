@@ -1,8 +1,19 @@
-<div ng-if="playlist[0].provider === 'youtube'">
+<div ng-if="playlist[0].provider === 'youtube'" >
+
+  <iframe
+      width="560"
+      height="315"
+      ng-src="{{$sce.trustAsResourceUrl('https://www.youtube.com/embed/'+playlist[0].provider_id + '?autoplay=1&start=15')}}"
+      frameborder="0"
+      allowfullscreen>
+
+  </iframe>
+
   <youtube width="{{stream.width}}"
            height="{{stream.height}}"
            videoid="{{playlist[0].provider_id}}"
-           startSeconds="30">
+           startSeconds="30"
+          ng-if="false">
 
   </youtube>
 
@@ -13,6 +24,13 @@
 
   <p>Player status is: {{yt.playerStatus}}</p>
 </div>
+
+
+<!-- APPEND TO END OF URL IN REGULAR YOUTUBE EMBED IFRAME #t=2m30s
+https://support.google.com/youtube/answer/171780
+-->
+
+
 
 <div ng-if="playlist[0].provider === 'soundcloud'">
 

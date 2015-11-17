@@ -6,8 +6,8 @@
   <button >load likes too?</button>
 
   <div><h4>add by url:</h4>
-    <input ng-model="newUrl" ng-change="recognized = Extract.determineService(newUrl)">
-    <span ng-if="recognized"> {{recognized}}
+    <input ng-model="newUrl" ng-change="inspectUrl(newUrl)">
+    <span ng-if="inspectionResult"> {{inspectionResult}}
       <button ng-click="Extract.getData(recognized,newUrl).then(Library.add)">add</button>
     </span>
   </div>
