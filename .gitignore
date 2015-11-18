@@ -6,3 +6,4 @@ dist/*
 .idea
 .tmp
 bower_components/
+.sass-cache/
