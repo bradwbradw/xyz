@@ -13,7 +13,7 @@ angular.module('xyzApp')
 
     var recognizedServices = [
       {name: 'soundcloud', domains: ['soundcloud.com', 'www.soundcloud.com']},
-      {name: 'youtube', domains: ['youtube.com', 'www.youtube.com', 'youtu.be', 'y2u.be']},
+      {name: 'youtube', domains: ['youtube.com', 'www.youtube.com', 'youtu.be', 'y2u.be','youtube-nocookie.com']},
       {name: 'bandcamp', domains: ['bandcamp.com', 'www.bandcamp.com']}
     ];
 

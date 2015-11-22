@@ -1,19 +1,20 @@
 <html>
 <head>
 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="/">
 
-    <script type="text/javascript">
-      document.write('<base href="' + document.location + '" />');
-    </script>
+  <script type="text/javascript">
+    document.write('<base href="' + document.location + '" />');
+  </script>
 
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
+  <!-- build:css(.) styles/vendor.css -->
+  <!-- bower:css -->
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
+  <!-- endbuild -->
 
 
   <style type="text/css">
@@ -21,6 +22,7 @@
     body {
 
     }
+
     a {
 
     }
@@ -32,56 +34,60 @@
 
 <div ui-view="base">
 
-<div class="navigation" ui-view="navigation" >
+
+  <div ui-view="top">
+
+  </div>
+  <div class="main-container" ui-view="main">
+
+  </div>
+
+  <div class="sidebar-container" ui-view="sidebar">
+
+  </div>
+
+
 </div>
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/lodash/lodash.js"></script>
+<script src="bower_components/angular-easyfb/build/angular-easyfb.js"></script>
+<script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
 
-<div ui-view="top" >
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
 
-</div>
-<div ui-view="main" >
+<script src="scripts/app.js"></script>
 
-</div>
+<script src="scripts/services/library.js"></script>
+<script src="scripts/services/stream.js"></script>
+<script src="scripts/services/global-players.js"></script>
+<script src="scripts/services/ytApi.js"></script>
+<script src="scripts/services/server.js"></script>
 
+<script src="scripts/controllers/list.js"></script>
+<script src="scripts/controllers/stream.js"></script>
 
-</div>
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/lodash/lodash.js"></script>
-    <script src="bower_components/angular-easyfb/build/angular-easyfb.js"></script>
-    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-
-        <script src="scripts/app.js"></script>
-
-        <script src="scripts/services/library.js"></script>
-        <script src="scripts/services/stream.js"></script>
-        <script src="scripts/services/global-players.js"></script>
-        <script src="scripts/services/ytApi.js"></script>
-        <script src="scripts/services/server.js"></script>
-
-        <script src="scripts/controllers/list.js"></script>
-        <script src="scripts/controllers/stream.js"></script>
-
-        <script src="scripts/directives/youtube.js"></script>
-        <script src="scripts/directives/bandcamp.js"></script>
-        <script src="scripts/services/myservice.js"></script>
-        <script src="scripts/services/extract.js"></script>
-        <script src="scripts/services/social.js"></script>
-        <script src="scripts/controllers/socialtest.js"></script>
-        <script src="scripts/controllers/rename.js"></script>
-        <script src="scripts/controllers/localitems.js"></script>
-        <script src="scripts/controllers/import.js"></script>
-        <!-- endbuild -->
+<script src="scripts/directives/youtube.js"></script>
+<script src="scripts/directives/bandcamp.js"></script>
+<script src="scripts/directives/directives.js"></script>
+<script src="scripts/services/myservice.js"></script>
+<script src="scripts/services/extract.js"></script>
+<script src="scripts/services/social.js"></script>
+<script src="scripts/controllers/socialtest.js"></script>
+<script src="scripts/controllers/rename.js"></script>
+<script src="scripts/controllers/localitems.js"></script>
+<script src="scripts/controllers/import.js"></script>
+<script src="scripts/controllers/space.js"></script>
+<!-- endbuild -->
 
 
 <!-- build:template  note: grunt build does not work -->
-<script >
+<script>
   angular.module('xyzApp')
       .value('serverConfig', {
         apiBaseUrl: '/'
@@ -89,17 +95,17 @@
 </script>
 <!-- /build -->
 
-<!-- build:remove -->
-<script >
+<!-- build:remove:dist,prod -->
+<script>
   /**
    * this gets removed after grunt build - for debug/development only
    *DEV MODE
    */
   angular.module('xyzApp')
-    .value('serverConfig', {
-      apiBaseUrl: 'http://localhost:5000/',
-      developing: true
-    });
+      .value('serverConfig', {
+        apiBaseUrl: '/',
+        developing: true
+      });
 
 
 </script>

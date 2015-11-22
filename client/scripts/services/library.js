@@ -115,6 +115,7 @@ angular.module('xyzApp')
           }
         );
       });
+
       return preparedLibrary;
     };
 

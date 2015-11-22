@@ -1,8 +1,33 @@
 
+<div class="xyz-item" ng-repeat="song in Library.getLibrary()"
+    ng-if="Library.getLibrary().length > 0"
+    draggable>
 
-<div class="song" ng-repeat="song in Library.getLibrary()"
-    ng-style="{left:song.x}">
+  <div class="dot" ng-mouseover="hovering = true" ng-mouseleave="hovering = false">
+    <img ng-src="{{song.attrs.art? song.attrs.art : 'images/flowers.png'}}">
 
-  {{song.artist}} - {{song.title}}
-  {{song.url}}
+  </div>
+  <div class="hover" ng-if="true">
+  {{song.attrs.artist}} - {{song.attrs.title}}
+  {{song.attrs.url}}
+
+  </div>
+</div>
+
+<div ng-if="Library.getLibrary().length === 0">
+
+  <div class="xyz-item" style="left:45%; top:10%;">
+
+    <div class="default dot">
+
+    </div>
+
+
+  <div class="hover">
+
+    no items (click to add an item)
+
+  </div>
+  </div>
+
 </div>

@@ -27,24 +27,43 @@ xyzApp.config(function (localStorageServiceProvider) {
     .setStorageCookieDomain('');
 });
 
-xyzApp.config(function ($stateProvider, $urlRouterProvider) {
+xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+  $locationProvider.html5Mode(false);
 
   $stateProvider
     .state('base', {
-      url: '/',
+      url: '',
       views: {
-        'navigation': {
-          templateUrl: 'views/navigation.html'
+        'main@': {
+          controller:'SpaceCtrl',
+          templateUrl: 'views/xyzspace.html'
         },
-        'main': {}
+        'sidebar@': {
+          templateUrl: 'views/sidebar.html'
+        }
+      },
+
+        onEnter:function(Library){
+          Library.loadLibrary();
+        }
+    })
+    .state('home', {
+      parent: 'base',
+      url: '',
+      views: {
+        'main@': {
+          'template': '<h2>home state</h2>'
+
+        }
       }
     })
+
     .state('list', {
       parent: 'base',
-      url: 'list',
+      url: '/list',
       views: {
-        'main': {
-          templateUrl: 'views/list.html',
+        'main@': {
+          templateUrl: 'views/test/list.html',
           controller: 'listCtrl',
           resolve: {
             songs: function (Library) {
@@ -53,21 +72,16 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider) {
             }
           }
         }
-        ,
-        'navigation': {
-          templateUrl: 'views/navigation.html'
-        }
+
       }
     })
     .state('stream', {
+      parent: 'base',
       url: '/stream',
       views: {
-        'main': {
-          templateUrl: 'views/stream.html',
+        'main@': {
+          templateUrl: 'views/test/stream.html',
           controller: 'streamCtrl as stream'
-        },
-        'navigation': {
-          templateUrl: 'views/navigation.html'
         }
       },
       resolve: {
@@ -82,53 +96,43 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider) {
 
     })
     .state('social', {
+      parent: 'base',
       url: '/social',
       views: {
-        'main': {
-          templateUrl: 'views/social.html',
+        'main@': {
+          templateUrl: 'views/test/social.html',
           controller: 'SocialTestCtrl'
         }
       }
 
     })
-    .state('xyzSpace', {
-      url: '/space',
-      views: {
-        'main': {
-          templateUrl: 'views/xyzspace.html'
-        }
-      }
-    })
     .state('import', {
+      parent: 'base',
       url: '/import',
       views: {
-        'top': {
-          templateUrl: 'views/import.html',
+        'top@': {
+          templateUrl: 'views/test/import.html',
           controller: 'ImportCtrl'
         },
-        'main': {
-          templateUrl: 'views/localItems.html',
+        'main@': {
+          templateUrl: 'views/test/localItems.html',
           controller: 'LocalItemsCtrl'
-        },
-        'navigation': {
-          templateUrl: 'views/navigation.html'
         }
       }
     })
 
 
     .state('embeds', {
+      parent: 'base',
       url: '/embeds',
       views: {
-        'main': {
-          templateUrl: 'views/embed-tester.html'
-        },
-        'navigation': {
-          templateUrl: 'views/navigation.html'
+        'main@': {
+          templateUrl: 'views/test/embed-tester.html'
         }
       }
     })
     .state('embeds.youtube', {
+      parent: 'base',
       url: '/youtube',
       views: {
         'embed-container': {
