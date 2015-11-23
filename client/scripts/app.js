@@ -44,7 +44,8 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       },
 
         onEnter:function(Library){
-          Library.loadLibrary();
+          var libProm = Library.loadLibrary();
+          console.log(libProm);
         }
     })
     .state('home', {
@@ -110,13 +111,9 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       parent: 'base',
       url: '/import',
       views: {
-        'top@': {
+        'main@': {
           templateUrl: 'views/test/import.html',
           controller: 'ImportCtrl'
-        },
-        'main@': {
-          templateUrl: 'views/test/localItems.html',
-          controller: 'LocalItemsCtrl'
         }
       }
     })

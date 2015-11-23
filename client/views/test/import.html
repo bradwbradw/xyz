@@ -1,14 +1,34 @@
+<button ng-click="reDownloadPosts()">load music from facebook posts (replace)</button>
 
-  <button ng-click="reDownloadPosts()">load music from facebook posts (replace)</button>
+<button ng-click="downloadMorePosts()">load more music from facebook posts</button>
 
-  <button ng-click="downloadMorePosts()">load more music from facebook posts</button>
+<button>load likes too?</button>
 
-  <button >load likes too?</button>
-
-  <div><h4>add by url:</h4>
-    <input ng-model="newUrl" ng-change="inspectUrl(newUrl)">
-    <span ng-if="inspectionResult"> {{inspectionResult}}
-      <button ng-click="Extract.getData(recognized,newUrl).then(Library.add)">add</button>
+<div><h4>add by url:</h4>
+  <input
+      ng-model="newUrl"
+      ng-change="examineUrl(newUrl)"
+      >
+    <span ng-if="fetchingSongData"> <i>fetching data...</i> </span>
+    <span ng-if="newItem"> {{ newItem.provider }} media detected:
+      {{ newItem.artist+' - '+newItem.title }}<hr/>
+      <button ng-click="Library.add(newItem)">add to library</button>
     </span>
-  </div>
+    <span ng-if="newUrl && error"> Sorry, {{error}} Please try adjusting the URL
+    </span>
+</div>
 
+<h3>imported (local items)</h3>
+<div class="song-table">
+  <h2>load more recent than (X)</h2>
+
+  <div class="song-row" ng-repeat="item in Library.getLocalItems()">
+    <div class="song-attribute few"> {{item.service}}</div>
+    <div class="song-attribute few"> {{item.url | json}}</div>
+    <div class="song-attribute few"> {{item.post_id}}</div>
+    <div class="song-attribute few">
+      <pre>{{item.data | json}}</pre>
+    </div>
+  </div>
+  <h2>load older than (X)</h2>
+</div>

@@ -1,0 +1,17 @@
+.debug{
+  font-size:0.8rem;
+  width:80%;
+  height:20em;
+  overflow: scroll;
+  text-align: left;
+  max-height:20em;
+  border:1px solid blue;
+  color:black;
+}
+
+.debug.sticky{
+  position:fixed;
+  top:0;
+  right:0;
+}
+.debug-button{position:absolute;bottom:0;margin-bottom:-1000px;padding-bottom:3em;}

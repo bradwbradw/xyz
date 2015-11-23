@@ -1,0 +1,32 @@
+
+.ieblock {
+  display:none;
+  a {
+    text-decoration: underline;
+  }
+}
+
+body.old-ie {
+  visibility: hidden;
+
+  .ieblock {
+    display:block;
+    visibility: visible;
+
+  }
+
+}
+
+
+
+
+
+  .add, .incart {
+
+	height:4em;
+
+  }
+
+  .search.icon-button{
+    height:3em;
+  }

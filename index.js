@@ -17,11 +17,11 @@ app.set('mode', process.env.MODE || 'development');
 
 
 app.use(express.static(__dirname + '/client'));
-app.use('/bower_components',  express.static( __dirname + '/bower_components'));
+app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
 //app.use(express.static(__dirname + 'sc_callback.html'));
 
-console.log('port is %s, mode is %s',app.get('port'), app.get('mode'));
+console.log('port is %s, mode is %s', app.get('port'), app.get('mode'));
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({'extended': 'true'}));
@@ -30,7 +30,7 @@ app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 app.use(methodOverride());
 
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
   // Set custom headers for CORS
@@ -48,6 +48,9 @@ var Song = app.resource = restful.model('song', mongoose.Schema({
   url: String,
   provider: String,
   provider_id: String,
+  pic: String,
+  date_saved: Date,
+  original_data: Array,
   x: Number,
   y: Number,
   active: Boolean
@@ -64,8 +67,6 @@ Song.register(app, '/songs');
  */
 
 
-
-
 var allSongs = [];
 var playlist = [];
 
@@ -79,9 +80,9 @@ var incrementStream = function () {
   }
 
   playhead += 1;
-  console.log('playhead ',playhead);
+  console.log('playhead ', playhead);
   if (playhead >= playlist[0].length) {
-    console.log('playhead reached '+playhead+'. changing songs.');
+    console.log('playhead reached ' + playhead + '. changing songs.');
     playlist.push(playlist[0]);
     playlist = _.rest(playlist);
     playhead = 0;
@@ -112,11 +113,11 @@ var radioTimer = setInterval(incrementStream, 1000);
 
 var populateAllSongs = function () {
 
-  var apiLocation = 'http://localhost:'+app.get('port')+'/songs';
-  console.log('api location:',apiLocation);
+  var apiLocation = 'http://localhost:' + app.get('port') + '/songs';
+  console.log('api location:', apiLocation);
 
-  request(apiLocation, function(error, response, body){
-    if (!error && response.statusCode == 200){
+  request(apiLocation, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
       console.log('sucessfully loaded songs from db');
       allSongs = JSON.parse(body);
 
@@ -124,7 +125,7 @@ var populateAllSongs = function () {
     } else {
       console.error('error loading songs: ', error);
       console.error('response:', response);
-      return(error);
+      return (error);
     }
   });
 
@@ -134,29 +135,39 @@ populateAllSongs();
 
 app.get('/library', function (request, response) {
 
-  populateAllSongs(function(){
+  populateAllSongs(function () {
     response.send(allSongs);
   });
 
 });
 
-app.get('/bandcampHelper', function(req,res){
+app.get('/bandcampHelper', function (req, res) {
 
-  console.log('request for bandcamp id of ',req.query.url);
+  console.log('request for bandcamp id of ', req.query.url);
 
-  request(req.query.url, function(error, response, body){
+  request(req.query.url, function (error, response, body) {
+    if (!body || _.isUndefined(body)){
+      res.status(500).json({error: 'not a bandcamp page'});
+    } else {
+      var stuff = body.split('<!-- track id ');
 
-            var stuff = body.split('<!-- track id ');
-            var id = stuff[1].split(' -->')[0];
-    console.log('found the id of bandcamp:',id);
-    res.send(id);
+      if( !stuff || _.isUndefined(stuff) || stuff.length < 2 ){
+        res.status(500).json({error: 'not a bandcamp page'});
+
+      } else {
+        var id = stuff[1].split(' -->')[0];
+        console.log('found the id of bandcamp:', id);
+        res.send(id);
+
+      }
+    }
   });
 
 });
 
 app.get('/playlist', function (req, res) {
 
-  res.send( playlist );
+  res.send(playlist);
 
 });
 
@@ -165,7 +176,7 @@ app.get('/refresh', function (request, response) {
   response.send('refreshin');
 });
 
-app.get('/sc_callback', function(request, response){
+app.get('/sc_callback', function (request, response) {
   response.sendFile(__dirname + '/sc_callback.html');
 });
 

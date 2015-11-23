@@ -51,19 +51,20 @@ describe('Service: Extract', function () {
   });
 
   it('should return false if garbage url', function () {
-    expect(Extract.determineService('www.garbage.com')).toBe(false);
+    expect(determineService('www.garbage.com')).toBe(false);
   });
 
   it('should recognize a youtube url', function () {
     var youtubeUrl = 'https://www.youtube.com/watch?v=eu2h9FfFAtQ';
-    expect(Extract.determineService(youtubeUrl)).toBe('youtube');
+    expect(determineService(youtubeUrl)).toBe('youtube');
   });
 
 
   it('should recognize a bandcamp url (artist is subdomain)', function () {
     var url = 'http://anansi.bandcamp.com/track/voyage';
-    expect(Extract.determineService(url)).toBe('bandcamp');
+    expect(determineService(url)).toBe('bandcamp');
   });
+
 
 
   it('should do sample promise shit', function () {

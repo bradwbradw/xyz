@@ -65,7 +65,6 @@
 
 <script src="scripts/services/library.js"></script>
 <script src="scripts/services/stream.js"></script>
-<script src="scripts/services/global-players.js"></script>
 <script src="scripts/services/ytApi.js"></script>
 <script src="scripts/services/server.js"></script>
 
@@ -75,7 +74,6 @@
 <script src="scripts/directives/youtube.js"></script>
 <script src="scripts/directives/bandcamp.js"></script>
 <script src="scripts/directives/directives.js"></script>
-<script src="scripts/services/myservice.js"></script>
 <script src="scripts/services/extract.js"></script>
 <script src="scripts/services/social.js"></script>
 <script src="scripts/controllers/socialtest.js"></script>
@@ -83,6 +81,7 @@
 <script src="scripts/controllers/localitems.js"></script>
 <script src="scripts/controllers/import.js"></script>
 <script src="scripts/controllers/space.js"></script>
+<script src="scripts/services/mediaapi.js"></script>
 <!-- endbuild -->
 
 
@@ -91,6 +90,10 @@
   angular.module('xyzApp')
       .value('serverConfig', {
         apiBaseUrl: '/'
+      })
+      .value('apiKeys',{
+        sc:'c29e4129f2bba3771a5472a65cad37e4',
+        yt:'AIzaSyAv5-et2TSQ3VsA5eKLviq2KjfExzFLxO8'
       });
 </script>
 <!-- /build -->
@@ -101,9 +104,12 @@
    * this gets removed after grunt build - for debug/development only
    *DEV MODE
    */
+
+  //FORMAT of apiBaseUrl: 'http://l.h:5000/'
+
   angular.module('xyzApp')
       .value('serverConfig', {
-        apiBaseUrl: '/',
+        apiBaseUrl: 'http://l.h:5000/',
         developing: true
       });
 
@@ -115,12 +121,6 @@
 <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
 
 <script>
-  SC.initialize({
-    client_id: 'c29e4129f2bba3771a5472a65cad37e4',
-    redirect_uri: 'http://l.h:8080/sc_callback'
-  });
-
-
 </script>
 
 </body>

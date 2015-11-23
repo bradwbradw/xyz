@@ -14,6 +14,9 @@ angular.module('xyzApp')
         'url',
         'provider',
         'provider_id',
+        'pic',
+        'date_saved',
+        'original_data',
         'x',
         'y',
         'active'
@@ -57,6 +60,7 @@ angular.module('xyzApp')
         return Server.getLibrary()
           .then(function (response) {
             Library.songs = prepareLibrary(response.data);
+            console.log(Library.songs);
             return Library.songs;
           })
           .catch(function (error) {
@@ -65,6 +69,7 @@ angular.module('xyzApp')
           });
       },
 
+      // example song object:
 
       add: function (song) {
         return Server.addSong(song)

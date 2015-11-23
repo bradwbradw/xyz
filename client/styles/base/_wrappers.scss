@@ -1,0 +1,42 @@
+.outer-content-container {
+	width: 96%; 
+	margin: auto;
+	
+	max-width: 1400px;
+	  @include MQ(M) {
+		width: 82%;
+		margin: auto;
+	}
+
+	@include MQ(XL) {
+		max-width: 1700px;
+	}	
+	@include MQ(XXL) {
+		max-width: 1900px;
+	}
+}
+
+.content-container {
+	width: 88%;
+	margin: auto;
+	padding: 0em;
+	  @include MQ(M) {
+	  	padding-left: 1em;
+	  	padding-right: 1em;
+		width: 90%;
+		margin: auto;
+	}
+}
+
+.content-container-grid {
+	width: 87%;
+	margin: auto;
+	  @include MQ(M) {
+		width: 90%;
+		margin: auto;
+	}
+}
+
+.main-content {
+	padding-bottom: 0em;
+}

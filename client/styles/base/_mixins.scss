@@ -1,0 +1,47 @@
+// center vertically and/or horizontally an absolute positioned element
+
+@mixin center($xy:xy) {
+  @if $xy == xy {
+    left: 50%;
+    top: 50%;
+    bottom: auto;
+    right: auto;
+    @include transform(translateX(-50%) translateY(-50%));
+  }
+  @else if $xy == x {
+    left: 50%;
+    right: auto;
+    @include transform(translateX(-50%));
+  }
+  @else if $xy == y {
+    top: 50%;
+    bottom: auto;
+    @include transform(translateY(-50%));
+  }
+}
+
+
+@mixin MQ($canvas) {
+  @if $canvas == S {
+   @media only screen and (min-width: $S) { @content; } 
+  }
+
+  @if $canvas == S-M {
+   @media only screen and (min-width: $S-M) { @content; } 
+  }
+  @else if $canvas == M {
+   @media only screen and (min-width: $M) { @content; } 
+  }
+  @else if $canvas == M-L {
+   @media only screen and (min-width: $M-L) { @content; } 
+  }
+  @else if $canvas == L {
+   @media only screen and (min-width: $L) { @content; } 
+  }
+  @else if $canvas == XL {
+   @media only screen and (min-width: $XL) { @content; } 
+  }
+  @else if $canvas == XXL {
+   @media only screen and (min-width: $XXL) { @content; } 
+  }
+}
