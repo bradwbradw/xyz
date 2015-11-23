@@ -18,9 +18,23 @@ angular.module('xyzApp')
 
 
     var MediaAPI = {
-      SC: $window.SC,
+      SC: {
+        resolve: function(url){
+          return $window.SC.get('/resolve?url='+url);
+        },
+        search: function(query){
+          return $window.SC.search('/tracks?q='+query);
+        }
+      },
       YT: {
         search: function (query) {
+          var ytGetUrl = 'https://www.googleapis.com/youtube/v3/search?key=' + apiKeys.yt
+            + '&q=' + query
+            + '&part=snippet';
+          return $http.get(ytGetUrl)
+            .then(function(data){
+              return data.data;
+            });
 
         },
         get: function (id) {

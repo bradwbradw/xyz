@@ -6,14 +6,20 @@
 
 <div><h4>add by url:</h4>
   <input
-      ng-model="newUrl"
-      ng-change="examineUrl(newUrl)"
+      ng-model="newText"
+      ng-change="examineText(newText)"
       >
     <span ng-if="fetchingSongData"> <i>fetching data...</i> </span>
     <span ng-if="newItem"> {{ newItem.provider }} media detected:
       {{ newItem.artist+' - '+newItem.title }}<hr/>
       <button ng-click="Library.add(newItem)">add to library</button>
     </span>
+
+    <ul ng-if="newItems">
+      <li ng-repeat="newItem in newItems">
+        {{newItem | json}}
+      </li>
+    </ul>
     <span ng-if="newUrl && error"> Sorry, {{error}} Please try adjusting the URL
     </span>
 </div>

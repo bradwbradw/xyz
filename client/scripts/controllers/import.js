@@ -38,10 +38,19 @@ angular.module('xyzApp')
 
     };
 
-    var updateNewItemInfo = function (newItem) {
-      $scope.newItem = newItem;
+    var updateImportView = function (new_) {
+      if(_.isArray(new_)){
+        $scope.newItems = new_
+      } else {
+        $scope.newItem = new_;
+      }
       $scope.fetchingSongData = false;
 
+    };
+
+    var updateArrayOfNewItems = function(arr){
+      $scope.newItems = arr;
+      $scope.fetchingSongData = false;
     };
 
     var invalidLink = function () {
@@ -50,11 +59,11 @@ angular.module('xyzApp')
 
     };
 
-    $scope.examineUrl = function (url) {
-      if (!url) return;
+    $scope.examineText = function (text) {
+      if (!text) return;
       $scope.fetchingSongData = true;
-      Extract.inspectUrl(url)
-        .then(updateNewItemInfo, invalidLink)
+      Extract.inspectText(text)
+        .then(updateImportView, invalidLink)
 
     };
 

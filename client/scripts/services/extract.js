@@ -61,12 +61,27 @@ angular.module('xyzApp')
     var Extract = {
 
 
-      inspectUrl: function (url) {
-        if (!getAllUrlsFromString(url)) {
-          return $q.reject('no URL found');
-        }
+      inspectText: function (text) {
+        if (!getAllUrlsFromString(text)) {
+        // text is not a URL!
 
-        var inspectPromise = Extract.getData(url);
+          var ytSearch = MediaAPI.YT.search(text);
+          var scSearch = MediaAPI.SC.search(text);
+
+          return $q.all([ytSearch, scSearch]).
+            then(function(ytResults, scResults){
+              var returnArr= [];
+              _.each(ytResults, function(ytResult){
+                returnArr.push(ytResult);
+              });
+              _.each(scResults, function(scResult){
+                returnArr.push(scResult);
+              });
+              return returnArr;
+            });
+        }
+        // text is a URL!
+        var inspectPromise = Extract.getData(text);
 
         inspectPromise
           .then(function (result) {
@@ -173,18 +188,18 @@ angular.module('xyzApp')
 
           //PT#M#S
           var dur_string = raw.contentDetails.duration;
-          var formattedTime = dur_string.replace("PT","").replace("H",":").replace("M",":").replace("S","");
+          var formattedTime = dur_string.replace("PT", "").replace("H", ":").replace("M", ":").replace("S", "");
           var hms_arr = formattedTime.split(':');
           var seconds = parseFloat(hms_arr.pop());
-          if (hms_arr.length > 0 ){
-            seconds += parseFloat( hms_arr.pop() ) *60;  // minutes
+          if (hms_arr.length > 0) {
+            seconds += parseFloat(hms_arr.pop()) * 60;  // minutes
           }
-          if (hms_arr.length > 0 ){
-            seconds += parseFloat( hms_arr.pop() ) *60*60; // hours
+          if (hms_arr.length > 0) {
+            seconds += parseFloat(hms_arr.pop()) * 60 * 60; // hours
           }
 
           var cleanData =
-           {
+          {
             provider: 'youtube',
             provider_id: raw.id,
             artist: raw.snippet.channelTitle,
@@ -213,8 +228,8 @@ angular.module('xyzApp')
           urlParts = url.split('youtu.be/');
           id = urlParts[1].substr(0, 11);
         }
-          return MediaAPI.YT.get(id)
-            .then(cleanYTData);
+        return MediaAPI.YT.get(id)
+          .then(cleanYTData);
 
       },
 
@@ -248,7 +263,7 @@ angular.module('xyzApp')
 
           }
         };
-        return MediaAPI.SC.get('/resolve?url=' + url)
+        return MediaAPI.SC.resolve(url)
           .then(cleanSCData);
 
         /*$q.all(
