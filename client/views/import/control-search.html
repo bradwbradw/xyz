@@ -1,0 +1,23 @@
+
+<div>
+  <h4>controls: search</h4>
+  <input
+      ng-model="newText"
+      ng-change="examineText(newText)"
+      ng-model-options="{debounce: 500}"
+      >
+    <span ng-if="fetchingSongData"> <i>fetching data...</i> </span>
+    <span ng-if="newItem"> {{ newItem.provider }} media detected:
+      {{ newItem.artist+' - '+newItem.title }}<hr/>
+      <button ng-click="Library.add(newItem)">add to library</button>
+    </span>
+
+    <ul ng-if="newItems">
+      <li ng-repeat="newItem in newItems">
+       <a ng-href="{{newItem.url}}"> ({{newItem.provider}}) {{newItem.artist}} - {{newItem.title}} ({{newItem.provider_id}})
+         </a>
+      </li>
+    </ul>
+    <span ng-if="newUrl && error"> Sorry, {{error}} Please try adjusting the URL
+    </span>
+</div>

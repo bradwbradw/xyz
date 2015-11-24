@@ -35,8 +35,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '',
       views: {
         'main@': {
-          controller:'SpaceCtrl',
-          templateUrl: 'views/xyzspace.html'
+          templateUrl:'views/main/landing.html'
         },
         'sidebar@': {
           templateUrl: 'views/sidebar.html'
@@ -48,13 +47,61 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           console.log(libProm);
         }
     })
-    .state('home', {
+    .state('mine', {
       parent: 'base',
-      url: '',
+      url: '/mine',
       views: {
         'main@': {
-          'template': '<h2>home state</h2>'
+          controller:'SpaceCtrl',
+          templateUrl: 'views/xyzspace.html'
+        },
+        'sidebar@': {
+          templateUrl: 'views/sidebar.html'
+        }
+      }
+    })
+    .state('import',{
+      parent:'base',
+      url:'/import',
+      views:{
+        'main@': {
+          controller:'SpaceCtrl',
+          templateUrl: 'views/xyzspace.html'
+        },
+        'sidebar@':{
+          templateUrl: 'views/import/container.html',
+          controller: 'ImportCtrl'
+        },
+        'importControls@sidebar':{
+          templateUrl: 'views/import/control-search.html'
+        },
+        'importSelector@sidebar':{
+          templateUrl: 'views/import/selector.html'
+        }
+      }
 
+    })
+
+    .state('import.search',{
+      url:'/search',
+      views:{
+        'importControls':{
+          templateUrl: 'views/import/control-search.html'
+        },
+        'importSelector':{
+          templateUrl: 'views/import/selector.html'
+        }
+      }
+    })
+
+    .state('import.explore',{
+      url:'/explore',
+      views:{
+        'importControls':{
+          templateUrl: 'views/import/control-explore.html'
+        },
+        'importSelector':{
+          templateUrl: 'views/import/selector.html'
         }
       }
     })
@@ -107,17 +154,6 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       }
 
     })
-    .state('import', {
-      parent: 'base',
-      url: '/import',
-      views: {
-        'main@': {
-          templateUrl: 'views/test/import.html',
-          controller: 'ImportCtrl'
-        }
-      }
-    })
-
 
     .state('embeds', {
       parent: 'base',

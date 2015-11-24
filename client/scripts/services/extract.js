@@ -38,6 +38,7 @@ angular.module('xyzApp')
       } else {
         cleanData.provider_id = raw.id;
       }
+      cleanData.url = 'https://youtube.com/watch?v='+cleanData.provider_id;
 
       //PT#M#S
       if (raw.contentDetails && raw.contentDetails.duration) {
