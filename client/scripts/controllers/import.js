@@ -40,7 +40,8 @@ angular.module('xyzApp')
 
     var updateImportView = function (new_) {
       if(_.isArray(new_)){
-        $scope.newItems = new_
+        $scope.newItems = new_;
+        console.log('array results:',new_);
       } else {
         $scope.newItem = new_;
       }

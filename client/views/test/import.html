@@ -8,6 +8,7 @@
   <input
       ng-model="newText"
       ng-change="examineText(newText)"
+      ng-model-options="{debounce: 500}"
       >
     <span ng-if="fetchingSongData"> <i>fetching data...</i> </span>
     <span ng-if="newItem"> {{ newItem.provider }} media detected:
@@ -17,7 +18,7 @@
 
     <ul ng-if="newItems">
       <li ng-repeat="newItem in newItems">
-        {{newItem | json}}
+        ({{newItem.provider}}) {{newItem.artist}} - {{newItem.title}} ({{newItem.provider_id}})
       </li>
     </ul>
     <span ng-if="newUrl && error"> Sorry, {{error}} Please try adjusting the URL

@@ -8,7 +8,7 @@
  * Service in the xyzApp.
  */
 angular.module('xyzApp')
-  .service('MediaAPI', function ($http, $window, apiKeys) {
+  .service('MediaAPI', function ($http, $window, apiKeys, $q) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
     $window.SC.initialize({
@@ -19,21 +19,33 @@ angular.module('xyzApp')
 
     var MediaAPI = {
       SC: {
-        resolve: function(url){
-          return $window.SC.get('/resolve?url='+url);
+        resolve: function (url) {
+          return $window.SC.get('/resolve?url=' + url);
         },
-        search: function(query){
-          return $window.SC.search('/tracks?q='+query);
+        search: function (query, pages) {
+          return $q.when($window.SC.get('/tracks?q=' + query + '&linked_partitioning=1'))
+            .then(function(data){
+              if (data.collection){
+                return data.collection;
+              } else {
+                return data;
+              }
+            });
         }
       },
       YT: {
-        search: function (query) {
-          var ytGetUrl = 'https://www.googleapis.com/youtube/v3/search?key=' + apiKeys.yt
+        search: function (query, limit) {
+
+          var ytSearchUrl = 'https://www.googleapis.com/youtube/v3/search?key=' + apiKeys.yt
             + '&q=' + query
-            + '&part=snippet';
-          return $http.get(ytGetUrl)
-            .then(function(data){
-              return data.data;
+            + '&part=snippet'
+            + '&type=video'
+            + '&videoEmbeddable=true'
+            + '&videoCategoryId=music'
+            + '&maxResults=10';
+          return $http.get(ytSearchUrl)
+            .then(function (data) {
+              return data.data.items;
             });
 
         },

@@ -18,6 +18,63 @@ angular.module('xyzApp')
     ];
 
 
+    function cleanYTData(raw) {
+
+
+      var cleanData =
+      {
+        provider: 'youtube',
+        artist: raw.snippet.channelTitle,
+        title: raw.snippet.title,
+        description:raw.snippet.description,
+        pic: raw.snippet.thumbnails.high.url, //"http://img.youtube.com/vi/" + raw.id + "/0.jpg",
+        date_saved: new Date(),
+        original_data: raw
+
+      };
+
+      if(raw.id.videoId){
+        cleanData.provider_id = raw.id.videoId;
+      } else {
+        cleanData.provider_id = raw.id;
+      }
+
+      //PT#M#S
+      if (raw.contentDetails && raw.contentDetails.duration) {
+        var dur_string = raw.contentDetails.duration;
+        var formattedTime = dur_string.replace("PT", "").replace("H", ":").replace("M", ":").replace("S", "");
+        var hms_arr = formattedTime.split(':');
+        var seconds = parseFloat(hms_arr.pop());
+        if (hms_arr.length > 0) {
+          seconds += parseFloat(hms_arr.pop()) * 60;  // minutes
+        }
+        if (hms_arr.length > 0) {
+          seconds += parseFloat(hms_arr.pop()) * 60 * 60; // hours
+        }
+        cleanData.length = seconds;
+      }
+
+      console.log(cleanData);
+      return cleanData;
+    }
+
+    function cleanSCData(track) {
+      return {
+        provider: 'soundcloud',
+        provider_id: track.id,
+        artist: track.user.username,
+        title: track.title,
+        description: track.description,
+        length: track.duration / 1000,
+        url: track.permalink_url,
+        stream: track.stream_url,
+        pic: track.artwork_url,
+        date_saved: new Date(),
+        original_data: track
+
+      }
+    }
+
     function contains(string, substring) {
       return string.indexOf(substring) > -1;
     }
@@ -63,19 +120,22 @@ angular.module('xyzApp')
 
       inspectText: function (text) {
         if (!getAllUrlsFromString(text)) {
-        // text is not a URL!
+          // text is not a URL! so search
 
           var ytSearch = MediaAPI.YT.search(text);
           var scSearch = MediaAPI.SC.search(text);
 
           return $q.all([ytSearch, scSearch]).
-            then(function(ytResults, scResults){
-              var returnArr= [];
-              _.each(ytResults, function(ytResult){
-                returnArr.push(ytResult);
+            then(function (results) {
+              var ytResults = results[0];
+              var scResults = results[1];
+
+              var returnArr = [];
+              _.each(ytResults, function (ytResult) {
+                returnArr = returnArr.concat(cleanYTData(ytResult));
               });
-              _.each(scResults, function(scResult){
-                returnArr.push(scResult);
+              _.each(scResults, function (scResult) {
+                returnArr = returnArr.concat(cleanSCData(scResult));
               });
               return returnArr;
             });
@@ -184,35 +244,7 @@ angular.module('xyzApp')
 
       },
       getDataFromYoutube: function (url) {
-        var cleanYTData = function (raw) {
-
-          //PT#M#S
-          var dur_string = raw.contentDetails.duration;
-          var formattedTime = dur_string.replace("PT", "").replace("H", ":").replace("M", ":").replace("S", "");
-          var hms_arr = formattedTime.split(':');
-          var seconds = parseFloat(hms_arr.pop());
-          if (hms_arr.length > 0) {
-            seconds += parseFloat(hms_arr.pop()) * 60;  // minutes
-          }
-          if (hms_arr.length > 0) {
-            seconds += parseFloat(hms_arr.pop()) * 60 * 60; // hours
-          }
-
-          var cleanData =
-          {
-            provider: 'youtube',
-            provider_id: raw.id,
-            artist: raw.snippet.channelTitle,
-            title: raw.snippet.title,
-            length: seconds,
-            pic: "http://img.youtube.com/vi/" + raw.id + "/0.jpg",
-            date_saved: new Date(),
-            original_data: raw
-
-          };
-          console.log(cleanData);
-          return cleanData;
-        };
+        ;
 
         var urlParts, id;
 
@@ -248,23 +280,10 @@ angular.module('xyzApp')
 //            return {provider: 'soundcloud', provider_id: '228009072'};
         };
 
-        var cleanSCData = function (track) {
-          return {
-            provider: 'soundcloud',
-            provider_id: track.id,
-            artist: track.user.username,
-            title: track.title,
-            length: track.duration / 1000,
-            url: track.permalink_url,
-            stream: track.stream_url,
-            pic: track.artwork_url,
-            date_saved: new Date(),
-            original_data: track
 
-          }
-        };
-        return MediaAPI.SC.resolve(url)
-          .then(cleanSCData);
+        var scPromise = MediaAPI.SC.resolve(url);
+        var scPromise2 = MediaAPI.SC.resolve(url).then(cleanSCData);
+        return MediaAPI.SC.resolve(url).then(cleanSCData);
 
         /*$q.all(
          [ ,

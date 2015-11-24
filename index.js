@@ -49,6 +49,7 @@ var Song = app.resource = restful.model('song', mongoose.Schema({
   provider: String,
   provider_id: String,
   pic: String,
+  description: String,
   date_saved: Date,
   original_data: Array,
   x: Number,

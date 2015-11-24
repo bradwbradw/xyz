@@ -17,6 +17,7 @@ angular.module('xyzApp')
         'pic',
         'date_saved',
         'original_data',
+        'description',
         'x',
         'y',
         'active'
