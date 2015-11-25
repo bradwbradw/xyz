@@ -4,10 +4,10 @@
     draggable>
 
   <div class="dot" ng-mouseover="hovering = true" ng-mouseleave="hovering = false">
-    <img ng-src="{{song.attrs.art? song.attrs.art : 'images/flowers.png'}}">
+    <img ng-src="{{song.attrs.pic? song.attrs.pic : 'images/flowers.png'}}">
 
   </div>
-  <div class="hover" ng-if="true">
+  <div class="hover" ng-if="hovering">
   {{song.attrs.artist}} - {{song.attrs.title}}
   {{song.attrs.url}}
 

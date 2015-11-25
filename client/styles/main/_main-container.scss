@@ -6,11 +6,17 @@
   background: linear-gradient(135deg, #f7fbfc 0%, #d9edf2 40%, #60a09f 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7fbfc', endColorstr='#60a09f', GradientType=1); /* IE6-9 fallback on horizontal gradient */
 
-  position:fixed;
-  top:0;
-  left:0;
-  width:100vh;
-  height:100vh;
-  max-height:100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vh;
+  height: 100vh;
+  max-height: 100vw;
+  max-width: 100vw;
+  @include MQ(M) {
+
+    position: fixed;
+  }
 }
+
 

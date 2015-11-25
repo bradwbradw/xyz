@@ -1,9 +1,15 @@
 .sidebar-container {
-  background-color:lightpink;
-  position:absolute;
-  top:0;
-  right:0;
-  width:20em;
-  height:100vh;
+  background-color: lightpink;
+  position: absolute;
+  top: 100vw;
+  width:100vw;
+
+  @include MQ(M) {
+    top: 0;
+    right: 0;
+    width: 20em;
+  }
+
 }
+
 
