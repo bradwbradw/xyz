@@ -8,7 +8,7 @@
  * Gets the artist, title, id and length from a service song URL
  */
 angular.module('xyzApp')
-  .service('Extract', function ($timeout, Server, $log, MediaAPI, $q) {
+  .service('Extract', function ($timeout, Server, Utility, $log, MediaAPI, $q) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
     var recognizedServices = [
@@ -17,63 +17,13 @@ angular.module('xyzApp')
       {name: 'bandcamp', domains: ['bandcamp.com', 'www.bandcamp.com']}
     ];
 
+    function convertFromYTEmbedUrl(embedUrl){
+          // example: https://www.youtube.com/embed/xmSEhUwGd4Q?autoplay=1
+      var parts = embedUrl.split('embed/');
+      parts = parts[1].split('?');
+      var standardUrl = 'https://youtube.com/watch?v='+parts[0];
+      return standardUrl;
 
-    function cleanYTData(raw) {
-
-
-      var cleanData =
-      {
-        provider: 'youtube',
-        artist: raw.snippet.channelTitle,
-        title: raw.snippet.title,
-        description:raw.snippet.description,
-        pic: raw.snippet.thumbnails.high.url, //"http://img.youtube.com/vi/" + raw.id + "/0.jpg",
-        date_saved: new Date(),
-        original_data: raw
-
-      };
-
-      if(raw.id.videoId){
-        cleanData.provider_id = raw.id.videoId;
-      } else {
-        cleanData.provider_id = raw.id;
-      }
-      cleanData.url = 'https://youtube.com/watch?v='+cleanData.provider_id;
-
-      //PT#M#S
-      if (raw.contentDetails && raw.contentDetails.duration) {
-        var dur_string = raw.contentDetails.duration;
-        var formattedTime = dur_string.replace("PT", "").replace("H", ":").replace("M", ":").replace("S", "");
-        var hms_arr = formattedTime.split(':');
-        var seconds = parseFloat(hms_arr.pop());
-        if (hms_arr.length > 0) {
-          seconds += parseFloat(hms_arr.pop()) * 60;  // minutes
-        }
-        if (hms_arr.length > 0) {
-          seconds += parseFloat(hms_arr.pop()) * 60 * 60; // hours
-        }
-        cleanData.length = seconds;
-      }
-
-      console.log(cleanData);
-      return cleanData;
-    }
-
-    function cleanSCData(track) {
-      return {
-        provider: 'soundcloud',
-        provider_id: track.id,
-        artist: track.user.username,
-        title: track.title,
-        description: track.description,
-        length: track.duration / 1000,
-        url: track.permalink_url,
-        stream: track.stream_url,
-        pic: track.artwork_url,
-        date_saved: new Date(),
-        original_data: track
-
-      }
     }
 
     function contains(string, substring) {
@@ -133,10 +83,10 @@ angular.module('xyzApp')
 
               var returnArr = [];
               _.each(ytResults, function (ytResult) {
-                returnArr = returnArr.concat(cleanYTData(ytResult));
+                returnArr = returnArr.concat(Utility.clean.YT.video(ytResult));
               });
               _.each(scResults, function (scResult) {
-                returnArr = returnArr.concat(cleanSCData(scResult));
+                returnArr = returnArr.concat(Utility.clean.SC.track(scResult));
               });
               return returnArr;
             });
@@ -146,12 +96,12 @@ angular.module('xyzApp')
 
         inspectPromise
           .then(function (result) {
-            console.log('inspectUrl done. result:', result);
+            console.log('inspectText done. result:', result);
             return result;
 
           })
           .catch(function (error) {
-            console.error('inspectUrl failed: ', error);
+            console.error('inspectText failed: ', error);
           });
 
         return inspectPromise;
@@ -169,22 +119,31 @@ angular.module('xyzApp')
           _.each(item, function (attribute) {
 
             if (typeof attribute === 'string') {
-              var parts = getAllUrlsFromString(attribute);
+              var urls = getAllUrlsFromString(attribute);
 
-              if (parts) {
-                console.log('parts:', parts);
-                _.each(parts, function (part) {
+              if (urls) {
+                console.log('urls:', urls);
 
-                  service = determineService(part);
+                _.each(urls, function (url) {
+
+                  service = determineService(url);
+                  // TODO - at this point, also determine the Type of resource
+                  //    (artist, playlist, etc.)
+                  // TODO - at this point, there may be some urls that are actually
+                  //    embeds.  Convert these to
                   if (service) {
-                    var cleanParts = part.split('\n');
-                    var newItem;
+                    var cleanParts = url.split('\n');
+                    var cleanUrl;
                     if (cleanParts.length > 1) {
-                      newItem = {service: service, url: cleanParts[1], post_id: item.id};
+                      cleanUrl = cleanParts[1];
+                      //newItem = {service: service, url: cleanParts[1], post_id: item.id};
                     } else {
-                      newItem = {service: service, url: part, post_id: item.id};
+                      cleanUrl = url;
+                      //newItem = {service: service, url: url, post_id: item.id};
                     }
 
+                    found.push(cleanUrl);
+/*
                     Extract.getData(newItem.service, newItem.url)
                       .then(function (data) {
                         newItem.data = data;
@@ -194,18 +153,19 @@ angular.module('xyzApp')
                       })
                       .finally(function () {
                         found.push(newItem);
-                      })
+                      })*/
 
                   }
 
                 });
+
 
               }
             }
 
           })
         });
-        return _.unique(found, 'url');
+        return _.unique( found );
 
 
       },
@@ -225,18 +185,31 @@ angular.module('xyzApp')
         var service = determineService(url);
 
         if (service === 'youtube') {
-          return Extract.getDataFromYoutube(url);
+          return Extract.getDataFromYoutube(url)
+            .catch(function(error){
+              $log.error('getDataFromYoutube failed for url '+url+' error:'+error);
+            });
         }
 
         if (service === 'bandcamp') {
-          return Extract.getDataFromBandcamp(url);
+          return Extract.getDataFromBandcamp(url)
+            .catch(function(error){
+              $log.error('getDataFromBandcamp failed for url '+url+' error:'+error);
+            });
         }
 
         if (service === 'soundcloud') {
-          return Extract.getDataFromSoundcloud(url);
+          return Extract.getDataFromSoundcloud(url)
+            .catch(function(error){
+              $log.error('getDataFromSoundcloud failed for url '+url+' error:', error);
+              return $q.resolve('invalid soundcloud url');
+            });
         } else {
           // url could still be bandcamp if the artist has a pro account (custom url)
-          return Extract.getDataFromBandcamp(url);
+          return Extract.getDataFromBandcamp(url)
+            .catch(function(error){
+              $log.error('getDataFromBandcamp failed for url '+url+' error:'+error);
+            });
         }
 
 
@@ -245,10 +218,14 @@ angular.module('xyzApp')
 
       },
       getDataFromYoutube: function (url) {
-        ;
 
         var urlParts, id;
 
+        // check to see if it's an embed
+        // if so, convert into standard youtube link
+        if( url.indexOf( 'embed') > -1){
+          url = convertFromYTEmbedUrl(url);
+        }
         if (contains(url, 'youtube.com')) {
           // full url - expect "v=" parameter2
           urlParts = url.split('?');
@@ -262,11 +239,20 @@ angular.module('xyzApp')
           id = urlParts[1].substr(0, 11);
         }
         return MediaAPI.YT.get(id)
-          .then(cleanYTData);
+          .then(Utility.clean.YT.video);
 
       },
 
       getDataFromBandcamp: function (url) {
+
+        if(url.indexOf( 'Embedded') >-1){
+          // example: "https://bandcamp.com/EmbeddedPlayer/v=2/track=1190798612/size=large/tracklist=false/artwork=small/ref=http%3A%2F%2Ffacebook.com%2F/"
+          var parts = url.split('track=');
+          parts = parts[1].split('/');
+          var id = parts[0];
+
+          return $q.resolve({provider:'bandcamp', provider_id:id});
+        }
         return Server.getBandcampId(url)
           .then(function (result) {
             return {provider: 'bandcamp', provider_id: result.data};
@@ -281,17 +267,13 @@ angular.module('xyzApp')
 //            return {provider: 'soundcloud', provider_id: '228009072'};
         };
 
+        return MediaAPI.SC.resolve(url)
+          .then(function(result){
+            console.log('soundcloud url resolves to:',JSON.stringify(result));
 
-        var scPromise = MediaAPI.SC.resolve(url);
-        var scPromise2 = MediaAPI.SC.resolve(url).then(cleanSCData);
-        return MediaAPI.SC.resolve(url).then(cleanSCData);
+            return Utility.clean.SC[result.kind](result);
 
-        /*$q.all(
-         [ ,
-         $timeout(test,1500),
-         $timeout(test, 2000)]
-         );
-         */
+          });
 
       }
     };

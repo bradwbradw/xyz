@@ -15,36 +15,42 @@ angular.module('xyzApp')
 
     var addToLocalItems = function (newItems) {
       Library.localItems = Library.localItems.concat(newItems);
-      localStorageService.set('localItems', Library.localItems);
     };
-
-    var replaceLocalItems = function (newItems) {
-      Library.localItems = newItems;
-      localStorageService.set('localItems', Library.localItems);
-    };
+/*
 
     var downloadMorePosts = function () {
 
       Social.FB.loadPosts()
         .then(Extract.filterOutMusicUrls)
-        .then(addToLocalItems);
+        .then(Library.addToLocalItems);
     };
+*/
 
     var reDownloadPosts = function () {
 
       Social.FB.loadPosts()
         .then(Extract.filterOutMusicUrls)
-        .then(replaceLocalItems);
+        .then(function(musicUrls){
+          var musicItemPromises = [];
+          _.each(musicUrls, function(musicUrl){
+            musicItemPromises.push(Extract.getData(musicUrl));
+          });
+
+          return $q.all(musicItemPromises)
+            .then(function(result){
+              console.log('download posts result:',result);
+              return result;
+            })
+            .catch(function(error){
+              console.error('download posts failed:',error);
+            });
+        })
+        .then(Library.addToLocalItems);
 
     };
 
     var updateImportView = function (new_) {
-      if(_.isArray(new_)){
-        $scope.newItems = new_;
-        console.log('array results:',new_);
-      } else {
-        $scope.newItem = new_;
-      }
+      Library.addToLocalItems(new_);
       $scope.fetchingSongData = false;
 
     };
@@ -68,7 +74,7 @@ angular.module('xyzApp')
 
     };
 
-    $scope.downloadMorePosts = downloadMorePosts;
+//    $scope.downloadMorePosts = downloadMorePosts;
     $scope.reDownloadPosts = reDownloadPosts;
 
     $scope.newItem = newItem;

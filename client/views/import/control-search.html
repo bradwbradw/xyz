@@ -4,10 +4,10 @@
   <input
       ng-model="newText"
       ng-change="examineText(newText)"
-      ng-model-options="{debounce: 500}"
-      >
+      ng-model-options="{debounce: 500, updateOn:'default'}"
+      >{{newText}}
     <span ng-if="fetchingSongData"> <i>fetching data...</i> </span>
-    <span ng-if="newItem"> {{ newItem.provider }} media detected:
+    <!--<span ng-if="Library.getLocalItems()"> {{ newItem.provider }} media detected:
       {{ newItem.artist+' - '+newItem.title }}<hr/>
       <button ng-click="Library.add(newItem)">add to library</button>
     </span>
@@ -17,7 +17,7 @@
        <a ng-href="{{newItem.url}}"> ({{newItem.provider}}) {{newItem.artist}} - {{newItem.title}} ({{newItem.provider_id}})
          </a>
       </li>
-    </ul>
-    <span ng-if="newUrl && error"> Sorry, {{error}} Please try adjusting the URL
+    </ul>-->
+    <span ng-if="newText && error"> Sorry, {{error}} Please try adjusting the URL
     </span>
 </div>

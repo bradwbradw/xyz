@@ -1,15 +1,15 @@
-
 <h3>selector</h3>
-<div class="song-table">
-  <h2>load more recent than (X)</h2>
+<button ng-click="Library.focusPrev()">right</button>
+<button ng-click="Library.focusNext()" ng-if="!latestFocused()">left</button>
+<div>
 
-  <div class="song-row" ng-repeat="item in Library.getLocalItems()">
-    <div class="song-attribute few"> {{item.service}}</div>
-    <div class="song-attribute few"> {{item.url | json}}</div>
-    <div class="song-attribute few"> {{item.post_id}}</div>
-    <div class="song-attribute few">
-      <pre>{{item.data | json}}</pre>
-    </div>
+  <div class="song-row" ng-repeat="item in Library.getFocusedLocalItemGroup()">
+
+    <a ng-href="{{item.url}}"> ({{item.provider}}) {{item.artist}} - {{item.title}} ({{item.provider_id}})
+    </a>
   </div>
-  <h2>load older than (X)</h2>
 </div>
+
+<pre class="debug">
+  {{Library.getLocalItems() | json}}
+</pre>

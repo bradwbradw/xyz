@@ -35,24 +35,24 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '',
       views: {
         'main@': {
-          templateUrl:'views/main/landing.html'
+          templateUrl: 'views/main/landing.html'
         },
         'sidebar@': {
           templateUrl: 'views/sidebar.html'
         }
       },
 
-        onEnter:function(Library){
-          var libProm = Library.loadLibrary();
-          console.log(libProm);
-        }
+      onEnter: function (Library) {
+        var libProm = Library.loadLibrary();
+        console.log(libProm);
+      }
     })
     .state('mine', {
       parent: 'base',
       url: '/mine',
       views: {
         'main@': {
-          controller:'SpaceCtrl',
+          controller: 'SpaceCtrl',
           templateUrl: 'views/xyzspace.html'
         },
         'sidebar@': {
@@ -60,48 +60,50 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         }
       }
     })
-    .state('import',{
-      parent:'base',
-      url:'/import',
-      views:{
+    .state('import', {
+      parent: 'base',
+      url: '/import',
+      views: {
         'main@': {
-          controller:'SpaceCtrl',
+          controller: 'SpaceCtrl',
           templateUrl: 'views/xyzspace.html'
         },
-        'sidebar@':{
+        'sidebar@': {
           templateUrl: 'views/import/container.html',
           controller: 'ImportCtrl'
         },
-        'importControls@sidebar':{
+        'importControls@sidebar': {
           templateUrl: 'views/import/control-search.html'
         },
-        'importSelector@sidebar':{
+        'importSelector@sidebar': {
           templateUrl: 'views/import/selector.html'
         }
       }
 
     })
 
-    .state('import.search',{
-      url:'/search',
-      views:{
-        'importControls':{
+    .state('import.search', {
+      url: '/search',
+      views: {
+        'importControls': {
           templateUrl: 'views/import/control-search.html'
         },
-        'importSelector':{
+        'importSelector': {
           templateUrl: 'views/import/selector.html'
+
         }
       }
     })
 
-    .state('import.explore',{
-      url:'/explore',
-      views:{
-        'importControls':{
+    .state('import.explore', {
+      url: '/explore',
+      views: {
+        'importControls': {
           templateUrl: 'views/import/control-explore.html'
         },
-        'importSelector':{
+        'importSelector': {
           templateUrl: 'views/import/selector.html'
+
         }
       }
     })

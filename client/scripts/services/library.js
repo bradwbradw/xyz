@@ -35,14 +35,50 @@ angular.module('xyzApp')
 
        ],*/
       songs: [],
-      localItems:localStorageService.get('localItems') || [],
-      getLocalItems: function(){
+      localItems: [],//localStorageService.get('localItems') || [],
+      getLocalItems: function () {
         return Library.localItems;
       },
+      focused: function () {
+        if (Library.localItems.length > -1) {
+          return Library.localItems.length - 1;
+        } else {
+          return 0;
+        }
+      },
+      focusLeft: function () {
+        Library.focused = Library.focused - 1;
+      },
+      focusRight: function () {
+        Library.focused = Library.focused + 1;
+      },
+      latestFocused: function () {
+        return Library.focused === Library.localItems.length - 1;
+      },
+      getFocusedLocalItemGroup: function () {
+      return Library.getLocalItems();
+      /*
+        if (_.isEmpty(Library.localItems)){
+          return false;
+        }
+        return Library.localItems[Library.focused];*/
+      },
+
+
+      addToLocalItems: function (newItems) {
+        console.log('ADDING ITEMS:',newItems);
+//        var newArr = _.isArray(newItems) ? newItems : [newItems];
+//        Library.localItems.push(newItems);
+        Library.localItems = newItems;
+        localStorageService.set('localItems', Library.localItems);
+
+      },
+
 
       /*
 
        GET /songs
+
        GET /songs/:id
        POST /songs
        PUT /songs/:id
