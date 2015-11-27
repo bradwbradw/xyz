@@ -5,7 +5,13 @@
 
   <div class="song-row" ng-repeat="item in Library.getFocusedLocalItemGroup()">
 
-    <a ng-href="{{item.url}}"> ({{item.provider}}) {{item.artist}} - {{item.title}} ({{item.provider_id}})
+    <a ng-href="{{item.url}}">
+      <span ng-if="!item.error">
+        ({{item.provider}}) {{item.artist}} - {{item.title}} ({{item.provider_id}})
+      </span>
+      <span ng-if="item.error">
+        {{item.error}}
+      </span>
     </a>
   </div>
 </div>

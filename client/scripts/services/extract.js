@@ -59,7 +59,7 @@ angular.module('xyzApp')
         }
       });
       if (result) {
-        console.log('found result:', result);
+        console.log('found result:'+result+' ('+url+')');
         return result;
       } else {
         return false;
@@ -187,7 +187,9 @@ angular.module('xyzApp')
         if (service === 'youtube') {
           return Extract.getDataFromYoutube(url)
             .catch(function(error){
+
               $log.error('getDataFromYoutube failed for url '+url+' error:'+error);
+            return $q.resolve({error:'invalid youtube url:'+url, url:url});
             });
         }
 
@@ -195,6 +197,7 @@ angular.module('xyzApp')
           return Extract.getDataFromBandcamp(url)
             .catch(function(error){
               $log.error('getDataFromBandcamp failed for url '+url+' error:'+error);
+           return $q.resolve({error:'invalid bandcamp url:'+url, url:url});
             });
         }
 
@@ -202,13 +205,14 @@ angular.module('xyzApp')
           return Extract.getDataFromSoundcloud(url)
             .catch(function(error){
               $log.error('getDataFromSoundcloud failed for url '+url+' error:', error);
-              return $q.resolve('invalid soundcloud url');
+              return $q.resolve({error:'invalid soundcloud url:'+url, url:url});
             });
         } else {
           // url could still be bandcamp if the artist has a pro account (custom url)
           return Extract.getDataFromBandcamp(url)
             .catch(function(error){
               $log.error('getDataFromBandcamp failed for url '+url+' error:'+error);
+              return $q.resolve({error:'invalid bandcamp url:'+url, url:url});
             });
         }
 
@@ -251,11 +255,17 @@ angular.module('xyzApp')
           parts = parts[1].split('/');
           var id = parts[0];
 
-          return $q.resolve({provider:'bandcamp', provider_id:id});
+          return $q.resolve({provider:'bandcamp', provider_id:id, url:url});
+        }
+
+        if(url.indexOf('/track/') <0){
+          // url is not for a track (could be album, artist, merch...)
+          var kind = Utility.BC.parseUrlForType(url);
+          return $q.resolve({provider:'bandcamp', url:url, kind:kind})
         }
         return Server.getBandcampId(url)
           .then(function (result) {
-            return {provider: 'bandcamp', provider_id: result.data};
+            return {provider: 'bandcamp', provider_id: result.data, url:url};
           });
 
       },
@@ -269,7 +279,6 @@ angular.module('xyzApp')
 
         return MediaAPI.SC.resolve(url)
           .then(function(result){
-            console.log('soundcloud url resolves to:',JSON.stringify(result));
 
             return Utility.clean.SC[result.kind](result);
 

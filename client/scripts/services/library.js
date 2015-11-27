@@ -70,7 +70,7 @@ angular.module('xyzApp')
 //        var newArr = _.isArray(newItems) ? newItems : [newItems];
 //        Library.localItems.push(newItems);
         Library.localItems = newItems;
-        localStorageService.set('localItems', Library.localItems);
+//        localStorageService.set('localItems', Library.localItems);
 
       },
 

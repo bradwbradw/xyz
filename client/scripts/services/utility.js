@@ -107,6 +107,13 @@ angular.module('xyzApp')
             return cleanData;
           }
 
+        },
+        BC: {
+          parseUrlForType: function(url){
+            var parts = url.split('.bandcamp.com/');
+            parts = parts[1].split('/');
+            return parts[0];
+          }
         }
       }
     }

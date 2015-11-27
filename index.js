@@ -81,9 +81,9 @@ var incrementStream = function () {
   }
 
   playhead += 1;
-  console.log('playhead ', playhead);
+//  console.log('playhead ', playhead);
   if (playhead >= playlist[0].length) {
-    console.log('playhead reached ' + playhead + '. changing songs.');
+//    console.log('playhead reached ' + playhead + '. changing songs.');
     playlist.push(playlist[0]);
     playlist = _.rest(playlist);
     playhead = 0;
