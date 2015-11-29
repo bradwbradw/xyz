@@ -91,6 +91,9 @@ angular.module('xyzApp')
               Social.FB.posts = data;
               return Social.FB.posts;
             })
+            .catch(function(error){
+              return $q.reject(error);
+            })
         },
         loadLikes: function () {
           ezfb.api('/me/likes')

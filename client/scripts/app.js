@@ -55,6 +55,9 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           controller: 'SpaceCtrl',
           templateUrl: 'views/xyzspace.html'
         },
+        'preview@main':{
+          template:'hello in mine state'
+        },
         'sidebar@': {
           templateUrl: 'views/sidebar.html'
         }
@@ -67,6 +70,9 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         'main@': {
           controller: 'SpaceCtrl',
           templateUrl: 'views/xyzspace.html'
+        },
+        'preview':{
+          template:'views/test/stream.html'
         },
         'sidebar@': {
           templateUrl: 'views/import/container.html',

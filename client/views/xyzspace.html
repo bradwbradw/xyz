@@ -1,16 +1,22 @@
 
 <div class="xyz-item" ng-repeat="song in Library.getLibrary()"
     ng-if="Library.getLibrary().length > 0"
-    draggable>
+    xyz-draggable
+    ng-click="expand(song)">
 
   <div class="dot" ng-mouseover="hovering = true" ng-mouseleave="hovering = false">
     <img ng-src="{{song.attrs.pic? song.attrs.pic : 'images/flowers.png'}}">
 
   </div>
-  <div class="hover" ng-if="hovering">
+  <div class="hover" >
   {{song.attrs.artist}} - {{song.attrs.title}}
   {{song.attrs.url}}
+    [expanded:{{song.expanded}}]
 
+  </div>
+
+  <div ng-if="song.expanded">
+    preview
   </div>
 </div>
 
@@ -23,7 +29,7 @@
     </div>
 
 
-  <div class="hover">
+  <div class="hover" ui-sref="import.search">
 
     no items (click to add an item)
 

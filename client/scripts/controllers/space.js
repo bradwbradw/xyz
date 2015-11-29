@@ -9,11 +9,14 @@
  */
 angular.module('xyzApp')
   .controller('SpaceCtrl', function ($scope, Library) {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
 
-    $scope.Library = Library
+    var expand = function(song){
+      _.each(Library.songs,function(song){
+        song.expanded = false;
+      });
+      song.expanded = true;
+    };
+    $scope.expand = expand;
+    $scope.Library = Library;
+
   });

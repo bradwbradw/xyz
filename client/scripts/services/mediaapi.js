@@ -31,6 +31,16 @@ angular.module('xyzApp')
                 return data;
               }
             });
+        },
+        likes: function(){
+          return $window.SC.get('/me/favorites')
+            .catch(function (error){
+              console.error('media api error ',error);
+              return $q.reject( error );
+            });
+        },
+        playlists: function(){
+          return $window.SC.get('/me/playlists');
         }
       },
       YT: {

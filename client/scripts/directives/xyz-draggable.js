@@ -1,5 +1,5 @@
 angular.module('xyzApp').
-directive('draggable', function($document, $log) {
+directive('xyzDraggable', function($document, $log, Library) {
   return function(scope, element, attr) {
     var song = scope.$parent.song;
 
@@ -33,21 +33,24 @@ directive('draggable', function($document, $log) {
     element.on('mousedown', dragStart);
 
     function dragMove(event) {
-      $log.log('dragMove event:',event);
+//      $log.log('dragMove event:',event);
       x = event.pageX - dragPointOffsetX;
       y = event.pageY - dragPointOffsetY;
       element.css({
         left:  x + 'px',
         top: y + 'px'
       });
+      song.attrs.x = x;
+      song.attrs.y = y;
     }
 
     function dragDone(event) {
-      $log.log('dragDone event:',event);
+//      $log.log('dragDone event:',event);
       $document.off('touchmove', dragMove);
       $document.off('touchend', dragDone);
       $document.off('mousemove', dragMove);
       $document.off('mouseup', dragDone);
+      Library.update(song.id, song.attrs);
     }
   };
 });

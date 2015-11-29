@@ -1,13 +1,13 @@
 .sidebar-container {
   background-color: lightpink;
   position: absolute;
-  top: 100vw;
+  top: 100vw;//calc(100vh + #{$preview-height});
   width:100vw;
 
   @include MQ(M) {
     top: 0;
     right: 0;
-    width: 20em;
+    width: $sidebar-width;
   }
 
 }

@@ -8,7 +8,7 @@
  * 'hub'-like controller used for importing and saving. Connected to many services
  */
 angular.module('xyzApp')
-  .controller('ImportCtrl', function ($timeout, Extract, Library, Social, localStorageService, $scope, $log, $q) {
+  .controller('ImportCtrl', function ($timeout, Extract, Library, Social, MediaAPI,localStorageService, $scope, $log, $window, $q) {
 
 
     var newItem = '';
@@ -26,9 +26,9 @@ angular.module('xyzApp')
     };
 */
 
-    var reDownloadPosts = function () {
+    var explore = function (serviceLoader) {
 
-      Social.FB.loadPosts()
+      serviceLoader
         .then(Extract.filterOutMusicUrls)
         .then(function(musicUrls){
           var musicItemPromises = [];
@@ -45,7 +45,12 @@ angular.module('xyzApp')
               console.error('download posts failed:',error);
             });
         })
-        .then(Library.addToLocalItems);
+        .then(Library.addToLocalItems)
+
+        .catch(function(error){
+          console.error('import ctrl error ',error);
+          alert(error.message? error.message : 'there was an error without message prop');
+        });
 
     };
 
@@ -74,11 +79,21 @@ angular.module('xyzApp')
 
     };
 
+    var putInSpace = function(item, event){
+      // if desktop
+      item.x = $window.width;
+      item.y = event.y;
+      Library.add(item);
+    };
+
 //    $scope.downloadMorePosts = downloadMorePosts;
-    $scope.reDownloadPosts = reDownloadPosts;
+    $scope.putInSpace = putInSpace;
+    $scope.explore = explore;
 
     $scope.newItem = newItem;
 
     $scope.Library = Library;
     $scope.Extract = Extract;
+    $scope.Social = Social;
+    $scope.MediaAPI = MediaAPI;
   });

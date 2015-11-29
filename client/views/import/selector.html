@@ -5,6 +5,7 @@
 
   <div class="song-row" ng-repeat="item in Library.getFocusedLocalItemGroup()">
 
+    <button ng-click="putInSpace(item, $event)">+</button>
     <a ng-href="{{item.url}}">
       <span ng-if="!item.error">
         ({{item.provider}}) {{item.artist}} - {{item.title}} ({{item.provider_id}})

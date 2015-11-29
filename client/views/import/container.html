@@ -1,4 +1,11 @@
-<a ui-sref="mine">xyz - mine</a>
+
+
+<div class="preview-box" ng-include="'views/main/preview.html'"
+    ng-controller="PreviewCtrl">
+a preview box
+
+</div>
+
 <ul class="tabs">
   <li ui-sref="import.search">search
   </li>
@@ -10,6 +17,9 @@
 import controls
 
 </div>
+<br/>
+<hr/>
+<br/>
 
 <div ui-view="importSelector">
 
