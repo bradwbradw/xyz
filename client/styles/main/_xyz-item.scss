@@ -5,6 +5,7 @@
   position: absolute;
   cursor: pointer;
   display: block;
+  z-index:3;
 
   .dot {
     width: 100%;
@@ -19,4 +20,17 @@
     }
   }
 
+  .beside-song{
+    position:absolute;
+    top:0;
+    left:80px;
+    background-color:lightgreen;
+
+  }
+}
+
+.xyz-click-screen{
+  height:100%;
+  width:100%;
+  z-index:2;
 }

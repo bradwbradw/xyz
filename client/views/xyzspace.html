@@ -1,24 +1,32 @@
-
-<div class="xyz-item" ng-repeat="song in Library.getLibrary()"
-    ng-if="Library.getLibrary().length > 0"
-    xyz-draggable
-    ng-click="expand(song)">
-
-  <div class="dot" ng-mouseover="hovering = true" ng-mouseleave="hovering = false">
-    <img ng-src="{{song.attrs.pic? song.attrs.pic : 'images/flowers.png'}}">
-
-  </div>
-  <div class="hover" >
-  {{song.attrs.artist}} - {{song.attrs.title}}
-  {{song.attrs.url}}
-    [expanded:{{song.expanded}}]
-
-  </div>
-
-  <div ng-if="song.expanded">
-    preview
-  </div>
+<div class="xyz-click-screen" ng-click="closeExpanded()">
 </div>
+<div class="xyz-item" ng-repeat="song in Library.getLibrary()"
+     ng-if="Library.getLibrary().length > 0"
+     xyz-draggable
+     ng-click="expand(song)">
+
+  <div class="dot"
+       ng-mouseover="song.hovering = true"
+       ng-mouseleave="mouseleave(song)"
+      ng-mouseup="mouseup(song)">
+    <img ng-src="{{song.attrs.pic? song.attrs.pic : 'images/flowers.png'}}">
+  </div>
+
+  <div class="beside-song">
+    <div class="hover" ng-if="showExpandedView(song)">
+      {{song.attrs.artist}} - {{song.attrs.title}}
+      {{song.attrs.url}}
+    </div>
+
+    <div ng-if="showExpandedView(song) && showControlsView(song)">
+      <button ng-click="preview(song)">preview</button>
+      <button ng-click="Library.remove(song.id)">remove</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
 
 <div ng-if="Library.getLibrary().length === 0">
 
@@ -29,11 +37,11 @@
     </div>
 
 
-  <div class="hover" ui-sref="import.search">
+    <div class="hover" ui-sref="import.search">
 
-    no items (click to add an item)
+      no items (click to add an item)
 
-  </div>
+    </div>
   </div>
 
 </div>

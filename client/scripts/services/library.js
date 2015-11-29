@@ -97,7 +97,6 @@ angular.module('xyzApp')
         return Server.getLibrary()
           .then(function (response) {
             Library.songs = prepareLibrary(response.data);
-            console.log(Library.songs);
             return Library.songs;
           })
           .catch(function (error) {
@@ -117,7 +116,7 @@ angular.module('xyzApp')
           .catch(reportError);
       },
       update: function (id, data) {
-        $log.log('update', data);
+//        $log.log('update', data);
         Server.updateSong(id, data)
 
           .then(updateView)
@@ -134,10 +133,11 @@ angular.module('xyzApp')
 
     var updateView = function (response) {
       reportSuccess(response);
+//      $log.log('update view');
       Library.loadLibrary();
     };
     var reportSuccess = function (response) {
-      $log.log('success', response);
+//      $log.log('success', response);
     };
 
     var reportError = function (error) {

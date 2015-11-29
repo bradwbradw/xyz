@@ -3,6 +3,8 @@ directive('xyzDraggable', function($document, $log, Library) {
   return function(scope, element, attr) {
     var song = scope.$parent.song;
 
+    var startX;
+    var startY;
     var x = parseFloat(song.attrs.x) || 0;
     var y = parseFloat(song.attrs.y)  || 0;
 
@@ -23,6 +25,10 @@ directive('xyzDraggable', function($document, $log, Library) {
 
       dragPointOffsetX = event.pageX - x;
       dragPointOffsetY = event.pageY - y;
+
+      startX = x;
+      startY = y;
+
       $document.on('touchmove', dragMove);
       $document.on('touchend', dragDone);
       $document.on('mousemove', dragMove);
@@ -33,6 +39,7 @@ directive('xyzDraggable', function($document, $log, Library) {
     element.on('mousedown', dragStart);
 
     function dragMove(event) {
+      song.dragging = true;
 //      $log.log('dragMove event:',event);
       x = event.pageX - dragPointOffsetX;
       y = event.pageY - dragPointOffsetY;
@@ -45,12 +52,24 @@ directive('xyzDraggable', function($document, $log, Library) {
     }
 
     function dragDone(event) {
+      song.dragging = false;
 //      $log.log('dragDone event:',event);
+
       $document.off('touchmove', dragMove);
       $document.off('touchend', dragDone);
       $document.off('mousemove', dragMove);
       $document.off('mouseup', dragDone);
-      Library.update(song.id, song.attrs);
+
+      $log.log('startX '+startX + ' startY '+startY);
+      $log.log('new X '+song.attrs.x + ' new Y '+song.attrs.y);
+
+//        song.expanded = false;
+
+      if(song.attrs.x !== startX
+      || song.attrs.y !== startY ){
+        // song was actually dragged
+        Library.update(song.id, song.attrs);
+      }
     }
   };
 });
