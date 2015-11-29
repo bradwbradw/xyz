@@ -73,4 +73,7 @@ angular.module('xyzApp')
     return MediaAPI;
   });
 
+// example youtube link w/ age restriction
+//https://www.youtube.com/watch?v=HcXNPI-IPPM&index=4&list=PLu-r3IVKTGZizq9ELoSG8AX63zQ8WMMva
+
 
