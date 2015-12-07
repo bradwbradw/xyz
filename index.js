@@ -54,6 +54,7 @@ var Song = app.resource = restful.model('song', mongoose.Schema({
   original_data: Array,
   x: Number,
   y: Number,
+  kind: String,
   active: Boolean
 }))
   .methods(['get', 'post', 'put', 'delete']);

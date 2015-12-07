@@ -8,45 +8,45 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SpaceCtrl', function ($scope, Library, $log) {
+  .controller('SpaceCtrl', function ($scope, Library, $log, Player) {
 
-    var expand = function(song){
+    var expand = function (song) {
       closeExpanded();
       song.expanded = true;
     };
 
-    var closeExpanded = function(){
+    var closeExpanded = function () {
       $log.log('closing expanded');
 
-      _.each(Library.songs,function(song){
+      _.each(Library.songs, function (song) {
         song.expanded = false;
       });
     };
 
-    var showExpandedView = function(song){
-      if (song.justDropped){
+    var showExpandedView = function (song) {
+      if (song.justDropped) {
         return false;
       }
       return song.hovering || (song.expanded && !song.dragging);
     };
 
-    var showControlsView = function(song){
+    var showControlsView = function (song) {
       return song.expanded;
     };
 
-    var mouseleave = function(song){
+    var mouseleave = function (song) {
       $log.log('mouseleave');
       song.hovering = false;
-      song.justDropped = false;
 
     };
 
-    var mouseup = function(song){
-      song.justDropped = true;
+    var mouseup = function (song) {
       $log.log('mouseup');
 
     };
 
+
+    $scope.Player = Player;
     $scope.showControlsView = showControlsView;
     $scope.mouseup = mouseup;
     $scope.mouseleave = mouseleave;

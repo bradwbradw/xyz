@@ -1,12 +1,16 @@
 angular.module('xyzApp').
 directive('xyzDraggable', function($document, $log, Library) {
   return function(scope, element, attr) {
-    var song = scope.$parent.song;
+    var item = scope.$parent.item;
+
+    if(_.isUndefined(item)){
+      return;
+    }
 
     var startX;
     var startY;
-    var x = parseFloat(song.attrs.x) || 0;
-    var y = parseFloat(song.attrs.y)  || 0;
+    var x = parseFloat(item.attrs.x) || 0;
+    var y = parseFloat(item.attrs.y)  || 0;
 
     element.css({
       top: y+'px',
@@ -39,7 +43,7 @@ directive('xyzDraggable', function($document, $log, Library) {
     element.on('mousedown', dragStart);
 
     function dragMove(event) {
-      song.dragging = true;
+      item.dragging = true;
 //      $log.log('dragMove event:',event);
       x = event.pageX - dragPointOffsetX;
       y = event.pageY - dragPointOffsetY;
@@ -47,12 +51,13 @@ directive('xyzDraggable', function($document, $log, Library) {
         left:  x + 'px',
         top: y + 'px'
       });
-      song.attrs.x = x;
-      song.attrs.y = y;
+      item.attrs.x = x;
+      item.attrs.y = y;
     }
 
     function dragDone(event) {
-      song.dragging = false;
+      item.dragging = false;
+      item.justDragged = true;
 //      $log.log('dragDone event:',event);
 
       $document.off('touchmove', dragMove);
@@ -61,14 +66,14 @@ directive('xyzDraggable', function($document, $log, Library) {
       $document.off('mouseup', dragDone);
 
       $log.log('startX '+startX + ' startY '+startY);
-      $log.log('new X '+song.attrs.x + ' new Y '+song.attrs.y);
+      $log.log('new X '+item.attrs.x + ' new Y '+item.attrs.y);
 
-//        song.expanded = false;
+//        item.expanded = false;
 
-      if(song.attrs.x !== startX
-      || song.attrs.y !== startY ){
-        // song was actually dragged
-        Library.update(song.id, song.attrs);
+      if(item.attrs.x !== startX
+      || item.attrs.y !== startY ){
+        // item was actually dragged
+        Library.update(item.id, item.attrs);
       }
     }
   };

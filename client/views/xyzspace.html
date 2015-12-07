@@ -1,26 +1,24 @@
 <div class="xyz-click-screen" ng-click="closeExpanded()">
 </div>
-<div class="xyz-item" ng-repeat="song in Library.getLibrary()"
+<div class="xyz-item" ng-repeat="item in Library.getLibrary()"
      ng-if="Library.getLibrary().length > 0"
      xyz-draggable
-     ng-click="expand(song)">
+     ng-click="Library.isPlayable(item)? Player.queue(item): Player.show(item)">
 
   <div class="dot"
-       ng-mouseover="song.hovering = true"
-       ng-mouseleave="mouseleave(song)"
-      ng-mouseup="mouseup(song)">
-    <img ng-src="{{song.attrs.pic? song.attrs.pic : 'images/flowers.png'}}">
+      >
+    <img ng-src="{{item.attrs.pic? item.attrs.pic : 'images/flowers.png'}}">
   </div>
 
-  <div class="beside-song">
-    <div class="hover" ng-if="showExpandedView(song)">
-      {{song.attrs.artist}} - {{song.attrs.title}}
-      {{song.attrs.url}}
+  <div class="beside-song" ng-if="false">
+    <div class="hover" ng-if="showExpandedView(item)">
+      {{item.attrs.artist}} - {{item.attrs.title}}
+      {{item.attrs.url}}
     </div>
 
-    <div ng-if="showExpandedView(song) && showControlsView(song)">
-      <button ng-click="preview(song)">preview</button>
-      <button ng-click="Library.remove(song.id)">remove</button>
+    <div ng-if="showExpandedView(item) && showControlsView(item)">
+      <button ng-click="Player.play(item)">preview</button>
+      <button ng-click="Library.remove(item.id)">remove</button>
     </div>
   </div>
 

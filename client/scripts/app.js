@@ -4,7 +4,8 @@ var xyzApp = angular.module("xyzApp",
   ['ui.router',
     'ngSanitize',
     'ezfb',
-    'LocalStorageModule']);
+    'LocalStorageModule',
+  'ngTouch']);
 
 xyzApp.constant('YT_event', {
   STOP: 0,

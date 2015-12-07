@@ -8,7 +8,7 @@
  * 'hub'-like controller used for importing and saving. Connected to many services
  */
 angular.module('xyzApp')
-  .controller('ImportCtrl', function ($timeout, Extract, Library, Social, MediaAPI,localStorageService, $scope, $log, $window, $q) {
+  .controller('ImportCtrl', function ($timeout, Extract, Library, Social, MediaAPI, Player, localStorageService, $scope, $log, $window, $q) {
 
 
     var newItem = '';
@@ -94,6 +94,7 @@ angular.module('xyzApp')
 
     $scope.Library = Library;
     $scope.Extract = Extract;
+    $scope.Player = Player;
     $scope.Social = Social;
     $scope.MediaAPI = MediaAPI;
   });

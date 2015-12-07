@@ -1,0 +1,69 @@
+
+
+<div ng-if="Library.isPlayable(Player.playingItem())">
+
+  <div ng-if="Player.playingAttrs().provider === 'youtube'">
+
+    <iframe
+        width="100%"
+        ng-src="{{iFrameUrl(Player.playingAttrs())}}"
+        frameborder="0"
+        allowfullscreen>
+
+    </iframe>
+
+    <youtube width="{{stream.width}}"
+             height="{{stream.height}}"
+             videoid="{{Player.playingAttrs().provider_id}}"
+             ng-if="false">
+
+    </youtube>
+
+  </div>
+
+
+  <!-- APPEND TO END OF URL IN REGULAR YOUTUBE EMBED IFRAME #t=2m30s
+  https://support.google.com/youtube/answer/171780
+  -->
+
+
+  <div ng-if="Player.playingAttrs().provider === 'soundcloud'">
+
+    <iframe
+        width="100%"
+        scrolling="no"
+        frameborder="no"
+        ng-src="{{iFrameUrl(Player.playingAttrs())}}">
+
+    </iframe>
+
+    id: [{{Player.playingAttrs().provider_id}}]
+  </div>
+
+
+  <div ng-if="Player.playingAttrs().provider === 'bandcamp'">
+    <iframe bandcamp-autoplay
+
+            style="border: 0; width: 100%;"
+
+            ng-src="{{iFrameUrl(Player.playingAttrs())}}"
+            seamless>
+
+      <a href="http://1080pcollection.bandcamp.com/album/12-hours-full-relaxation">
+        &quot;12 Hours FULL RELAXATION&quot; by I Am Just A Pupil
+      </a>
+
+    </iframe>
+  </div>
+
+</div>
+
+<div ng-if="!Library.isPlayable(Player.playingItem())" >
+
+  <a ng-href="{{Player.playingAttrs().url}}" target="_blank">
+    {{Player.playingAttrs().artist }} - {{Player.playingAttrs().title}}
+  </a><br/><br/>
+    <button ng-click="Library.remove(Player.playingItem().id)">
+    remove
+  </button>
+  </div>

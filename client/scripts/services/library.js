@@ -20,6 +20,7 @@ angular.module('xyzApp')
         'description',
         'x',
         'y',
+        'kind',
         'active'
 
       ], /* after test
@@ -127,6 +128,13 @@ angular.module('xyzApp')
         Server.deleteSong(id)
           .then(updateView)
           .catch(reportError);
+      },
+      isPlayable: function(item){
+        if(item.attrs && item.attrs.kind){
+          return item.attrs.kind === 'media';
+        } else if(item.kind) {
+          return item.kind === 'media';
+        }
       }
 
     };

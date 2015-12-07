@@ -1,11 +1,14 @@
+<!--
 <h3>selector</h3>
 <button ng-click="Library.focusPrev()">right</button>
 <button ng-click="Library.focusNext()" ng-if="!latestFocused()">left</button>
+-->
 <div>
 
   <div class="song-row" ng-repeat="item in Library.getFocusedLocalItemGroup()">
 
-    <button ng-click="putInSpace(item, $event)">+</button>
+    <button ng-if="!item.error" ng-click="putInSpace(item, $event)">add</button>
+    <button ngi-if="!item.error" ng-click="Player.play(item)">play</button>
     <a ng-href="{{item.url}}">
       <span ng-if="!item.error">
         ({{item.provider}}) {{item.artist}} - {{item.title}} ({{item.provider_id}})
@@ -17,6 +20,7 @@
   </div>
 </div>
 
-<pre class="debug">
+<pre class="debug" ng-if="false">
   {{Library.getLocalItems() | json}}
 </pre>
+
