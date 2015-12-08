@@ -59,7 +59,7 @@ angular.module('xyzApp')
         }
       });
       if (result) {
-        console.log('found result:'+result+' ('+url+')');
+//        console.log('found result:'+result+' ('+url+')');
         return result;
       } else {
         return false;
@@ -122,7 +122,7 @@ angular.module('xyzApp')
               var urls = getAllUrlsFromString(attribute);
 
               if (urls) {
-                console.log('urls:', urls);
+//                console.log('urls:', urls);
 
                 _.each(urls, function (url) {
 
@@ -233,8 +233,18 @@ angular.module('xyzApp')
         if (contains(url, 'youtube.com')) {
           // full url - expect "v=" parameter2
           urlParts = url.split('?');
+          if(!_.isArray(urlParts) || urlParts.length < 2) {
+
+            console.warn('weird youtube url '+ url);
+            return $q.reject('youtube url has no ? params');
+          }
           var usefulPart = urlParts[1];
           var idPartAlmost = usefulPart.split('v=');
+          if(!_.isArray(idPartAlmost) || idPartAlmost.length < 2){
+
+            console.warn('weird youtube url '+ url);
+            return $q.reject('youtube url has no id');
+          }
           id = idPartAlmost[1].substr(0, 11);
 
         } else if (contains(url, 'youtu.be')) {

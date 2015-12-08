@@ -3,7 +3,7 @@
 <div class="xyz-item" ng-repeat="item in Library.getLibrary()"
      ng-if="Library.getLibrary().length > 0"
      xyz-draggable
-     ng-click="Library.isPlayable(item)? Player.queue(item): Player.show(item)">
+     ng-click="Library.isPlayable(item)? queueIfNotDragging(item): Player.show(item)">
 
   <div class="dot"
       >

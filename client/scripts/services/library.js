@@ -38,7 +38,7 @@ angular.module('xyzApp')
       songs: [],
       localItems: [],//localStorageService.get('localItems') || [],
       getLocalItems: function () {
-        console.warn('getLocalItems: ',Library.localItems);
+       // console.warn('getLocalItems: ',Library.localItems);
         return Library.localItems;
       },
       focused: function () {
@@ -68,7 +68,7 @@ angular.module('xyzApp')
 
 
       addToLocalItems: function (newItems) {
-        console.log('ADDING ITEMS:',newItems);
+      //  console.log('ADDING ITEMS:',newItems);
 //        var newArr = _.isArray(newItems) ? newItems : [newItems];
 //        Library.localItems.push(newItems);
         Library.localItems = newItems;

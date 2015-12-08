@@ -38,7 +38,7 @@ angular.module('xyzApp')
 
           return $q.all(musicItemPromises)
             .then(function(result){
-              console.log('download posts result:',result);
+//              console.log('download posts result:',result);
               return _.unique(result, 'provider_id');
             })
             .catch(function(error){

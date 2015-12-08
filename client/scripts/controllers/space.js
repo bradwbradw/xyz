@@ -23,6 +23,16 @@ angular.module('xyzApp')
       });
     };
 
+    var queueIfNotDragging = function(item){
+      if (item.justDropped) {
+        return false;
+      } else {
+        Player.queue(item);
+      }
+
+        item.justDropped = false;
+
+    };
     var showExpandedView = function (song) {
       if (song.justDropped) {
         return false;
@@ -46,6 +56,7 @@ angular.module('xyzApp')
     };
 
 
+    $scope.queueIfNotDragging = queueIfNotDragging;
     $scope.Player = Player;
     $scope.showControlsView = showControlsView;
     $scope.mouseup = mouseup;

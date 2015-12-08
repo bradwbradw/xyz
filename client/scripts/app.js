@@ -45,7 +45,6 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
       onEnter: function (Library) {
         var libProm = Library.loadLibrary();
-        console.log(libProm);
       }
     })
     .state('mine', {
@@ -124,7 +123,6 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           controller: 'listCtrl',
           resolve: {
             songs: function (Library) {
-              console.log('songs resolve');
               return Library.loadLibrary();
             }
           }
@@ -143,7 +141,6 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       },
       resolve: {
         playlist: function (Stream, Server) {
-          console.log('stream resolve?');
           return Server.refresh().then(function () {
 
             return Stream.reloadPlaylist();
