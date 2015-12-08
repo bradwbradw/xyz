@@ -5,10 +5,20 @@
 -->
 <div>
 
-  <div class="song-row" ng-repeat="item in Library.getFocusedLocalItemGroup()">
+  <div ng-if="Library.getFocusedLocalItemGroup().urlResult">
+    {{ Library.getFocusedLocalItemGroup().provider }} media detected:
+      {{ Library.getFocusedLocalItemGroup().artist+' - '+Library.getFocusedLocalItemGroup().title }}<hr/>
+      <button ng-click="Library.add(Library.getFocusedLocalItemGroup())">add to library</button>
+      <button ng-if="!item.error && Library.isPlayable(Library.getFocusedLocalItemGroup())" ng-click="Player.play(Library.getFocusedLocalItemGroup())">play</button>
+
+  </div>
+
+  <div class="song-row" ng-repeat="item in Library.getFocusedLocalItemGroup()"
+      ng-if="!Library.getFocusedLocalItemGroup().urlResult">
+
 
     <button ng-if="!item.error" ng-click="putInSpace(item, $event)">add</button>
-    <button ngi-if="!item.error" ng-click="Player.play(item)">play</button>
+    <button ng-if="!item.error && Library.isPlayable(item)" ng-click="Player.play(item)">play</button>
     <a ng-href="{{item.url}}">
       <span ng-if="!item.error">
         ({{item.provider}}) {{item.artist}} - {{item.title}} ({{item.provider_id}})
@@ -20,7 +30,7 @@
   </div>
 </div>
 
-<pre class="debug" ng-if="false">
-  {{Library.getLocalItems() | json}}
+<pre class="debug" ng-if="true">
+  {{Library.getFocusedLocalItemGroup() | json}}
 </pre>
 

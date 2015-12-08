@@ -32,12 +32,12 @@ angular.module('xyzApp')
         }
       },
       queue: function(item){
-        Player.autoplay = false;
+        Player.status.autoplay = false;
         Player.current = item;
 
       },
       play: function (item) {
-        Player.autoplay = true;
+        Player.status.autoplay = true;
         if(item.id){
         Player.current = item;
         } else {

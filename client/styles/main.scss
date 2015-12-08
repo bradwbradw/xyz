@@ -10,11 +10,12 @@
 
 @import 'import/import';
 
-@import 'admin/admin';
-@import 'main/xyz-item';
-@import 'sidebar/sidebar-container';
 @import 'main/main-container';
-
+@import 'main/xyz-item';
+@import 'main/list';
 @import 'main/stream';
+
+@import 'sidebar/sidebar-container';
+
 
 

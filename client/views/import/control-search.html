@@ -1,9 +1,10 @@
 
 <div>
   <h4>search for songs on youtube and soundcloud at the same time</h4>
+  <h4>or enter the URL for a track or video</h4>
   <input
       ng-model="newText"
-      ng-change="examineText(newText)"
+      ng-change="examineText(newText).then(Library.closeExpanded)"
       ng-model-options="{debounce: 500, updateOn:'default'}"
       placeholder="type in here to search now"
       >{{newText}}

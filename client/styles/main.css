@@ -972,50 +972,39 @@ body.old-ie .ieblock {
   cursor: pointer;
 }
 
-/* line 2, admin/_admin.scss */
-.song-table {
-  display: table;
-  background-color: lightblue;
+/* line 1, main/_main-container.scss */
+.main-container {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f7fbfc+0,d9edf2+40,60a09f+100 */
+  background: #f7fbfc;
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #f7fbfc 0%, #d9edf2 40%, #60a09f 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, #f7fbfc 0%, #d9edf2 40%, #60a09f 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, #f7fbfc 0%, #d9edf2 40%, #60a09f 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7fbfc', endColorstr='#60a09f', GradientType=1);
+  /* IE6-9 fallback on horizontal gradient */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vh;
+  height: 100vh;
+  max-height: 100vw;
+  max-width: 100vw;
+}
+@media only screen and (min-width: 768px) {
+  /* line 1, main/_main-container.scss */
+  .main-container {
+    position: fixed;
+  }
 }
 
-/* line 8, admin/_admin.scss */
-.header {
-  background-color: darkcyan;
-  color: white;
-  font-weight: 700;
-}
-
-/* line 14, admin/_admin.scss */
-.song-row {
-  display: table-row;
-  padding: 0.4em;
-}
-/* line 19, admin/_admin.scss */
-.song-row.editing {
-  background-color: white;
-}
-
-/* line 24, admin/_admin.scss */
-.song-attribute {
-  display: table-cell;
-  padding: 0.7em;
-  overflow: scroll;
-  max-width: 200px;
-}
-/* line 31, admin/_admin.scss */
-.song-attribute.few {
-  max-width: 50%;
-}
-/* line 34, admin/_admin.scss */
-.song-attribute input {
+/* line 22, main/_main-container.scss */
+.preview-box {
   width: 100%;
-}
-
-/* line 39, admin/_admin.scss */
-button {
-  background-color: black;
-  color: white;
-  text-blink: 5cm;
+  height: 200px;
+  background-color: chartreuse;
 }
 
 /* line 2, main/_xyz-item.scss */
@@ -1055,6 +1044,68 @@ button {
   z-index: 2;
 }
 
+/* line 2, main/_list.scss */
+.song-table {
+  display: table;
+  background-color: lightblue;
+}
+
+/* line 8, main/_list.scss */
+.header {
+  background-color: darkcyan;
+  color: white;
+  font-weight: 700;
+}
+
+/* line 14, main/_list.scss */
+.song-row {
+  display: table-row;
+  padding: 0.4em;
+}
+/* line 19, main/_list.scss */
+.song-row.editing {
+  background-color: white;
+}
+
+/* line 24, main/_list.scss */
+.song-attribute {
+  display: table-cell;
+  padding: 0.7em;
+  overflow: scroll;
+  max-width: 200px;
+}
+/* line 31, main/_list.scss */
+.song-attribute.few {
+  max-width: 50%;
+}
+/* line 34, main/_list.scss */
+.song-attribute input {
+  width: 100%;
+}
+
+/* line 39, main/_list.scss */
+button {
+  background-color: black;
+  color: white;
+  text-blink: 5cm;
+}
+
+/* line 47, main/_list.scss */
+.list-outer {
+  height: 100vh;
+  overflow: scroll;
+}
+
+/* line 1, main/_stream.scss */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 350px;
+  background-color: teal;
+  color: yellow;
+}
+
 /* line 1, sidebar/_sidebar-container.scss */
 .sidebar-container {
   background-color: lightpink;
@@ -1069,51 +1120,6 @@ button {
     right: 0;
     width: 20em;
   }
-}
-
-/* line 1, main/_main-container.scss */
-.main-container {
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f7fbfc+0,d9edf2+40,60a09f+100 */
-  background: #f7fbfc;
-  /* Old browsers */
-  background: -moz-linear-gradient(-45deg, #f7fbfc 0%, #d9edf2 40%, #60a09f 100%);
-  /* FF3.6-15 */
-  background: -webkit-linear-gradient(-45deg, #f7fbfc 0%, #d9edf2 40%, #60a09f 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(135deg, #f7fbfc 0%, #d9edf2 40%, #60a09f 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7fbfc', endColorstr='#60a09f', GradientType=1);
-  /* IE6-9 fallback on horizontal gradient */
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vh;
-  height: 100vh;
-  max-height: 100vw;
-  max-width: 100vw;
-}
-@media only screen and (min-width: 768px) {
-  /* line 1, main/_main-container.scss */
-  .main-container {
-    position: fixed;
-  }
-}
-
-/* line 22, main/_main-container.scss */
-.preview-box {
-  width: 100%;
-  height: 200px;
-  background-color: chartreuse;
-}
-
-/* line 1, main/_stream.scss */
-.sidebar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 350px;
-  background-color: teal;
-  color: yellow;
 }
 
 /*# sourceMappingURL=main.css.map */

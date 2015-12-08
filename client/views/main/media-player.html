@@ -1,11 +1,10 @@
-
-
 <div ng-if="Library.isPlayable(Player.playingItem())">
 
   <div ng-if="Player.playingAttrs().provider === 'youtube'">
 
     <iframe
         width="100%"
+        height="100%"
         ng-src="{{iFrameUrl(Player.playingAttrs())}}"
         frameborder="0"
         allowfullscreen>
@@ -31,6 +30,7 @@
 
     <iframe
         width="100%"
+        height="100%"
         scrolling="no"
         frameborder="no"
         ng-src="{{iFrameUrl(Player.playingAttrs())}}">
@@ -44,7 +44,7 @@
   <div ng-if="Player.playingAttrs().provider === 'bandcamp'">
     <iframe bandcamp-autoplay
 
-            style="border: 0; width: 100%;"
+            style="border: 0; width: 100%; height:100%;"
 
             ng-src="{{iFrameUrl(Player.playingAttrs())}}"
             seamless>
@@ -58,12 +58,18 @@
 
 </div>
 
-<div ng-if="!Library.isPlayable(Player.playingItem())" >
+<div ng-if="!Library.isPlayable(Player.playingItem())">
 
   <a ng-href="{{Player.playingAttrs().url}}" target="_blank">
     {{Player.playingAttrs().artist }} - {{Player.playingAttrs().title}}
   </a><br/><br/>
-    <button ng-click="Library.remove(Player.playingItem().id)">
+
+
+  <button ng-click="Library.remove(Player.playingItem().id)">
     remove
   </button>
-  </div>
+
+  <pre class="debug">
+    {{Player.playingItem() | json}}
+  </pre>
+</div>

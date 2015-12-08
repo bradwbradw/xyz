@@ -55,7 +55,7 @@ angular.module('xyzApp')
     };
 
     var updateImportView = function (new_) {
-      Library.addToLocalItems(new_);
+      $timeout(Library.addToLocalItems(new_));
       $scope.fetchingSongData = false;
 
     };
@@ -74,8 +74,9 @@ angular.module('xyzApp')
     $scope.examineText = function (text) {
       if (!text) return;
       $scope.fetchingSongData = true;
-      Extract.inspectText(text)
-        .then(updateImportView, invalidLink)
+      console.log('new text is '+ text);
+      return Extract.inspectText(text)
+        .then(updateImportView, invalidLink);
 
     };
 

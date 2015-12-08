@@ -96,7 +96,7 @@ angular.module('xyzApp')
 
         inspectPromise
           .then(function (result) {
-            console.log('inspectText done. result:', result);
+            result.urlResult = true;
             return result;
 
           })
@@ -249,23 +249,28 @@ angular.module('xyzApp')
 
       getDataFromBandcamp: function (url) {
 
-        if(url.indexOf( 'Embedded') >-1){
+        if(url.indexOf( 'Embedded') > -1){
           // example: "https://bandcamp.com/EmbeddedPlayer/v=2/track=1190798612/size=large/tracklist=false/artwork=small/ref=http%3A%2F%2Ffacebook.com%2F/"
           var parts = url.split('track=');
+
+          if(!_.isArray(parts) || parts.length <2){
+            console.warn('weird bandcamp url '+ url);
+            return $q.reject('bandcamp confused: url is '+url);
+          }
           parts = parts[1].split('/');
           var id = parts[0];
 
-          return $q.resolve({provider:'bandcamp', provider_id:id, url:url});
+          return $q.resolve({provider:'bandcamp', provider_id:id, url:url, kind:'media'});
         }
 
-        if(url.indexOf('/track/') <0){
+        if(url.indexOf('/track/') < 0){
           // url is not for a track (could be album, artist, merch...)
-          var kind = Utility.BC.parseUrlForType(url);
+          var kind = Utility.clean.BC.parseUrlForType(url);
           return $q.resolve({provider:'bandcamp', url:url, kind:kind})
         }
         return Server.getBandcampId(url)
           .then(function (result) {
-            return {provider: 'bandcamp', provider_id: result.data, url:url};
+            return {provider: 'bandcamp', provider_id: result.data, url:url, kind:'media'};
           });
 
       },

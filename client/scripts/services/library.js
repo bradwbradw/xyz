@@ -38,6 +38,7 @@ angular.module('xyzApp')
       songs: [],
       localItems: [],//localStorageService.get('localItems') || [],
       getLocalItems: function () {
+        console.warn('getLocalItems: ',Library.localItems);
         return Library.localItems;
       },
       focused: function () {

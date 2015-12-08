@@ -14,7 +14,7 @@ angular.module('xyzApp')
   .config(function (ezfbProvider) {
 
     ezfbProvider.setInitParams({
-      // This is my FB app id for plunker demo app
+      // Facebook App ID
       appId: '1381485208848570',
 
       // Module default is `v2.4`.
