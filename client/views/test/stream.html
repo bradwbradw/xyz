@@ -21,14 +21,10 @@
   Videoid:<input type="text" ng-model="stream.videoid">
 
   <br/>
-
-  <p>Player status is: {{yt.playerStatus}}</p>
+<!--
+  <p>Player status is: {{yt.playerStatus}}</p>-->
 </div>
 
-
-<!-- APPEND TO END OF URL IN REGULAR YOUTUBE EMBED IFRAME #t=2m30s
-https://support.google.com/youtube/answer/171780
--->
 
 
 <div ng-if="playlist[0].provider === 'soundcloud'">
@@ -63,15 +59,13 @@ https://support.google.com/youtube/answer/171780
 </div>
 
 <hr/>
-current song:
-<pre>
-{{playlist[0] | json}}
-</pre>
-<hr/>
+current song:<br/>
+{{playlist[0].artist}} - {{playlist[0].title}}
+<hr/><!--
 next song:
 <pre>
 {{playlist[0] | json}}
-</pre>
+</pre>-->
 <br/>
 
 
