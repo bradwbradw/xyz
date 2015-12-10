@@ -80,6 +80,7 @@ angular.module('xyzApp')
       return Extract.inspectText(text)
         .then(function(result){
           $scope.urlResult = result;
+          return result;
         });
 
     };
