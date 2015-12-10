@@ -4,7 +4,9 @@
   <h4>or enter the URL for a track or video</h4>
   <input
       ng-model="newText"
-      ng-change="examineText(newText).then(Library.closeExpanded)"
+      ng-change="examineText(newText)
+        .then(updateImportView)
+        .catch(invalidLink)"
       ng-model-options="{debounce: 500, updateOn:'default'}"
       placeholder="type in here to search now"
       >{{newText}}

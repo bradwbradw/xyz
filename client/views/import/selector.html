@@ -3,18 +3,30 @@
 <button ng-click="Library.focusPrev()">right</button>
 <button ng-click="Library.focusNext()" ng-if="!latestFocused()">left</button>
 -->
+
+
+  <button ng-if="urlResult.kind === 'user'"
+          ng-click="MediaAPI.SC.tracksByUser(urlResult.provider_id)
+        .then(updateImportView)
+        .catch(invalidLink)">
+    view all posts by user
+  </button>
+
 <div>
 
   <div ng-if="Library.getFocusedLocalItemGroup().urlResult">
     {{ Library.getFocusedLocalItemGroup().provider }} media detected:
-      {{ Library.getFocusedLocalItemGroup().artist+' - '+Library.getFocusedLocalItemGroup().title }}<hr/>
-      <button ng-click="Library.add(Library.getFocusedLocalItemGroup())">add to library</button>
-      <button ng-if="!item.error && Library.isPlayable(Library.getFocusedLocalItemGroup())" ng-click="Player.play(Library.getFocusedLocalItemGroup())">play</button>
+    {{ Library.getFocusedLocalItemGroup().artist+' - '+Library.getFocusedLocalItemGroup().title }}
+    <hr/>
+    <button ng-click="Library.add(Library.getFocusedLocalItemGroup())">add to library</button>
+    <button ng-if="!item.error && Library.isPlayable(Library.getFocusedLocalItemGroup())"
+            ng-click="Player.play(Library.getFocusedLocalItemGroup())">play
+    </button>
 
   </div>
 
   <div class="song-row" ng-repeat="item in Library.getFocusedLocalItemGroup()"
-      ng-if="!Library.getFocusedLocalItemGroup().urlResult">
+       ng-if="!Library.getFocusedLocalItemGroup().urlResult">
 
 
     <button ng-if="!item.error" ng-click="putInSpace(item, $event)">add</button>
@@ -30,7 +42,7 @@
   </div>
 </div>
 
-<pre class="debug" ng-if="true">
+<pre class="debug" ng-if="false">
   {{Library.getFocusedLocalItemGroup() | json}}
 </pre>
 

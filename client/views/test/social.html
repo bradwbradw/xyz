@@ -1,20 +1,21 @@
 <div ng-if="!data">
   <hr/>
-  <h2>soundcloud social</h2>
+  <!--<h2>soundcloud social</h2>
 
   <button ng-click="initSC()">log in to SC</button>
 
   <button ng-click="SC.get('/me')">get me</button>
-  <h2>facebook social</h2>
+-->
+  <h2>facebook connect</h2>
   <button ng-click="FB.login().then(FB.loadMe())">login to FB</button>
   <hr/>
   login status {{loginStatus}}
   <hr/>
 
+<!--
   <button ng-click="FB.loadMe()">load me</button>
   {{FB.me }}
   <hr/>
-
   <button ng-click="FB.loadFriends()">load friends</button>
   {{FB.friends }}
 
@@ -36,9 +37,9 @@
 
 
   <button ng-click="FB.loadProfile()">load profile</button>
-  <pre>{{FB.profile | json}}</pre>
+  <pre>{{FB.profile | json}}</pre>-->
 </div>
 
-<div ng-if="data">
+<div ng-if="data" ng-hide="true">
   <pre>{{data | json}}</pre>
 </div>

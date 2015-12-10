@@ -71,12 +71,16 @@ angular.module('xyzApp')
 
     };
 
+    var urlResult;
+
     $scope.examineText = function (text) {
       if (!text) return;
       $scope.fetchingSongData = true;
       console.log('new text is '+ text);
       return Extract.inspectText(text)
-        .then(updateImportView, invalidLink);
+        .then(function(result){
+          $scope.urlResult = result;
+        });
 
     };
 
@@ -87,7 +91,24 @@ angular.module('xyzApp')
       Library.add(item);
     };
 
+
+    Social.FB.updateLoginStatus()
+      .then(function (res) {
+        // res: FB.getLoginStatus response
+        // https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus
+        $scope.loginStatus = res;
+      })
+      .then(function () {
+        Social.FB.loadMe();
+      });
+
+    $scope.FB = Social.FB;
+
 //    $scope.downloadMorePosts = downloadMorePosts;
+    $scope.urlResult = urlResult;
+    $scope.updateImportView = updateImportView;
+    $scope.invalidLink = invalidLink;
+
     $scope.putInSpace = putInSpace;
     $scope.explore = explore;
 

@@ -25,13 +25,13 @@ angular.module('xyzApp')
   });
 
 angular.module('xyzApp')
-  .service('Social', function ($window, ezfb) {
+  .service('Social', function ($window, ezfb,$timeout) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
 // initiate auth popup
 //
-/*
-*/
+    /*
+     */
     var Social = {
 
       FB: {
@@ -42,7 +42,7 @@ angular.module('xyzApp')
         likes: {},
         profile: {},
 
-        post_paging:false,
+        post_paging: false,
 
         login: function () {
           return ezfb.login(
@@ -51,9 +51,12 @@ angular.module('xyzApp')
           );
         },
 
+        loggedIn: function () {
+          return !!Social.FB.me;
+        },
         logout: ezfb.logout,
 
-        updateLoginStatus: function(){
+        updateLoginStatus: function () {
           return ezfb.getLoginStatus()
         },
 
@@ -67,10 +70,10 @@ angular.module('xyzApp')
          }),*/
 
         loadMe: function () {
-           ezfb.api('/me')
-            .then(function(data){
+          return $timeout(ezfb.api('/me')
+            .then(function (data) {
               Social.FB.me = data;
-            });
+            }));
         },
 
         loadFriends: function () {
@@ -82,7 +85,7 @@ angular.module('xyzApp')
 
         loadPosts: function () {
           var endpoint = '/me/posts';
-          if(Social.FB.post_paging){
+          if (Social.FB.post_paging) {
             endpoint = Social.FB.post_paging.next;
           }
           return ezfb.api(endpoint)
@@ -91,7 +94,7 @@ angular.module('xyzApp')
               Social.FB.posts = data;
               return Social.FB.posts;
             })
-            .catch(function(error){
+            .catch(function (error) {
               return $q.reject(error);
             })
         },

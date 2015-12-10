@@ -41,6 +41,16 @@ angular.module('xyzApp')
         },
         playlists: function(){
           return $window.SC.get('/me/playlists');
+        },
+        tracksByUser: function(id){
+          return $window.SC.get('/users/'+id+'/tracks', {limit:300})
+            .then(function(data){
+              if (data.collection){
+                return data.collection;
+              } else {
+                return data;
+              }
+            });
         }
       },
       YT: {
