@@ -95,7 +95,7 @@ var incrementStream = function () {
 
 
 var refreshMix = function () {
-  playlist = _.filter(allSongs, 'active', true);
+  playlist = allSongs;//_.filter(allSongs, 'active', true);
   mixLength = _.sum(playlist, 'length');
 
   if (mixLength === 0) return 'no active songs found';
