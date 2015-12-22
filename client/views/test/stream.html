@@ -3,22 +3,24 @@
   <iframe
       width="560"
       height="315"
-      ng-src="{{$sce.trustAsResourceUrl('https://www.youtube.com/embed/'+playlist[0].provider_id + '?autoplay=1&start=1')}}"
+      ng-src="{{iFrameUrl(playlist[0],playerOptions)}}"
       frameborder="0"
       allowfullscreen>
 
   </iframe>
+<!--
 
-  <youtube width="{{stream.width}}"
-           height="{{stream.height}}"
+  <youtube width="100%"
+           height="100%"
            videoid="{{playlist[0].provider_id}}"
            startSeconds="30"
           ng-if="false">
 
   </youtube>
+-->
 
   <br/>
-  Videoid:<input type="text" ng-model="stream.videoid">
+  Videoid:<input type="text" ng-model="playlist[0].provider_id">
 
   <br/>
 <!--
@@ -34,8 +36,7 @@
       height="450"
       scrolling="no"
       frameborder="no"
-      ng-src="{{$sce.trustAsResourceUrl('https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'
-    +playlist[0].provider_id+'&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true')}}">
+      ng-src="{{iFrameUrl(playlist[0],playerOptions)}}">
 
   </iframe>
 
@@ -48,7 +49,7 @@
 
     style="border: 0; width: 350px; height: 470px;"
 
-    ng-src="{{$sce.trustAsResourceUrl('http://bandcamp.com/EmbeddedPlayer/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/track='+playlist[0].provider_id+'/transparent=true/')}}"
+    ng-src="{{iFrameUrl(playlist[0],playerOptions)}}"
     seamless>
 
   <a href="http://1080pcollection.bandcamp.com/album/12-hours-full-relaxation">

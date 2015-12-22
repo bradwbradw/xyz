@@ -81,12 +81,16 @@ var incrementStream = function () {
     return;
   }
 
+
   playhead += 1;
-//  console.log('playhead ', playhead);
-  if (playhead >= playlist[0].length) {
-//    console.log('playhead reached ' + playhead + '. changing songs.');
+  console.log('playhead ', playhead);
+  if (playhead >= playlist[0].length ) {
+    console.log('playhead reached ' + playhead + '. changing songs.');
+    console.log('from '+playlist[0].artist + ' - '+playlist[0].title);
     playlist.push(playlist[0]);
     playlist = _.rest(playlist);
+
+    console.log('to '+playlist[0].artist + ' - '+playlist[0].title);
     playhead = 0;
 
   }
@@ -95,7 +99,7 @@ var incrementStream = function () {
 
 
 var refreshMix = function () {
-  playlist = allSongs;//_.filter(allSongs, 'active', true);
+  playlist = _.filter(allSongs, 'length');
   mixLength = _.sum(playlist, 'length');
 
   if (mixLength === 0) return 'no active songs found';
@@ -170,6 +174,11 @@ app.get('/bandcampHelper', function (req, res) {
 app.get('/playlist', function (req, res) {
 
   res.send(playlist);
+
+});
+app.get('/playhead', function (req, res) {
+
+  res.send({'playhead':playhead});
 
 });
 

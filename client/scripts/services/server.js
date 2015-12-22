@@ -33,6 +33,10 @@ angular.module('xyzApp')
         return get('playlist');
       },
 
+      getPlayhead: function(){
+        return get('playhead');
+      },
+
       refresh: function(){
         return get('refresh');
       },

@@ -8,7 +8,7 @@
  * Service in the xyzApp.
  */
 angular.module('xyzApp')
-  .service('Utility', function () {
+  .service('Utility', function ($sce) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
 
@@ -28,7 +28,7 @@ angular.module('xyzApp')
               stream: track.stream_url,
               pic: track.artwork_url,
               date_saved: new Date(),
-              kind:'media',
+              kind: 'media',
               original_data: track
 
             };
@@ -43,7 +43,7 @@ angular.module('xyzApp')
               url: user.permalink_url,
               pic: user.avatar_url,
               date_saved: new Date(),
-              kind:'user',
+              kind: 'user',
               original_data: user
 
             }
@@ -52,16 +52,16 @@ angular.module('xyzApp')
           playlist: function (playlist) {
             return {
               provider: 'soundcloud',
-              provider_id:playlist.id,
-              artist:playlist.user.username,
-              title:playlist.title,
-              length:playlist.duration / 1000,
-              description:playlist.description,
-              url:playlist.permalink_url,
-              pic:playlist.artwork_url,
+              provider_id: playlist.id,
+              artist: playlist.user.username,
+              title: playlist.title,
+              length: playlist.duration / 1000,
+              description: playlist.description,
+              url: playlist.permalink_url,
+              pic: playlist.artwork_url,
               date_saved: new Date(),
-              kind:'playlist',
-              original_data:playlist
+              kind: 'playlist',
+              original_data: playlist
 
             }
           }
@@ -78,7 +78,7 @@ angular.module('xyzApp')
               description: raw.snippet.description,
               pic: raw.snippet.thumbnails.high.url, //"http://img.youtube.com/vi/" + raw.id + "/0.jpg",
               date_saved: new Date(),
-              kind:'media',
+              kind: 'media',
               original_data: raw
 
             };
@@ -109,13 +109,49 @@ angular.module('xyzApp')
 
         },
         BC: {
-          parseUrlForType: function(url){
+          parseUrlForType: function (url) {
             var parts = url.split('.bandcamp.com/');
             parts = parts[1].split('/');
             return parts[0];
           }
         }
+      },
+      iFrameUrl: function (item, playerStatus) {
+
+        var url;
+        if (item.provider === 'youtube') {
+          url = 'https://www.youtube.com/embed/'
+          + item.provider_id
+          + '?autoplay=';
+
+          if (playerStatus.autoplay) {
+            url += '1';
+          } else {
+            url += '0';
+          }
+          url += '&start=' + playerStatus.startFrom;
+
+        } else if (item.provider === 'soundcloud') {
+
+          url = 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'
+          + item.provider_id
+          + '&amp;auto_play='
+          + playerStatus.autoplay
+          + '&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true';
+
+        } else if (item.provider === 'bandcamp') {
+
+          url = 'http://bandcamp.com/EmbeddedPlayer/size=medium/bgcol=ffffff/linkcol=0687f5/tracklist=false/track='
+          + item.provider_id
+          + '/transparent=true/';
+        } else {
+          url = '/iframeUrlProblem';
+        }
+
+        return $sce.trustAsResourceUrl(url);
       }
-    }
+
+    };
     return Utility;
-  });
+  })
+;

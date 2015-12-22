@@ -2,11 +2,11 @@
 
 angular.module('xyzApp')
 
-  .controller('streamCtrl', function ($scope, YT_event, Stream, playlist, $sce, $interval, Server) {
+  .controller('streamCtrl', function ($scope, $interval, YT_event, Stream, playlist, Server, Utility) {
     //initial settings
     //borrowed from http://plnkr.co/edit/8lxuN8?p=info
-    this.width = 400;
-    this.height = 280;
+/*
+
     this.videoid = playlist[0].provider_id;
     this.startSeconds= 20;
     this.playerStatus = "NOT PLAYING";
@@ -23,22 +23,34 @@ angular.module('xyzApp')
       console.log('status change!');
       console.log(event, data);
 //      this.yt.playerStatus = data;
+*/
 /*
       if (data === 'PLAYING' && !playedFromStartOnce){
         console.log('playin for first time');
         playedFromStartOnce = true;
-      }*/
+      }*//*
+
 
     });
+*/
+    var playerOptions = {
+      autoplay:true,
+      startFrom:false
+    };
 
-    $scope.Stream = Stream;
+    if(!playerOptions.startFrom){
+    Stream.getPlayhead()
+      .then(function(playhead){
+        playerOptions.startFrom = playhead;
+      })
+
+    }
+
+    $scope.iFrameUrl = Utility.iFrameUrl;
+    $scope.playerOptions = playerOptions;
+
     $scope.Server = Server;
     $scope.playlist = Stream.playlist;
-    $scope.$sce = $sce;
-
-    $scope.soundcloudUrl = $sce.trustAsResourceUrl("https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/" +playlist[0].provider_id+"&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true");
-
-    $scope.bandampUrl = $sce.trustAsResourceUrl("bandcamp.com/"+playlist[0].provider_id);
 
     var updateScopePlaylist = function() {
       Stream.reloadPlaylist().then(
@@ -46,6 +58,9 @@ angular.module('xyzApp')
           $scope.playlist = playlist;
         });
     };
+
+
+
     $interval(updateScopePlaylist, 5000);
 
   });

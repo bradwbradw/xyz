@@ -9,7 +9,7 @@
  */
 angular.module('xyzApp')
   .service('Player', function () {
-    // AngularJS will instantiate a singleton by calling "new" on this function
+
     var Player = {
       current: false,
       status:{
@@ -39,8 +39,10 @@ angular.module('xyzApp')
       play: function (item) {
         Player.status.autoplay = true;
         if(item.id){
+          // the item is already saved (playing from library)
         Player.current = item;
         } else {
+          // the item is being previewed (not yet saved)
           Player.current = {
             saveable:true,
             attrs:item

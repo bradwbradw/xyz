@@ -64,6 +64,15 @@ angular.module('xyzApp')
         } else {
           return false;
         }
+      },
+      getPlayhead: function(){
+        return Server.getPlayhead()
+          .then(function(response){
+            return response.data.playhead;
+          })
+          .catch(function(error){
+            return $q.reject(error);
+          })
       }
     };
 

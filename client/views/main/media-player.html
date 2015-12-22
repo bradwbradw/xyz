@@ -5,7 +5,7 @@
     <iframe
         width="100%"
         height="100%"
-        ng-src="{{iFrameUrl(Player.playingAttrs())}}"
+        ng-src="{{iFrameUrl(Player.playingAttrs(), Player.status)}}"
         frameborder="0"
         allowfullscreen>
 
@@ -33,7 +33,8 @@
         height="100%"
         scrolling="no"
         frameborder="no"
-        ng-src="{{iFrameUrl(Player.playingAttrs())}}">
+        ng-src="{{iFrameUrl(Player.playingAttrs(), Player.status)}}"
+        >
 
     </iframe>
 
@@ -46,7 +47,7 @@
 
             style="border: 0; width: 100%; height:100%;"
 
-            ng-src="{{iFrameUrl(Player.playingAttrs())}}"
+            ng-src="{{iFrameUrl(Player.playingAttrs(), Player.status)}}"
             seamless>
 
       <a href="http://1080pcollection.bandcamp.com/album/12-hours-full-relaxation">
