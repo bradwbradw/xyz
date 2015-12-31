@@ -3,10 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "description": "xyz helps to organize music",
-  "main": "index.js",
+  "main": "server/server.js",
   "scripts": {
     "postinstall": "bower install",
-    "start": "node index.js"
+    "start": "node server/server.js"
   },
   "dependencies": {
     "body-parser": "1.12.4",
@@ -21,7 +21,15 @@
     "node-restful": "^0.2.2",
     "q": "^1.4.1",
     "request": "2.53.0",
-    "soundcloud": "^3.0.1"
+    "soundcloud": "^3.0.1",
+    "compression": "^1.0.3",
+    "cors": "^2.5.2",
+    "loopback": "^2.22.0",
+    "loopback-boot": "^2.6.5",
+    "loopback-component-explorer": "^2.1.0",
+    "loopback-connector-mongodb": "^1.13.2",
+    "loopback-datasource-juggler": "^2.39.0",
+    "serve-favicon": "^2.0.1"
   },
   "devDependencies": {
     "angular-mocks": "1.4.1",

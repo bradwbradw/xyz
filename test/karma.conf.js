@@ -22,14 +22,14 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // bower:js
-      'bower_components/angular/angular.js',
-      'bower_components/angular-sanitize/angular-sanitize.js',
-      'bower_components/angular-ui-router/release/angular-ui-router.js',
-      'bower_components/lodash/lodash.js',
-      'bower_components/angular-easyfb/build/angular-easyfb.js',
-      'bower_components/angular-local-storage/dist/angular-local-storage.js',
-      'bower_components/angular-touch/angular-touch.js',
-      'bower_components/angular-mocks/angular-mocks.js',
+      'client/vendor/angular/angular.js',
+      'client/vendor/angular-sanitize/angular-sanitize.js',
+      'client/vendor/angular-ui-router/release/angular-ui-router.js',
+      'client/vendor/lodash/lodash.js',
+      'client/vendor/angular-easyfb/build/angular-easyfb.js',
+      'client/vendor/angular-local-storage/dist/angular-local-storage.js',
+      'client/vendor/angular-touch/angular-touch.js',
+      'client/vendor/angular-mocks/angular-mocks.js',
       // endbower
       'test/ngMockHttp.js',
       'test/serverConfig.js',
