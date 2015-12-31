@@ -36,15 +36,19 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '',
       views: {
         'main@': {
-          templateUrl: 'views/main/landing.html'
+          templateUrl: 'views/main/landing.html',
+          controller: 'LandingCtrl'
         },
         'sidebar@': {
           templateUrl: 'views/sidebar.html'
         }
       },
 
-      onEnter: function (Library) {
+      onEnter: function (Library, User) {
         var libProm = Library.loadLibrary();
+        if(!User.get()){
+          User.loadUser();
+        }
       }
     })
     .state('mine', {

@@ -2,42 +2,49 @@
 
 angular.module('xyzApp')
 
-  .service('Server', function ($http, serverConfig) {
+  .service('Server', function ($rootScope, $http, serverConfig) {
 
-    var API = serverConfig.apiBaseUrl || 'http://l.h:5000/';
+    var API = serverConfig.apiBaseUrl;
 
-    var get = function(item){
-      return $http.get(API+item);
+    var resetErrors = function(){
+      $rootScope.error = '';
+    };
+    var get = function (item) {
+      resetErrors();
+      return $http.get(API + item);
     };
 
-    var post = function(place,item){
-      return $http.post(API+place,item);
+    var post = function (place, item) {
+      resetErrors();
+      return $http.post(API + place, item);
 
     };
 
-    var put = function(place,item){
-      return $http.put(API+place,item);
-      };
+    var put = function (place, item) {
+      resetErrors();
+      return $http.put(API + place, item);
+    };
 
-      var restDelete = function(item){
-      return $http.delete(API+item);
+    var restDelete = function (item) {
+      resetErrors();
+      return $http.delete(API + item);
     };
 
     return {
 
-      getBandcampId: function(url){
-        return get('bandcampHelper?url='+url);
+      getBandcampId: function (url) {
+        return get('bandcampHelper?url=' + url);
       },
 
-      getPlaylist: function(){
+      getPlaylist: function () {
         return get('playlist');
       },
 
-      getPlayhead: function(){
+      getPlayhead: function () {
         return get('playhead');
       },
 
-      refresh: function(){
+      refresh: function () {
         return get('refresh');
       },
 
@@ -50,10 +57,26 @@ angular.module('xyzApp')
       updateSong: function (id, data) {
         return put('songs/' + id, data);
       },
-      deleteSong: function(id){
-        return restDelete('songs/'+id);
-      }
+      deleteSong: function (id) {
+        return restDelete('songs/' + id);
+      },
 
+      register: function(data){
+        return post('api/djs', data);
+      },
+
+      login: function(data){
+        return post('api/djs/login',data);
+      },
+      logout: function(token){
+        return post('api/djs/logout?access_token='+token);
+      },
+      getUser: function(data){
+        return get('api/djs/'+data.userId+'?access_token='+data.accessToken);
+      },
+      updateUser: function(id, token, data){
+        return put('api/djs/'+id+'/?access_token='+token, data);
+      }
 
     };
   });

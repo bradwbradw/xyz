@@ -87,6 +87,8 @@
 <script src="scripts/directives/previewing.js"></script>
 <script src="scripts/controllers/preview.js"></script>
 <script src="scripts/services/player.js"></script>
+<script src="scripts/controllers/landing.js"></script>
+<script src="scripts/services/user.js"></script>
 <!-- endbuild -->
 
 
@@ -114,7 +116,7 @@
 
   angular.module('xyzApp')
       .value('serverConfig', {
-        apiBaseUrl: '/',
+        apiBaseUrl: 'http://0.0.0.0:3000/',// '/',
         developing: true
       });
 
