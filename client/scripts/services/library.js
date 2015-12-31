@@ -160,7 +160,7 @@ angular.module('xyzApp')
       _.each(rawLibrary, function (song) { //jshint ignore:line
         preparedLibrary.push(
           {
-            id: song._id,
+            id: song.id,
             attrs: song,
             editing: false
           }

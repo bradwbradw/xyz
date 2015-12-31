@@ -49,16 +49,16 @@ angular.module('xyzApp')
       },
 
       getLibrary: function () {
-        return get('songs');
+        return get('api/songs');
       },
       addSong: function (song) {
-        return post('songs', song);
+        return post('api/songs', song);
       },
       updateSong: function (id, data) {
-        return put('songs/' + id, data);
+        return put('api/songs/' + id, data);
       },
       deleteSong: function (id) {
-        return restDelete('songs/' + id);
+        return restDelete('api/songs/' + id);
       },
 
       register: function(data){
