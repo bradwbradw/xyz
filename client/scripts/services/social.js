@@ -11,11 +11,11 @@
 //https://github.com/pc035860/angular-easyfb
 
 angular.module('xyzApp')
-  .config(function (ezfbProvider) {
+  .config(function (ezfbProvider, apiKeys) {
 
     ezfbProvider.setInitParams({
       // Facebook App ID
-      appId: '1381485208848570',
+      appId: apiKeys.fb_app_id,
 
       // Module default is `v2.4`.
       // If you want to use Facebook platform `v2.3`, you'll have to add the following parameter.
