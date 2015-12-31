@@ -1,0 +1,47 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "xyzdb"
+  },
+  "AccessToken": {
+    "dataSource": "xyzdb",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "xyzdb",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "xyzdb",
+    "public": false
+  },
+  "Role": {
+    "dataSource": "xyzdb",
+    "public": false
+  },
+  "space": {
+    "dataSource": "xyzdb",
+    "public": true
+  },
+  "dj": {
+    "dataSource": "xyzdb",
+    "public": true
+  },
+  "Song": {
+    "dataSource": "xyzdb",
+    "public": true
+  }
+}

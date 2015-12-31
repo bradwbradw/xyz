@@ -1,0 +1,58 @@
+{
+  "name": "Song",
+  "plural": "Songs",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "artist": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "length": {
+      "type": "number"
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "provider": {
+      "type": "string"
+    },
+    "provider_id": {
+      "type": "string"
+    },
+    "pic": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "date_saved": {
+      "type": "date"
+    },
+    "original_data": {
+      "type": "object"
+    },
+    "x": {
+      "type": "number"
+    },
+    "y": {
+      "type": "number"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
