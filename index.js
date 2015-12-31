@@ -83,7 +83,7 @@ var incrementStream = function () {
 
 
   playhead += 1;
-  console.log('playhead ', playhead);
+//  console.log('playhead ', playhead);
   if (playhead >= playlist[0].length ) {
     console.log('playhead reached ' + playhead + '. changing songs.');
     console.log('from '+playlist[0].artist + ' - '+playlist[0].title);
@@ -109,7 +109,7 @@ var refreshMix = function () {
     playlist: playlist
   });
 
-  console.log('refreshed the mix: \n ' + outputJson);
+  console.log('refreshed the mix:');// \n ' + outputJson);
   return outputJson;
 };
 
