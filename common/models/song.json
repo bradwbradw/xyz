@@ -52,7 +52,11 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "Spaces": {
+      "type": "hasAndBelongsToMany",
+      "model": "Space"
+    }},
   "acls": [],
   "methods": {}
 }

@@ -18,13 +18,16 @@
     "password": {
       "type": "string",
       "required": true
-    },
-    "spaces": {
-      "type": "Array"
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "spaces":{
+      "type":"hasMany",
+      "model":"Space",
+      "foreignKey":"ownerId"
+    }
+  },
   "acls": [],
   "methods": {}
 }

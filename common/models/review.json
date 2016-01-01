@@ -1,22 +1,22 @@
 {
-  "name": "Space",
-  "plural": "Spaces",
+  "name": "review",
+  "plural": "reviews",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
+  "properties": {
+    "bushiness": {
+      "type": "number"
+    }
+  },
   "validations": [],
   "relations": {
-    "Songs": {
-      "type": "hasAndBelongsToMany",
-      "model": "Song"
-    },
-    "owner": {
+    "customer": {
       "type": "belongsTo",
-      "model": "dj",
-      "foreignKey": "ownerId"
+      "model": "customer",
+      "foreignKey": "authorId"
     }
   },
   "acls": [],

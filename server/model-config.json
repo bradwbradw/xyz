@@ -32,15 +32,23 @@
     "dataSource": "xyzdb",
     "public": false
   },
-  "space": {
-    "dataSource": "xyzdb",
-    "public": true
-  },
   "dj": {
     "dataSource": "xyzdb",
     "public": true
   },
   "Song": {
+    "dataSource": "xyzdb",
+    "public": true
+  },
+  "Space": {
+    "dataSource": "xyzdb",
+    "public": true
+  },
+  "customer": {
+    "dataSource": "xyzdb",
+    "public": true
+  },
+  "review": {
     "dataSource": "xyzdb",
     "public": true
   }
