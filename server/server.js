@@ -9,7 +9,7 @@ var app = module.exports = loopback();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-//app.use(express.static(__dirname + '/client'));
+app.use('/docs',loopback.static(__dirname + '/docular_generated'));
 app.use('/bower_components', loopback.static(__dirname + '/bower_components'));
 
 
