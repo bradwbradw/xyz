@@ -5,7 +5,9 @@ var xyzApp = angular.module("xyzApp",
     'ngSanitize',
     'ezfb',
     'LocalStorageModule',
-  'ngTouch']);
+    'ngTouch',
+    'ngResource',
+    'lbServices']);
 
 xyzApp.constant('YT_event', {
   STOP: 0,
@@ -46,7 +48,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
       onEnter: function (Library, User) {
         var libProm = Library.loadLibrary();
-        if(!User.get()){
+        if (!User.get()) {
           User.loadUser();
         }
       }
@@ -59,8 +61,8 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           controller: 'SpaceCtrl',
           templateUrl: 'views/xyzspace.html'
         },
-        'preview@main':{
-          template:'hello in mine state'
+        'preview@main': {
+          template: 'hello in mine state'
         },
         'sidebar@': {
           templateUrl: 'views/sidebar.html'
@@ -75,8 +77,8 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           controller: 'SpaceCtrl',
           templateUrl: 'views/xyzspace.html'
         },
-        'preview':{
-          template:'views/test/stream.html'
+        'preview': {
+          template: 'views/test/stream.html'
         },
         'sidebar@': {
           templateUrl: 'views/import/container.html',

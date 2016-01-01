@@ -8,7 +8,8 @@
     "lodash": "3.10.1",
     "angular-easyfb": "~1.4.1",
     "angular-local-storage": "~0.2.3",
-    "angular-touch": "~1.4.8"
+    "angular-touch": "~1.4.8",
+    "angular-resource": "~1.4.8"
   },
   "devDependencies": {
     "angular-mocks": "1.4.1"
@@ -16,6 +17,6 @@
   "appPath": "client",
   "moduleName": "xyzApp",
   "resolutions": {
-    "angular": "1.4.1"
+    "angular": "1.4.8"
   }
 }
