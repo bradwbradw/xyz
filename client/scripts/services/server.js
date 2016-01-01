@@ -32,11 +32,23 @@ angular.module('xyzApp')
 
     var resCall = function (lbResourceCall, data) {
 
+      console.log('lbResourceCall:',lbResourceCall);
+      console.log('data:',data);
       var resPromise = function (resource) {
-        if (resource && resource.$promise) {
-          return resource.$promise;
+        if (!resource) {
+          return $q.reject('no resource provided');
+        }
+
+        if (!resource.$promise) {
+          return $q.reject('no promise found in resource');
+        }
+
+        if (resource.$promise.$resolved) {
+          return resource.$promise.resolve(resource);
+            // or maybe $q.resolve(resource);
         } else {
-          return $q.reject('no promise found in this resource');
+          return resource.$promise.reject('something bad happened');
+            // or maybe $q.reject(resource);
         }
       };
 
@@ -45,14 +57,23 @@ angular.module('xyzApp')
 
     return {
 
-      p: {
+      loopback: {
         Dj: {
           create: function (data) {
-            return resCall(Dj.create, data);
+            return resCall(Dj.create, data)
+              .catch(function (err) {
+                return $q.reject(err);
+              });
           },
           login: function (data) {
-            return resCall(Dj.login, data);
+            return resCall(Dj.login, data)
+              .catch(function (err) {
+                return $q.reject(err);
+              });
           }
+          // ... and so on...
+          // fixme: make more generic, somehow
+          //  so that
         }
       },
 

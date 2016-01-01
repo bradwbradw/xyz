@@ -6,11 +6,11 @@
 <h2 ui-sref='lobby'>"lobby" (tba)</h2>
 
 
-<div ng-if="!User.get()">
+<div ng-if="!Dj.isAuthenticated()">
 
   <h2>register:</h2>
 <!--  <form ng-submit="Server.registerDj(registerData).then(Server.login).catch(showError)">-->
-    <form ng-submit="p.Dj.create(registerData).then(p.Dj.login).catch(showError)">
+    <form ng-submit="Dj.create({},registerData,handleRegister,showError)">
 <!-- p.DJ.login needs to be moved out because it doesn't take user / pass as parameters -->
 
     <input ng-model="registerData.email" placeholder="email" type="email" required>
@@ -21,7 +21,7 @@
   </form>
 
   <h2>or login:</h2>
-  <form ng-submit="User.login(loginData).catch(showError)">
+  <form ng-submit="Dj.login({},loginData,noop,showError)">
 
     <input ng-model="loginData.email" placeholder="email" type="email" required>
     <input ng-model="loginData.password" placeholder="password" type="password" required>
@@ -31,28 +31,29 @@
 
 </div>
 
-<div ng-if="User.attrs()">
+<div ng-if="Dj.isAuthenticated()">
 
-  Welcome to XYZ: {{User.attrs() | json}}
+  Welcome to XYZ: {{Dj.getCurrent() | json}}
 
-  <form ng-submit="User.update(new).catch(showError)">
+  <form ng-submit="Dj.update({},new,noop,showError)">
 
     <input ng-model="new.name" placeholder="update name">
     <input type="submit" value="update data">
 
   </form>
-
-  <ul ng-if="User.spaces()">
-    <li ng-repeat="space in User.spaces()">
+<!--
+  <ul ng-if="false && DjSpaces.count()">
+    <li ng-repeat="space in Dj.spaces()">
       {{space.name}}
     </li>
   </ul>
-  <span ng-repeat="space in dj.spaces()">a space: {space | json} | </span>
+  <span ng-repeat="space in Dj.spaces()">a space: {space | json} | </span>
 
   <input ng-model="newSpace.name" placeholder="new space name">
-  <button ng-click="User.addSpace(newSpace)">add new space </button>
+  <button ng-click="Space.create(newSpace)">add new space </button>
 
-  <button ng-click="User.logout()">Log out</button>
+  <button ng-click="Dj.logout()">Log out</button>
+-->
 </div>
 
 <span ng-if="error">{{error}}</span>
