@@ -9,7 +9,9 @@
 <div ng-if="!User.get()">
 
   <h2>register:</h2>
-  <form ng-submit="User.register(registerData).then(User.login)">
+<!--  <form ng-submit="Server.registerDj(registerData).then(Server.login).catch(showError)">-->
+    <form ng-submit="p.Dj.create(registerData).then(p.Dj.login).catch(showError)">
+<!-- p.DJ.login needs to be moved out because it doesn't take user / pass as parameters -->
 
     <input ng-model="registerData.email" placeholder="email" type="email" required>
     <input ng-model="registerData.name" placeholder="name">
@@ -45,6 +47,7 @@
       {{space.name}}
     </li>
   </ul>
+  <span ng-repeat="space in dj.spaces()">a space: {space | json} | </span>
 
   <input ng-model="newSpace.name" placeholder="new space name">
   <button ng-click="User.addSpace(newSpace)">add new space </button>
