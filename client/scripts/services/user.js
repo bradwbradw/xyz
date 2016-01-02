@@ -8,7 +8,7 @@
  * Service in the xyzApp.
  */
 angular.module('xyzApp')
-  .service('User', function ($q, Server, Dj, Space) {
+  .service('User', function ($q, $state, Server, Dj, Space) {
 
     var User = {
 
@@ -50,7 +50,11 @@ angular.module('xyzApp')
       },
 
       logout: function () {
-        return Dj.logout(_.noop).$promise;
+        return Dj.logout(_.noop).$promise
+          .then(function(){
+            User.set(false);
+            $state.go($state.current, {}, {reload: true});
+          });
       },
 
       update: function (data) {

@@ -55,6 +55,13 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         },
         user: function (User) {
 
+          if (!User.get() && User.loggedIn()) {
+            return User.fetchUserInfo()
+              .catch(errorAlert);
+
+          } else {
+            return User.get();
+          }
         }
       },
 
@@ -62,19 +69,15 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       onEnter: function (Library, User) {
         var libProm = Library.loadLibrary();
 
-
-        if (User.loggedIn()) {
-          User.fetchUserInfo()
-            .then(User.fetchSpaces)
-            .catch(errorAlert);
-
+        if (User.get()) {
+          User.fetchSpaces;
         }
 
       }
     })
     .state('space', {
       parent: 'base',
-      url: '/mine',
+      url: '/space/:id',
       views: {
         'main@': {
           controller: 'SpaceCtrl',
@@ -84,7 +87,38 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           template: 'hello in mine state'
         },
         'sidebar@': {
-          templateUrl: 'views/sidebar.html'
+          templateUrl: 'views/sidebar.html',
+          controller: 'SidebarCtrl'
+        }
+      },
+      resolve: {
+        space: function ($stateParams, Space) {
+          return Space.findById({id: $stateParams.id}, _.noop)
+            .$promise;
+        },
+        owner: function (space, Dj) {
+          return Dj.findById({id: space.ownerId}, _.noop)
+            .$promise;
+        },
+        viewer:function(owner, user, User){
+          var the_user;
+
+          if(User.get()){
+            the_user = User.get();
+          } else {
+            the_user = user; // this should be the user from the 'base' state resolve
+          }
+
+          if(!the_user){
+            return 'guest';
+          } else {
+            if( owner.id === the_user.id){
+              return 'owner';
+            } else {
+              return 'user';
+            }
+          }
+
         }
       }
     })

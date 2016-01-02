@@ -1,5 +1,9 @@
 <div class="xyz-click-screen" ng-click="closeExpanded()">
 </div>
+
+<h2 class="space-title"> {{space.name}} ({{owner.name}})</h2>
+
+
 <div class="xyz-item" ng-repeat="item in Library.getLibrary()"
      ng-if="Library.getLibrary().length > 0"
      xyz-draggable

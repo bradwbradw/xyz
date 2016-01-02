@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SpaceCtrl', function ($scope, Library, $log, Player) {
+  .controller('SpaceCtrl', function ($scope, $log, Library, Player, space, owner, viewer, Space) {
 
     var expand = function (song) {
       closeExpanded();
@@ -65,5 +65,10 @@ angular.module('xyzApp')
     $scope.expand = expand;
     $scope.Library = Library;
     $scope.closeExpanded = closeExpanded;
+
+    $scope.space = space;
+    $scope.owner = owner;
+    $scope.viewer = viewer;
+
 
   });
