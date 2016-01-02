@@ -53,6 +53,7 @@ angular.module('xyzApp')
         return Dj.logout(_.noop).$promise
           .then(function(){
             User.set(false);
+            User.setSpaces(false);
             $state.go($state.current, {}, {reload: true});
           });
       },
@@ -64,10 +65,13 @@ angular.module('xyzApp')
       },
 
       fetchUserInfo: function () {
-
         return Dj.getCurrent(_.noop)
           .$promise
-          .then(User.set);
+          .then(User.set)
+          .then(User.fetchSpaces)
+          .catch(function(err){
+            return $q.reject(err);
+          });
       },
       spaces: false,
 
