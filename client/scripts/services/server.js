@@ -2,7 +2,7 @@
 
 angular.module('xyzApp')
 
-  .service('Server', function ($rootScope, $http, serverConfig, Dj) {
+  .service('Server', function ($rootScope, $http, $q, serverConfig, Dj) {
 
     var API = serverConfig.apiBaseUrl;
 

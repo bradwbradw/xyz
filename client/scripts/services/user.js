@@ -8,69 +8,26 @@
  * Service in the xyzApp.
  */
 angular.module('xyzApp')
-  .service('User', function ($q, Server, Dj, localStorageService) {
+  .service('User', function ($q, Server, Dj, Space) {
 
     var User = {
 
-      saveUserInfo: function (userData) {
-        var userInfo =
-        {
-          userId: userData.userId,
-          accessToken: userData.id,
-          created: userData.created
-        };
-        if (localStorageService.set('user', userInfo)) {
-          return userInfo;
-        }
-      },
-
       userData: false,
-      loggedIn: Dj.isAuthenticated,
+
       get: function () {
         return User.userData;
       },
-      attrs: function () {
-        if ( User.get() ) {
-          return User.get();
-        } else {
-          return false;
-        }
+      set: function(newUserData){
+        User.userData = newUserData;
+        return User.userData;
       },
 
-      fetchUserInfo: function () {
-
-        return Dj.getCurrent(_.noop)
-          .$promise
-          .then(function (attrs) {
-            console.log('get user response:', attrs);
-            User.userData = attrs;
-            return attrs;
-          });
-      },
-      spaces: function () {
-        if (User.attrs() && User.attrs().spaces) {
-          return User.attrs().spaces;
-        } else {
-          return false;
-        }
-      },
-      addSpace: function (space) {
-        var newSpaces = [];
-        if (User.spaces()) {
-          newSpaces = User.spaces();
-        }
-        newSpaces.push(_.clone(space));
-        User.update({spaces: newSpaces})
-          .then(function () {
-            User.userData.attrs.spaces = newSpaces;
-          });
-
-      },
+      loggedIn: Dj.isAuthenticated,
 
       register: function (data) {
         return Server.loopback.Dj.create(data)
           .then(function () {
-            return $q.resolve(data); // return user, pass so that can now log in
+            return $q.resolve(data); // return user and pass so that can now log in right after registering
           })
           .catch(function (err) {
             return $q.reject(err);
@@ -80,10 +37,14 @@ angular.module('xyzApp')
       login: function (data) {
         return Server.loopback.Dj.login(data)
           .then(function(response){
-            User.userData = response.user;
+            User.set(response.user);
           })
-          .catch(function () {
-            return $q.reject('Sorry, please verify your email and password and try again.');
+          .catch(function (err) {
+            var message;
+            if(err && err.data){
+              message = err.data;
+            }
+            return $q.reject(message);
           });
       },
 
@@ -91,13 +52,53 @@ angular.module('xyzApp')
         return Dj.logout(_.noop).$promise;
       },
       update: function (data) {
-        return Server.updateUser(User.get().userId, User.get().accessToken, data)
-          .then(function (response) {
-            if (response && response.data && response.data.id === User.get().userId) {
-              User.userData.attrs = response.data;
-            }
-            console.log('update response.data:', response.data);
+        return Dj.prototype$updateAttributes({id:User.get().id},data, _.noop)
+          .$promise
+          .then(User.set);
+      },
+
+      fetchUserInfo: function () {
+
+        return Dj.getCurrent(_.noop)
+          .$promise
+          .then(User.set);
+      },
+      spaces: false,
+      getSpaces: function(){
+        return User.spaces;
+      },
+      setSpaces: function(spaces){
+        User.spaces = spaces;
+        return User.spaces;
+      },
+      fetchSpaces: function(){
+        return Dj.spaces({id:User.get().id}).$promise
+          .then(User.setSpaces)
+          .catch(function(err){
+            return $q.reject(err);
+          })
+      },
+      addSpace: function (space) {
+//        space.ownerId = User.get().id;
+        Dj.spaces.create({id:User.get().id},space,_.noop)
+          .$promise
+          .then(User.fetchSpaces)
+          .catch(function(err){
+            return $q.reject(err);
           });
+
+
+        /*
+        var newSpaces = [];
+        if (User.spaces()) {
+          newSpaces = User.spaces();
+        }
+        newSpaces.push(_.clone(space));
+        User.update({spaces: newSpaces})
+          .then(function () {
+            User.userData.get.spaces = newSpaces;
+          });
+*/
       }
     };
 

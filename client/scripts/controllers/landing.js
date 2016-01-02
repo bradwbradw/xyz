@@ -8,11 +8,14 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('LandingCtrl', function ($rootScope, $scope, Dj, User, Server) {
+  .controller('LandingCtrl', function ($rootScope, $scope, Dj, User, Server, allSpaces) {
 
     $scope.Dj = Dj;//.findById({id:'5684f858d4b1e4996ec6d9bf'});
 
     $scope.User = User;
+
+    $scope.allSpaces = allSpaces;
+
 /*
 
     var registerData = {};

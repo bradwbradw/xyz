@@ -22,12 +22,25 @@
   },
   "validations": [],
   "relations": {
-    "spaces":{
-      "type":"hasMany",
-      "model":"Space",
-      "foreignKey":"ownerId"
+    "spaces": {
+      "type": "hasMany",
+      "model": "Space",
+      "foreignKey": "ownerId"
     }
   },
-  "acls": [],
+  "acls": [
+    {
+      "permission": "ALLOW",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "property": "__get__spaces"
+    },
+    {
+      "permission": "ALLOW",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "property": "__create__spaces"
+    }
+  ],
   "methods": {}
 }

@@ -6,6 +6,9 @@
 <h2 ui-sref='lobby'>"lobby" (tba)</h2>
 
 
+  <span ng-repeat="space in allSpaces">{{space.name}}, </span>
+
+
 <div ng-if="!Dj.isAuthenticated()">
 
   <h2>register:</h2>
@@ -19,7 +22,7 @@
   </form>
 
   <h2>or login:</h2>
-  <form ng-submit="User.login(loginData)">
+  <form ng-submit="User.login(loginData).then(User.fetchSpaces).catch(showError)">
 
     <input ng-model="loginData.email" placeholder="email" type="email" required>
     <input ng-model="loginData.password" placeholder="password" type="password" required>
@@ -34,26 +37,29 @@ NOT LOGGED IN
 
 LOGGED IN
 
-  Welcome to XYZ: {{User.attrs() | json}}
-<!--
-  <form ng-submit="Dj.update({},new,noop,showError)">
+  Welcome to XYZ: {{User.get() | json}}
+  <form ng-submit="User.update(new).catch(showError)">
 
     <input ng-model="new.name" placeholder="update name">
     <input type="submit" value="update data">
 
-  </form>-->
-<!--
-  <ul ng-if="false && DjSpaces.count()">
-    <li ng-repeat="space in Dj.spaces()">
-      {{space.name}}
+  </form>
+
+  <br/><br/>
+
+  <ul ng-if="User.spaces">
+    you own some spaces
+    <li ng-repeat="space in User.spaces">
+      {{space.name }}
     </li>
   </ul>
-  <span ng-repeat="space in Dj.spaces()">a space: {space | json} | </span>
+  <span ng-if="!User.spaces">
+    you do not own any spaces
+  </span>
 
   <input ng-model="newSpace.name" placeholder="new space name">
-  <button ng-click="Space.create(newSpace)">add new space </button>
+  <button ng-click="User.addSpace(newSpace).catch(showError)">add new space </button>
 
--->
 
   <button ng-click="User.logout().catch(showError)">Log out</button>
 </div>

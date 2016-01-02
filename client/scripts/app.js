@@ -30,6 +30,10 @@ xyzApp.config(function (localStorageServiceProvider) {
     .setStorageCookieDomain('');
 });
 
+var errorAlert = function (err) {
+  alert('error:   ' + JSON.stringify(err));
+};
+
 xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
   $locationProvider.html5Mode(false);
 
@@ -45,15 +49,29 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           templateUrl: 'views/sidebar.html'
         }
       },
+      resolve: {
+        allSpaces: function (Space) {
+          return Space.find();
+        },
+        user: function (User) {
+
+        }
+      },
+
 
       onEnter: function (Library, User) {
         var libProm = Library.loadLibrary();
-        if (!User.get()) {
-          User.fetchUserInfo();
+
+        if (User.loggedIn) {
+          User.fetchUserInfo()
+            .then(User.fetchSpaces)
+            .catch(errorAlert);
+
         }
+
       }
     })
-    .state('mine', {
+    .state('space', {
       parent: 'base',
       url: '/mine',
       views: {
