@@ -9,9 +9,7 @@
 <div ng-if="!Dj.isAuthenticated()">
 
   <h2>register:</h2>
-<!--  <form ng-submit="Server.registerDj(registerData).then(Server.login).catch(showError)">-->
-    <form ng-submit="Dj.create({},registerData,handleRegister,showError)">
-<!-- p.DJ.login needs to be moved out because it doesn't take user / pass as parameters -->
+  <form ng-submit="User.register(registerData).then(User.login).catch(showError)">
 
     <input ng-model="registerData.email" placeholder="email" type="email" required>
     <input ng-model="registerData.name" placeholder="name">
@@ -21,26 +19,29 @@
   </form>
 
   <h2>or login:</h2>
-  <form ng-submit="Dj.login({},loginData,noop,showError)">
+  <form ng-submit="User.login(loginData)">
 
     <input ng-model="loginData.email" placeholder="email" type="email" required>
     <input ng-model="loginData.password" placeholder="password" type="password" required>
 
     <input type="submit" value="submit"/>
   </form>
+NOT LOGGED IN
 
 </div>
 
 <div ng-if="Dj.isAuthenticated()">
 
-  Welcome to XYZ: {{Dj.getCurrent() | json}}
+LOGGED IN
 
+  Welcome to XYZ: {{User.attrs() | json}}
+<!--
   <form ng-submit="Dj.update({},new,noop,showError)">
 
     <input ng-model="new.name" placeholder="update name">
     <input type="submit" value="update data">
 
-  </form>
+  </form>-->
 <!--
   <ul ng-if="false && DjSpaces.count()">
     <li ng-repeat="space in Dj.spaces()">
@@ -52,8 +53,9 @@
   <input ng-model="newSpace.name" placeholder="new space name">
   <button ng-click="Space.create(newSpace)">add new space </button>
 
-  <button ng-click="Dj.logout()">Log out</button>
 -->
+
+  <button ng-click="User.logout().catch(showError)">Log out</button>
 </div>
 
 <span ng-if="error">{{error}}</span>

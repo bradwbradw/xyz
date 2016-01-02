@@ -32,8 +32,6 @@ angular.module('xyzApp')
 
     var resCall = function (lbResourceCall, data) {
 
-      console.log('lbResourceCall:',lbResourceCall);
-      console.log('data:',data);
       var resPromise = function (resource) {
         if (!resource) {
           return $q.reject('no resource provided');
@@ -42,14 +40,14 @@ angular.module('xyzApp')
         if (!resource.$promise) {
           return $q.reject('no promise found in resource');
         }
-
+/*
         if (resource.$promise.$resolved) {
           return resource.$promise.resolve(resource);
             // or maybe $q.resolve(resource);
         } else {
           return resource.$promise.reject('something bad happened');
             // or maybe $q.reject(resource);
-        }
+        }*/
       };
 
       return lbResourceCall({}, data, resPromise).$promise;

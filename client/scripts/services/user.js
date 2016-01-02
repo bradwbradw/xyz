@@ -8,7 +8,7 @@
  * Service in the xyzApp.
  */
 angular.module('xyzApp')
-  .service('User', function ($q, Server, localStorageService) {
+  .service('User', function ($q, Server, Dj, localStorageService) {
 
     var User = {
 
@@ -23,43 +23,29 @@ angular.module('xyzApp')
           return userInfo;
         }
       },
-      /*
-
-       getToken: function () {
-       return localStorageService.get('user');
-       },
-       */
-
-      login: function (data) {
-        return Server.login(data)
-          .then(function (response) {
-            return User.saveUserInfo(response.data);
-          })
-          .then(User.fetchAttrs)
-          .catch(function () {
-            return $q.reject('Sorry, please verify your email and password and try again.');
-          });
-      },
-
-      logout: function () {
-        return Server.logout(User.get().accessToken)
-          .then(function () {
-            localStorageService.remove('user');
-            User.userData = false;
-          });
-      },
 
       userData: false,
+      loggedIn: Dj.isAuthenticated,
       get: function () {
-//        console.log('user.get(): ', User.userData);
         return User.userData;
       },
       attrs: function () {
-        if (User.get() && User.get().attrs) {
-          return User.get().attrs;
+        if ( User.get() ) {
+          return User.get();
         } else {
           return false;
         }
+      },
+
+      fetchUserInfo: function () {
+
+        return Dj.getCurrent(_.noop)
+          .$promise
+          .then(function (attrs) {
+            console.log('get user response:', attrs);
+            User.userData = attrs;
+            return attrs;
+          });
       },
       spaces: function () {
         if (User.attrs() && User.attrs().spaces) {
@@ -68,52 +54,46 @@ angular.module('xyzApp')
           return false;
         }
       },
-      addSpace: function(space){
+      addSpace: function (space) {
         var newSpaces = [];
-        if(User.spaces()){
+        if (User.spaces()) {
           newSpaces = User.spaces();
         }
         newSpaces.push(_.clone(space));
-        User.update({spaces:newSpaces})
-          .then(function(){
+        User.update({spaces: newSpaces})
+          .then(function () {
             User.userData.attrs.spaces = newSpaces;
           });
 
       },
-      fetchAttrs: function (idAndToken) {
-
-        var userData = {
-          userId: idAndToken.userId,
-          accessToken: idAndToken.accessToken,
-          created: idAndToken.created,
-          attrs: {}, // email, id, name, list of spaces...
-        };
-
-        Server.getUser(idAndToken)
-          .then(function (response) {
-            console.log('get user response:', response);
-            userData.attrs = response.data;
-            User.userData = userData;
-          });
-      },
-      loadUser: function () {
-        var data = localStorageService.get('user');
-        if (!data) return false;
-
-        User.fetchAttrs(data);
-      },
 
       register: function (data) {
-        return Server.register(data)
+        return Server.loopback.Dj.create(data)
           .then(function () {
-            return $q.resolve(data); // so that can now log in
+            return $q.resolve(data); // return user, pass so that can now log in
+          })
+          .catch(function (err) {
+            return $q.reject(err);
           })
       },
 
+      login: function (data) {
+        return Server.loopback.Dj.login(data)
+          .then(function(response){
+            User.userData = response.user;
+          })
+          .catch(function () {
+            return $q.reject('Sorry, please verify your email and password and try again.');
+          });
+      },
+
+      logout: function () {
+        return Dj.logout(_.noop).$promise;
+      },
       update: function (data) {
         return Server.updateUser(User.get().userId, User.get().accessToken, data)
           .then(function (response) {
-            if(response && response.data && response.data.id === User.get().userId){
+            if (response && response.data && response.data.id === User.get().userId) {
               User.userData.attrs = response.data;
             }
             console.log('update response.data:', response.data);

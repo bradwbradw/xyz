@@ -8,15 +8,12 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('LandingCtrl', function ($rootScope, $scope, Dj, Space, Server) {
+  .controller('LandingCtrl', function ($rootScope, $scope, Dj, User, Server) {
 
     $scope.Dj = Dj;//.findById({id:'5684f858d4b1e4996ec6d9bf'});
 
-    $scope.noop = _.noop;
-    $scope.Server = Server;
-//    $scope.Space = Space;
-
-//    $scope.DjSpaces = Dj.spaces;
+    $scope.User = User;
+/*
 
     var registerData = {};
 
@@ -30,6 +27,7 @@ angular.module('xyzApp')
         });
       console.log('register handled:');
     };
+*/
 
     $scope.showError = function(error){
       $rootScope.error = error;

@@ -49,7 +49,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       onEnter: function (Library, User) {
         var libProm = Library.loadLibrary();
         if (!User.get()) {
-          User.loadUser();
+          User.fetchUserInfo();
         }
       }
     })
