@@ -62,7 +62,8 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       onEnter: function (Library, User) {
         var libProm = Library.loadLibrary();
 
-        if (User.loggedIn) {
+
+        if (User.loggedIn()) {
           User.fetchUserInfo()
             .then(User.fetchSpaces)
             .catch(errorAlert);

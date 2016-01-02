@@ -9,7 +9,7 @@
   <span ng-repeat="space in allSpaces">{{space.name}}, </span>
 
 
-<div ng-if="!Dj.isAuthenticated()">
+<div ng-if="!User.loggedIn()">
 
   <h2>register:</h2>
   <form ng-submit="User.register(registerData).then(User.login).catch(showError)">
@@ -33,7 +33,7 @@ NOT LOGGED IN
 
 </div>
 
-<div ng-if="Dj.isAuthenticated()">
+<div ng-if="User.loggedIn()">
 
 LOGGED IN
 

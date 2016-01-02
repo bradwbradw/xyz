@@ -17,13 +17,14 @@ angular.module('xyzApp')
       get: function () {
         return User.userData;
       },
-      set: function(newUserData){
+      set: function (newUserData) {
         User.userData = newUserData;
         return User.userData;
       },
 
-      loggedIn: Dj.isAuthenticated,
-
+      loggedIn: function () {
+        return Dj.isAuthenticated();
+      },
       register: function (data) {
         return Server.loopback.Dj.create(data)
           .then(function () {
@@ -36,12 +37,12 @@ angular.module('xyzApp')
 
       login: function (data) {
         return Server.loopback.Dj.login(data)
-          .then(function(response){
+          .then(function (response) {
             User.set(response.user);
           })
           .catch(function (err) {
             var message;
-            if(err && err.data){
+            if (err && err.data) {
               message = err.data;
             }
             return $q.reject(message);
@@ -51,8 +52,9 @@ angular.module('xyzApp')
       logout: function () {
         return Dj.logout(_.noop).$promise;
       },
+
       update: function (data) {
-        return Dj.prototype$updateAttributes({id:User.get().id},data, _.noop)
+        return Dj.prototype$updateAttributes({id: User.get().id}, data, _.noop)
           .$promise
           .then(User.set);
       },
@@ -64,44 +66,49 @@ angular.module('xyzApp')
           .then(User.set);
       },
       spaces: false,
-      getSpaces: function(){
+
+      getSpaces: function () {
         return User.spaces;
       },
-      setSpaces: function(spaces){
+
+      setSpaces: function (spaces) {
         User.spaces = spaces;
         return User.spaces;
       },
-      fetchSpaces: function(){
-        return Dj.spaces({id:User.get().id}).$promise
+
+      fetchSpaces: function () {
+        return Dj.spaces({id: User.get().id}).$promise
           .then(User.setSpaces)
-          .catch(function(err){
+          .catch(function (err) {
             return $q.reject(err);
           })
       },
+
       addSpace: function (space) {
 //        space.ownerId = User.get().id;
-        Dj.spaces.create({id:User.get().id},space,_.noop)
+        Dj.spaces.create({id: User.get().id}, space, _.noop)
           .$promise
           .then(User.fetchSpaces)
-          .catch(function(err){
+          .catch(function (err) {
             return $q.reject(err);
           });
 
 
         /*
-        var newSpaces = [];
-        if (User.spaces()) {
-          newSpaces = User.spaces();
-        }
-        newSpaces.push(_.clone(space));
-        User.update({spaces: newSpaces})
-          .then(function () {
-            User.userData.get.spaces = newSpaces;
-          });
-*/
+         var newSpaces = [];
+         if (User.spaces()) {
+         newSpaces = User.spaces();
+         }
+         newSpaces.push(_.clone(space));
+         User.update({spaces: newSpaces})
+         .then(function () {
+         User.userData.get.spaces = newSpaces;
+         });
+         */
       }
     };
 
     return User;
-    // AngularJS will instantiate a singleton by calling "new" on this function
-  });
+// AngularJS will instantiate a singleton by calling "new" on this function
+  })
+;
