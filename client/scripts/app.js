@@ -46,12 +46,13 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           controller: 'LandingCtrl'
         },
         'sidebar@': {
-          templateUrl: 'views/sidebar.html'
+          templateUrl: 'views/sidebar/sidebar-container.html'
         }
       },
       resolve: {
         allSpaces: function (Space) {
-          return Space.find();
+
+          return Space.find({filter:{include:"owner"}});
         },
         user: function (User) {
 
@@ -87,13 +88,14 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           template: 'hello in mine state'
         },
         'sidebar@': {
-          templateUrl: 'views/sidebar.html',
+          templateUrl: 'views/sidebar/sidebar-container.html',
           controller: 'SidebarCtrl'
         }
       },
       resolve: {
+
         space: function ($stateParams, Space) {
-          return Space.findById({id: $stateParams.id}, _.noop)
+          return Space.findById({id: $stateParams.id,filter:{include:"Songs"} }, _.noop)
             .$promise;
         },
         owner: function (space, Dj) {

@@ -19,6 +19,18 @@
       "foreignKey": "ownerId"
     }
   },
-  "acls": [],
+  "acls": [
+    {
+      "permission": "DENY",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "accessType":"WRITE"
+    },
+    {
+      "permission": "ALLOW",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "accessType":"WRITE"
+    }],
   "methods": {}
 }

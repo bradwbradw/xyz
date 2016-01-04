@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('LandingCtrl', function ($rootScope, $scope, Dj, User, Server, allSpaces) {
+  .controller('LandingCtrl', function ($rootScope, $scope, $q,Dj, User, Server, Space,allSpaces) {
 
     $scope.Dj = Dj;//.findById({id:'5684f858d4b1e4996ec6d9bf'});
 
@@ -39,6 +39,15 @@ angular.module('xyzApp')
     $rootScope.lb = Server.loopback;
 
 
+    $scope.deleteSpace = function(space){
+      //return Dj.spaces.destroyById({id:User.get().id,fk:space.id}, _.noop)
+      return Space.destroyById({id:space.id}, _.noop)
+        .$promise
+        .then(User.fetchSpaces)
+        .catch(function(err){
+          return $q.reject(err);
+        });
+    }
 
 
   });

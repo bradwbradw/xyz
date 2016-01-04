@@ -60,6 +60,18 @@
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "property": "__create__spaces"
+    },
+    {
+      "permission": "ALLOW",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "property": "__updateById__spaces"
+    },
+    {
+      "permission": "ALLOW",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "property": "__destroyById__spaces"
     }
   ],
   "methods": {}

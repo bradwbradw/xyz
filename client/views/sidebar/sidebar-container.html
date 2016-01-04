@@ -1,0 +1,37 @@
+<div ng-hide="sidebarClosed">
+
+  <div class="close-button" ng-click="sidebarClosed = true"> [X] </div>
+  <h3><a ui-sref="base">XYZ</a></h3>
+
+  <span>
+  welcome, {{viewer}}
+</span>
+  <div ng-if="viewer === 'owner'"
+       ng-include="'views/import/container.html'"
+        ng-controller="ImportCtrl">
+    (space editing tools go here)
+  </div>
+  <div ng-if="viewer === 'user'">
+    (clone / copy songs to my space(s) tools go here)
+  </div>
+  <div ng-if="viewer === 'guest'">
+    ( this is an XYZ space by {{owner}}. make your own! )
+  </div>
+
+  <br/><i><a ui-sref="import.search">check out 'import' section!</a></i>
+
+  <h3>
+    Our goal is to make the curation, discovery, and enjoyment of networked music streams better.
+  </h3>
+
+  <br/>
+
+
+  <h4>tools</h4><!--
+  <a ui-sref="list"> my xyz list </a> |
+  <a ui-sref="import.search"> import </a> |
+  <a ui-sref="stream"> stream </a> |
+  <a ui-sref="embeds"> embed test </a> |-->
+  <a ui-sref="social"> connect to facebook </a>
+
+</div>
