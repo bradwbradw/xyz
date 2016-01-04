@@ -4,8 +4,8 @@
 <h2 class="space-title"> {{space.name}} ({{owner.name}})</h2>
 
 
-<div class="xyz-item" ng-repeat="item in space.getLibrary()"
-     ng-if="Library.getLibrary().length > 0"
+<div class="xyz-item" ng-repeat="item in Library.songs()"
+     ng-if="Library.songs().length > 0"
      xyz-draggable
      ng-click="Library.isPlayable(item)? queueIfNotDragging(item): Player.show(item)">
 
@@ -30,7 +30,7 @@
 </div>
 
 
-<div ng-if="Library.getLibrary().length === 0">
+<div ng-if="Library.songs().length === 0">
 
   <div class="xyz-item" style="left:45%; top:10%;">
 

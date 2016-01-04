@@ -68,7 +68,6 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
 
       onEnter: function (Library, User) {
-        var libProm = Library.loadLibrary();
 
         if (User.get()) {
           User.fetchSpaces;
@@ -87,23 +86,19 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         'sidebar@': {
           templateUrl: 'views/sidebar/sidebar-container.html',
           controller: 'SidebarCtrl'
-        }/*
+        },
         'importControls': {
           templateUrl: 'views/sidebar/import/control-search.html'
         },
         'importSelector': {
           templateUrl: 'views/sidebar/import/selector.html'
-        }*/
+        }
       },
       resolve: {
 
         space: function ($stateParams, Space, Library) {
-          return Space.findById({id: $stateParams.id,filter:{include:"Songs"} }, _.noop)
-            .$promise
-            .then(function(space){
-              Library.currentSpace = space;
-              return space;
-            });
+          return Library.fetchSpaceAndSongs($stateParams.id)
+            .then(Library.space);
         },
         owner: function (space, Dj) {
           return Dj.findById({id: space.ownerId}, _.noop)
@@ -130,24 +125,10 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
         }
       }
-    })/*
-    .state('import', {
-      parent: 'base',
-      url: '/import',
-      views: {
-        'main@': {
-          controller: 'SpaceCtrl',
-          templateUrl: 'views/xyzspace.html'
-        },
-        'preview': {
-          template: 'views/test/stream.html'
-        }
-      }
-
     })
+    .state('space.search', {
 
-    .state('import.search', {
-      url: '/search',
+      url: '',
       views: {
         'importControls': {
           templateUrl: 'views/sidebar/import/control-search.html'
@@ -159,8 +140,8 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       }
     })
 
-    .state('import.explore', {
-      url: '/explore',
+    .state('space.explore', {
+      url: '',
       views: {
         'importControls': {
           templateUrl: 'views/sidebar/import/control-explore.html'
@@ -171,7 +152,6 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         }
       }
     })
-*/
     .state('list', {
       parent: 'base',
       url: '/list',
@@ -181,7 +161,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           controller: 'listCtrl',
           resolve: {
             songs: function (Library) {
-              return Library.loadLibrary();
+              return Library.fetchSpaceAndSongs();
             }
           }
         }

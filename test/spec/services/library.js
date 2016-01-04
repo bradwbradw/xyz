@@ -77,11 +77,11 @@ describe('Service: Library', function () {
   });
 
   it('should have zero songs before loading', function () {
-    expect(Library.getLibrary().length).toBe(0);
+    expect(Library.songs().length).toBe(0);
   });
 
   it('should load', function (done) {
-    Library.loadLibrary()
+    Library.fetchSpaceAndSongs()
       .then(function (songs) {
         expect(songs.length).toEqual(jasmine.any(Number));
         $timeout(done);
@@ -96,9 +96,9 @@ describe('Service: Library', function () {
 
   it('should save 3 songs and delete 3 songs', function (done) {
 
-    Library.loadLibrary()
+    Library.fetchSpaceAndSongs()
       .then(function () {
-        var num = Library.getLibrary().length;
+        var num = Library.songs().length;
         var promises = [];
 
         _.each(testSongs, function (song) { //jshint ignore:line
@@ -111,8 +111,8 @@ describe('Service: Library', function () {
 
         $q.all(promises)
           .then(function () {
-            Library.loadLibrary().then(function () {
-              expect(Library.getLibrary().length).toBe(num + testSongs.length);
+            Library.fetchSpaceAndSongs().then(function () {
+              expect(Library.songs().length).toBe(num + testSongs.length);
 
               var promises2 = [];
               _.each(added_song_ids, function (id) {
@@ -122,9 +122,9 @@ describe('Service: Library', function () {
               $q.all(promises2)
                 .then(function () {
 
-                  Library.loadLibrary().then(function () {
+                  Library.fetchSpaceAndSongs().then(function () {
 
-                    expect(Library.getLibrary().length).toBe(num);
+                    expect(Library.songs().length).toBe(num);
                     $timeout(done);
 
                   });

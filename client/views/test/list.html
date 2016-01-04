@@ -24,7 +24,7 @@
     </div>
 
 
-    <div ng-repeat="song in Library.getLibrary()"
+    <div ng-repeat="song in Library.songs()"
          class="song-row"
          ng-class="{'editing':song.editing}">
 
@@ -58,6 +58,6 @@
   {{newSong | json}}
 </pre>
 <pre>Library JSON:<br/>
-    {{Library.getLibrary() | json}}
+    {{Library.songs() | json}}
   </pre>
 </div>

@@ -9,7 +9,7 @@
   "properties": {},
   "validations": [],
   "relations": {
-    "Songs": {
+    "songs": {
       "type": "hasAndBelongsToMany",
       "model": "Song"
     },
@@ -31,6 +31,30 @@
       "principalType": "ROLE",
       "principalId": "$owner",
       "accessType":"WRITE"
+    },
+    {
+      "permission": "ALLOW",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "property": "__get__songs"
+    },
+    {
+      "permission": "ALLOW",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "property": "__create__songs"
+    },
+    {
+      "permission": "ALLOW",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "property": "__updateById__songs"
+    },
+    {
+      "permission": "ALLOW",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "property": "__destroyById__songs"
     }],
   "methods": {}
 }
