@@ -81,22 +81,29 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '/space/:id',
       views: {
         'main@': {
-          controller: 'SpaceCtrl',
-          templateUrl: 'views/xyzspace.html'
-        },
-        'preview@main': {
-          template: 'hello in mine state'
+          templateUrl: 'views/xyzspace.html',
+          controller: 'SpaceCtrl'
         },
         'sidebar@': {
           templateUrl: 'views/sidebar/sidebar-container.html',
           controller: 'SidebarCtrl'
-        }
+        }/*
+        'importControls': {
+          templateUrl: 'views/sidebar/import/control-search.html'
+        },
+        'importSelector': {
+          templateUrl: 'views/sidebar/import/selector.html'
+        }*/
       },
       resolve: {
 
-        space: function ($stateParams, Space) {
+        space: function ($stateParams, Space, Library) {
           return Space.findById({id: $stateParams.id,filter:{include:"Songs"} }, _.noop)
-            .$promise;
+            .$promise
+            .then(function(space){
+              Library.currentSpace = space;
+              return space;
+            });
         },
         owner: function (space, Dj) {
           return Dj.findById({id: space.ownerId}, _.noop)
@@ -123,7 +130,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
         }
       }
-    })
+    })/*
     .state('import', {
       parent: 'base',
       url: '/import',
@@ -134,16 +141,6 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         },
         'preview': {
           template: 'views/test/stream.html'
-        },
-        'sidebar@': {
-          templateUrl: 'views/import/container.html',
-          controller: 'ImportCtrl'
-        },
-        'importControls@sidebar': {
-          templateUrl: 'views/import/control-search.html'
-        },
-        'importSelector@sidebar': {
-          templateUrl: 'views/import/selector.html'
         }
       }
 
@@ -153,10 +150,10 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '/search',
       views: {
         'importControls': {
-          templateUrl: 'views/import/control-search.html'
+          templateUrl: 'views/sidebar/import/control-search.html'
         },
         'importSelector': {
-          templateUrl: 'views/import/selector.html'
+          templateUrl: 'views/sidebar/import/selector.html'
 
         }
       }
@@ -166,15 +163,15 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '/explore',
       views: {
         'importControls': {
-          templateUrl: 'views/import/control-explore.html'
+          templateUrl: 'views/sidebar/import/control-explore.html'
         },
         'importSelector': {
-          templateUrl: 'views/import/selector.html'
+          templateUrl: 'views/sidebar/import/selector.html'
 
         }
       }
     })
-
+*/
     .state('list', {
       parent: 'base',
       url: '/list',

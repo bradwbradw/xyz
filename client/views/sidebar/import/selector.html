@@ -14,19 +14,19 @@
 
 <div>
 
-  <div ng-if="Library.getFocusedLocalItemGroup().urlResult">
-    {{ Library.getFocusedLocalItemGroup().provider }} media detected:
-    {{ Library.getFocusedLocalItemGroup().artist+' - '+Library.getFocusedLocalItemGroup().title }}
+  <div ng-if="Library.getLocalItems().urlResult">
+    {{ Library.getLocalItems().provider }} media detected:
+    {{ Library.getLocalItems().artist+' - '+Library.getLocalItems().title }}
     <hr/>
-    <button ng-click="Library.add(Library.getFocusedLocalItemGroup())">add to library</button>
-    <button ng-if="!item.error && Library.isPlayable(Library.getFocusedLocalItemGroup())"
-            ng-click="Player.play(Library.getFocusedLocalItemGroup())">play
+    <button ng-click="Library.add(Library.getLocalItems())">add to library</button>
+    <button ng-if="!item.error && Library.isPlayable(Library.getLocalItems())"
+            ng-click="Player.play(Library.getLocalItems())">play
     </button>
 
   </div>
 
-  <div class="song-row" ng-repeat="item in Library.getFocusedLocalItemGroup()"
-       ng-if="!Library.getFocusedLocalItemGroup().urlResult">
+  <div class="song-row" ng-repeat="item in Library.getLocalItems()"
+       ng-if="!Library.getLocalItems().urlResult">
 
 
     <button ng-if="!item.error" ng-click="putInSpace(item, $event)">add</button>
@@ -43,6 +43,6 @@
 </div>
 
 <pre class="debug" ng-if="false">
-  {{Library.getFocusedLocalItemGroup() | json}}
+  {{Library.getLocalItems() | json}}
 </pre>
 

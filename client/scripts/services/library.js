@@ -2,10 +2,11 @@
 
 angular.module('xyzApp')
 
-  .service('Library', function ($log, $q, Server, Social, Extract, localStorageService) {
-
+  .service('Library', function ($log, $q, Server) {
 
     var Library = {
+
+      /*
       // should be same as in index.js database model
       fields: [
         'artist',
@@ -23,18 +24,9 @@ angular.module('xyzApp')
         'kind',
         'active'
 
-      ], /* after test
-       fields:[
+      ], */
 
-       'artist',
-       'title',
-       'provider',
-       'url',
-       'x',
-       'y',
-       'z',
-
-       ],*/
+      currentSpace:{}, // set by the 'space' resolve
       songs: [],
       localItems: [],//localStorageService.get('localItems') || [],
       getLocalItems: function () {
@@ -48,24 +40,6 @@ angular.module('xyzApp')
           return 0;
         }
       },
-      focusLeft: function () {
-        Library.focused = Library.focused - 1;
-      },
-      focusRight: function () {
-        Library.focused = Library.focused + 1;
-      },
-      latestFocused: function () {
-        return Library.focused === Library.localItems.length - 1;
-      },
-      getFocusedLocalItemGroup: function () {
-      return Library.getLocalItems();
-      /*
-        if (_.isEmpty(Library.localItems)){
-          return false;
-        }
-        return Library.localItems[Library.focused];*/
-      },
-
 
       addToLocalItems: function (newItems) {
       //  console.log('ADDING ITEMS:',newItems);
@@ -75,19 +49,6 @@ angular.module('xyzApp')
 //        localStorageService.set('localItems', Library.localItems);
 
       },
-
-
-      /*
-
-       GET /songs
-
-       GET /songs/:id
-       POST /songs
-       PUT /songs/:id
-       DELETE /songs/:id
-
-       */
-
 
       getLibrary: function () {
 
@@ -110,6 +71,7 @@ angular.module('xyzApp')
       // example song object:
 
       add: function (song) {
+        console.warn('** space is :',Library.currentSpace);
         return Server.addSong(song)
           .then(function (result) {
             updateView(result);
@@ -136,7 +98,27 @@ angular.module('xyzApp')
         } else if(item.kind) {
           return item.kind === 'media';
         }
-      }
+      },
+
+      /*
+
+      focusLeft: function () {
+        Library.focused = Library.focused - 1;
+      },
+      focusRight: function () {
+        Library.focused = Library.focused + 1;
+      },
+      latestFocused: function () {
+        return Library.focused === Library.localItems.length - 1;
+      },
+      getFocusedLocalItemGroup: function () {
+      /!*
+        if (_.isEmpty(Library.localItems)){
+          return false;
+        }
+        return Library.localItems[Library.focused];*!/
+      },
+*/
 
     };
 

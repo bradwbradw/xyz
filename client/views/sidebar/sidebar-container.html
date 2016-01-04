@@ -7,10 +7,11 @@
   welcome, {{viewer}}
 </span>
   <div ng-if="viewer === 'owner'"
-       ng-include="'views/import/container.html'"
-        ng-controller="ImportCtrl">
-    (space editing tools go here)
+       ng-include="'views/sidebar/import/import-container.html'"
+      ng-controller="ImportCtrl"
+  >
   </div>
+
   <div ng-if="viewer === 'user'">
     (clone / copy songs to my space(s) tools go here)
   </div>

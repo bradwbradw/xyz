@@ -8,7 +8,8 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SidebarCtrl', function ($scope, viewer, User) {
+  .controller('SidebarCtrl', function ($scope, viewer, space) {
 
     $scope.viewer = viewer;
+    $scope.space = space;
   });

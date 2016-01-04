@@ -9,7 +9,10 @@
  */
 angular.module('xyzApp')
   .controller('ImportCtrl', function ($timeout, Extract, Library, Social, MediaAPI, Player, localStorageService, $scope, $log, $window, $q) {
+/*
+    Library.currentSpace = $scope.$parent.space;*/
 
+    $scope.space = Library.currentSpace;
 
     var newItem = '';
 
