@@ -46,7 +46,8 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           controller: 'LandingCtrl'
         },
         'sidebar@': {
-          templateUrl: 'views/sidebar/sidebar-container.html'
+          templateUrl: 'views/sidebar/sidebar-container.html',
+          controller: 'SidebarCtrl'
         }
       },
       resolve: {
@@ -63,6 +64,12 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           } else {
             return User.get();
           }
+        },
+        viewer:function(){
+          return false;
+        },
+        space: function(){
+          return false;
         }
       },
 
@@ -119,7 +126,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             if( owner.id === the_user.id){
               return 'owner';
             } else {
-              return 'user';
+              return 'viewer';
             }
           }
 

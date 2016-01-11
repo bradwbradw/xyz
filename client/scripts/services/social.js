@@ -25,7 +25,7 @@ angular.module('xyzApp')
   });
 
 angular.module('xyzApp')
-  .service('Social', function ($window, ezfb,$timeout) {
+  .service('Social', function ($window, $q, $timeout, ezfb) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
 // initiate auth popup
@@ -57,7 +57,7 @@ angular.module('xyzApp')
         logout: ezfb.logout,
 
         updateLoginStatus: function () {
-          return ezfb.getLoginStatus()
+          return ezfb.getLoginStatus();
         },
 
         /*

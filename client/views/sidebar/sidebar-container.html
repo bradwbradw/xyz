@@ -3,36 +3,51 @@
   <div class="close-button" ng-click="sidebarClosed = true"> [X] </div>
   <h3><a ui-sref="base">XYZ</a></h3>
 
-  <span>
-  welcome, {{viewer}}
-</span>
-  <div ng-if="viewer === 'owner'"
-       ng-include="'views/sidebar/import/import-container.html'"
-      ng-controller="ImportCtrl"
-  >
-  </div>
-
-  <div ng-if="viewer === 'user'">
-    (clone / copy songs to my space(s) tools go here)
-  </div>
-  <div ng-if="viewer === 'guest'">
-    ( this is an XYZ space by {{owner}}. make your own! )
-  </div>
-
-  <br/><i><a ui-sref="import.search">check out 'import' section!</a></i>
-
   <h3>
     Our goal is to make the curation, discovery, and enjoyment of networked music streams better.
   </h3>
 
+  <div ng-if="viewer">
+
+    <span>
+    you are: {{viewer}} of this space
+    </span>
+    <div ng-if="viewer === 'owner'"
+         ng-include="'views/sidebar/import/import-container.html'"
+         ng-controller="ImportCtrl"
+    >
+    </div>
+
+    <div ng-if="viewer === 'viewer'">
+      (clone / copy songs to my space(s) tools go here)
+    </div>
+    <div ng-if="viewer === 'guest'">
+      ( this is an XYZ space by {{owner}}. make your own! )
+    </div>
+  </div>
+
   <br/>
-
-
-  <h4>tools</h4><!--
+  <!--
   <a ui-sref="list"> my xyz list </a> |
   <a ui-sref="import.search"> import </a> |
   <a ui-sref="stream"> stream </a> |
   <a ui-sref="embeds"> embed test </a> |-->
-  <a ui-sref="social"> connect to facebook </a>
 
+  <hr/>
+  <h2>facebook connect</h2>
+
+  <div ng-if="loginStatus.status === 'unknown' || ( !loginStatus && !connectingToFB )">
+
+    Facebook: not connected
+    <button ng-click="FB.login().then(refreshFB)">connect XYZ to Facebook</button>
+  </div>
+  <div ng-if="connectingToFB">Facebook: connecting...</div>
+  <div ng-if="loginStatus.status === 'connected'">
+    Facebook: &#10003;
+  </div>
+
+
+  <hr/>
+<!--
+  <pre>status: {{loginStatus | json}}</pre>-->
 </div>
