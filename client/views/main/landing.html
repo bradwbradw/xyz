@@ -1,14 +1,11 @@
-<h1>xyz</h1>
-<h2>
-  <a ui-sref='base'>XYZ</a>
-</h2>
 
-<h2 ui-sref='lobby'>"lobby" (tba)</h2>
+
+<h2 ui-sref='lobby'>"lobby" - public spaces</h2>
 
 
 <span ng-repeat="space in allSpaces">
   <a ui-sref="space({id:space.id})">
-    {{space.name}} ({{space.owner.name}}) <button ng-click="deleteSpace(space).catch(showError)">x</button>
+    {{space.name}} (owned by {{space.owner.name}})
   </a>, </span>
 
 
@@ -32,15 +29,13 @@
 
     <input type="submit" value="submit"/>
   </form>
-NOT LOGGED IN
+join xyz today!
 
 </div>
 
 <div ng-if="User.loggedIn()">
 
-LOGGED IN
-
-  Welcome to XYZ: {{User.get() | json}}
+  Logged in to XYZ: {{User.get().name}}
   <form ng-submit="User.update(new).catch(showError)">
 
     <input ng-model="new.name" placeholder="update name">

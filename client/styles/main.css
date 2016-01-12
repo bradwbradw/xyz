@@ -864,5 +864,7 @@ button {
       top: 0;
       right: 0;
       width: 20em; } }
+  .sidebar-container .active {
+    background-color: cadetblue; }
 
 /*# sourceMappingURL=main.css.map */

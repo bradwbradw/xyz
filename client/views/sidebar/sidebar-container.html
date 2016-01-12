@@ -1,9 +1,9 @@
 <div ng-hide="sidebarClosed">
 
   <div class="close-button" ng-click="sidebarClosed = true"> [X] </div>
-  <h3><a ui-sref="base">XYZ</a></h3>
+  <h1><a ui-sref="base">XYZ</a></h1>
 
-  <h3>
+  <h3 ng-if="false">
     Our goal is to make the curation, discovery, and enjoyment of networked music streams better.
   </h3>
 
@@ -14,6 +14,7 @@
     </span>
     <div ng-if="viewer === 'owner'"
          ng-include="'views/sidebar/import/import-container.html'"
+
          ng-controller="ImportCtrl"
     >
     </div>
@@ -34,7 +35,7 @@
   <a ui-sref="embeds"> embed test </a> |-->
 
   <hr/>
-  <h2>facebook connect</h2>
+  <h3>facebook connector</h3>
 
   <div ng-if="loginStatus.status === 'unknown' || ( !loginStatus && !connectingToFB )">
 

@@ -1,7 +1,7 @@
 <button ng-if="!FB.loggedIn()" ng-click="FB.login().then(FB.loadMe())">login to FB</button>
 
 <div ng-if="FB.loggedIn()">
-  <h4>load neat songs from your facebook feed</h4><br/>
+  <h4>load neat songs from your facebook feed. click the button again to load more</h4><br/>
   <button ng-click="explore(Social.FB.loadPosts())">facebook posts</button>
 </div>
 <!--
