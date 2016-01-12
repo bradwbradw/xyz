@@ -3089,89 +3089,89 @@ module.factory(
           method: "POST"
         },
 
-        // INTERNAL. Use Space.Songs.findById() instead.
-        "::findById::Space::Songs": {
+        // INTERNAL. Use Space.songs.findById() instead.
+        "::findById::Space::songs": {
           params: {
           'fk': '@fk'
           },
-          url: urlBase + "/Spaces/:id/Songs/:fk",
+          url: urlBase + "/Spaces/:id/songs/:fk",
           method: "GET"
         },
 
-        // INTERNAL. Use Space.Songs.destroyById() instead.
-        "::destroyById::Space::Songs": {
+        // INTERNAL. Use Space.songs.destroyById() instead.
+        "::destroyById::Space::songs": {
           params: {
           'fk': '@fk'
           },
-          url: urlBase + "/Spaces/:id/Songs/:fk",
+          url: urlBase + "/Spaces/:id/songs/:fk",
           method: "DELETE"
         },
 
-        // INTERNAL. Use Space.Songs.updateById() instead.
-        "::updateById::Space::Songs": {
+        // INTERNAL. Use Space.songs.updateById() instead.
+        "::updateById::Space::songs": {
           params: {
           'fk': '@fk'
           },
-          url: urlBase + "/Spaces/:id/Songs/:fk",
+          url: urlBase + "/Spaces/:id/songs/:fk",
           method: "PUT"
         },
 
-        // INTERNAL. Use Space.Songs.link() instead.
-        "::link::Space::Songs": {
+        // INTERNAL. Use Space.songs.link() instead.
+        "::link::Space::songs": {
           params: {
           'fk': '@fk'
           },
-          url: urlBase + "/Spaces/:id/Songs/rel/:fk",
+          url: urlBase + "/Spaces/:id/songs/rel/:fk",
           method: "PUT"
         },
 
-        // INTERNAL. Use Space.Songs.unlink() instead.
-        "::unlink::Space::Songs": {
+        // INTERNAL. Use Space.songs.unlink() instead.
+        "::unlink::Space::songs": {
           params: {
           'fk': '@fk'
           },
-          url: urlBase + "/Spaces/:id/Songs/rel/:fk",
+          url: urlBase + "/Spaces/:id/songs/rel/:fk",
           method: "DELETE"
         },
 
-        // INTERNAL. Use Space.Songs.exists() instead.
-        "::exists::Space::Songs": {
+        // INTERNAL. Use Space.songs.exists() instead.
+        "::exists::Space::songs": {
           params: {
           'fk': '@fk'
           },
-          url: urlBase + "/Spaces/:id/Songs/rel/:fk",
+          url: urlBase + "/Spaces/:id/songs/rel/:fk",
           method: "HEAD"
         },
 
-        // INTERNAL. Use Space.Songs() instead.
-        "::get::Space::Songs": {
+        // INTERNAL. Use Space.songs() instead.
+        "::get::Space::songs": {
           isArray: true,
-          url: urlBase + "/Spaces/:id/Songs",
+          url: urlBase + "/Spaces/:id/songs",
           method: "GET"
         },
 
-        // INTERNAL. Use Space.Songs.create() instead.
-        "::create::Space::Songs": {
-          url: urlBase + "/Spaces/:id/Songs",
+        // INTERNAL. Use Space.songs.create() instead.
+        "::create::Space::songs": {
+          url: urlBase + "/Spaces/:id/songs",
           method: "POST"
         },
 
-        // INTERNAL. Use Space.Songs.createMany() instead.
-        "::createMany::Space::Songs": {
+        // INTERNAL. Use Space.songs.createMany() instead.
+        "::createMany::Space::songs": {
           isArray: true,
-          url: urlBase + "/Spaces/:id/Songs",
+          url: urlBase + "/Spaces/:id/songs",
           method: "POST"
         },
 
-        // INTERNAL. Use Space.Songs.destroyAll() instead.
-        "::delete::Space::Songs": {
-          url: urlBase + "/Spaces/:id/Songs",
+        // INTERNAL. Use Space.songs.destroyAll() instead.
+        "::delete::Space::songs": {
+          url: urlBase + "/Spaces/:id/songs",
           method: "DELETE"
         },
 
-        // INTERNAL. Use Space.Songs.count() instead.
-        "::count::Space::Songs": {
-          url: urlBase + "/Spaces/:id/Songs/count",
+        // INTERNAL. Use Space.songs.count() instead.
+        "::count::Space::songs": {
+          url: urlBase + "/Spaces/:id/songs/count",
           method: "GET"
         },
       }
