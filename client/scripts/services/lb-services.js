@@ -3755,57 +3755,57 @@ module.factory(
       { 'id': '@id' },
       {
 
-        // INTERNAL. Use Space.Songs.findById() instead.
-        "prototype$__findById__Songs": {
+        // INTERNAL. Use Space.songs.findById() instead.
+        "prototype$__findById__songs": {
           params: {
           'fk': '@fk'
           },
-          url: urlBase + "/Spaces/:id/Songs/:fk",
+          url: urlBase + "/Spaces/:id/songs/:fk",
           method: "GET"
         },
 
-        // INTERNAL. Use Space.Songs.destroyById() instead.
-        "prototype$__destroyById__Songs": {
+        // INTERNAL. Use Space.songs.destroyById() instead.
+        "prototype$__destroyById__songs": {
           params: {
           'fk': '@fk'
           },
-          url: urlBase + "/Spaces/:id/Songs/:fk",
+          url: urlBase + "/Spaces/:id/songs/:fk",
           method: "DELETE"
         },
 
-        // INTERNAL. Use Space.Songs.updateById() instead.
-        "prototype$__updateById__Songs": {
+        // INTERNAL. Use Space.songs.updateById() instead.
+        "prototype$__updateById__songs": {
           params: {
           'fk': '@fk'
           },
-          url: urlBase + "/Spaces/:id/Songs/:fk",
+          url: urlBase + "/Spaces/:id/songs/:fk",
           method: "PUT"
         },
 
-        // INTERNAL. Use Space.Songs.link() instead.
-        "prototype$__link__Songs": {
+        // INTERNAL. Use Space.songs.link() instead.
+        "prototype$__link__songs": {
           params: {
           'fk': '@fk'
           },
-          url: urlBase + "/Spaces/:id/Songs/rel/:fk",
+          url: urlBase + "/Spaces/:id/songs/rel/:fk",
           method: "PUT"
         },
 
-        // INTERNAL. Use Space.Songs.unlink() instead.
-        "prototype$__unlink__Songs": {
+        // INTERNAL. Use Space.songs.unlink() instead.
+        "prototype$__unlink__songs": {
           params: {
           'fk': '@fk'
           },
-          url: urlBase + "/Spaces/:id/Songs/rel/:fk",
+          url: urlBase + "/Spaces/:id/songs/rel/:fk",
           method: "DELETE"
         },
 
-        // INTERNAL. Use Space.Songs.exists() instead.
-        "prototype$__exists__Songs": {
+        // INTERNAL. Use Space.songs.exists() instead.
+        "prototype$__exists__songs": {
           params: {
           'fk': '@fk'
           },
-          url: urlBase + "/Spaces/:id/Songs/rel/:fk",
+          url: urlBase + "/Spaces/:id/songs/rel/:fk",
           method: "HEAD"
         },
 
@@ -3815,28 +3815,28 @@ module.factory(
           method: "GET"
         },
 
-        // INTERNAL. Use Space.Songs() instead.
-        "prototype$__get__Songs": {
+        // INTERNAL. Use Space.songs() instead.
+        "prototype$__get__songs": {
           isArray: true,
-          url: urlBase + "/Spaces/:id/Songs",
+          url: urlBase + "/Spaces/:id/songs",
           method: "GET"
         },
 
-        // INTERNAL. Use Space.Songs.create() instead.
-        "prototype$__create__Songs": {
-          url: urlBase + "/Spaces/:id/Songs",
+        // INTERNAL. Use Space.songs.create() instead.
+        "prototype$__create__songs": {
+          url: urlBase + "/Spaces/:id/songs",
           method: "POST"
         },
 
-        // INTERNAL. Use Space.Songs.destroyAll() instead.
-        "prototype$__delete__Songs": {
-          url: urlBase + "/Spaces/:id/Songs",
+        // INTERNAL. Use Space.songs.destroyAll() instead.
+        "prototype$__delete__songs": {
+          url: urlBase + "/Spaces/:id/songs",
           method: "DELETE"
         },
 
-        // INTERNAL. Use Space.Songs.count() instead.
-        "prototype$__count__Songs": {
-          url: urlBase + "/Spaces/:id/Songs/count",
+        // INTERNAL. Use Space.songs.count() instead.
+        "prototype$__count__songs": {
+          url: urlBase + "/Spaces/:id/songs/count",
           method: "GET"
         },
 
@@ -4550,27 +4550,27 @@ module.factory(
 
     /**
      * @ngdoc object
-     * @name lbServices.Space.Songs
-     * @header lbServices.Space.Songs
+     * @name lbServices.Space.songs
+     * @header lbServices.Space.songs
      * @object
      * @description
      *
-     * The object `Space.Songs` groups methods
+     * The object `Space.songs` groups methods
      * manipulating `Song` instances related to `Space`.
      *
-     * Call {@link lbServices.Space#Songs Space.Songs()}
+     * Call {@link lbServices.Space#songs Space.songs()}
      * to query all related instances.
      */
 
 
         /**
          * @ngdoc method
-         * @name lbServices.Space#Songs
+         * @name lbServices.Space#songs
          * @methodOf lbServices.Space
          *
          * @description
          *
-         * Queries Songs of Space.
+         * Queries songs of Space.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -4593,20 +4593,20 @@ module.factory(
          * This usually means the response is a `Song` object.)
          * </em>
          */
-        R.Songs = function() {
+        R.songs = function() {
           var TargetResource = $injector.get("Song");
-          var action = TargetResource["::get::Space::Songs"];
+          var action = TargetResource["::get::Space::songs"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Space.Songs#count
-         * @methodOf lbServices.Space.Songs
+         * @name lbServices.Space.songs#count
+         * @methodOf lbServices.Space.songs
          *
          * @description
          *
-         * Counts Songs of Space.
+         * Counts songs of Space.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -4628,20 +4628,20 @@ module.factory(
          *
          *  - `count` – `{number=}` - 
          */
-        R.Songs.count = function() {
+        R.songs.count = function() {
           var TargetResource = $injector.get("Song");
-          var action = TargetResource["::count::Space::Songs"];
+          var action = TargetResource["::count::Space::songs"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Space.Songs#create
-         * @methodOf lbServices.Space.Songs
+         * @name lbServices.Space.songs#create
+         * @methodOf lbServices.Space.songs
          *
          * @description
          *
-         * Creates a new instance in Songs of this model.
+         * Creates a new instance in songs of this model.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -4666,20 +4666,20 @@ module.factory(
          * This usually means the response is a `Song` object.)
          * </em>
          */
-        R.Songs.create = function() {
+        R.songs.create = function() {
           var TargetResource = $injector.get("Song");
-          var action = TargetResource["::create::Space::Songs"];
+          var action = TargetResource["::create::Space::songs"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Space.Songs#createMany
-         * @methodOf lbServices.Space.Songs
+         * @name lbServices.Space.songs#createMany
+         * @methodOf lbServices.Space.songs
          *
          * @description
          *
-         * Creates a new instance in Songs of this model.
+         * Creates a new instance in songs of this model.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -4704,20 +4704,20 @@ module.factory(
          * This usually means the response is a `Song` object.)
          * </em>
          */
-        R.Songs.createMany = function() {
+        R.songs.createMany = function() {
           var TargetResource = $injector.get("Song");
-          var action = TargetResource["::createMany::Space::Songs"];
+          var action = TargetResource["::createMany::Space::songs"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Space.Songs#destroyAll
-         * @methodOf lbServices.Space.Songs
+         * @name lbServices.Space.songs#destroyAll
+         * @methodOf lbServices.Space.songs
          *
          * @description
          *
-         * Deletes all Songs of this model.
+         * Deletes all songs of this model.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -4735,26 +4735,26 @@ module.factory(
          *
          * This method returns no data.
          */
-        R.Songs.destroyAll = function() {
+        R.songs.destroyAll = function() {
           var TargetResource = $injector.get("Song");
-          var action = TargetResource["::delete::Space::Songs"];
+          var action = TargetResource["::delete::Space::songs"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Space.Songs#destroyById
-         * @methodOf lbServices.Space.Songs
+         * @name lbServices.Space.songs#destroyById
+         * @methodOf lbServices.Space.songs
          *
          * @description
          *
-         * Delete a related item by id for Songs.
+         * Delete a related item by id for songs.
          *
          * @param {Object=} parameters Request parameters.
          *
          *  - `id` – `{*}` - PersistedModel id
          *
-         *  - `fk` – `{*}` - Foreign key for Songs
+         *  - `fk` – `{*}` - Foreign key for songs
          *
          * @param {function(Object,Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4768,26 +4768,26 @@ module.factory(
          *
          * This method returns no data.
          */
-        R.Songs.destroyById = function() {
+        R.songs.destroyById = function() {
           var TargetResource = $injector.get("Song");
-          var action = TargetResource["::destroyById::Space::Songs"];
+          var action = TargetResource["::destroyById::Space::songs"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Space.Songs#exists
-         * @methodOf lbServices.Space.Songs
+         * @name lbServices.Space.songs#exists
+         * @methodOf lbServices.Space.songs
          *
          * @description
          *
-         * Check the existence of Songs relation to an item by id.
+         * Check the existence of songs relation to an item by id.
          *
          * @param {Object=} parameters Request parameters.
          *
          *  - `id` – `{*}` - PersistedModel id
          *
-         *  - `fk` – `{*}` - Foreign key for Songs
+         *  - `fk` – `{*}` - Foreign key for songs
          *
          * @param {function(Object,Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4804,26 +4804,26 @@ module.factory(
          * This usually means the response is a `Song` object.)
          * </em>
          */
-        R.Songs.exists = function() {
+        R.songs.exists = function() {
           var TargetResource = $injector.get("Song");
-          var action = TargetResource["::exists::Space::Songs"];
+          var action = TargetResource["::exists::Space::songs"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Space.Songs#findById
-         * @methodOf lbServices.Space.Songs
+         * @name lbServices.Space.songs#findById
+         * @methodOf lbServices.Space.songs
          *
          * @description
          *
-         * Find a related item by id for Songs.
+         * Find a related item by id for songs.
          *
          * @param {Object=} parameters Request parameters.
          *
          *  - `id` – `{*}` - PersistedModel id
          *
-         *  - `fk` – `{*}` - Foreign key for Songs
+         *  - `fk` – `{*}` - Foreign key for songs
          *
          * @param {function(Object,Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4840,26 +4840,26 @@ module.factory(
          * This usually means the response is a `Song` object.)
          * </em>
          */
-        R.Songs.findById = function() {
+        R.songs.findById = function() {
           var TargetResource = $injector.get("Song");
-          var action = TargetResource["::findById::Space::Songs"];
+          var action = TargetResource["::findById::Space::songs"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Space.Songs#link
-         * @methodOf lbServices.Space.Songs
+         * @name lbServices.Space.songs#link
+         * @methodOf lbServices.Space.songs
          *
          * @description
          *
-         * Add a related item by id for Songs.
+         * Add a related item by id for songs.
          *
          * @param {Object=} parameters Request parameters.
          *
          *  - `id` – `{*}` - PersistedModel id
          *
-         *  - `fk` – `{*}` - Foreign key for Songs
+         *  - `fk` – `{*}` - Foreign key for songs
          *
          * @param {Object} postData Request data.
          *
@@ -4880,26 +4880,26 @@ module.factory(
          * This usually means the response is a `Song` object.)
          * </em>
          */
-        R.Songs.link = function() {
+        R.songs.link = function() {
           var TargetResource = $injector.get("Song");
-          var action = TargetResource["::link::Space::Songs"];
+          var action = TargetResource["::link::Space::songs"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Space.Songs#unlink
-         * @methodOf lbServices.Space.Songs
+         * @name lbServices.Space.songs#unlink
+         * @methodOf lbServices.Space.songs
          *
          * @description
          *
-         * Remove the Songs relation to an item by id.
+         * Remove the songs relation to an item by id.
          *
          * @param {Object=} parameters Request parameters.
          *
          *  - `id` – `{*}` - PersistedModel id
          *
-         *  - `fk` – `{*}` - Foreign key for Songs
+         *  - `fk` – `{*}` - Foreign key for songs
          *
          * @param {function(Object,Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4913,26 +4913,26 @@ module.factory(
          *
          * This method returns no data.
          */
-        R.Songs.unlink = function() {
+        R.songs.unlink = function() {
           var TargetResource = $injector.get("Song");
-          var action = TargetResource["::unlink::Space::Songs"];
+          var action = TargetResource["::unlink::Space::songs"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Space.Songs#updateById
-         * @methodOf lbServices.Space.Songs
+         * @name lbServices.Space.songs#updateById
+         * @methodOf lbServices.Space.songs
          *
          * @description
          *
-         * Update a related item by id for Songs.
+         * Update a related item by id for songs.
          *
          * @param {Object=} parameters Request parameters.
          *
          *  - `id` – `{*}` - PersistedModel id
          *
-         *  - `fk` – `{*}` - Foreign key for Songs
+         *  - `fk` – `{*}` - Foreign key for songs
          *
          * @param {Object} postData Request data.
          *
@@ -4953,9 +4953,9 @@ module.factory(
          * This usually means the response is a `Song` object.)
          * </em>
          */
-        R.Songs.updateById = function() {
+        R.songs.updateById = function() {
           var TargetResource = $injector.get("Song");
-          var action = TargetResource["::updateById::Space::Songs"];
+          var action = TargetResource["::updateById::Space::songs"];
           return action.apply(R, arguments);
         };
 
