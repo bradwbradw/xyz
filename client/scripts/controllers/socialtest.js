@@ -28,6 +28,12 @@ angular.module('xyzApp')
       })
       .then(function () {
         Social.FB.loadMe();
+      })
+      .catch(function(err){
+        alert(err);
+      })
+      .finally(function(huh){
+        alert('finally '+huh);
       });
 
     $scope.FB = Social.FB;

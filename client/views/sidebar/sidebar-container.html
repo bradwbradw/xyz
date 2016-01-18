@@ -33,17 +33,16 @@
   <a ui-sref="import.search"> import </a> |
   <a ui-sref="stream"> stream </a> |
   <a ui-sref="embeds"> embed test </a> |-->
-
   <hr/>
-  <h3>facebook connector</h3>
+  <h3>social med.</h3>
 
-  <div ng-if="loginStatus.status === 'unknown' || ( !loginStatus && !connectingToFB )">
+  <div ng-if="!FB.isConnected() && !FB.isConnecting() ">
 
     Facebook: not connected
-    <button ng-click="FB.login().then(refreshFB)">connect XYZ to Facebook</button>
+    <button ng-click="FB.setConnecting().then(FB.login).then(FB.refreshFB)">connect XYZ to Facebook</button>
   </div>
-  <div ng-if="connectingToFB">Facebook: connecting...</div>
-  <div ng-if="loginStatus.status === 'connected'">
+  <div ng-if="FB.isConnecting()">Facebook: connecting...</div>
+  <div ng-if="FB.isConnected()">
     Facebook: &#10003;
   </div>
 

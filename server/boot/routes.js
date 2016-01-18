@@ -50,13 +50,11 @@ module.exports = function (app) {
     return outputJson;
   };
 
-  var radioTimer = setInterval(incrementStream, 1000);
-
 
   var populateAllSongs = function () {
 
-    var apiLocation = 'http://localhost:' + app.get('port') + '/api/songs';
-    console.log('api location:', apiLocation);
+    var apiLocation = 'http://' + app.get('host') + ':' + app.get('port') + app.get('restApiRoot') + '/songs';
+    console.log('populate songs: api location:', apiLocation);
 
     request(apiLocation, function (error, response, body) {
       if (!error && response.statusCode == 200) {
@@ -73,7 +71,12 @@ module.exports = function (app) {
 
   };
 
-  populateAllSongs();
+  var startEverything = function () {
+
+    populateAllSongs();
+    var radioTimer = setInterval(incrementStream, 1000);
+
+  }
 
   app.get('/library', function (request, response) {
 

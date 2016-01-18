@@ -12,6 +12,7 @@
 
 angular.module('xyzApp')
   .config(function (ezfbProvider, apiKeys) {
+    console.log('api fb ', apiKeys);
 
     ezfbProvider.setInitParams({
       // Facebook App ID
@@ -42,6 +43,20 @@ angular.module('xyzApp')
         likes: {},
         profile: {},
 
+        // this one is used
+        status: false,
+        connecting: false,
+        isConnected: function () {
+          return Social.FB.status === 'connected';
+        },
+        isConnecting: function () {
+          return Social.FB.connecting;
+        },
+        setConnecting: function () {
+          Social.FB.connecting = true;
+          return $q.resolve(true);
+        },
+
         post_paging: false,
 
         login: function () {
@@ -56,8 +71,40 @@ angular.module('xyzApp')
         },
         logout: ezfb.logout,
 
+        refreshFB: function () {
+
+          console.log('refreshing fb');
+
+          Social.FB.setConnecting()
+            .then(Social.FB.updateLoginStatus)
+            .then(function (res) {
+              console.log('updated login:', res);
+              // res: FB.getLoginStatus response
+              // https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus
+            })
+            .then(function () {
+              Social.FB.loadMe;
+            })
+            .catch(function (err) {
+              console.error(err);
+              alert(err);
+            })
+            .finally(function () {
+              Social.FB.connecting = false;
+            });
+        },
         updateLoginStatus: function () {
-          return ezfb.getLoginStatus();
+          console.log('updating login status');
+          return ezfb.getLoginStatus()
+            .then(function (response) {
+              console.log('back grom ez: ', status);
+
+              Social.FB.status = response.status;
+              return status
+            })
+            .catch(function (err) {
+              return $q.reject(err);
+            });
         },
 
         /*

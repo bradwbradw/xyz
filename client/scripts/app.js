@@ -74,11 +74,14 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       },
 
 
-      onEnter: function (Library, User) {
+      onEnter: function (Library, User, Social) {
 
         if (User.get()) {
           User.fetchSpaces;
         }
+
+        Social.FB.refreshFB();
+
 
       }
     })
