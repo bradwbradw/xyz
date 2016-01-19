@@ -35,11 +35,11 @@ var errorAlert = function (err) {
 };
 
 xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
-  $locationProvider.html5Mode(false);
+  $locationProvider.html5Mode(true);
 
   $stateProvider
     .state('base', {
-      url: '',
+      url: '/',
       views: {
         'main@': {
           templateUrl: 'views/main/landing.html',
@@ -87,7 +87,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     })
     .state('space', {
       parent: 'base',
-      url: '/space/:id',
+      url: 'space/:id',
       views: {
         'main@': {
           templateUrl: 'views/xyzspace.html',
@@ -164,7 +164,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     })
     .state('list', {
       parent: 'base',
-      url: '/list',
+      url: 'list',
       views: {
         'main@': {
           templateUrl: 'views/test/list.html',
@@ -180,7 +180,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     })
     .state('stream', {
       parent: 'base',
-      url: '/stream',
+      url: 'stream',
       views: {
         'main@': {
           templateUrl: 'views/test/stream.html',
@@ -199,7 +199,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     })
     .state('social', {
       parent: 'base',
-      url: '/social',
+      url: 'social',
       views: {
         'main@': {
           templateUrl: 'views/test/social.html',
@@ -211,7 +211,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
     .state('embeds', {
       parent: 'base',
-      url: '/embeds',
+      url: 'embeds',
       views: {
         'main@': {
           templateUrl: 'views/test/embed-tester.html'
@@ -220,7 +220,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     })
     .state('embeds.youtube', {
       parent: 'base',
-      url: '/youtube',
+      url: 'youtube',
       views: {
         'embed-container': {
           templateUrl: 'views/embeds/youtube.html'
@@ -228,7 +228,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       }
     })
     .state('embeds.soundcloud', {
-      url: '/soundcloud',
+      url: 'soundcloud',
       views: {
         'embed-container': {
           templateUrl: 'views/embeds/soundcloud.html'
@@ -236,7 +236,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       }
     })
     .state('embeds.bandcamp', {
-      url: '/bandcamp',
+      url: 'bandcamp',
       views: {
         'embed-container': {
           templateUrl: 'views/embeds/bandcamp.html'

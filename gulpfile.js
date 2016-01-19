@@ -8,6 +8,7 @@ var nodemon = require('gulp-nodemon');
 var bower = require('gulp-bower');
 var rename = require("gulp-rename");
 var loopbackAngular = require('gulp-loopback-sdk-angular');
+var historyApiFallback = require('connect-history-api-fallback');
 
 var del = require('del');
 
@@ -38,6 +39,11 @@ gulp.task('name', function(){
 })
 */
 
+gulp.task('copyHtml', function(){
+  return gulp.src('client/views/**/*.html')
+    .pipe(gulp.dest('dist/views'))
+});
+
 gulp.task('useref', function(){
 	return gulp.src('client/index.html')
 
@@ -46,7 +52,7 @@ gulp.task('useref', function(){
     .pipe(replace('%%%ytKey', keys.yt))
     .pipe(replace('%%%API_URL', apiUrl))
 	.pipe(useref())
-	.pipe(gulpIf('*.js',uglify()))
+//	.pipe(gulpIf('*.js',uglify()))
   .pipe(gulpIf('*.css', cssnano()))
 	.pipe(gulp.dest('dist'))
 });
@@ -60,7 +66,7 @@ gulp.task('sass', function(){
     }))
 });
 
-gulp.task('watch', ['browserSync', 'sass'], function(){
+gulp.task('watch', ['browserSync:client', 'sass'], function(){
 	gulp.watch('client/scss/**/*.scss', ['sass']);
 	gulp.watch([
     'client/*.html' ,
@@ -69,18 +75,28 @@ gulp.task('watch', ['browserSync', 'sass'], function(){
     ], browserSync.reload);
 });
 
-gulp.task('browserSync', function() {
+gulp.task('browserSync:client', function() {
   browserSync({
     server: {
       baseDir: 'client',
-
+      index: 'index.html',
+      middleware: [ historyApiFallback() ]
     },
     ui:{
       port:9001
-
     },
-    port:9000,
+    port:9000
+  })
+});
 
+gulp.task('browserSync:dist', function(){
+  browserSync({
+    server: {
+      baseDir: 'dist',
+      index: 'index.html',
+      middleware: [ historyApiFallback() ]
+    },
+    port:9000
   })
 });
 
@@ -111,14 +127,14 @@ gulp.task('clean', function() {
 
 
 gulp.task('build', function (callback) {
-  runSequence('clean', 'loopback',
-    ['bower','sass', 'useref'],
+  runSequence('clean', 'loopback','sass','bower',
+    [ 'useref', 'copyHtml'],
     callback
   )
 });
 
 gulp.task('default', function (callback) {
-  runSequence(['loopback','bower','sass','browserSync', 'watch'],
+  runSequence(['loopback','bower','sass','browserSync:client', 'watch'],
     callback
   )
 });
@@ -129,6 +145,15 @@ gulp.task('default', function (callback) {
 
 
 
+
+gulp.task('serveApi', function () {
+  nodemon({
+    script: 'server/server.js',
+   ext: 'js json html jade',
+    ignore: 'client/!*',
+   env: { 'NODE_ENV': 'development' }
+  })
+})
 
 
 
