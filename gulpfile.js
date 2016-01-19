@@ -125,7 +125,6 @@ gulp.task('clean', function() {
 
 
 
-
 gulp.task('build', function (callback) {
   runSequence('clean', 'loopback','sass','bower',
     [ 'useref', 'copyHtml'],
