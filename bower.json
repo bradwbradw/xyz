@@ -2,7 +2,7 @@
   "name": "xyz",
   "version": "0.0.0",
   "dependencies": {
-    "angular": "1.4.1",
+    "angular": "~1.4.9",
     "angular-sanitize": "1.4.1",
     "angular-ui-router": "0.2.15",
     "lodash": "3.10.1",
