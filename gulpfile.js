@@ -100,6 +100,10 @@ gulp.task('browserSync:dist', function(){
   })
 });
 
+gulp.task('tryBuild', function(callback){
+  runSequence('build','browserSync:dist', callback);
+});
+
 
 
 gulp.task('loopback', function () {
