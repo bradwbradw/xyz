@@ -74,6 +74,9 @@ angular.module('xyzApp')
           });
       },
       spaces: false,
+      hasSpaces: function(){
+        return User.spaces && _.isArray(User.spaces) && User.spaces.length > 0;
+      },
 
       getSpaces: function () {
         return User.spaces;

@@ -46,14 +46,14 @@ join xyz today!
   <br/><br/>
 
   <ul ng-if="User.spaces">
-    you own some spaces
+    <span ng-if="User.hasSpaces()">you own some spaces</span>
     <li ng-repeat="space in User.spaces">
       <a ui-sref="space({id:space.id})">{{space.name }}<a/>
         <button ng-click="deleteSpace(space).catch(showError)">x</button>
     </li>
   </ul>
-  <span ng-if="!User.spaces">
-    you do not own any spaces
+  <span ng-if="!User.hasSpaces()">
+    create your first space here:<br/>
   </span>
 
   <input ng-model="newSpace.name" placeholder="new space name">
