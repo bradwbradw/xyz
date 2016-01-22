@@ -30,7 +30,11 @@ angular.module('xyzApp')
               } else {
                 return data;
               }
-            });
+            })
+              .catch(function(err){
+                  console.error(err);
+                  return [];
+              });
         },
         likes: function(){
           return $window.SC.get('/me/favorites')
@@ -61,12 +65,24 @@ angular.module('xyzApp')
             + '&part=snippet'
             + '&type=video'
             + '&videoEmbeddable=true'
-            + '&videoCategoryId=music'
+//            + '&videoCategoryId=music'
             + '&maxResults=10';
           return $http.get(ytSearchUrl)
             .then(function (data) {
               return data.data.items;
-            });
+            })
+              .catch(function(response){
+                  var error = 'unknown error';
+                  if (response.data && response.data.error && response.data.errors && _.isArray(response.data.errors)){
+                      error = response.data.errors.join(' , ');
+                  } else if(response.data && response.data.error.message){
+                      error = response.data.error.message;
+                  } else {
+
+                  }
+                  console.error('youtube search error: ' , error);
+                  return [];
+              });
 
         },
         get: function (id) {
