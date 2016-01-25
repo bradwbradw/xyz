@@ -11,7 +11,8 @@ Array.prototype.sum = function(){
 };
 
 function parseForSongID(str){
-  return str.replace(/\D/g,'');
+
+  return str.replace('song','').replace('play','');
 }
 
 function makeStruct(names) {
@@ -108,6 +109,7 @@ function songByID(id){
      //	since the last distance calculation
 
       function calculateDistances(){
+          return true;
         //  num = songs.length;
           num = $('.song').length;
           index = 0;

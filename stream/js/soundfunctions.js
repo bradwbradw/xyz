@@ -117,7 +117,7 @@
 
     function playSong(theID){
           song_now = songByID(theID);
-          if (song_now.fadingOut) return false;
+//          if (song_now.fadingOut) return false;
 
 //           clearInterval(fading);
            if ((typeof nowPlaying != "undefined")&&(anythingPlaying)){
@@ -142,16 +142,10 @@
             
             } else
             if (songByID(theID).type == 'yt') {
-            //        ytSongs[ytID].playNow(youtube style);
-            //    console.log("yooou toob its yoou tubee!");
-//            xyz_youtube = document.getElementByID("xyz_youtube_embed");
-//            loadTheYoutube(songs[theID].url);
 
-            $('#video-container').css('bottom','10px');
+            $('#video-container').css('bottom','10vh');
 
-
-//            xyz_youtube.loadVideoByUrl(songByID(theID).url);
-            xyz_youtube.cueVideoByUrl(songByID(theID).url);
+            xyz_youtube.cueVideoByUrl('http://www.youtube.com/v/'+songByID(theID).serviceID+'?version=3');//songByID(theID).url);
 
             //TODO - check to make sure vid is in 'playing' state
             song_is_playing = true;

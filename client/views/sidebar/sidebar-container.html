@@ -2,6 +2,7 @@
 
   <div class="close-button" ng-click="sidebarClosed = true"> [X] </div>
   <h1><a ui-sref="base">XYZ</a></h1>
+  <h2><a ng-href="stream?playlist={{space.id}}" target="_blank">--&gt stream link</a></h2>
 
   <h3 ng-if="false">
     Our goal is to make the curation, discovery, and enjoyment of networked music streams better.
@@ -20,10 +21,10 @@
     </div>
 
     <div ng-if="viewer === 'viewer'">
-      (clone / copy songs to my space(s) tools go here)
+<!--      (clone / copy songs to my space(s) tools go here)-->
     </div>
     <div ng-if="viewer === 'guest'">
-      ( this is an XYZ space by {{owner}}. make your own! )
+      ( this is an XYZ space, made by {{owner}}. )
     </div>
   </div>
 
@@ -34,10 +35,8 @@
   <a ui-sref="stream"> stream </a> |
   <a ui-sref="embeds"> embed test </a> |-->
   <hr/>
-  <h3>social med.</h3>
 
   <div ng-if="!FB.isConnected() && !FB.isConnecting() ">
-
     Facebook: not connected
     <button ng-click="FB.setConnecting().then(FB.login).then(FB.refreshFB)">connect XYZ to Facebook</button>
   </div>

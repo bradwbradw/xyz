@@ -268,10 +268,12 @@ function setupClicks(){
           console.log('nowPlaying:');
           console.log(nowPlaying);
           console.log('songToPlay:');
-          console.log(songToPlay);
 
           blacklist.push(nowPlaying);
           songToPlay = nextSong(nowPlaying);
+
+
+         console.log(songToPlay);
 
           if(songToPlay <= -1){
                return;
@@ -313,8 +315,16 @@ function setupClicks(){
      // figures out what the next song should be based on current song id
      // 
      function nextSong(currentSong){
+         console.log('play next from ',currentSong);
 
           debug.prepend('<br/><br/>');
+         var currentSongIndex = _.findIndex(songs,['id',currentSong]);
+
+         if(_.last(songs).id === currentSong){
+             return songs[0].id;
+         } else {
+             return songs[currentSongIndex + 1].id;
+         }
         //num = songs.length;
           num = $('.song').length;
          var  songDistances = [];
@@ -356,7 +366,6 @@ function setupClicks(){
               // get a sorted version with old indeces preserved
               sortedDistances = makeSortedVersion(songDistances);
 
-              console.log('hi');
               return sortedDistances[0].song;
 
               /*

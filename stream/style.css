@@ -11,11 +11,12 @@ left:0;
 
 }
 #area{
+  display:none;
 position:absolute;
 top:0;
 left:0;
-width:2000px;
-height:2000px;
+width:100vw;
+height:100vw;
 background-color:white;
 z-index:0;
 background: rgb(174,188,191); /* Old browsers */
@@ -30,6 +31,7 @@ cursor:crosshair;
 }
 
 div.song{
+  display:none;
 height:100px;
 width:100px;
 background-color: black;
@@ -49,6 +51,7 @@ background-repeat: no-repeat;
 div#topbar{
 
 position: fixed;
+  left:42%;
 height:40px;
 z-index: 10;
 text-decoration: none;
@@ -339,17 +342,16 @@ span#labelsong{
 }
 
 
-
 #video-container{
 
 /*  display:none;
 */
     z-index: 200;
 
-
 position:fixed;
-margin-left: auto;
-margin-right: auto;
+  width:80vw;
+  height:80vh;
+  left:10vw;
 bottom:-1000px;
 }
 
@@ -364,12 +366,6 @@ bottom:0;
 /*display:none;*/
 }
 
-.youtube-player{
-
-  position: fixed;
-  top:0;
-  left:0;
-}
 
 div#uploading{
   position:fixed;

@@ -137,8 +137,8 @@ function loadAPIClientInterfaces() {
       function onYouTubeIframeAPIReady() {
         xyz_youtube = new YT.Player('videoDiv', {
       //    height: '390',
-          width: '300',
-          height: '235',
+          width: '100%',
+          height: '100%',
           videoId: 'M7lc1UVf-VE',
           events: {
             'onReady': onPlayerReady,
@@ -149,6 +149,8 @@ function loadAPIClientInterfaces() {
 
       // 4. The API will call this function when the video player is ready.
       function onPlayerReady(event) {
+          tryInitialize();
+          console.log('YT Player is ready');
     //    event.target.playVideo();
       }
 
@@ -157,6 +159,10 @@ function loadAPIClientInterfaces() {
       //    the player should play for six seconds and then stop.
       var done = false;
       function onPlayerStateChange(newState) {
+          if(newState.data===1){
+          $('#masterPlayButton').hide();
+          }
+          console.log('YT Player state change: ',newState);
       //  if (event.data == YT.PlayerState.PLAYING && !done) {
       //    setTimeout(stopVideo, 6000);
       //    done = true;

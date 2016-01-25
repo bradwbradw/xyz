@@ -1,0 +1,140 @@
+<html>
+<head>
+  <meta charset="UTF-8"> </meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>XYZ STREAM </title>
+
+
+    <script type="text/javascript">
+
+        var playlistId = '56953c8edd323f0a00eebdf5'; // default space ID
+
+        console.log('q var looks like', getQueryVariable('playlist'));
+        if( getQueryVariable('playlist')){
+            playlistId = getQueryVariable('playlist');
+        } else {
+
+        }
+
+        console.log(window.location.pathname.split('/'));
+        var xyz_root_dir = 'http://xyz.d2.xyz.gs/api/spaces/'+playlistId+'/songs';
+        console.log('apiURL: ',xyz_root_dir);
+        var editable = false;
+
+
+        function getQueryVariable(variable) {
+            var query = window.location.search.substring(1);
+            var vars = query.split('&');
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split('=');
+                if (decodeURIComponent(pair[0]) == variable) {
+                    return decodeURIComponent(pair[1]);
+                }
+            }
+            console.log('Query variable %s not found', variable);
+        }
+
+    </script>
+
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<!--<script type='text/javascript' src="includes/jquery.ui.draggable.js"></script>-->
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+
+</head>
+
+<body>
+
+
+
+<div id='topbar' >  <span id=xyz_title> powered by XYZ </span>
+
+    <span id="initializing">initializing...</span>
+    <button id="masterPlayButton" style="display:none"> click to start </button>
+
+</div>
+
+
+
+<div id='area'>
+</div>
+<div id='add_a_song'>
+
+</div>
+
+<!-- youtube url: http://www.youtube.com/v/Az3SHeMHC6c?version=3&enablejsapi=1-->
+
+
+<div id="video-container">
+<div id="videoDiv" width="100%" height="100%"></div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.0.0/lodash.min.js"></script>
+    <script type="text/javascript" src="includes/sm/script/soundmanager2.js"> </script>
+    <script type="text/javascript" src="includes/browserDetect.js"></script>
+    <script type="text/javascript" src="includes/swfobject/swfobject.js"></script>
+     <script type="text/javascript" src="includes/jquery.ui.touch-punch.js"></script>
+<!--
+   <script type="text/javascript" src="includes/dancer/dancer.js"></script>
+    <script src="includes/dancer/src/support.js"></script>
+    <script src="includes/dancer/src/kick.js"></script>
+    <script src="includes/dancer/src/adapterWebkit.js"></script>
+    <script src="includes/dancer/src/adapterMoz.js"></script>
+    <script src="includes/dancer/src/adapterFlash.js"></script>
+    <script src="includes/dancer/lib/fft.js"></script>
+    <script src="includes/dancer/lib/flash_detect.js"></script>
+    <script src="includes/dancer/plugins/dancer.fft.js"></script>-->
+
+    <script type="text/javascript" src="js/getsoundcloud.js"></script>
+
+    <script type="text/javascript" src="js/ui.js"></script>
+    <script type="text/javascript" src="js/db.js"></script>
+    <script type="text/javascript" src="js/soundfunctions.js"></script>
+    <script type="text/javascript" src="js/init.js"></script>
+    <script type="text/javascript" src="js/functions.js"></script>
+    <script type="text/javascript" src="js/loadFile.js"></script>
+    <script src="//www.google.com/jsapi" type="text/javascript"></script>
+    <script type="text/javascript" src="js/youtubehtml5.js"></script>
+<script src="//connect.soundcloud.com/sdk.js"></script>
+
+<script>
+  SC.initialize({
+    client_id: soundcloudKey,
+    redirect_uri: "http://example.com/callback.html",
+  });
+</script>
+<script type="text/javascript">
+
+
+    function tryInitialize(){
+        // if all songs are done loading, then play the first one, else, do nothing
+
+        var allsongsdone = true;
+        _.each(songs, function(song){
+            if(!song.doneLoading){
+                allsongsdone = false;
+            }
+        })
+
+        console.log('all songs are done loading?  ', allsongsdone);
+        console.info('player state ',xyz_youtube);
+        if(allsongsdone && xyz_youtube){
+            $('#initializing').hide();
+            // comment if want to be able to click to start
+
+            playSong(songs[0].id);
+            $('#masterPlayButton').show();
+            $('#masterPlayButton').unbind('click');
+            $('#masterPlayButton').click(function(){
+                playSong(songs[0].id);
+            });
+        } else {
+            console.log('youtube ready? ',xyz_youtube.isReady());
+        }
+    }
+</script>
+
+</body>
+
+</html>

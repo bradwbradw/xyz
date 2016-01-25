@@ -100,8 +100,21 @@ gulp.task('browserSync:dist', function(){
   })
 });
 
-gulp.task('tryBuild', function(callback){
+gulp.task('trybuild', function(callback){
   runSequence('build','browserSync:dist', callback);
+});
+
+
+
+gulp.task('browserSync:stream', function(){
+  browserSync({
+    server: {
+      baseDir: 'stream',
+      index: 'index.html',
+      middleware: [ historyApiFallback() ]
+    },
+    port:9001
+  })
 });
 
 
@@ -145,6 +158,26 @@ gulp.task('default', function (callback) {
 
 
 
+
+
+
+
+gulp.task('watchStream', ['browserSync:stream', 'sass'], function(){
+    gulp.watch('stream/scss/**/*.scss', ['sass']);
+    gulp.watch([
+        'stream/*.html' ,
+        'stream/style.css',
+//        'stream/views/**/*.html',
+        'stream/js/**/*.js',
+    ], browserSync.reload);
+});
+
+
+gulp.task('stream', function (callback) {
+  runSequence(['browserSync:stream', 'watchStream'],
+    callback
+  )
+});
 
 
 

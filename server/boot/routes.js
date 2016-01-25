@@ -1,10 +1,30 @@
 var dsConfig = require('../datasources.json')
 request = require('request'),
   logger = require('logger'),
+    loopback = require('loopback'),
   _ = require('lodash');
 
 
+
 module.exports = function (app) {
+
+
+
+
+
+
+
+
+//  app.use('/stream', loopback.static(__dirname + '/stream'));
+
+
+
+
+
+
+
+
+
   var User = app.models.User;
 
   //verified

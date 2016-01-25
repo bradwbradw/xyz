@@ -752,6 +752,10 @@ body.old-ie {
     padding: 1em 1em;
     cursor: pointer; }
 
+.preview-box {
+  width: 100%;
+  height: 200px; }
+
 .main-container {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f7fbfc+0,d9edf2+40,60a09f+100 */
   background: #f7fbfc;
@@ -774,11 +778,6 @@ body.old-ie {
   @media only screen and (min-width: 768px) {
     .main-container {
       position: fixed; } }
-
-.preview-box {
-  width: 100%;
-  height: 200px;
-  background-color: chartreuse; }
 
 .space-title {
   position: absolute;

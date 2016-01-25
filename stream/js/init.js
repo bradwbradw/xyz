@@ -30,7 +30,6 @@
 
           mouseDown = false;
 
-
 var db_endpoint = xyz_root_dir+"data/db.php";
 var upload_endpoint = xyz_root_dir+'data/upload.php';
 //window.history.pushState("","","/"+user);
@@ -116,7 +115,7 @@ soundManager.setup({
       });
 
 
-loadAll(user);
+loadAll();
 
           
     },

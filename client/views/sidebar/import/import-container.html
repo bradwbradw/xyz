@@ -1,6 +1,6 @@
 <div class="preview-box" ng-include="'views/main/media-player.html'"
-    ng-controller="PreviewCtrl">
-a preview box
+    ng-controller="PreviewCtrl"
+    ng-if="Player.playingItem()">
 
 </div>
 
@@ -18,7 +18,6 @@ import controls
 
 </div>
 <br/>
-<hr/>
 <br/>
 
 <div ui-view="importSelector">

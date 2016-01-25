@@ -9,9 +9,9 @@ var app = module.exports = loopback();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.use('/docs',loopback.static(__dirname + '/docular_generated'));
-app.use('/bower_components', loopback.static(__dirname + '/bower_components'));
 
+app.use('/stream',loopback.static(path.resolve(__dirname, '../stream')));
+app.use('/space*',loopback.static(path.resolve(__dirname, '../dist')));
 
 app.use(loopback.token());
 
