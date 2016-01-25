@@ -2,11 +2,11 @@
 
   <div class="close-button" ng-click="sidebarClosed = true"> [X] </div>
   <h1><a ui-sref="base">XYZ</a></h1>
-  <h2><a ng-href="stream?playlist={{space.id}}" target="_blank">--&gt stream link</a></h2>
 
   <h3 ng-if="false">
     Our goal is to make the curation, discovery, and enjoyment of networked music streams better.
   </h3>
+  <h3 ng-if="space.id"><a ng-href="stream?playlist={{space.id}}" target="_blank">--&gt stream link</a></h3>
 
   <div ng-if="viewer">
 

@@ -135,6 +135,8 @@
                 smSongs[objID].play({onfinish:playAnother});
                 if (smSongs[objID].playState == 1){
                     song_is_playing = true;
+                    $('#masterPlayButton').hide();
+
                     nowPlaying = theID;
                 }
 
