@@ -8,7 +8,7 @@
  * Service in the xyzApp.
  */
 angular.module('xyzApp')
-  .service('MediaAPI', function ($http, $window, apiKeys, $q) {
+  .service('MediaAPI', function ($http, $window, apiKeys, $q, Utility) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
     $window.SC.initialize({
@@ -49,11 +49,34 @@ angular.module('xyzApp')
         tracksByUser: function(id){
           return $window.SC.get('/users/'+id+'/tracks', {limit:300})
             .then(function(data){
+                var returnArr = [], input;
               if (data.collection){
-                return data.collection;
+
+                input = data.collection;
               } else {
-                return data;
+                input = data;
               }
+
+              _.each(input, function (scResult) {
+                returnArr = returnArr.concat(Utility.clean.SC.track(scResult));
+              });
+              return returnArr;
+            });
+        },
+        likesByUser: function(id){
+          return $window.SC.get('/users/'+id+'/favorites', {limit:300})
+               .then(function(data){
+                var returnArr = [], input;
+              if (data.collection){
+
+                input = data.collection;
+              } else {
+                input = data;
+              }
+              _.each(input, function (scResult) {
+                returnArr = returnArr.concat(Utility.clean.SC.track(scResult));
+              });
+              return returnArr;
             });
         }
       },

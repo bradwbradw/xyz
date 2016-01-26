@@ -9,9 +9,14 @@
           ng-click="MediaAPI.SC.tracksByUser(urlResult.provider_id)
         .then(updateImportView)
         .catch(invalidLink)">
-    view all posts by user
+    view all tracks by {{urlResult.artist}}
   </button>
-
+  <button ng-if="urlResult.kind === 'user'"
+          ng-click="MediaAPI.SC.likesByUser(urlResult.provider_id)
+        .then(updateImportView)
+        .catch(invalidLink)">
+    view all likes by {{urlResult.artist}}
+  </button>
 <div>
 
   <div ng-if="Library.getLocalItems().urlResult">

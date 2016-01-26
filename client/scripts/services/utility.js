@@ -33,6 +33,17 @@ angular.module('xyzApp')
 
             };
           },
+          // warning this function might not work
+          tracks: function(tracks){
+            var output = [];
+            if (!_.isArray(tracks) ){
+              tracks = [tracks];
+            }
+            _.each(tracks,function(track){
+              output.push(Utility.clean.SC.track);
+            });
+            return output;
+          },
 
           user: function (user) {
             return {

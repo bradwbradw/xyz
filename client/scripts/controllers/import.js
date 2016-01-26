@@ -76,6 +76,7 @@ angular.module('xyzApp')
 
     var urlResult;
 
+
     $scope.examineText = function (text) {
       if (!text) return;
       $scope.fetchingSongData = true;
