@@ -189,13 +189,24 @@ gulp.task('serveApi', function () {
     ignore: 'client/!*',
    env: { 'NODE_ENV': 'development' }
   })
+});
+
+
+
+
+/*
+
+gulp.task('serveApi', function () {
+  nodemon({
+    script: 'server/server.js',
+   ext: 'js json html jade',
+    ignore: 'client/!*',
+   env: { 'NODE_ENV': 'development' }
+  })
 })
 
 
-
-
-
-
+*/
 
 
 

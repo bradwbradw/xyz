@@ -8,10 +8,11 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SidebarCtrl', function ($scope, $timeout,$q,viewer, space, Social) {
+  .controller('SidebarCtrl', function ($scope, $timeout,$q,viewer, space, Space, Social) {
 
     $scope.viewer = viewer;
     $scope.space = space;
+    $scope.Space = Space;
 
     $scope.FB = Social.FB
   });

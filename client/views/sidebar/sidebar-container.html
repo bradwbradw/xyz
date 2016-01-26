@@ -13,11 +13,19 @@
     <span>
     you are: {{viewer}} of this space
     </span>
-    <div ng-if="viewer === 'owner'"
-         ng-include="'views/sidebar/import/import-container.html'"
+    <div ng-if="viewer === 'owner'">
+      <div
+          ng-include="'views/sidebar/import/import-container.html'"
+          ng-controller="ImportCtrl">
+       </div>
+       <h4>Space details:</h4>
+        name:<input ng-model="space.name">
+        public:<input type="checkbox" ng-model="space.public">
+      <button ng-click="Space.prototype$updateAttributes( {id:space.id},space, _.noop)"> save</button>
+      <pre class="debug">
+        {{space}}
+      </pre>
 
-         ng-controller="ImportCtrl"
-    >
     </div>
 
     <div ng-if="viewer === 'viewer'">
@@ -47,6 +55,6 @@
 
 
   <hr/>
-<!--
-  <pre>status: {{loginStatus | json}}</pre>-->
+  <!--
+    <pre>status: {{loginStatus | json}}</pre>-->
 </div>

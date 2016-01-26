@@ -53,7 +53,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       resolve: {
         allSpaces: function (Space) {
 
-          return Space.find({filter:{include:"owner"}});
+          return Space.find({filter:{include:"owner", where:{public:true}}});
         },
         user: function (User) {
 
