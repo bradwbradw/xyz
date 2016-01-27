@@ -18,11 +18,14 @@
           ng-include="'views/sidebar/import/import-container.html'"
           ng-controller="ImportCtrl">
        </div>
+      <hr/>
        <h4>Space details:</h4>
         name:<input ng-model="space.name">
         public:<input type="checkbox" ng-model="space.public">
       <button ng-click="Space.prototype$updateAttributes( {id:space.id},space, _.noop)"> save</button>
-      <pre class="debug">
+
+      <button ng-click="deleteViaConfirm(Space,space)">delete</button>
+      <pre class="debug" ng-if="false">
         {{space}}
       </pre>
 

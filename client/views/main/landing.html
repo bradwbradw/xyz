@@ -49,7 +49,6 @@ join xyz today!
     <span ng-if="User.hasSpaces()">you own some spaces</span>
     <li ng-repeat="space in User.spaces">
       <a ui-sref="space({id:space.id})">{{space.name }}<a/>
-        <button ng-click="deleteSpace(space).catch(showError)">x</button>
     </li>
   </ul>
   <span ng-if="!User.hasSpaces()">
