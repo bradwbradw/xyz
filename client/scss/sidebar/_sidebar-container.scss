@@ -7,7 +7,15 @@
   @include MQ(M) {
     top: 0;
     right: 0;
-    width: $sidebar-width;
+    width: 30%;
+    min-width:$sidebar-max-width;
+    max-width: $sidebar-max-width;
+text-align:center;
+
+    input {
+      width:80%;
+    }
+
   }
 
 

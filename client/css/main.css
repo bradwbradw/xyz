@@ -487,6 +487,9 @@ html {
 /**
  * Basic styling
  */
+body {
+  background-color: darkgray; }
+
 body, input, textarea {
   font-family: "courier new", sans-serif;
   font-size: 1em;
@@ -690,7 +693,7 @@ li {
   width: 96%;
   margin: auto;
   max-width: 1400px; }
-  @media only screen and (min-width: 768px) {
+  @media only screen and (min-width: 640px) {
     .outer-content-container {
       width: 82%;
       margin: auto; } }
@@ -705,7 +708,7 @@ li {
   width: 88%;
   margin: auto;
   padding: 0em; }
-  @media only screen and (min-width: 768px) {
+  @media only screen and (min-width: 640px) {
     .content-container {
       padding-left: 1em;
       padding-right: 1em;
@@ -715,7 +718,7 @@ li {
 .content-container-grid {
   width: 87%;
   margin: auto; }
-  @media only screen and (min-width: 768px) {
+  @media only screen and (min-width: 640px) {
     .content-container-grid {
       width: 90%;
       margin: auto; } }
@@ -733,12 +736,6 @@ body.old-ie {
   body.old-ie .ieblock {
     display: block;
     visibility: visible; }
-
-.add, .incart {
-  height: 4em; }
-
-.search.icon-button {
-  height: 3em; }
 
 .tabs {
   width: 100%;
@@ -775,7 +772,7 @@ body.old-ie {
   height: 100vh;
   max-height: 100vw;
   max-width: 100vw; }
-  @media only screen and (min-width: 768px) {
+  @media only screen and (min-width: 640px) {
     .main-container {
       position: fixed; } }
 
@@ -858,6 +855,10 @@ button {
   min-height: 2em;
   min-width: 2em; }
 
+input {
+  margin: 1em;
+  min-height: 2em; }
+
 .close-button {
   height: 2em;
   width: 2em;
@@ -874,15 +875,29 @@ button {
 .link-button {
   cursor: pointer; }
 
+.checkbox, .checkbox * {
+  display: inline;
+  max-width: 2em; }
+
 .sidebar-container {
   background-color: lightpink;
   position: absolute;
   top: 100vw;
   width: 100vw; }
-  @media only screen and (min-width: 768px) {
+  @media only screen and (min-width: 640px) {
     .sidebar-container {
       top: 0;
       right: 0;
-      width: 20em; } }
+      width: 30%;
+      min-width: 30em;
+      max-width: 30em;
+      text-align: center; }
+      .sidebar-container input {
+        width: 80%; } }
   .sidebar-container .active {
     background-color: cadetblue; }
+
+.selector-container {
+  text-align: left; }
+  .selector-container .song-row {
+    border-bottom: solid 1px black; }

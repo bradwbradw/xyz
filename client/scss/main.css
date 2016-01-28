@@ -734,12 +734,6 @@ body.old-ie {
     display: block;
     visibility: visible; }
 
-.add, .incart {
-  height: 4em; }
-
-.search.icon-button {
-  height: 3em; }
-
 .tabs {
   width: 100%;
   display: flex;

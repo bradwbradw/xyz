@@ -1,4 +1,4 @@
-<div class="open-button" ng-show="sidebarClosed"  ng-click="sidebarClosed = false"> open panel </div>
+<div class="open-button" ng-show="sidebarClosed" ng-click="sidebarClosed = false"> open </div>
 
 <div ng-hide="sidebarClosed">
 
@@ -12,19 +12,20 @@
 
   <div ng-if="viewer">
 
-    <span>
-    you are: {{viewer}} of this space
-    </span>
     <div ng-if="viewer === 'owner'">
       <div
           ng-include="'views/sidebar/import/import-container.html'"
           ng-controller="ImportCtrl">
-       </div>
-       <h4>Space details:</h4>
-        name:<input ng-model="space.name">
-        public:<input type="checkbox" ng-model="space.public">
+      </div>
+      <h4>edit {{space.name}} details:</h4>
+      name:<input ng-model="space.name">
+        <span class="checkbox">
+          public:<input type="checkbox" ng-model="space.public"></input>
+      </span>
       <br/>
       <button ng-click="Space.prototype$updateAttributes( {id:space.id},space, _.noop)"> save</button>
+      <button ng-click="deleteViaConfirm(Space,space)">delete</button>
+
       <pre ng-if="false" class="debug">
         {{space | json}}
       </pre>

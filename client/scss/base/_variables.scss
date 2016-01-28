@@ -10,12 +10,13 @@ $text-color: #333;
 $link-hover-color: #F63357;
 
 $preview-height:200px;
-$sidebar-width:20em;
+$sidebar-min-width:15em;
+$sidebar-max-width:30em;
 
 $XS:    320px;
 $S:		500px;
 $S-M:	600px;
-$M:     768px;
+$M:     640px;
 $M-L:	975px;
 $L:     1170px;
 $XL:	1450px;

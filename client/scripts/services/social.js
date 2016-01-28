@@ -79,7 +79,7 @@ angular.module('xyzApp')
             Social.FB.connecting = false;
             return $q.reject('Facebook seems unreachable');
           },7500);
-          Social.FB.setConnecting()
+          return Social.FB.setConnecting()
             .then(Social.FB.updateLoginStatus)
             .then(function (res) {
               console.log('updated login:', res);

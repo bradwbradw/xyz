@@ -1,12 +1,16 @@
-.sidebar-toggle{
-
-}
 
 button{
   margin:1em;
   min-height:2em;
   min-width:2em;
 }
+
+input{
+  margin:1em;
+  min-height:2em;
+
+}
+
 .close-button{
   height:2em;
   width:2em;
@@ -29,4 +33,9 @@ button{
 
 .link-button{
   cursor:pointer;
+}
+
+.checkbox, .checkbox *{
+  display:inline;
+  max-width:2em;
 }

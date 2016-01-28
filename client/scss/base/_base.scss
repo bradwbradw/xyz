@@ -42,6 +42,10 @@ html {
 /**
  * Basic styling
  */
+
+body{
+  background-color:darkgray;
+}
 body, input, textarea {
     font-family: $base-header-font-family;
     font-size: $base-font-size;

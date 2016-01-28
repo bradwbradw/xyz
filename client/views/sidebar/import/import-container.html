@@ -4,9 +4,11 @@
 
 </div>
 
-<h3><a ui-sref="base">import tools</a></h3>
+<h3>add media to {{space.name}}:</h3>
 <ul class="tabs">
   <li ui-sref="space.search" ui-sref-active="active">search
+  </li>
+  <li ui-sref="space.url" ui-sref-active="active">load url
   </li>
   <li ui-sref="space.explore" ui-sref-active="active">explore
   </li>
@@ -14,15 +16,13 @@
 
 
 <div ui-view="importControls">
-import controls
 
 </div>
 <br/>
 <br/>
 
-<div ui-view="importSelector">
+<div ui-view="importSelector" class="selector-container">
 
-import selector
 </div>
 
 

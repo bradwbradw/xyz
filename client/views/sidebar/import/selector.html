@@ -34,8 +34,12 @@
        ng-if="!Library.getLocalItems().urlResult">
 
 
-    <button ng-if="!item.error" ng-click="putInSpace(item, $event)">add</button>
-    <button ng-if="!item.error && Library.isPlayable(item)" ng-click="Player.play(item)">play</button>
+    <button class="add" ng-if="!item.error" ng-click="putInSpace(item, $event)">
+      add
+    </button>
+    <button class="play" ng-if="!item.error && Library.isPlayable(item)" ng-click="Player.play(item)">
+      play
+    </button>
     <a ng-href="{{item.url}}">
       <span ng-if="!item.error">
         ({{item.provider}}) {{item.artist}} - {{item.title}} ({{item.provider_id}})

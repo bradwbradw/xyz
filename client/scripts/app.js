@@ -149,6 +149,19 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         }
       }
     })
+    .state('space.url', {
+
+      url: '',
+      views: {
+        'importControls': {
+          templateUrl: 'views/sidebar/import/control-url.html'
+        },
+        'importSelector': {
+          templateUrl: 'views/sidebar/import/selector.html'
+
+        }
+      }
+    })
 
     .state('space.explore', {
       url: '',

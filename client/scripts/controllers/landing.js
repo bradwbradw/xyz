@@ -41,12 +41,6 @@ angular.module('xyzApp')
 
     $scope.deleteSpace = function(space){
       //return Dj.spaces.destroyById({id:User.get().id,fk:space.id}, _.noop)
-      return Space.destroyById({id:space.id}, _.noop)
-        .$promise
-        .then(User.fetchSpaces)
-        .catch(function(err){
-          return $q.reject(err);
-        });
     }
 
 
