@@ -97,12 +97,7 @@ angular.module('xyzApp')
     };
 
 
-    Social.FB.updateLoginStatus()
-      .then(function (res) {
-        // res: FB.getLoginStatus response
-        // https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus
-        $scope.loginStatus = res;
-      })
+    Social.FB.refreshFB()
       .then(function () {
         Social.FB.loadMe();
       });

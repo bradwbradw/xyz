@@ -853,6 +853,27 @@ button {
   background-color: teal;
   color: yellow; }
 
+button {
+  margin: 1em;
+  min-height: 2em;
+  min-width: 2em; }
+
+.close-button {
+  height: 2em;
+  width: 2em;
+  max-width: 100px;
+  cursor: pointer; }
+
+.open-button {
+  right: 0;
+  height: 2em;
+  width: 2em;
+  max-width: 100px;
+  cursor: pointer; }
+
+.link-button {
+  cursor: pointer; }
+
 .sidebar-container {
   background-color: lightpink;
   position: absolute;

@@ -75,6 +75,10 @@ angular.module('xyzApp')
 
           console.log('refreshing fb');
 
+          $timeout(function(){
+            Social.FB.connecting = false;
+            return $q.reject('Facebook seems unreachable');
+          },7500);
           Social.FB.setConnecting()
             .then(Social.FB.updateLoginStatus)
             .then(function (res) {
@@ -83,18 +87,21 @@ angular.module('xyzApp')
               // https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus
             })
             .then(function () {
+              console.log('trying to load me');
               Social.FB.loadMe;
             })
             .catch(function (err) {
-              console.error(err);
+              console.error('error loading me:  '+err);
               alert(err);
             })
             .finally(function () {
+              console.log('finally done refreshing FB');
               Social.FB.connecting = false;
             });
         },
         updateLoginStatus: function () {
           console.log('updating login status');
+
           return ezfb.getLoginStatus()
             .then(function (response) {
               console.log('back grom ez: ', status);
@@ -105,6 +112,7 @@ angular.module('xyzApp')
             .catch(function (err) {
               return $q.reject(err);
             });
+
         },
 
         /*
@@ -120,7 +128,11 @@ angular.module('xyzApp')
           return $timeout(ezfb.api('/me')
             .then(function (data) {
               Social.FB.me = data;
-            }));
+            })
+            .catch(function(err){
+              return $q.reject(err);
+            })
+          );
         },
 
         loadFriends: function () {

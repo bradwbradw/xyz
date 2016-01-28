@@ -1,3 +1,5 @@
+<div class="open-button" ng-show="sidebarClosed"  ng-click="sidebarClosed = false"> open panel </div>
+
 <div ng-hide="sidebarClosed">
 
   <div class="close-button" ng-click="sidebarClosed = true"> [X] </div>
@@ -21,9 +23,10 @@
        <h4>Space details:</h4>
         name:<input ng-model="space.name">
         public:<input type="checkbox" ng-model="space.public">
+      <br/>
       <button ng-click="Space.prototype$updateAttributes( {id:space.id},space, _.noop)"> save</button>
-      <pre class="debug">
-        {{space}}
+      <pre ng-if="false" class="debug">
+        {{space | json}}
       </pre>
 
     </div>
@@ -46,7 +49,7 @@
 
   <div ng-if="!FB.isConnected() && !FB.isConnecting() ">
     Facebook: not connected
-    <button ng-click="FB.setConnecting().then(FB.login).then(FB.refreshFB)">connect XYZ to Facebook</button>
+    <a class="link-button" ng-click="FB.setConnecting().then(FB.login).then(FB.refreshFB)">(connect)</a>
   </div>
   <div ng-if="FB.isConnecting()">Facebook: connecting...</div>
   <div ng-if="FB.isConnected()">
@@ -55,6 +58,4 @@
 
 
   <hr/>
-  <!--
-    <pre>status: {{loginStatus | json}}</pre>-->
 </div>
