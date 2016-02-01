@@ -5,7 +5,7 @@ module.exports = function (app) {
   Song.createChangeStream(function (err, changes) {
     changes.pipe(es.stringify()).pipe(process.stdout);
   });
-
+  
 //THEN GO TO
 //  http://0.0.0.0:3000/api/Spaces/change-stream?_format=event-stream
 
