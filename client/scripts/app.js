@@ -7,7 +7,10 @@ var xyzApp = angular.module("xyzApp",
     'LocalStorageModule',
     'ngTouch',
     'ngResource',
-    'lbServices']);
+    'lbServices',
+    'ls.LiveSet',
+    'ls.ChangeStream'
+  ]);
 
 xyzApp.constant('YT_event', {
   STOP: 0,
@@ -53,7 +56,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       resolve: {
         allSpaces: function (Space) {
 
-          return Space.find({filter:{include:"owner", where:{public:true}}});
+          return Space.find({filter: {include: "owner", where: {public: true}}});
         },
         user: function (User) {
 
@@ -65,10 +68,10 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             return User.get();
           }
         },
-        viewer:function(){
+        viewer: function () {
           return false;
         },
-        space: function(){
+        space: function () {
           return false;
         }
       },
@@ -114,19 +117,19 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           return Dj.findById({id: space.ownerId}, _.noop)
             .$promise;
         },
-        viewer:function(owner, user, User){
+        viewer: function (owner, user, User) {
           var the_user;
 
-          if(User.get()){
+          if (User.get()) {
             the_user = User.get();
           } else {
             the_user = user; // this should be the user from the 'base' state resolve
           }
 
-          if(!the_user){
+          if (!the_user) {
             return 'guest';
           } else {
-            if( owner.id === the_user.id){
+            if (owner.id === the_user.id) {
               return 'owner';
             } else {
               return 'viewer';

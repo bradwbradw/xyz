@@ -11,10 +11,12 @@
   "dependencies": {
     "body-parser": "1.12.4",
     "bower": "1.6.5",
+    "browser-sync": "^2.11.0",
     "compression": "^1.0.3",
-    "cors": "^2.5.2",
     "connect-history-api-fallback": "^1.1.0",
+    "cors": "^2.5.2",
     "del": "^2.2.0",
+    "event-stream": "^3.3.2",
     "express": "^4.13.3",
     "gulp": "^3.9.0",
     "gulp-bower": "0.0.11",
@@ -47,8 +49,7 @@
     "request": "2.53.0",
     "run-sequence": "^1.1.5",
     "serve-favicon": "^2.0.1",
-    "soundcloud": "^3.0.1",
-    "browser-sync": "^2.11.0"
+    "soundcloud": "^3.0.1"
   },
   "devDependencies": {
     "grunt-docular": "^0.2.4",

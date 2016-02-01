@@ -1,5 +1,5 @@
 <div ng-if="Library.isPlayable(Player.playingItem())">
-
+playable
   <div ng-if="Player.playingAttrs().provider === 'youtube'">
 
     <iframe
@@ -61,8 +61,11 @@
 
 <div ng-if="!Library.isPlayable(Player.playingItem())">
 
-  <a ng-href="{{Player.playingAttrs().url}}" target="_blank">
-    {{Player.playingAttrs().artist }} - {{Player.playingAttrs().title}}
+    {{Player.playingAttrs().artist }}
+    {{Player.playingAttrs().title? ' - '+Player.playingAttrs().title : ''}}
+    {{Player.playingAttrs().kind? ' ('+Player.playingAttrs().kind+')' : ''}}
+
+  <a ng-href="{{Player.playingAttrs().url}}" target="_blank"> --> visit page
   </a><br/><br/>
 
 
@@ -70,7 +73,7 @@
     remove
   </button>
 
-  <pre class="debug" ng-if="true">
+  <pre class="debug" ng-if="false">
     {{Player.playingItem() | json}}
   </pre>
 </div>

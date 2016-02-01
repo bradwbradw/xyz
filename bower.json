@@ -9,7 +9,8 @@
     "angular-easyfb": "~1.4.1",
     "angular-local-storage": "~0.2.3",
     "angular-touch": "~1.4.8",
-    "angular-resource": "~1.4.8"
+    "angular-resource": "~1.4.8",
+    "angular-live-set": "*"
   },
   "devDependencies": {
     "angular-mocks": "1.4.1"

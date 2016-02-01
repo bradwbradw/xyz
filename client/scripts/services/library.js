@@ -118,6 +118,7 @@ angular.module('xyzApp')
       },
       isPlayable: function (item) {
         if (item.attrs && item.attrs.kind) {
+          console.log('playbale:?',item.attrs.kind === 'media')
           return item.attrs.kind === 'media';
         } else if (item.kind) {
           return item.kind === 'media';
