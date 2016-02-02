@@ -1,5 +1,9 @@
 <div ng-if="Library.isPlayable(Player.playingItem())">
-playable
+playable media
+  <a ng-click="Library.remove(Player.playingItem().id)">
+    (remove)
+  </a>
+
   <div ng-if="Player.playingAttrs().provider === 'youtube'">
 
     <iframe
@@ -60,20 +64,25 @@ playable
 </div>
 
 <div ng-if="!Library.isPlayable(Player.playingItem())">
-
-    {{Player.playingAttrs().artist }}
+<h2>{{Player.playingAttrs().artist }}
     {{Player.playingAttrs().title? ' - '+Player.playingAttrs().title : ''}}
     {{Player.playingAttrs().kind? ' ('+Player.playingAttrs().kind+')' : ''}}
+</h2>
 
+  <br/>
   <a ng-href="{{Player.playingAttrs().url}}" target="_blank"> --> visit page
   </a><br/><br/>
 
+  <a ng-click="Library.remove(Player.playingItem().id)">
+    remove from space
+  </a>
 
-  <button ng-click="Library.remove(Player.playingItem().id)">
-    remove
-  </button>
+
 
   <pre class="debug" ng-if="false">
     {{Player.playingItem() | json}}
   </pre>
 </div>
+
+
+<br/>

@@ -58,9 +58,9 @@
 
 <br/><hr/><br/>
   You are logged in as {{User.get().name}}.
+  <br/>
   <span ng-if="User.get().website"><!-- todo: fix website links (add http if not there) -->
-    Your website is :
-    {{User.get().website}}
+    Your website is {{User.get().website}}
   </span>
   <form ng-submit="User.update(new).catch(showError)">
 

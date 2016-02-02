@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SpaceCtrl', function ($scope, $log, Library, Player, space, owner, viewer, Space) {
+  .controller('SpaceCtrl', function ($scope, $log, $state, Library, Player, space, owner, viewer, Space) {
 
     var expand = function (song) {
       closeExpanded();
@@ -56,6 +56,11 @@ angular.module('xyzApp')
     };
 
 
+    var clickToOpen = function(){
+      
+      $state.go("space.search");
+    };
+
     $scope.queueIfNotDragging = queueIfNotDragging;
     $scope.Player = Player;
     $scope.showControlsView = showControlsView;
@@ -65,6 +70,7 @@ angular.module('xyzApp')
     $scope.expand = expand;
     $scope.Library = Library;
     $scope.closeExpanded = closeExpanded;
+    $scope.clickToOpen = clickToOpen;
 
     $scope.space = space;
     $scope.owner = owner;

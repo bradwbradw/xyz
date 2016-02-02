@@ -13,6 +13,7 @@
   height: 100vh;
   max-height: 100vw;
   max-width: 100vw;
+  text-align: center;
   @include MQ(M) {
 
     position: fixed;
