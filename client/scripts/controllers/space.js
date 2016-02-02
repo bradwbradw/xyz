@@ -57,7 +57,7 @@ angular.module('xyzApp')
 
 
     var clickToOpen = function(){
-      
+
       $state.go("space.search");
     };
 
