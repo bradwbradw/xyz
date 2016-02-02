@@ -3,6 +3,8 @@ angular.module('xyzApp').
     return function (scope, element, attr) {
       var item = scope.$parent.item;
 
+      var canDrag = attr.xyzDraggable === 'owner';
+
       if (_.isUndefined(item)) {
         return;
       }
@@ -16,6 +18,11 @@ angular.module('xyzApp').
         top: y + 'px',
         left: x + 'px'
       });
+
+
+      if(!canDrag){
+        return;
+      }
 
       var dragPointOffsetX;
       var dragPointOffsetY;

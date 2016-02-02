@@ -114,8 +114,20 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             .then(Library.space);
         },
         owner: function (space, Dj) {
-          return Dj.findById({id: space.ownerId}, _.noop)
-            .$promise;
+          return Dj.findById(
+            {
+              id: space.ownerId,
+              filter: {
+                fields: {id:true,
+                  name: true,
+                  website:true}
+              }
+            }, _.noop)
+            .$promise
+            .then(function (owner) {
+              space.owner = owner;
+              return owner;
+            });
         },
         viewer: function (owner, user, User) {
           var the_user;
@@ -129,6 +141,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           if (!the_user) {
             return 'guest';
           } else {
+
             if (owner.id === the_user.id) {
               return 'owner';
             } else {

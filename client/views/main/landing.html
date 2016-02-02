@@ -1,6 +1,6 @@
 
-
-<h2 ui-sref='lobby'>"lobby" - public spaces</h2>
+<h1>~ X Y Z ~</h1>
+<h2 ui-sref='lobby'>public spaces</h2>
 
 
 <span ng-repeat="space in allSpaces">
@@ -29,36 +29,47 @@
 
     <input type="submit" value="submit"/>
   </form>
-join xyz today!
+::join xyz::
 
 </div>
-
+<br/>
+<hr/>
+<br/>
 <div ng-if="User.loggedIn()">
 
-  Logged in to XYZ: {{User.get().name}}
-  <form ng-submit="User.update(new).catch(showError)">
-
-    <input ng-model="new.name" placeholder="update name">
-    <input type="submit" value="update data">
-
-  </form>
-
-  <br/><br/>
+  <br/>
 
   <ul ng-if="User.spaces">
-    <span ng-if="User.hasSpaces()">you own some spaces</span>
+    <h2 ng-if="User.hasSpaces()">{{User.get().name}}'s spaces:</h2>
     <li ng-repeat="space in User.spaces">
-      <a ui-sref="space({id:space.id})">{{space.name }}<a/>
+      <a ui-sref="space({id:space.id})">
+        {{space.name }} {{space.public? '' : '(private)'}}
+      </a>
     </li>
   </ul>
   <span ng-if="!User.hasSpaces()">
     create your first space here:<br/>
   </span>
 
-  <input ng-model="newSpace.name" placeholder="new space name">
+  <input ng-model="newSpace.name" placeholder="new space name"></input>
+  <br/>
   <button ng-click="User.addSpace(newSpace).catch(showError)">add new space </button>
 
 
+<br/><hr/><br/>
+  You are logged in as {{User.get().name}}.
+  <span ng-if="User.get().website"><!-- todo: fix website links (add http if not there) -->
+    Your website is :
+    {{User.get().website}}
+  </span>
+  <form ng-submit="User.update(new).catch(showError)">
+
+    <input ng-model="new.name" placeholder="update name">
+    <input ng-model="new.website" placeholder="update website">
+    <br/>
+    <input type="submit" value="update data">
+
+  </form>
   <button ng-click="User.logout().catch(showError)">Log out</button>
 </div>
 
