@@ -5,25 +5,18 @@ var Song = loopback.getModel('Song');
 
 module.exports = function (Space) {
 
-
   Space.playlist = function (spaceId, cb) {
 
-    Space.findById(spaceId,{include:'songs'},function (err,data) {
+    Space.findById(spaceId, {include: 'songs'},
+      function (err, data) {
 
-      Song.find({})
-      console.log(data);
-
-      var response = {
-        space: data
-      };
-      cb(null, response);
-    })
+        var response = {
+          space: data
+        };
+        cb(null, response);
+      })
   };
 
-  Space.thing = function (cb) {
-    var response = 'thingy';
-    cb(null, response);
-  };
 
   Space.remoteMethod(
     'playlist',
@@ -34,12 +27,14 @@ module.exports = function (Space) {
     }
   );
 
-  Space.remoteMethod(
-    'thing',
-
-    {
-      http: {path: '/thing', verb: 'get'},
-      returns: {arg: 'thing', type: 'string'}
-    }
-  )
+  Space.observe('after save', function(ctx, next) {
+  if (ctx.instance) {
+    console.log('Saved %s#%s', ctx.Model.Space, ctx.instance.id);
+  } else {
+    console.log('Updated %s matching %j',
+      ctx.Model.Spaces,
+      ctx.where);
+  }
+  next();
+});
 };

@@ -64,6 +64,6 @@
     "time-grunt": "^1.0.0"
   },
   "engines": {
-    "node": "stable"
+    "node": "4.2.1"
   }
 }
