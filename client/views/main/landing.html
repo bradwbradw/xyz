@@ -13,7 +13,7 @@
 
   <h2>::join xyz::</h2>
   <h4>create your own xyz space</h4>
-  <form ng-submit="User.register(registerData).then(User.login).catch(showError)">
+  <form ng-submit="clearError(registerData).then(User.register).then(User.login).catch(showError)">
 
     <input ng-model="registerData.email" placeholder="email" type="email" required>
     <input ng-model="registerData.name" placeholder="name">
@@ -23,12 +23,12 @@
   </form>
 
   <h2>or login:</h2>
-  <form ng-submit="User.login(loginData).then(User.fetchSpaces).catch(showError)">
+  <form ng-submit="clearError(loginData).then(User.login).then(User.fetchSpaces).catch(showError)">
 
     <input ng-model="loginData.email" placeholder="email" type="email" required>
     <input ng-model="loginData.password" placeholder="password" type="password" required>
 
-    <input type="submit" value="submit"/>
+    <input type="submit" value="submit" />
   </form>
 
 </div>

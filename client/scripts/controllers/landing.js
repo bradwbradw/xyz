@@ -33,8 +33,17 @@ angular.module('xyzApp')
 */
 
     $scope.showError = function(error){
+      if (error.error.message){
+        error = error.error.message;
+      }
+      
       $rootScope.error = error;
     };
+
+    $scope.clearError = function(thing){
+      $rootScope.error = '';
+      return $q.resolve(thing);
+    }
 
     $rootScope.lb = Server.loopback;
 
