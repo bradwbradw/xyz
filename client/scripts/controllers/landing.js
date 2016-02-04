@@ -36,7 +36,7 @@ angular.module('xyzApp')
       if (error.error.message){
         error = error.error.message;
       }
-      
+
       $rootScope.error = error;
     };
 
