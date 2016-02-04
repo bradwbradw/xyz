@@ -83,9 +83,9 @@ gulp.task('browserSync:client', function() {
       middleware: [ historyApiFallback() ]
     },
     ui:{
-      port:9001
+      port:9006
     },
-    port:9000
+    port:9005
   })
 });
 
