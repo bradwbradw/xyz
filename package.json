@@ -11,7 +11,6 @@
   "dependencies": {
     "body-parser": "1.12.4",
     "bower": "1.6.5",
-    "browser-sync": "^2.11.0",
     "compression": "^1.0.3",
     "connect-history-api-fallback": "^1.1.0",
     "cors": "^2.5.2",
@@ -26,7 +25,6 @@
     "gulp-if": "^2.0.0",
     "gulp-jshint": "^2.0.0",
     "gulp-loopback-sdk-angular": "^0.1.4",
-    "gulp-nodemon": "^2.0.6",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-run": "^1.6.12",
@@ -43,9 +41,6 @@
     "loopback-connector-mongodb": "^1.13.2",
     "loopback-datasource-juggler": "^2.39.0",
     "method-override": "2.3.3",
-    "mongoose": "4.1.8",
-    "morgan": "1.5.3",
-    "node-restful": "^0.2.2",
     "q": "^1.4.1",
     "request": "2.53.0",
     "run-sequence": "^1.1.5",
@@ -53,6 +48,8 @@
     "soundcloud": "^3.0.1"
   },
   "devDependencies": {
+    "gulp-nodemon": "^2.0.6",
+    "browser-sync": "^2.11.0",
     "grunt-docular": "^0.2.4",
     "angular-mocks": "1.4.1",
     "jasmine-core": "^2.3.4",
@@ -65,6 +62,6 @@
     "time-grunt": "^1.0.0"
   },
   "engines": {
-    "node": "4.2.1"
+    "node": "4.2.6"
   }
 }

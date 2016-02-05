@@ -9,6 +9,8 @@ var gulpIf = require('gulp-if');
 var sass = require('gulp-sass');
 var cssnano = require('gulp-cssnano');
 
+var uglify = require('gulp-uglify'),
+    concat = require('gulp-concat');
 var replace = require('gulp-replace');
 
 var del = require('del');
@@ -63,7 +65,7 @@ gulp.task('useref', function(){
     .pipe(replace('%%%scKey', keys.sc))
     .pipe(replace('%%%ytKey', keys.yt))
     .pipe(replace('%%%API_URL', apiUrl))
-	.pipe(useref())
+  	.pipe(useref())
 //	.pipe(gulpIf('*.js',uglify()))
   .pipe(gulpIf('*.css', cssnano()))
 	.pipe(gulp.dest('dist'))
@@ -79,7 +81,7 @@ gulp.task('build:production', function (callback) {
 
 
 /*
-EXISTING GULP FILE
+EXISTING GULP FILE (for dev)
 
 
 
@@ -87,28 +89,11 @@ EXISTING GULP FILE
 
 
 
-var gulp = require('gulp'),
-    jshint = require('gulp-jshint'),
-    uglify = require('gulp-uglify'),
-    concat = require('gulp-concat');
-var replace = require('gulp-replace');
+var jshint = require('gulp-jshint');
 var connect = require('gulp-connect');
 var nodemon = require('gulp-nodemon');
-
-var bower = require('gulp-bower');
-var rename = require("gulp-rename");
-var loopbackAngular = require('gulp-loopback-sdk-angular');
-var del = require('del');
-var sass = require('gulp-sass');
-var runSequence = require('run-sequence');
-
 var historyApiFallback = require('connect-history-api-fallback');
-
-
 var browserSync = require('browser-sync');
-var useref = require('gulp-useref');
-var gulpIf = require('gulp-if');
-var cssnano = require('gulp-cssnano');
 
 var keys = {
   fb: process.env.FB_APP_ID || '1507355422928214',
