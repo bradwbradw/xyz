@@ -6,7 +6,7 @@
   "main": "server/server.js",
   "scripts": {
     "postinstall": "gulp build",
-    "start": "node server/server.js"
+    "start": ""
   },
   "dependencies": {
     "body-parser": "1.12.4",
@@ -62,5 +62,8 @@
     "karma-phantomjs-launcher": "^0.2.1",
     "phantomjs": "^1.9.18",
     "time-grunt": "^1.0.0"
+  },
+  "resolve":{
+    "lodash":"3.10.1"
   }
 }
