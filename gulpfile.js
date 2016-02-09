@@ -86,6 +86,7 @@ DEV-NEEDED
 
 
 
+/*
 
 
 
@@ -99,9 +100,9 @@ var browserSync = require('browser-sync');
 gulp.task('watch', ['browserSync:client', 'sass'], function(){
 	gulp.watch('client/scss/!**!/!*.scss', ['sass']);
 	gulp.watch([
-    'client/*.html' ,
-    'client/views/**/*.html',
-    'client/scripts/**/*.js',
+    'client/!*.html' ,
+    'client/views/!**!/!*.html',
+    'client/scripts/!**!/!*.js',
     ], browserSync.reload);
 });
 
@@ -224,131 +225,4 @@ gulp.task('serveApi', function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-VERY OLD STUFF
-
-
-gulp.task('serveApi', function () {
-  nodemon({
-    script: 'server/server.js',
-   ext: 'js json html jade',
-    ignore: 'client/!*',
-   env: { 'NODE_ENV': 'development' }
-  })
-})
-
-
 */
-
-
-
-
-
-
-
-/*
-
-
-
-
-gulp.task('index', function(){
-
-
-  gulp.src(['client/index-source.html'])
-    .pipe(replace('%%%facebookAppId', keys.fb))
-    .pipe(replace('%%%scKey', keys.sc))
-    .pipe(replace('%%%ytKey', keys.yt))
-    .pipe(rename('client/index.html'))
-    .pipe(gulp.dest('client'));
-});
-
-gulp.task('js', function () {
-   return gulp.src('client/scripts/!**!/!*.js')
-//      .pipe(jshint())
-//      .pipe(jshint.reporter('default'))
-      .pipe(uglify())
-      .pipe(concat('scriptsconcat.js'))
-      .pipe(gulp.dest(buildDest));
-});
-
-gulp.task('copy',function(){
-  return gulp.src([
-    'client/!**!/!*','!'+indexHtml])
-    .pipe(gulp.dest(buildDest));
-})
-
-gulp.task('serveBuild', function() {
-    connect.server({
-      root: 'build/',
-      port: 9000,
-      host:'0.0.0.0',
-      fallback: 'build/index.html',
-      livereload: true
-    });
-// maybe could also set up to run api server at the same time
-/!*    connect.server({
-      root: buildDest,
-      port: 9000,
-      host:'0.0.0.0',
-      fallback: buildDest+'/index.html',
-      livereload: true
-    });*!/
-
-  gulp.src('client/!**!/!*').pipe(connect.reload());
-});
-
-gulp.task('serveApi', function () {
-  nodemon({
-    script: 'server/server.js',
-   ext: 'js json html jade',
-    ignore: 'client/!*',
-   env: { 'NODE_ENV': 'development' }
-  })
-})
-
-gulp.task('build',['js','copy', 'overwriteconfig']);
-
-gulp.task('default',['js','copy', 'bower','config','serveBuild']);*/
