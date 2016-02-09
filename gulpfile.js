@@ -22,7 +22,7 @@ var keys = {
   yt: process.env.YT_KEY || 'AIzaSyAv5-et2TSQ3VsA5eKLviq2KjfExzFLxO8'
 };
 
-var apiUrl = process.env.API_URL || 'http://localhost:3000/api';
+var apiUrl = process.env.API_URL || 'http://localhost:5005/api';
 
 gulp.task('loopback', function () {
 	return gulp.src('./server/server.js')
@@ -81,8 +81,8 @@ gulp.task('build:production', function (callback) {
 
 
 /*
-EXISTING GULP FILE (for dev)
-
+DEV-NEEDED
+*/
 
 
 
@@ -95,59 +95,13 @@ var nodemon = require('gulp-nodemon');
 var historyApiFallback = require('connect-history-api-fallback');
 var browserSync = require('browser-sync');
 
-var keys = {
-  fb: process.env.FB_APP_ID || '1507355422928214',
-  sc: process.env.SC_KEY || 'c29e4129f2bba3771a5472a65cad37e4',
-  yt: process.env.YT_KEY || 'AIzaSyAv5-et2TSQ3VsA5eKLviq2KjfExzFLxO8'
-};
-
-var apiUrl = process.env.API_URL || 'http://localhost:3000/api';
-
-gulp.task('bower', function() {
-  return bower()
-    .pipe(gulp.dest('client/vendor'))
-});
-
-
-/!*
-gulp.task('name', function(){
-	// stuff
-})
-*!/
-
-gulp.task('copyHtml', function(){
-  return gulp.src('client/views/!**!/!*.html')
-    .pipe(gulp.dest('dist/views'))
-});
-
-gulp.task('useref', function(){
-	return gulp.src('client/index.html')
-
-    .pipe(replace('%%%facebookAppId', keys.fb))
-    .pipe(replace('%%%scKey', keys.sc))
-    .pipe(replace('%%%ytKey', keys.yt))
-    .pipe(replace('%%%API_URL', apiUrl))
-	.pipe(useref())
-//	.pipe(gulpIf('*.js',uglify()))
-  .pipe(gulpIf('*.css', cssnano()))
-	.pipe(gulp.dest('dist'))
-});
-
-gulp.task('sass', function(){
-  return gulp.src('client/scss/!**!/!*.scss')
-    .pipe(sass()) // Using gulp-sass
-    .pipe(gulp.dest('client/css'))
-    .pipe(browserSync.reload({
-      stream: true
-    }))
-});
 
 gulp.task('watch', ['browserSync:client', 'sass'], function(){
 	gulp.watch('client/scss/!**!/!*.scss', ['sass']);
 	gulp.watch([
-    'client/!*.html' ,
-    'client/views/!**!/!*.html',
-    'client/scripts/!**!/!*.js',
+    'client/*.html' ,
+    'client/views/**/*.html',
+    'client/scripts/**/*.js',
     ], browserSync.reload);
 });
 
@@ -266,9 +220,6 @@ gulp.task('serveApi', function () {
    env: { 'NODE_ENV': 'development' }
   })
 });
-
-
-*/
 
 
 
