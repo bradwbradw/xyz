@@ -89,6 +89,7 @@ angular.module('xyzApp')
 
       add: function (song) {
         console.warn('** space is :', Library.currentSpace);
+        song.date_created = new Date();
         return Space.songs.create({id: Library.space().id}, song, _.noop)
           .$promise
           .then(function (result) {

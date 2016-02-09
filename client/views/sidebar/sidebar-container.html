@@ -27,6 +27,9 @@
           public:<input type="checkbox" ng-model="space.public"></input>
       </span>
       <br/>
+        <span ng-if="space.startTime"> Space started playing at {{space.startTime | date:"mediumTime"}}</span>
+        <br/>
+      <button ng-click="Server.setStartTime(space)"> restart Playlist </button>
       <button ng-click="Space.prototype$updateAttributes( {id:space.id},space, _.noop)"> save</button>
       <button ng-click="deleteViaConfirm(Space,space)">delete</button>
 

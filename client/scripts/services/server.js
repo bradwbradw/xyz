@@ -2,9 +2,11 @@
 
 angular.module('xyzApp')
 
-  .service('Server', function ($rootScope, $http, $q, serverConfig, Dj) {
+  .service('Server', function ($rootScope, $http, $q, serverConfig, Dj, Space) {
 
     var API = serverConfig.apiBaseUrl;
+
+
 
     var resetErrors = function () {
       $rootScope.error = '';
@@ -54,6 +56,13 @@ angular.module('xyzApp')
     };
 
     return {
+
+        setStartTime: function(space){
+          var now = new Date();
+            return Space.prototype$updateAttributes( {id:space.id},{startTime: now})
+                .$promise;
+
+        },
 
       loopback: {
         Dj: {
