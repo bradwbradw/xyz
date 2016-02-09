@@ -54,7 +54,7 @@ gulp.task('bower', function() {
 });
 
 gulp.task('copyHtml', function(){
-  return gulp.src('client/views/!**!/!*.html')
+  return gulp.src('client/views/**/*.html')
     .pipe(gulp.dest('dist/views'))
 });
 
