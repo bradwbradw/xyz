@@ -40,7 +40,6 @@ gulp.task('clean', function() {
   return del.sync('dist');
 });
 
-
 gulp.task('sass', function(){
   return gulp.src('client/scss/**/*.scss')
     .pipe(sass()) // Using gulp-sass
