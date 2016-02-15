@@ -90,7 +90,7 @@ var browserSync = require('browser-sync');
 
 
 gulp.task('watch', ['browserSync:client', 'sass'], function(){
-	gulp.watch('client/scss/!**!/!*.scss', ['sass']);
+	gulp.watch('client/scss/**/*.scss', ['sass']);
 	gulp.watch([
     'client/*.html' ,
     'client/views/**/*.html',
