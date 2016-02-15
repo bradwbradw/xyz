@@ -79,13 +79,6 @@ gulp.task('build:production', function (callback) {
 
 
 
-/*
-DEV-NEEDED
-*/
-
-
-
-/*
 
 
 
@@ -99,9 +92,9 @@ var browserSync = require('browser-sync');
 gulp.task('watch', ['browserSync:client', 'sass'], function(){
 	gulp.watch('client/scss/!**!/!*.scss', ['sass']);
 	gulp.watch([
-    'client/!*.html' ,
-    'client/views/!**!/!*.html',
-    'client/scripts/!**!/!*.js',
+    'client/*.html' ,
+    'client/views/**/*.html',
+    'client/scripts/**/*.js',
     ], browserSync.reload);
 });
 
@@ -210,8 +203,6 @@ gulp.task('stream', function (callback) {
 });
 
 
-
-
 gulp.task('serveApi', function () {
   nodemon({
     script: 'server/server.js',
@@ -222,6 +213,3 @@ gulp.task('serveApi', function () {
 });
 
 
-
-
-*/
