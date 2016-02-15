@@ -1,7 +1,5 @@
 
 <h1>~ X Y Z ~</h1>
-<h2 ui-sref='lobby'>public spaces</h2>
-
 
 <span ng-repeat="space in allSpaces">
   <a ui-sref="space({id:space.id})">
@@ -11,8 +9,7 @@
 
 <div ng-if="!User.loggedIn()">
 
-  <h2>::join xyz::</h2>
-  <h4>create your own xyz space</h4>
+  <h4>join to create your own xyz space</h4>
   <form ng-submit="clearError(registerData).then(User.register).then(User.login).catch(showError)">
 
     <input ng-model="registerData.email" placeholder="email" type="email" required><br/>
