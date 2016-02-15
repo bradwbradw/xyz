@@ -90,9 +90,10 @@ var browserSync = require('browser-sync');
 
 
 gulp.task('watch', ['browserSync:client', 'sass'], function(){
-	gulp.watch('client/scss/**/*.scss', ['sass'],browserSync.reload);
+	gulp.watch('client/scss/**/*.scss', ['sass']);
 	gulp.watch([
     'client/*.html' ,
+    'client/css/*.css', // this line is actually not supposed to be here, updated sass should get compiled and injected without reloading
     'client/views/**/*.html',
     'client/scripts/**/*.js',
     ], browserSync.reload);
