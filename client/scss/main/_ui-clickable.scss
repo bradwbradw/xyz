@@ -6,7 +6,7 @@ button{
 }
 
 input{
-  margin:1em;
+  margin:0.3em;
   min-height:2em;
 
 }
@@ -23,11 +23,18 @@ input{
 }
 
 .open-button{
-  right:0;
+  right:1em;
+  bottom:0;
   height:2em;
   width:2em;
   max-width:100px;
   cursor:pointer;
+  background-color: inherit;
+  position: fixed;
+
+  @include MQ(M) {
+    top:0;
+  }
 }
 
 
