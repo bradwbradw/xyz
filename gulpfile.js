@@ -90,7 +90,7 @@ var browserSync = require('browser-sync');
 
 
 gulp.task('watch', ['browserSync:client', 'sass'], function(){
-	gulp.watch('client/scss/**/*.scss', ['sass']);
+	gulp.watch('client/scss/**/*.scss', ['sass'],browserSync.reload);
 	gulp.watch([
     'client/*.html' ,
     'client/views/**/*.html',
@@ -186,12 +186,12 @@ gulp.task('default', function (callback) {
 
 
 gulp.task('watchStream', ['browserSync:stream', 'sass'], function(){
-    gulp.watch('stream/scss/!**!/!*.scss', ['sass']);
+    gulp.watch('stream/scss/**/*.scss', ['sass']);
     gulp.watch([
-        'stream/!*.html' ,
+        'stream/*.html' ,
         'stream/style.css',
-//        'stream/views/!**!/!*.html',
-        'stream/js/!**!/!*.js',
+        'stream/views/**/*.html',
+        'stream/js/**/*.js',
     ], browserSync.reload);
 });
 
@@ -207,7 +207,7 @@ gulp.task('serveApi', function () {
   nodemon({
     script: 'server/server.js',
    ext: 'js json html jade',
-    ignore: 'client/!*',
+    ignore: 'client/*',
    env: { 'NODE_ENV': 'development' }
   })
 });
