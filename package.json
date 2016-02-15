@@ -47,7 +47,7 @@
     "serve-favicon": "^2.0.1",
     "soundcloud": "^3.0.1",
     "gulp-nodemon": "^2.0.6",
-    "browser-sync": "^2.11.0",
+    "browser-sync": "^2.11.0"
   },
   "devDependencies": {
     "grunt-docular": "^0.2.4",
