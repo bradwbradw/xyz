@@ -121,17 +121,11 @@ function generateSongHTML(song){
          if(song.image!=''){
           image = 'url("'+song.image+'")';
          } else {
-          image = 'url('+no_art_image_path+')';
+          image = 'no image';
          }
 
           $('#song'+mID).css('left',song.x).css('top',song.y).css('background-image',image);
 
-
-          if (image == 'url(no_art_image_path)'){
-          //      $('#song'+mID).append('<div id=noart-label>'+artist_and_title+'</div>');
-          
-          // ADD IMAGE W/ ARTIST NAME + TITLE
-          }
           if(editable){
           $('#song'+mID).draggable({
                stop: doneDragging
