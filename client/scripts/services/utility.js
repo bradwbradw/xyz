@@ -17,7 +17,9 @@ angular.module('xyzApp')
       clean: {
         SC: {
           track: function (track) {
-            return {
+
+            var cleaned =
+             {
               provider: 'soundcloud',
               provider_id: track.id,
               artist: track.user.username,
@@ -32,6 +34,11 @@ angular.module('xyzApp')
               original_data: track
 
             };
+            if (!cleaned.pic && track.user && track.user.avatar_url){
+              cleaned.pic = track.user && track.user.avatar_url;
+            }
+
+            return cleaned;
           },
           // warning this function might not work
           tracks: function(tracks){
