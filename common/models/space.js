@@ -46,21 +46,16 @@ module.exports = function (Space) {
             function (err, data) {
 
                 var playlist = [];
-
                 var songs = data.songs();
-
                 var response = {
                     success: true
                 }
-
                 if (_.size(songs) <= 0) {
-
                     var response = {
                         success: false,
                         error: 'there are no songs in this space'
                     }
                 } else {
-
                     _.each(songs, function (song) {
                         song.distances = distancesToOtherItems(song, songs);
                         playlist.push(song);
@@ -84,6 +79,17 @@ module.exports = function (Space) {
                     response.songs = playlist;
                 }
 
+                var seconds = [];
+                var i = 0;
+                _.each(playlist, function(song){
+                    var songSeconds = [];
+                    _.each(_.range(Math.round(song.length)), function(){
+                        songSeconds.push({song:song.id, second:i++});
+                    });
+                    seconds = seconds.concat(songSeconds);
+                });
+
+                response.seconds = seconds;
                 cb(null, response);
             })
     };
