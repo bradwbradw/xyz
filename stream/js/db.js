@@ -295,7 +295,7 @@ function loadAll() {
         url: xyz_root_dir,
         success: function (data) {
             console.log('loading songs done - success!');
-            _.each(data.playlist.songs, loadSong);
+            _.each(data.playlist, loadSong);
 
         }
     }).done(function () {

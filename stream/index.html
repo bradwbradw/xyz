@@ -119,7 +119,7 @@
 
         console.log('all songs are done loading?  ', allsongsdone);
         console.info('player state ',xyz_youtube);
-        if(allsongsdone && xyz_youtube && xyz_youtube.isReady){
+        if(allsongsdone && xyz_youtube ){
             $('#initializing').hide();
             // comment if want to be able to click to start
 
@@ -130,7 +130,6 @@
                 playSong(songs[0].id);
             });
         } else {
-            alert('cannot load data from xyz - please try again later');
         }
     }
 </script>
