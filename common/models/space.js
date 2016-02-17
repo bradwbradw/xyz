@@ -47,32 +47,33 @@ module.exports = function (Space) {
 
         var playlist = [];
         var songs = data.songs();
-        var response = {
-          success: true
-        }
+        var response = {};
         if (_.size(songs) <= 0) {
           var response = {
             success: false,
             error: 'there are no songs in this space'
-          }
+          };
+
+          cb(null, response);
+          return;
         } else {
           _.each(songs, function (song) {
             song.distances = distancesToOtherItems(song, songs);
             playlist.push(song);
           });
 
-          var firstSong;
+          var seedSong;
 
-          if (data.firstSong) {
-            firstSong = data.firstSong;
+          if (data.seedSong) {
+            seedSong = data.seedSong;
           } else {
             var sortedByDate = _.sortBy(data.songs(), 'date_saved');
-            firstSong = sortedByDate[0];
+            seedSong = sortedByDate[0];
           }
 
-          var playlist = [firstSong];
+          var playlist = [seedSong];
 
-          _.each(firstSong.distances, function (song) {
+          _.each(seedSong.distances, function (song) {
             playlist.push(_.find(songs, 'id', song.id));
           });
 
@@ -90,7 +91,7 @@ module.exports = function (Space) {
         var totalLength = i;
 
         if (!data.startTime) {
-          response.playlist = playlist;
+          response = playlist;
         } else {
 
 
@@ -117,7 +118,7 @@ module.exports = function (Space) {
             var newPlaylist2 = _.slice(playlist, currentIndex);
             var newPlaylist = newPlaylist2.concat(newPlaylist1);
 
-            response.playlist = newPlaylist;
+            response = newPlaylist;
 
           }
 
