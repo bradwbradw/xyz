@@ -166,6 +166,8 @@
                 if (scSongs[objID].playState == 1){
                     song_is_playing = true;
                     nowPlaying = theID;
+
+                    $('#masterPlayButton').hide();
                 }
             }
 
