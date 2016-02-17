@@ -89,7 +89,10 @@ module.exports = function (Space) {
         });
         var totalLength = i;
 
-        if (data.startTime) {
+        if (!data.startTime) {
+          response.playlist = playlist;
+        } else {
+
 
           var now = new Date();
           var started = new Date(data.startTime);
@@ -116,12 +119,14 @@ module.exports = function (Space) {
 
             response.playlist = newPlaylist;
 
-            cb(null, response);
-            return;
           }
 
 
         }
+
+
+            cb(null, response);
+            return;
 
       })
   };
