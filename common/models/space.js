@@ -126,8 +126,8 @@ module.exports = function (Space) {
         }
 
 
-            cb(null, response);
-            return;
+        cb(null, response);
+        return;
 
       })
   };
