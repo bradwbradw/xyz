@@ -76,7 +76,6 @@ module.exports = function (Space) {
             playlist.push(_.find(songs, 'id', song.id));
           });
 
-          response.songs = playlist;
         }
 
         var seconds = [];
@@ -94,24 +93,36 @@ module.exports = function (Space) {
 
           var now = new Date();
           var started = new Date(data.startTime);
-          var playhead = Math.round((now - started)/1000) % totalLength;
-          console.log('playhead:',playhead);
+          var playhead = Math.round((now - started) / 1000) % totalLength;
 
-          if(seconds[playhead]){
-            response.current = _.find(playlist,'id',response.current);
+          var currentIndex = false;
+          if (seconds[playhead]) {
+            currentIndex = _.findIndex(playlist, 'id', seconds[playhead].song);
+            var current = playlist[currentIndex];
           } else {
-            console.error('could not get song at playhead ',playhead);
+            console.error('could not get song at playhead ', playhead);
           }
 
-          if(!response.current){
-            console.error('could not find song at playhead ',playhead);
+          if (!currentIndex) {
+            console.error('could not find song at playhead ', playhead);
+            console.error('here is the seconds: ', seconds);
+            cb(null, response);
+            return;
+          } else {
+
+            var newPlaylist1 = _.slice(playlist, 0, currentIndex);
+            var newPlaylist2 = _.slice(playlist, currentIndex);
+            var newPlaylist = newPlaylist2.concat(newPlaylist1);
+
+            response.playlist = newPlaylist;
+
+            cb(null, response);
+            return;
           }
+
 
         }
 
-
-        response.seconds = seconds;
-        cb(null, response);
       })
   };
 
