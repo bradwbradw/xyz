@@ -255,19 +255,19 @@ function setupClicks(){
      }
      function playAnother(){
 
-          console.log('blacklist:');
-          console.log(blacklist);
-          console.log('songs:');
-          console.log(songs);
-          console.log('nowPlaying:');
-          console.log(nowPlaying);
-          console.log('songToPlay:');
+          console.warn('blacklist:');
+          console.warn(blacklist);
+          console.warn('songs:');
+          console.warn(songs);
+          console.warn('nowPlaying:');
+          console.warn(nowPlaying);
+          console.warn('songToPlay:');
 
           blacklist.push(nowPlaying);
-          songToPlay = nextSong(nowPlaying);
+          var songToPlay = nextSong(nowPlaying);
 
 
-         console.log(songToPlay);
+         console.warn(songToPlay);
 
           if(songToPlay <= -1){
                return;

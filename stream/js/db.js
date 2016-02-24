@@ -146,9 +146,6 @@ function initPlayer(song) {
 
                 }
             });
-            if (scData.artwork_url === null) {
-                scData.artwork_url = no_art_image_path;
-            }
 
             // these lines have to happen here (scope issues)
             scSongs.push(scSong);
