@@ -32,16 +32,17 @@
 <br/>
 <hr/>
 <br/>
-<div ng-if="User.loggedIn()">
+<div ng-if="User.loggedIn()" class="landing-container">
 
   <br/>
 
   <ul ng-if="User.spaces">
     <h2 ng-if="User.hasSpaces()">{{User.get().name}}'s spaces:</h2>
     <li ng-repeat="space in User.spaces">
-      <a ui-sref="space({id:space.id})">
-        {{space.name }} {{space.public? '' : '(private)'}}
-      </a>
+
+      <div ng-include="'views/partials/space-thumbnail.html'">
+
+      </div>
     </li>
   </ul>
   <span ng-if="!User.hasSpaces()">
