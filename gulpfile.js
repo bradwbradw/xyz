@@ -24,6 +24,8 @@ var keys = {
 
 var apiUrl = process.env.API_URL || 'http://localhost:5005/api';
 
+console.log('api Url is ',apiUrl);
+
 gulp.task('loopback', function () {
 	return gulp.src('./server/server.js')
     .pipe(loopbackAngular(

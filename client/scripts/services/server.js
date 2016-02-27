@@ -89,8 +89,8 @@ angular.module('xyzApp')
       }
       ,
 
-      getPlaylist: function () {
-        return get('playlist');
+      getPlaylist: function (spaceId) {
+        return get('api/spaces/playlist?spaceId='+spaceId);
       }
       ,
 
@@ -142,7 +142,7 @@ angular.module('xyzApp')
       ,
       updateUser: function (id, token, data) {
         return put('api/djs/' + id + '/?access_token=' + token, data);
-      }
+      },
 
 
     }

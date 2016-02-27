@@ -56,7 +56,9 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       resolve: {
         allSpaces: function (Space) {
 
-          return Space.find({filter: {include: "owner", where: {public: true}}});
+          return Space.find({filter: {include: "owner", where: {public: true}}})
+
+
         },
         user: function (User) {
 
@@ -77,13 +79,36 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       },
 
 
-      onEnter: function (Library, User, Social) {
+      onEnter: function (Library, User, Social, $q, $log, allSpaces, localStorageService, Server) {
 
         if (User.get()) {
           User.fetchSpaces;
         }
 
         Social.FB.refreshFB();
+
+        var fetchAllSpacePlaylists = function(spaces) {
+
+          var playlistLoads = [];
+          _.each(spaces,function(space){
+            var playlistLoad = Server.getPlaylist(space.id)
+              .then(function(result){
+                console.warn(result);
+              });
+            playlistLoads.push(playlistLoad)
+          });
+
+          return $q.all(playlistLoads);
+
+        };
+
+        fetchAllSpacePlaylists(allSpaces)
+          .then(function(allPlaylists){
+            localStorageService.set('playlists',allPlaylists);
+          })
+          .catch(function(err){
+            $log.error(err);
+          });
 
 
       }
