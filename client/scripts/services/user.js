@@ -8,7 +8,7 @@
  * Service in the xyzApp.
  */
 angular.module('xyzApp')
-  .service('User', function ($q, $state, Server, Dj, Space) {
+  .service('User', function ($q, $state, $log, Server, Dj, localStorageService, Space) {
 
     var User = {
 
@@ -23,6 +23,9 @@ angular.module('xyzApp')
       },
 
       loggedIn: function () {
+          if(!window.localStorage.getItem('$LoopBack$currentUserId')){
+              return false;
+          }
         return Dj.isAuthenticated();
       },
       register: function (data) {
@@ -50,12 +53,20 @@ angular.module('xyzApp')
       },
 
       logout: function () {
-        return Dj.logout(_.noop).$promise
+        return Dj.logout().$promise
           .then(function(){
             User.set(false);
             User.setSpaces(false);
             $state.go($state.current, {}, {reload: true});
-          });
+          })
+            .catch(function(){
+                $log.error('token expired, cannot call logout because of annoying loopback bug');
+                User.set(false);
+                User.setSpaces(false);
+                window.localStorage.removeItem('$LoopBack$accessTokenId');
+                window.localStorage.removeItem('$LoopBack$currentUserId');
+                $state.go('base',{},{reload:true});
+            });
       },
 
       update: function (data) {
@@ -70,7 +81,14 @@ angular.module('xyzApp')
           .then(User.set)
           .then(User.fetchSpaces)
           .catch(function(err){
-            return $q.reject(err);
+              // if we get here, the session likely expired and the user has to log in again
+              /*
+              User.set(false);
+              User.setSpaces(false);
+              $state.go($state.current, {}, {reload: true});*/
+
+              return User.logout();
+        //    return $q.reject(err);
           });
       },
       spaces: false,
