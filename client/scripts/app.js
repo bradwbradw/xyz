@@ -34,7 +34,19 @@ xyzApp.config(function (localStorageServiceProvider) {
 });
 
 var errorAlert = function (err) {
-  alert('error:   ' + JSON.stringify(err));
+
+    if(_.isObject(err)){
+        var message = _.get(err,'data.error.message', '') + '\n';
+        message += 'status: '+_.get(err,'status', '') + '\n';
+        message += _.get(err,'config.url', '') + '\n';
+        message += _.get(err,'statusText', '') + '\n';
+    } else {
+        var message = err;
+    }
+
+
+        console.error(message);
+  alert(message);
 };
 
 xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
