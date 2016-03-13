@@ -35,17 +35,17 @@ xyzApp.config(function (localStorageServiceProvider) {
 
 var errorAlert = function (err) {
 
-    if(_.isObject(err)){
-        var message = _.get(err,'data.error.message', '') + '\n';
-        message += 'status: '+_.get(err,'status', '') + '\n';
-        message += _.get(err,'config.url', '') + '\n';
-        message += _.get(err,'statusText', '') + '\n';
-    } else {
-        var message = err;
-    }
+  if (_.isObject(err)) {
+    var message = _.get(err, 'data.error.message', '') + '\n';
+    message += 'status: ' + _.get(err, 'status', '') + '\n';
+    message += _.get(err, 'config.url', '') + '\n';
+    message += _.get(err, 'statusText', '') + '\n';
+  } else {
+    var message = err;
+  }
 
 
-        console.error(message);
+  console.error(message);
   alert(message);
 };
 
@@ -99,18 +99,18 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
         Social.FB.refreshFB();
 
-        var fetchPublicSpacePlaylists = function(spaces) {
+        var fetchPublicSpacePlaylists = function (spaces) {
 
 
           var playlistLoads = [];
-          _.each(spaces,function(space){
+          _.each(spaces, function (space) {
             var playlistLoad = Server.getPlaylist(space.id)
-              .then(function(result){
-                $log.debug('playlist load complete:',result);
-                  return result.data;
-              }).catch(function(err){
-                    $log.error('playlist load failed: ', err);
-                });
+              .then(function (result) {
+                $log.debug('playlist load complete:', result);
+                return result.data;
+              }).catch(function (err) {
+                $log.error('playlist load failed: ', err);
+              });
             playlistLoads.push(playlistLoad)
           });
 
@@ -119,11 +119,11 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         };
 
         fetchPublicSpacePlaylists(publicSpaces)
-          .then(function(playlists){
-              $log.log('all playlists loaded:',playlists);
-            localStorageService.set('playlists',playlists);
+          .then(function (playlists) {
+            $log.log('all playlists loaded:', playlists);
+            localStorageService.set('playlists', playlists);
           })
-          .catch(function(err){
+          .catch(function (err) {
             $log.error(err);
           });
 
@@ -160,9 +160,11 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             {
               id: space.ownerId,
               filter: {
-                fields: {id:true,
+                fields: {
+                  id: true,
                   name: true,
-                  website:true}
+                  website: true
+                }
               }
             }, _.noop)
             .$promise

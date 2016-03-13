@@ -43,9 +43,14 @@ gulp.task('clean', function() {
 });
 
 gulp.task('sass', function(){
-  return gulp.src('client/scss/**/*.scss')
+  return gulp.src([
+    'client/scss/**/*.scss',
+    'client/xyz-player-component/**/*.scss'
+    ]
+  )
     .pipe(sass()) // Using gulp-sass
     .pipe(gulp.dest('client/css'))
+
 
 });
 
@@ -55,7 +60,11 @@ gulp.task('bower', function() {
 });
 
 gulp.task('copyHtml', function(){
-  return gulp.src('client/views/**/*.html')
+  return gulp.src([
+    'client/views/**/*.html',
+    'client/xyz-player-component/*.html'
+    ]
+  )
     .pipe(gulp.dest('dist/views'))
 });
 
@@ -92,12 +101,17 @@ var browserSync = require('browser-sync');
 
 
 gulp.task('watch', ['browserSync:client', 'sass'], function(){
-	gulp.watch('client/scss/**/*.scss', ['sass']);
+	gulp.watch([
+    'client/scss/**/*.scss',
+    'client/xyz-player-component/**/*.scss'
+  ], ['sass']);
 	gulp.watch([
     'client/*.html' ,
     'client/css/*.css', // this line is actually not supposed to be here, updated sass should get compiled and injected without reloading
     'client/views/**/*.html',
     'client/scripts/**/*.js',
+    'client/xyz-player-component/**/*.js',
+    'client/xyz-player-component/**/*.html',
     ], browserSync.reload);
 });
 

@@ -28,7 +28,7 @@ angular.module("xyzApp")
 
       youTubeApiService.onReady(function() {
         player = setupPlayer(scope, element);
-      });
+      })
 
       function setupPlayer(scope, element) {
         return new YT.Player(element.children()[0], { //jshint ignore:line

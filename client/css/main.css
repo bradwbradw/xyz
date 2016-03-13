@@ -488,6 +488,7 @@ html {
  * Basic styling
  */
 body {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f7fbfc+0,d9edf2+40,60a09f+100 */
   background: #f7fbfc;
   /* Old browsers */
   background: -moz-linear-gradient(-45deg, #f7fbfc 0%, #d9edf2 40%, #60a09f 100%);
@@ -763,7 +764,6 @@ body.old-ie {
   height: 200px; }
 
 .main-container {
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f7fbfc+0,d9edf2+40,60a09f+100 */
   position: absolute;
   top: 0;
   left: 0;
