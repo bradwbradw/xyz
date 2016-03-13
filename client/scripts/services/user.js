@@ -8,136 +8,141 @@
  * Service in the xyzApp.
  */
 angular.module('xyzApp')
-  .service('User', function ($q, $state, $log, Server, Dj, localStorageService, Space) {
+    .service('User', function ($q, $state, $log, Server, Dj, localStorageService, Space) {
 
-    var User = {
+        var User = {
 
-      userData: false,
+            userData: false,
 
-      get: function () {
-        return User.userData;
-      },
-      set: function (newUserData) {
-        User.userData = newUserData;
-        return User.userData;
-      },
+            get: function () {
+                return User.userData;
+            },
+            set: function (newUserData) {
+                User.userData = newUserData;
+                return User.userData;
+            },
 
-      loggedIn: function () {
-          if(!window.localStorage.getItem('$LoopBack$currentUserId')){
-              return false;
-          }
-        return Dj.isAuthenticated();
-      },
-      register: function (data) {
-        return Server.loopback.Dj.create(data)
-          .then(function () {
-            return $q.resolve(data); // return user and pass so that can now log in right after registering
-          })
-          .catch(function (err) {
-            return $q.reject(err);
-          })
-      },
+            loggedIn: function () {
+                // shouldn't have to do this
+                // https://github.com/strongloop/loopback/issues/1081
+                if (!window.localStorage.getItem('$LoopBack$currentUserId')) {
+                    return false;
+                }
+                return Dj.isAuthenticated();
+            },
+            register: function (data) {
+                return Server.loopback.Dj.create(data)
+                    .then(function () {
+                        return $q.resolve(data); // return user and pass so that can now log in right after registering
+                    })
+                    .catch(function (err) {
+                        return $q.reject(err);
+                    })
+            },
 
-      login: function (data) {
-        return Server.loopback.Dj.login(data)
-          .then(function (response) {
-            User.set(response.user);
-          })
-          .catch(function (err) {
-            var message;
-            if (err && err.data) {
-              message = err.data;
-            }
-            return $q.reject(message);
-          });
-      },
+            login: function (data) {
+                return Server.loopback.Dj.login(data)
+                    .then(function (response) {
+                        User.set(response.user);
+                    })
+                    .catch(function (err) {
+                        var message;
+                        if (err && err.data) {
+                            message = err.data;
+                        }
+                        return $q.reject(message);
+                    });
+            },
 
-      logout: function () {
-        return Dj.logout().$promise
-          .then(function(){
-            User.set(false);
-            User.setSpaces(false);
-            $state.go($state.current, {}, {reload: true});
-          })
-            .catch(function(){
-                $log.error('token expired, cannot call logout because of annoying loopback bug');
-                User.set(false);
-                User.setSpaces(false);
-                window.localStorage.removeItem('$LoopBack$accessTokenId');
-                window.localStorage.removeItem('$LoopBack$currentUserId');
-                $state.go('base',{},{reload:true});
-            });
-      },
+            logout: function () {
+                return Dj.logout().$promise
+                    .then(function () {
+                        User.set(false);
+                        User.setSpaces(false);
+                        $state.go($state.current, {}, {reload: true});
+                    })
+                    .catch(function () {
+                        $log.error('token expired, cannot call logout because of annoying loopback bug');
+                        User.set(false);
+                        User.setSpaces(false);
 
-      update: function (data) {
-        return Dj.prototype$updateAttributes({id: User.get().id}, data, _.noop)
-          .$promise
-          .then(User.set);
-      },
+                        // shouldn't have to do this
+                        // https://github.com/strongloop/loopback/issues/1081
+                        window.localStorage.removeItem('$LoopBack$accessTokenId');
+                        window.localStorage.removeItem('$LoopBack$currentUserId');
+                        $state.go('base', {}, {reload: true});
+                    });
+            },
 
-      fetchUserInfo: function () {
-        return Dj.getCurrent(_.noop)
-          .$promise
-          .then(User.set)
-          .then(User.fetchSpaces)
-          .catch(function(err){
-              // if we get here, the session likely expired and the user has to log in again
-              /*
-              User.set(false);
-              User.setSpaces(false);
-              $state.go($state.current, {}, {reload: true});*/
+            update: function (data) {
+                return Dj.prototype$updateAttributes({id: User.get().id}, data, _.noop)
+                    .$promise
+                    .then(User.set);
+            },
 
-              return User.logout();
-        //    return $q.reject(err);
-          });
-      },
-      spaces: false,
-      hasSpaces: function(){
-        return User.spaces && _.isArray(User.spaces) && User.spaces.length > 0;
-      },
+            fetchUserInfo: function () {
+                return Dj.getCurrent(_.noop)
+                    .$promise
+                    .then(User.set)
+                    .then(User.fetchSpaces)
+                    .catch(function (err) {
+                        // if we get here, the session likely expired and the user has to log in again
+                        /*
+                         User.set(false);
+                         User.setSpaces(false);
+                         $state.go($state.current, {}, {reload: true});*/
 
-      getSpaces: function () {
-        return User.spaces;
-      },
+                        return User.logout();
+                        //    return $q.reject(err);
+                    });
+            },
+            spaces: false,
+            hasSpaces: function () {
+                return User.spaces && _.isArray(User.spaces) && User.spaces.length > 0;
+            },
 
-      setSpaces: function (spaces) {
-        User.spaces = spaces;
-        return User.spaces;
-      },
+            getSpaces: function () {
+                return User.spaces;
+            },
 
-      fetchSpaces: function () {
-        return Dj.spaces({id: User.get().id}).$promise
-          .then(User.setSpaces)
-          .catch(function (err) {
-            return $q.reject(err);
-          })
-      },
+            setSpaces: function (spaces) {
+                User.spaces = spaces;
+                return User.spaces;
+            },
 
-      addSpace: function (space) {
+            fetchSpaces: function () {
+                return Dj.spaces({id: User.get().id}).$promise
+                    .then(User.setSpaces)
+                    .catch(function (err) {
+                        return $q.reject(err);
+                    })
+            },
+
+            addSpace: function (space) {
 //        space.ownerId = User.get().id;
-        Dj.spaces.create({id: User.get().id}, space, _.noop)
-          .$promise
-          .then(User.fetchSpaces)
-          .catch(function (err) {
-            return $q.reject(err);
-          });
+                Dj.spaces.create({id: User.get().id}, space, _.noop)
+                    .$promise
+                    .then(User.fetchSpaces)
+                    .catch(function (err) {
+                        return $q.reject(err);
+                    });
 
 
-        /*
-         var newSpaces = [];
-         if (User.spaces()) {
-         newSpaces = User.spaces();
-         }
-         newSpaces.push(_.clone(space));
-         User.update({spaces: newSpaces})
-         .then(function () {
-         User.userData.get.spaces = newSpaces;
-         });
-         */
-      }
-    };
+                /*
+                 var newSpaces = [];
+                 if (User.spaces()) {
+                 newSpaces = User.spaces();
+                 }
+                 newSpaces.push(_.clone(space));
+                 User.update({spaces: newSpaces})
+                 .then(function () {
+                 User.userData.get.spaces = newSpaces;
+                 });
+                 */
+            }
+        };
 
-    return User;
+        return User;
 // AngularJS will instantiate a singleton by calling "new" on this function
-  })
+    })
 ;
