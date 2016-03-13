@@ -54,7 +54,7 @@ module.exports = function (Space) {
             error: 'there are no songs in this space'
           };
 
-          cb(null, response);
+          cb(null, {space:data,playlist:response});
           return;
         } else {
           _.each(songs, function (song) {
@@ -110,7 +110,7 @@ module.exports = function (Space) {
           if (!currentIndex) {
             console.error('could not find song at playhead ', playhead);
             console.error('here is the seconds: ', seconds);
-            cb(null, response);
+            cb(null, {space:data,playlist:response});
             return;
           } else {
 
@@ -126,7 +126,7 @@ module.exports = function (Space) {
         }
 
 
-        cb(null, response);
+        cb(null, {space:data,playlist:response});
         return;
 
       })
