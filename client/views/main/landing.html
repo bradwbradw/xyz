@@ -1,7 +1,7 @@
 
 <h1>~ X Y Z ~</h1>
 
-<span ng-repeat="space in allSpaces">
+<span ng-repeat="space in publicSpaces" >
   <a ui-sref="space({id:space.id})">
     {{space.name}} (owned by {{space.owner.name}})
   </a>, </span>

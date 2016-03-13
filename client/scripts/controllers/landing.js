@@ -8,13 +8,13 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('LandingCtrl', function ($rootScope, $scope, $q,Dj, User, Server, Space,allSpaces) {
+  .controller('LandingCtrl', function ($rootScope, $scope, $q,Dj, User, Server, Space, publicSpaces) {
 
     $scope.Dj = Dj;//.findById({id:'5684f858d4b1e4996ec6d9bf'});
 
     $scope.User = User;
 
-    $scope.allSpaces = allSpaces;
+    $scope.publicSpaces = publicSpaces;
 
 /*
 

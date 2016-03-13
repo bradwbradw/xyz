@@ -66,7 +66,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         }
       },
       resolve: {
-        allSpaces: function (Space) {
+        publicSpaces: function (Space) {
 
           return Space.find({filter: {include: "owner", where: {public: true}}})
 
@@ -91,7 +91,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       },
 
 
-      onEnter: function (Library, User, Social, $q, $log, allSpaces, localStorageService, Server) {
+      onEnter: function (Library, User, Social, $q, $log, publicSpaces, localStorageService, Server) {
 
         if (User.get()) {
           User.fetchSpaces;
@@ -99,14 +99,18 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
         Social.FB.refreshFB();
 
-        var fetchAllSpacePlaylists = function(spaces) {
+        var fetchPublicSpacePlaylists = function(spaces) {
+
 
           var playlistLoads = [];
           _.each(spaces,function(space){
             var playlistLoad = Server.getPlaylist(space.id)
               .then(function(result){
-                console.warn(result);
-              });
+                $log.debug('playlist load complete:',result);
+                  return result.data;
+              }).catch(function(err){
+                    $log.error('playlist load failed: ', err);
+                });
             playlistLoads.push(playlistLoad)
           });
 
@@ -114,9 +118,10 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
         };
 
-        fetchAllSpacePlaylists(allSpaces)
-          .then(function(allPlaylists){
-            localStorageService.set('playlists',allPlaylists);
+        fetchPublicSpacePlaylists(publicSpaces)
+          .then(function(playlists){
+              $log.log('all playlists loaded:',playlists);
+            localStorageService.set('playlists',playlists);
           })
           .catch(function(err){
             $log.error(err);
