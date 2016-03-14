@@ -10,10 +10,12 @@ angular.module("xyzApp")
 
             templateUrl: 'xyz-player-component/xyz-player.html',
 
+
             link: function (scope, element, attrs, $rootScope) { //jshint ignore:line
 
               MockMediaProvider.onReady(function(){
-                $log.debug('xyzPlayer sees MockMediaProvider')
+                $log.debug('xyzPlayer sees MockMediaProvider');
+                MockMediaProvider.play();
               });
 
 /*              youTubeApiService.onReady(function(){

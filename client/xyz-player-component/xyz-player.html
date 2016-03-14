@@ -6,13 +6,15 @@
     <div class="media-box">
         <h3>media box (container for the different templates for each provider</h3>
 
-        <div ng-include="'xyz-player-component/mock-media-provider/mock-media-provider-view.html'" >
+        <div ng-include="'xyz-player-component/mock-media-provider/mock-media-provider-view.html'"
+             ng-controller="mockProviderCtrl"
+        >
 
         </div>
 
         <div>
             YT player provider view
-            
+
         </div>
         <div>
             SC player provider view
