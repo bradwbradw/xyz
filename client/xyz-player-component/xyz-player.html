@@ -4,7 +4,10 @@
     <p>space name, owner, permalink goes here</p>
 
     <div class="media-box">
+
         <h3>media box (container for the different templates for each provider</h3>
+
+        <h3>current song: {{getNowPlaying().title}}</h3>
 
         <div ng-include="'xyz-player-component/mock-media-provider/mock-media-provider-view.html'"
              ng-controller="mockProviderCtrl"
@@ -26,7 +29,7 @@
 
     <div class="media-controls">
         <h3>media controls</h3>
-        <button>play</button>
+        <button ng-click="play()">play</button>
         <button>pause</button>
     </div>
 

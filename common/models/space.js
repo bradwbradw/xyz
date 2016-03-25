@@ -126,7 +126,7 @@ module.exports = function (Space) {
         }
 
 
-        cb(null, {space:data,playlist:response});
+        cb(null, {space:data,playlist:response, totalLength: totalLength});
         return;
 
       })

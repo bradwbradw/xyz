@@ -82,11 +82,11 @@ describe('Service: Extract', function () {
         return $timeout(function () {
           deferred.notify('starting...');
           return 'donkey';
-//          return deferred.resolve('donkey');//{id:id});
+//          return loading.resolve('donkey');//{id:id});
 
         },80);
 
-//      return deferred.promise;
+//      return loading.promise;
 
     };
 

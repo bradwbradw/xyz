@@ -16,7 +16,7 @@ var
 	// A central reference to the root jQuery(document)
 	rootjQuery,
 
-	// The deferred used on DOM ready
+	// The loading used on DOM ready
 	readyList,
 
 	// Use the correct document accordingly with window argument (sandbox)
@@ -1123,7 +1123,7 @@ jQuery.extend({
 						jQuery.each( tuples, function( i, tuple ) {
 							var action = tuple[ 0 ],
 								fn = fns[ i ];
-							// deferred[ done | fail | progress ] for forwarding actions to newDefer
+							// loading[ done | fail | progress ] for forwarding actions to newDefer
 							deferred[ tuple[1] ]( jQuery.isFunction( fn ) ?
 								function() {
 									var returned = fn.apply( this, arguments );
@@ -1142,7 +1142,7 @@ jQuery.extend({
 						fns = null;
 					}).promise();
 				},
-				// Get a promise for this deferred
+				// Get a promise for this loading
 				// If obj is provided, the promise aspect is added to the object
 				promise: function( obj ) {
 					return obj != null ? jQuery.extend( obj, promise ) : promise;
@@ -1171,12 +1171,12 @@ jQuery.extend({
 				}, tuples[ i ^ 1 ][ 2 ].disable, tuples[ 2 ][ 2 ].lock );
 			}
 
-			// deferred[ resolve | reject | notify ] = list.fire
+			// loading[ resolve | reject | notify ] = list.fire
 			deferred[ tuple[0] ] = list.fire;
 			deferred[ tuple[0] + "With" ] = list.fireWith;
 		});
 
-		// Make the deferred a promise
+		// Make the loading a promise
 		promise.promise( deferred );
 
 		// Call given func if any

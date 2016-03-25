@@ -73,7 +73,7 @@ angular.module('xyzApp')
 
         refreshFB: function () {
 
-          console.log('refreshing fb');
+//          console.log('refreshing fb');
 
           $timeout(function(){
             Social.FB.connecting = false;
@@ -82,12 +82,12 @@ angular.module('xyzApp')
           return Social.FB.setConnecting()
             .then(Social.FB.updateLoginStatus)
             .then(function (res) {
-              console.log('updated login:', res);
+//              console.log('updated login:', res);
               // res: FB.getLoginStatus response
               // https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus
             })
             .then(function () {
-              console.log('trying to load me');
+//              console.log('trying to load me');
               Social.FB.loadMe;
             })
             .catch(function (err) {
@@ -95,16 +95,14 @@ angular.module('xyzApp')
               alert(err);
             })
             .finally(function () {
-              console.log('finally done refreshing FB');
+//              console.log('finally done refreshing FB');
               Social.FB.connecting = false;
             });
         },
         updateLoginStatus: function () {
-          console.log('updating login status');
 
           return ezfb.getLoginStatus()
             .then(function (response) {
-              console.log('back grom ez: ', status);
 
               Social.FB.status = response.status;
               return status

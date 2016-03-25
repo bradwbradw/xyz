@@ -5382,7 +5382,7 @@ function SoundManager(smURL, smID) {
       /**
        * Something isn't right - we've reached init, but the soundManager url property has not been set.
        * User has not called setup({url: ...}), or has not set soundManager.url (legacy use case) directly before init time.
-       * Notify and exit. If user calls setup() with a url: property, init will be restarted as in the deferred loading case.
+       * Notify and exit. If user calls setup() with a url: property, init will be restarted as in the loading loading case.
        */
 
        _wDS('noURL');

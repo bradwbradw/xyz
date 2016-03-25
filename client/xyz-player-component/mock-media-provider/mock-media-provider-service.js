@@ -24,10 +24,24 @@ angular.module("xyzApp")
     $log.debug('starting to load the mock media service');
     $timeout(resolution, 1000);
 
+
+    var songDeferred = $q.defer();
+    var songDone = songDeferred.promise;
+
     var backgroundCss;
 
     var play = function () {
 
+      if (MockMediaProvider.status !== 'queued'){
+        $log.error('play() called before song has been loaded!!!');
+        return;
+      };
+      MockMediaProvider.status = 'playing';
+
+      MockMediaProvider.songInterval =
+        $interval( songDone.resolve, MockMediaProvider.currentSong.length*1000);
+
+      // non important color changing viz:
       var colors = [
         [62, 35, 255],
         [60, 255, 60],
@@ -36,18 +50,8 @@ angular.module("xyzApp")
         [255, 0, 255],
         [255, 128, 0]
         ];
-
-      var step = 0;
-//color table indices for:
-// current color left
-// next color left
-// current color right
-// next color right
-      var colorIndices = [0, 1, 2, 3];
-
-//transition speed
-      var gradientSpeed = 0.02;
-
+      var step = 0; var colorIndices = [0, 1, 2, 3];
+      var gradientSpeed = 0.01;
       function updateGradient() {
 
         var c0_0 = colors[colorIndices[0]];
@@ -84,16 +88,51 @@ angular.module("xyzApp")
 
         }
       }
+      MockMediaProvider.animation = $interval(updateGradient, 10);
 
-      $interval(updateGradient, 10);
+
     };
+
+    var pause = function(){
+      MockMediaProvider.status = 'paused';
+      MockMediaProvider.animation.cancel();
+
+    };
+
+    var loadSong = function(provider_id){
+      MockMediaProvider.status = 'loading';
+      return $timeout(function(){
+
+        MockMediaProvider.currentSong = {
+          name:'mockMedia - '+provider_id,
+          artist:'mockerson',
+          length:provider_id*1,
+        };
+
+        MockMediaProvider.status = 'queued';
+
+      },500);
+    };
+
+    var getPosition = function(){};
 
     var MockMediaProvider = {
       onReady: function (callback) {
         apiReady.then(callback);
       },
+      onSongDone: function(callback) {
+        songDone.then(callback);
+      },
 
       play: play,
+      pause: pause,
+      loadSong: loadSong,
+      currentSong:{},
+      position:false,
+      status:'initializing',
+      animation:{},
+      songInterval:{},
+      getPosition: getPosition,
       backgroundCss: backgroundCss,
       getBackgroundCss:function(){
         return MockMediaProvider.backgroundCss;

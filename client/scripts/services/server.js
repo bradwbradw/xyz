@@ -90,7 +90,10 @@ angular.module('xyzApp')
       ,
 
       getPlaylist: function (spaceId) {
-        return get('api/spaces/playlist?spaceId='+spaceId);
+        return get('api/spaces/playlist?spaceId='+spaceId)
+          .then(function(result){
+            return result.data.playlist;
+          });
       }
       ,
 

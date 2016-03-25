@@ -24,8 +24,8 @@ angular.module('xyzApp')
         $log.log('reloading playlist');
         return Server.getPlaylist()
           .then(function(response){
-            Stream.playlist = response.data;
-            return response.data;
+            Stream.playlist = response;
+            return response;
           });
       },
 
