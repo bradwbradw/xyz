@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("xyzApp")
-  .directive('xyzPlayer', function ($log, $q, $timeout, MockMediaProvider, youTubeApiService, Server) {
+  .directive('xyzPlayer', function ($log, $q, $timeout, MockMediaProvider, youTubeApiService, Server, $rootScope) {
 
     return {
       restrict: "A",
@@ -11,19 +11,27 @@ angular.module("xyzApp")
       templateUrl: 'xyz-player-component/xyz-player.html',
 
 
-      link: function (scope, element, attrs, $rootScope) { //jshint ignore:line
+      link: function (scope, element, attrs) { //jshint ignore:line
 
         var mediaProviders = {
-          youtube: {},
-          soundcloud: {},
-          bandcamp: {},
-          mock: {}
+          youtube: {
+            loading: $q.defer()
+          },
+          soundcloud: {
+            loading: $q.defer()
+          },
+          bandcamp: {
+            loading: $q.defer()
+          },
+          mock: {
+            loading: $q.defer()
+          }
         };
 
         var defaultProviderFunctions = {
           play: {},
           pause: {},
-          cueAndPlay:{},
+          cueAndPlay: {},
           volume: {},
         };
 
@@ -32,38 +40,45 @@ angular.module("xyzApp")
             $log.debug('xyzPlayer sees MockMediaProvider');
             mediaProviders.mock.play = MockMediaProvider.play;
             mediaProviders.mock.pause = MockMediaProvider.pause;
-            mediaProviders.mock.cueAndPlay = function(provider_id){
+            mediaProviders.mock.cueAndPlay = function (provider_id) {
 
               return MockMediaProvider.loadSong(provider_id)
                 .then(MockMediaProvider.play);
 
             };
+            mediaProviders.mock.onSongDone = MockMediaProvider.onSongDone;
             mediaProviders.mock.loading.resolve();
 //                MockMediaProvider.play();
           }
         };
 
         _.each(mediaProviders, function (provider, index) {
-          mediaProviders[index] = defaultProviderFunctions;
-          mediaProviders[index].loading = $q.defer();
+          _.extend(mediaProviders[index], defaultProviderFunctions);
         });
 
 
-        MockMediaProvider.onReady(function(){
+        MockMediaProvider.onReady(function () {
+          $log.debug('mock media provider onready');
           providerInitFunctions.mock();
         });
 
         //TODO turn into actual callbacks after SC, YT providers load.
 
-        mediaProviders.youtube.loading.resolve();
-        mediaProviders.soundcloud.loading.resolve();
-        mediaProviders.bandcamp.loading.resolve();
+
+        $timeout(function () {
+
+          mediaProviders.youtube.loading.resolve('youtube!');
+          mediaProviders.soundcloud.loading.resolve('soundcloud!');
+          mediaProviders.bandcamp.loading.resolve('bandcamp!');
+        }, 1000);
 
         var serviceProvidersLoaded = $q.all(
-          [mediaProviders.youtube.loading,
-          mediaProviders.soundcloud.loading,
-          mediaProviders.bandcamp.loading,
-          mediaProviders.mock.loading]
+          [
+            mediaProviders.youtube.loading.promise,
+            mediaProviders.soundcloud.loading.promise,
+            mediaProviders.bandcamp.loading.promise,
+            mediaProviders.mock.loading.promise
+          ]
         );
 
         var loadPlaylist = function (spaceId) {
@@ -83,20 +98,20 @@ angular.module("xyzApp")
 
         };
         var nowPlaying = {};
-        var getNowPlaying = function(){
+        var getNowPlaying = function () {
           return nowPlaying;
         };
 
-        var setNowPlaying = function(songObj){
+        var setNowPlaying = function (songObj) {
           nowPlaying = songObj;
         };
 
-        var nextSong = function(songObjThatJustFinished){
-          if(!songObjThatJustFinished){
+        var nextSong = function (songObjThatJustFinished) {
+          if (!songObjThatJustFinished) {
             return playlist[0];
           } else {
             var indexOfSongThatJustFinished = _.indexOf(playlist, songObjThatJustFinished);
-            if (_.size(playlist) === indexOfSongThatJustFinished + 1){
+            if (_.size(playlist) === indexOfSongThatJustFinished + 1) {
               return playlist[0];
             } else {
               return playlist[indexOfSongThatJustFinished + 1];
@@ -105,17 +120,20 @@ angular.module("xyzApp")
 
         };
 
-        var go = function(){
+        var go = function () {
 
           var songToPlay = nextSong(getNowPlaying());
 
+          $log.debug('go called. song to play is: ', songToPlay);
+
           mediaProviders[songToPlay.provider].cueAndPlay(songToPlay.provider_id)
-            .then(function(){
+            .then(function () {
               setNowPlaying(songToPlay);
             })
-            .catch(function(err){
+            .catch(function (err) {
               $log.error(err);
             });
+
         };
 
         $q.all([loadPlaylist(attrs.space), serviceProvidersLoaded])
@@ -124,11 +142,13 @@ angular.module("xyzApp")
             playlist = results[0].playlist;
             space = results[0].space;
 
-            var firstSong = playlist[0];
+            // assuming auto-play, otherwise, bind go() to a button click or something
+            go();
 
 
           });
 
+        $rootScope.$on('mock_song_done', go);
 
         scope.getNowPlaying = getNowPlaying;
         scope.status = status;

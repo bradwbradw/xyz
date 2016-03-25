@@ -1,5 +1,7 @@
 <div class="mock-media-provider-view">
-    <div ng-style="MockMediaProvider.getBackgroundCss()"> mock media provider view </div>
+    <div ng-style="MockMediaProvider.getBackgroundCss()">
+        {{MockMediaProvider.getCurrentSong().artist }} -
+        {{MockMediaProvider.getCurrentSong().name }} </div>
 </div>
 
 
