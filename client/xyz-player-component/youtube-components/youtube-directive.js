@@ -28,6 +28,7 @@ angular.module("xyzApp")
 
         youTubeApiService.onReady(function() { // equivalent to youtube's 'onYouTubeIframeAPIReady'
           player = setupPlayer(scope, element);
+          console.warn('emitting youtube_is_ready');
           scope.$emit('youtube_is_ready');
         });
 

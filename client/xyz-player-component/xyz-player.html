@@ -2,7 +2,7 @@
     <h3>xyz player </h3>
     <p>space name, owner, permalink goes here</p>
 
-    <div class="media-box">
+    <div class="media-box" >
 
         <h3>media box (container for the different templates for each provider</h3>
 
@@ -17,7 +17,7 @@
 
 
         <div youtube
-             ng-if="getNowPlaying().provider === 'youtube'"
+             ng-show="getNowPlaying().provider === 'youtube'"
              videoid="{{youtubeId}}"
         >
 
