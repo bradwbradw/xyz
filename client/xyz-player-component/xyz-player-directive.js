@@ -193,9 +193,22 @@ angular.module("xyzApp")
             // assuming auto-play, otherwise, bind go() to a button click or something
             go();
 
-
           });
 
+        var spaceOpen = true;
+
+        var close = function(){
+          spaceOpen = false;
+          $timeout(scope.$destroy);
+          // TODO: currently, destroy annihilates everything
+          // but the calls to go() above keep happening.
+          // should not try to play
+          // (might just be from mock media though..)
+        };
+
+        var spaceIsOpen = function(){
+          return spaceOpen;
+        };
 
         scope.getNowPlaying = getNowPlaying;
         scope.status = status;
@@ -205,6 +218,9 @@ angular.module("xyzApp")
 
         scope.play = play;
         scope.pause = pause;
+        scope.spaceOpen = spaceOpen;
+        scope.close = close;
+        scope.spaceIsOpen = spaceIsOpen;
 
       }
     }

@@ -1,49 +1,49 @@
-<div class="xyz-player">
-    <h3>xyz player </h3>
-    <p>space name, owner, permalink goes here</p>
+<div class="xyz-player" ng-if="spaceIsOpen()">
+  <h3>xyz player </h3>
+  <button ng-click="close()"> close </button>
+  <p>space name, owner, permalink goes here</p>
 
-    <div class="media-box" >
+  <div class="media-box">
 
-        <h3>media box (container for the different templates for each provider</h3>
+    <h3>media box (container for the different templates for each provider</h3>
+    <h3>current song: {{getNowPlaying().title}}</h3>
 
-        <h3>current song: {{getNowPlaying().title}}</h3>
-
-        <div ng-include="'xyz-player-component/mock-media-provider/mock-media-provider-view.html'"
-             ng-controller="mockProviderCtrl"
-             ng-if="getNowPlaying().provider === 'mock'"
-        >
-
-        </div>
-
-
-        <div youtube
-             ng-show="getNowPlaying().provider === 'youtube'"
-             videoid="{{youtubeId}}"
-        >
-
-            YT player provider view (i should get replaced)
-
-        </div>
-
-        <div>
-            SC player provider view
-        </div>
-
-        <!-- TODO: add other template elements for SC and YT -->
+    <div ng-include="'xyz-player-component/mock-media-provider/mock-media-provider-view.html'"
+         ng-controller="mockProviderCtrl"
+         ng-if="getNowPlaying().provider === 'mock'"
+    >
 
     </div>
 
-    <div class="media-controls">
-        <h3>media controls</h3>
-        <button ng-click="play()">play</button>
-        <button ng-click="pause()">pause</button>
+
+    <div youtube
+         ng-show="getNowPlaying().provider === 'youtube'"
+         videoid="{{youtubeId}}"
+    >
+
+      YT player provider view (i should get replaced)
+
     </div>
 
-    <div class="progress-bar">
-        <h3>scrubbing / song progress indicator</h3>
+    <div soundcloud>
+      SC player provider view
     </div>
-    <div class="volume control">
-        <h3>volume control</h3>
-    </div>
+
+    <!-- TODO: add other template elements for SC and YT -->
+
+  </div>
+
+  <div class="media-controls">
+    <h3>media controls</h3>
+    <button ng-click="play()">play</button>
+    <button ng-click="pause()">pause</button>
+  </div>
+
+  <div class="progress-bar">
+    <h3>scrubbing / song progress indicator</h3>
+  </div>
+  <div class="volume control">
+    <h3>volume control</h3>
+  </div>
 
 </div>

@@ -52,4 +52,20 @@ angular.module('xyzApp')
       //return Dj.spaces.destroyById({id:User.get().id,fk:space.id}, _.noop)
     };
 
+    var thePlayingSpace = false;
+
+    var playSpace = function(space){
+      thePlayingSpace = space;
+    };
+
+    var playingSpace = function(){
+      return thePlayingSpace;
+    };
+
+    //TODO remove this
+//    playSpace('mock');
+    $scope.playingSpace = playingSpace;
+    $scope.playSpace = playSpace;
+
+
   });
