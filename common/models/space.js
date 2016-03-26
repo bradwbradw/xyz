@@ -46,7 +46,7 @@ module.exports = function (Space) {
       function (err, data) {
 
         var playlist = [];
-        var songs = data.songs();
+        var songs = data && _.isFunction(data.songs)? data.songs() : [];
         var response = {};
         if (_.size(songs) <= 0) {
           var response = {
