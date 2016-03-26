@@ -1,4 +1,3 @@
-
 <div class="xyz-player">
     <h3>xyz player </h3>
     <p>space name, owner, permalink goes here</p>
@@ -11,14 +10,21 @@
 
         <div ng-include="'xyz-player-component/mock-media-provider/mock-media-provider-view.html'"
              ng-controller="mockProviderCtrl"
+             ng-if="getNowPlaying().provider === 'mock'"
         >
 
         </div>
 
-        <div>
-            YT player provider view
+
+        <div youtube
+             ng-if="getNowPlaying().provider === 'youtube'"
+             videoid="{{youtubeId}}"
+        >
+
+            YT player provider view (i should get replaced)
 
         </div>
+
         <div>
             SC player provider view
         </div>
@@ -30,7 +36,7 @@
     <div class="media-controls">
         <h3>media controls</h3>
         <button ng-click="play()">play</button>
-        <button>pause</button>
+        <button ng-click="pause()">pause</button>
     </div>
 
     <div class="progress-bar">

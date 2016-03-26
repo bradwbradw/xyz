@@ -85,7 +85,7 @@ angular.module("xyzApp")
       if (MockMediaProvider.status !== 'queued'){
         $log.error('play() called before song has been loaded!!!');
         return;
-      };
+      }
       MockMediaProvider.status = 'playing';
 
 

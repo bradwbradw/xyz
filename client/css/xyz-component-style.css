@@ -9,6 +9,9 @@
     width: 270;
     display: inline-block;
     background-color: lightgoldenrodyellow; }
+  .xyz-player .media-controls {
+    position: fixed;
+    bottom: 0; }
 
 .mock-media-provider-view {
   display: inline-block;

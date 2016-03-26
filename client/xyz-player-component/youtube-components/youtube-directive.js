@@ -1,11 +1,11 @@
 "use strict";
 
 angular.module("xyzApp")
-  .directive('youtube', function ($window, YT_event, youTubeApiService) {
+  .directive('youtube', function ($log, $window, YT_event, youTubeApiService) {
 
     // from http://plnkr.co/edit/8lxuN8?p=info
     return {
-      restrict: "E",
+      restrict: "A",
 
       scope: {
         height: "@",
@@ -26,12 +26,14 @@ angular.module("xyzApp")
 
         var player;
 
-      youTubeApiService.onReady(function() {
-        player = setupPlayer(scope, element);
-      })
+        youTubeApiService.onReady(function() { // equivalent to youtube's 'onYouTubeIframeAPIReady'
+          player = setupPlayer(scope, element);
+          scope.$emit('youtube_is_ready');
+        });
 
-      function setupPlayer(scope, element) {
-        return new YT.Player(element.children()[0], { //jshint ignore:line
+        var setupPlayer = function(scope, element) {
+
+          return new YT.Player(element.children()[0], { //jshint ignore:line
             playerVars: {
               autoplay: 1,
               html5: 1,
@@ -70,8 +72,13 @@ angular.module("xyzApp")
                     break;
                 }
 
+                if(message.data === 'ENDED'){
+                  $log.debug('emitting youtube_has_ended');
+                  scope.$emit('youtube_has_ended');
+                }
+
                 scope.$apply(function () {
-                  console.log('emitting message from youtube directive:');
+                  console.log('emitting message from youtube directive:', message);
                   scope.$emit(message.event, message.data);
                 });
               }
@@ -94,7 +101,7 @@ angular.module("xyzApp")
             return;
           }
 
-          player.cueVideoById(scope.videoid);
+          player.loadVideoById(scope.videoid);
 
         });
 
@@ -105,7 +112,7 @@ angular.module("xyzApp")
         });
 
         scope.$on(YT_event.PLAY, function () {
-        console.log("playin video");
+          console.log("playin video");
           player.playVideo();
         });
 
