@@ -191,13 +191,20 @@ angular.module("xyzApp")
             space = results[0].space;
 
             // assuming auto-play, otherwise, bind go() to a button click or something
-            go();
+            if (_.size(playlist) > 0) {
+              go();
+              message = '';
+            } else {
+              message = 'playlist has 0 songs';
+            }
+
 
           });
 
+        var message = '';
         var spaceOpen = true;
 
-        var close = function(){
+        var close = function () {
           spaceOpen = false;
           $timeout(scope.$destroy);
           // TODO: currently, destroy annihilates everything
@@ -206,7 +213,7 @@ angular.module("xyzApp")
           // (might just be from mock media though..)
         };
 
-        var spaceIsOpen = function(){
+        var spaceIsOpen = function () {
           return spaceOpen;
         };
 
@@ -215,6 +222,7 @@ angular.module("xyzApp")
         scope.playlist = playlist;
         scope.space = space;
         scope.nowPlaying = nowPlaying;
+        scope.message = message;
 
         scope.play = play;
         scope.pause = pause;
