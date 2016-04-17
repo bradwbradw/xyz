@@ -20,11 +20,11 @@ xyzApp.constant('YT_event', {
 });
 
 xyzApp.constant('SC_event', {
-  STOP: 0,
-  PLAY: 1,
-  PAUSE: 2,
-  STATUS_CHANGE: 3,
-  CUE_AND_PLAY:4
+  STOP: 10,
+  PLAY: 11,
+  PAUSE: 12,
+  STATUS_CHANGE: 13,
+  CUE_AND_PLAY:14
 });
 
 xyzApp.config(function ($httpProvider) {// jshint ignore:line
