@@ -11,6 +11,7 @@ angular.module('xyzApp')
   .service('MediaAPI', function ($http, $window, apiKeys, $q, Utility) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
+
     $window.SC.initialize({
       client_id: apiKeys.sc,
       redirect_uri: 'http://l.h:8080/sc_callback'

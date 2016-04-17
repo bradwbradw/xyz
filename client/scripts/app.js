@@ -5,7 +5,7 @@ var xyzApp = angular.module("xyzApp",
     'ngSanitize',
     'ezfb',
     'LocalStorageModule',
-    'ngTouch',
+//    'ngTouch',
     'ngResource',
     'lbServices',
     'ls.LiveSet',
@@ -17,6 +17,14 @@ xyzApp.constant('YT_event', {
   PLAY: 1,
   PAUSE: 2,
   STATUS_CHANGE: 3
+});
+
+xyzApp.constant('SC_event', {
+  STOP: 0,
+  PLAY: 1,
+  PAUSE: 2,
+  STATUS_CHANGE: 3,
+  CUE_AND_PLAY:4
 });
 
 xyzApp.config(function ($httpProvider) {// jshint ignore:line
@@ -266,17 +274,6 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
             return Stream.reloadPlaylist();
           });
-        }
-      }
-
-    })
-    .state('social', {
-      parent: 'base',
-      url: 'social',
-      views: {
-        'main@': {
-          templateUrl: 'views/test/social.html',
-          controller: 'SocialTestCtrl'
         }
       }
 

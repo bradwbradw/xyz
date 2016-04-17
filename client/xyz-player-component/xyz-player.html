@@ -2,7 +2,7 @@
   <h3>xyz player </h3>
 
   <h4>{{message}}</h4>
-  <button ng-click="close()"> close </button>
+  <button ng-click="close()"> close</button>
   <p>space name, owner, permalink goes here</p>
 
   <div class="media-box">
@@ -27,9 +27,12 @@
 
     </div>
 
-    <div soundcloud>
+
+    <div soundcloud ng-show="getNowPlaying().provider === 'soundcloud'"
+      soundid={{soundId}} >
       SC player provider view
     </div>
+
 
     <!-- TODO: add other template elements for SC and YT -->
 

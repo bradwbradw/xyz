@@ -19,6 +19,9 @@ angular.module("xyzApp")
       link: function (scope, element, attrs, $rootScope) { //jshint ignore:line
 
         console.log('linking youtube directive');
+        // as per
+        // https://developers.google.com/youtube/iframe_api_reference#Getting_Started
+
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -97,7 +100,7 @@ angular.module("xyzApp")
         });
 
         scope.$watch('videoid', function (newValue, oldValue) {
-          console.log('videoid watch hit');
+          console.log('videoid watch hit. value is ',newValue);
           if (newValue === oldValue) {
             return;
           }

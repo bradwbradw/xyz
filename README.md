@@ -26,6 +26,11 @@ for Step 1, you can supply an environment variable as such:
 
 ^ this will connect to the local mongo database. (default is to connect to the staging database - the one at https://xxxyyyzzz.herokuapp.com/)
 
+##notes
+
+api call to get playlist from a space:
+
+/api/spaces/playlist?spaceId=1234
 
 Run `grunt` for building and `grunt serve` for preview.
 

@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("xyzApp")
-  .directive('xyzPlayer', function ($log, $q, $timeout, MockMediaProvider, youTubeApiService, Server, $rootScope, YT_event) {
+  .directive('xyzPlayer', function ($log, $q, $timeout, MockMediaProvider, youTubeApiService, Server, $rootScope, YT_event, SC_event) {
 
     return {
       restrict: "A",
@@ -13,6 +13,7 @@ angular.module("xyzApp")
 
       link: function (scope, element, attrs) { //jshint ignore:line
 
+        scope.soundcloudId = 76067623;
         var mediaProviders = {
           youtube: {
             loading: $q.defer(),
@@ -70,6 +71,32 @@ angular.module("xyzApp")
 
             $rootScope.$on('youtube_has_ended', go);
 
+          },
+          soundcloud: function () {
+            mediaProviders.soundcloud.pause =
+              function (provider_id) {
+                $rootScope.$broadcast(SC_event.PAUSE);
+                return $q.resolve(true);
+              };
+
+            mediaProviders.soundcloud.play = function () {
+              $log.debug('tryin to play');
+              $rootScope.$broadcast(SC_event.PLAY);
+            };
+
+
+            mediaProviders.soundcloud.cueAndPlay =
+              function (provider_id) {
+                scope.soundId = provider_id;
+                return $q.resolve(true);
+              };
+
+
+            $rootScope.$on('soundcloud_has_ended', go);
+
+
+
+            mediaProviders.soundcloud.loading.resolve('soundcloud!');
           }
         };
 
@@ -85,7 +112,12 @@ angular.module("xyzApp")
         $rootScope.$on('youtube_is_ready', function () {
           $log.debug('youtube provider onready');
           providerInitFunctions.youtube();
-//          providerInitFunctions.youtube();
+
+
+        });
+        $rootScope.$on('soundcloud_is_ready', function () {
+          $log.debug('soundcloud provider onready');
+          providerInitFunctions.soundcloud();
 
         });
 
@@ -111,7 +143,7 @@ angular.module("xyzApp")
 
         $timeout(function () {
 
-          mediaProviders.soundcloud.loading.resolve('soundcloud!');
+//          mediaProviders.soundcloud.loading.resolve('soundcloud!');
           mediaProviders.bandcamp.loading.resolve('bandcamp!');
         }, 1000);
 
@@ -138,6 +170,7 @@ angular.module("xyzApp")
         var space = false;
 
         var play = function () {
+          console.log('play button clicked, so will play ',getNowPlaying().provider);
           mediaProviders[getNowPlaying().provider].play();
 
         };

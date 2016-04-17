@@ -113,14 +113,6 @@ angular.module('xyzApp')
 
         },
 
-        /*
-
-         updateApiCall: $q.all([
-         ezfb.api('/me'),
-         ezfb.api('/me/likes')
-         ]).then(function (data) {
-         return data;
-         }),*/
 
         loadMe: function () {
           return $timeout(ezfb.api('/me')
@@ -169,7 +161,7 @@ angular.module('xyzApp')
         }
       },
       YT: {},
-      SC: $window.SC,
+      SC: {},
       BC: {}
     };
 
