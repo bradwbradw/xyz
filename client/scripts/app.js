@@ -9,23 +9,9 @@ var xyzApp = angular.module("xyzApp",
     'ngResource',
     'lbServices',
     'ls.LiveSet',
-    'ls.ChangeStream'
+    'ls.ChangeStream',
+    'xyzPlayer'
   ]);
-
-xyzApp.constant('YT_event', {
-  STOP: 0,
-  PLAY: 1,
-  PAUSE: 2,
-  STATUS_CHANGE: 3
-});
-
-xyzApp.constant('SC_event', {
-  STOP: 10,
-  PLAY: 11,
-  PAUSE: 12,
-  STATUS_CHANGE: 13,
-  CUE_AND_PLAY:14
-});
 
 xyzApp.config(function ($httpProvider) {// jshint ignore:line
   /*

@@ -253,6 +253,10 @@ angular.module('xyzApp')
           id = urlParts[1].substr(0, 11);
         }
         return MediaAPI.YT.get(id)
+          .then(function(result){
+            $log.log('youtube get result:',result);
+            return result;
+          })
           .then(Utility.clean.YT.video);
 
       },
