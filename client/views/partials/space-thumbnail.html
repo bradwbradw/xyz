@@ -1,8 +1,10 @@
- <a ui-sref="space({id:space.id})">
-        {{space.name }} {{space.public? '' : '(private)'}}
- </a>
- loading...
-<pre class="debug">
+<a ui-sref="space({id:space.id})">
+  {{space.name }} {{space.public? '' : '(private)'}}
+</a>
+<div ng-if="false">
+  loading...
+</div>
+<pre class="debug" ng-if="false">
   {{space  | json}}
 
 </pre>

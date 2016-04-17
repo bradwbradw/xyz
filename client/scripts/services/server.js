@@ -7,10 +7,10 @@ angular.module('xyzApp')
     var API = serverConfig.apiBaseUrl;
 
 
-
     var resetErrors = function () {
       $rootScope.error = '';
     };
+
     var get = function (item) {
       resetErrors();
       return $http.get(API + item);
@@ -19,7 +19,6 @@ angular.module('xyzApp')
     var post = function (place, item) {
       resetErrors();
       return $http.post(API + place, item);
-
     };
 
     var put = function (place, item) {
@@ -42,27 +41,31 @@ angular.module('xyzApp')
         if (!resource.$promise) {
           return $q.reject('no promise found in resource');
         }
-/*
-        if (resource.$promise.$resolved) {
-          return resource.$promise.resolve(resource);
-            // or maybe $q.resolve(resource);
-        } else {
-          return resource.$promise.reject('something bad happened');
-            // or maybe $q.reject(resource);
-        }*/
+        /*
+         if (resource.$promise.$resolved) {
+         return resource.$promise.resolve(resource);
+         // or maybe $q.resolve(resource);
+         } else {
+         return resource.$promise.reject('something bad happened');
+         // or maybe $q.reject(resource);
+         }*/
       };
 
       return lbResourceCall({}, data, resPromise).$promise;
     };
 
-    return {
+    var Server = {
 
-        setStartTime: function(space){
-          var now = new Date();
-            return Space.prototype$updateAttributes( {id:space.id},{startTime: now})
-                .$promise;
+      processing: function () {
 
-        },
+        return true;
+      },
+
+      setStartTime: function (space) {
+        var now = new Date();
+        return Space.prototype$updateAttributes({id: space.id}, {startTime: now}).$promise;
+
+      },
 
       loopback: {
         Dj: {
@@ -71,8 +74,7 @@ angular.module('xyzApp')
               .catch(function (err) {
                 return $q.reject(err);
               });
-          },
-          login: function (data) {
+          }, login: function (data) {
             return resCall(Dj.login, data)
               .catch(function (err) {
                 return $q.reject(err);
@@ -86,68 +88,63 @@ angular.module('xyzApp')
 
       getBandcampId: function (url) {
         return get('bandcampHelper?url=' + url);
-      }
-      ,
+      },
 
       getPlaylist: function (spaceId) {
-        return get('api/spaces/playlist?spaceId='+spaceId)
-          .then(function(result){
+        return get('api/spaces/playlist?spaceId=' + spaceId)
+          .then(function (result) {
             return result.data.playlist;
           });
-      }
-      ,
+      },
 
       getPlayhead: function () {
         return get('playhead');
-      }
-      ,
+      },
 
       refresh: function () {
         return get('refresh');
-      }
-      ,
+      },
 
       getLibrary: function () {
         return get('api/songs');
-      }
-      ,
+      },
+
       addSong: function (song) {
         return post('api/songs', song);
-      }
-      ,
+      },
+
       updateSong: function (id, data) {
         return put('api/songs/' + id, data);
-      }
-      ,
+      },
+
       deleteSong: function (id) {
         return restDelete('api/songs/' + id);
-      }
-      ,
+      },
 
       registerDj: function (data) {
         var theResource = Dj.create({}, data, resPromise);
         return theResource.$promise;
 //        return post('api/djs', data);
-      }
-      ,
+      },
 
       login: function (data) {
         return Dj.login({}, data, resPromise).$promise;
-      }
-      ,
-      logout: function (token) {
-        return post('api/djs/logout?access_token=' + token);
-      }
-      ,
-      getUser: function (data) {
-        return get('api/djs/' + data.userId + '?access_token=' + data.accessToken);
-      }
-      ,
-      updateUser: function (id, token, data) {
-        return put('api/djs/' + id + '/?access_token=' + token, data);
       },
 
+      logout: function (token) {
+        return post('api/djs/logout?access_token=' + token);
+      },
 
-    }
-      ;
+      getUser: function (data) {
+        return get('api/djs/' + data.userId + '?access_token=' + data.accessToken);
+      },
+
+      updateUser: function (id, token, data) {
+        return put('api/djs/' + id + '/?access_token=' + token, data);
+      }
+
+
+    };
+
+    return Server;
   });

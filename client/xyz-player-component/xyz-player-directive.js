@@ -157,10 +157,6 @@ angular.module("xyzApp")
         );
 
         var loadPlaylist = function (spaceId) {
-
-          if (spaceId === 'mock') {
-            return $timeout(mockPlaylist, 700);
-          }
           return Server.getPlaylist(spaceId);
         };
 

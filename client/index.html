@@ -3,18 +3,18 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="/">
-<!--
-  <script type="text/javascript">
-    document.write('<base href="' + document.location + '" />');
-  </script>-->
+  <!--
+    <script type="text/javascript">
+      document.write('<base href="' + document.location + '" />');
+    </script>-->
 
-<!-- build:css css/main.min.css -->
+  <!-- build:css css/main.min.css -->
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/xyz-component-style.css">
-<!-- endbuild -->
+  <!-- endbuild -->
 </head>
 
-<body ng-app="xyzApp" >
+<body ng-app="xyzApp">
 
 <div ng-controller="BodyCtrl">
 
@@ -46,20 +46,10 @@
 <!-- endbuild -->
 
 
-
-
-
-<!--
-
 <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
--->
 
 
 <script src="https://w.soundcloud.com/player/api.js"></script>
-
-
-
-
 
 
 <!-- build:js scripts/scripts.js -->
@@ -110,7 +100,7 @@
 <!-- build:remove -->
 <script>
 
-    //FORMAT of apiBaseUrl: 'http://l.h:5000/'
+  //FORMAT of apiBaseUrl: 'http://l.h:5000/'
 
 
   angular.module('xyzApp')
@@ -136,9 +126,7 @@
         apiBaseUrl: '%%%API_URL'
       })
       .constant('apiKeys', {
-        sc: '%%%scKey',
-        yt: '%%%ytKey',
-        fb_app_id: '%%%facebookAppId'// PROD: '1381485208848570'
+        sc: '%%%scKey', yt: '%%%ytKey', fb_app_id: '%%%facebookAppId'// PROD: '1381485208848570'
       });
 </script>
 <!-- /build -->

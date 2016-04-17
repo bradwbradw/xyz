@@ -7,19 +7,12 @@
   <button ng-click="playSpace(space.id)">play</button>
 </div>
 
-<button ng-click="playSpace('mock')">mock space</button>
-
-
-<!--<div xyz-player space="56e2ec4cff13560481f347d1" ></div>-->
 <div xyz-player
      space="{{playingSpace()}}"
      ng-if="playingSpace()">
 
-</div><!--<div xyz-player
-     space="mock">
-
-</div>-->
-{{playingSpace()}}
+</div>
+{{playingSpace()? playingSpace() : '' }}
 
 <div ng-if="!User.loggedIn()">
 
