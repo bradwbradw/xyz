@@ -10,7 +10,7 @@ var sass = require('gulp-sass');
 var cssnano = require('gulp-cssnano');
 
 var uglify = require('gulp-uglify'),
-    concat = require('gulp-concat');
+  concat = require('gulp-concat');
 var replace = require('gulp-replace');
 
 var del = require('del');
@@ -24,13 +24,13 @@ var keys = {
 
 var apiUrl = process.env.API_URL || 'http://localhost:5005/api';
 
-console.log('api Url is ',apiUrl);
+console.log('api Url is ', apiUrl);
 
 gulp.task('loopback', function () {
-	return gulp.src('./server/server.js')
+  return gulp.src('./server/server.js')
     .pipe(loopbackAngular(
       {
-        apiUrl:apiUrl
+        apiUrl: apiUrl
       }
     ))
     .pipe(rename('lb-services.js'))
@@ -38,59 +38,55 @@ gulp.task('loopback', function () {
 });
 //lb-ng server/server.js client/scripts/services/lb-services.js -u http://0.0.0.0:3000/api && node docs.js
 
-gulp.task('clean', function() {
+gulp.task('clean', function () {
   return del.sync('dist');
 });
 
-gulp.task('sass', function(){
+gulp.task('sass', function () {
   return gulp.src([
-    'client/scss/**/*.scss',
-    'client/xyz-player-component/**/*.scss'
+      'client/scss/**/*.scss',
+      'client/xyz-player-component/**/*.scss'
     ]
-  )
+    )
     .pipe(sass()) // Using gulp-sass
     .pipe(gulp.dest('client/css'))
 
 
 });
 
-gulp.task('bower', function() {
+gulp.task('bower', function () {
   return bower()
     .pipe(gulp.dest('client/vendor'))
 });
 
-gulp.task('copyHtml', function(){
+gulp.task('copyHtml', function () {
   return gulp.src([
-    'client/views/**/*.html',
-    'client/xyz-player-component/*.html'
+      'client/views/**/*.html',
+      'client/xyz-player-component/*.html'
     ]
-  )
+    )
     .pipe(gulp.dest('dist/views'))
 });
 
-gulp.task('useref', function(){
-	return gulp.src('client/index.html')
+gulp.task('useref', function () {
+  return gulp.src('client/index.html')
 
     .pipe(replace('%%%facebookAppId', keys.fb))
     .pipe(replace('%%%scKey', keys.sc))
     .pipe(replace('%%%ytKey', keys.yt))
     .pipe(replace('%%%API_URL', apiUrl))
-  	.pipe(useref())
-//	.pipe(gulpIf('*.js',uglify()))
-  .pipe(gulpIf('*.css', cssnano()))
-	.pipe(gulp.dest('dist'))
+    .pipe(useref())
+    //	.pipe(gulpIf('*.js',uglify()))
+    .pipe(gulpIf('*.css', cssnano()))
+    .pipe(gulp.dest('dist'))
 });
 
 gulp.task('build:production', function (callback) {
-  runSequence('clean', 'loopback','sass','bower',
-    [ 'useref', 'copyHtml'],
+  runSequence('clean', 'loopback', 'sass', 'bower',
+    ['useref', 'copyHtml'],
     callback
   )
 });
-
-
-
-
 
 
 var jshint = require('gulp-jshint');
@@ -100,70 +96,76 @@ var historyApiFallback = require('connect-history-api-fallback');
 var browserSync = require('browser-sync');
 
 
-gulp.task('watch', ['browserSync:client', 'sass'], function(){
-	gulp.watch([
+gulp.task('watch', ['browserSync:client', 'sass'], function () {
+  gulp.watch([
     'client/scss/**/*.scss',
     'client/xyz-player-component/**/*.scss'
   ], ['sass']);
-	gulp.watch([
-    'client/*.html' ,
+  gulp.watch([
+    'client/*.html',
     'client/css/*.css', // this line is actually not supposed to be here, updated sass should get compiled and injected without reloading
     'client/views/**/*.html',
     'client/scripts/**/*.js',
     'client/xyz-player-component/**/*.js',
     'client/xyz-player-component/**/*.html',
-    ], browserSync.reload);
+  ], browserSync.reload);
 });
 
-gulp.task('browserSync:client', function() {
+gulp.task('browserSync:client', function () {
   browserSync({
     server: {
       baseDir: 'client',
       index: 'index.html',
-      middleware: [ historyApiFallback() ]
+      middleware: [historyApiFallback()],
+      routes: {
+        "/xyz-player-component": "xyz-player-component",
+        "/stream": "stream"
+      }
     },
-    ui:{
-      port:9006
+    ui: {
+      port: 9006
     },
-    port:9005
+    port: 9005
   })
 });
 
-gulp.task('browserSync:dist', function(){
+gulp.task('browserSync:dist', function () {
   browserSync({
     server: {
       baseDir: 'dist',
       index: 'index.html',
-      middleware: [ historyApiFallback() ]
+      middleware: [historyApiFallback()]
     },
-    port:9000
+    port: 9000
   })
 });
 
-gulp.task('trybuild', function(callback){
-  runSequence('build','browserSync:dist', callback);
+gulp.task('trybuild', function (callback) {
+  runSequence('build', 'browserSync:dist', callback);
 });
 
 
-
-gulp.task('browserSync:stream', function(){
+gulp.task('browserSync:stream', function () {
   browserSync({
     server: {
       baseDir: 'stream',
       index: 'index.html',
-      middleware: [ historyApiFallback() ]
+      middleware: [historyApiFallback()],
+      routes: {
+        "/xyz-player-component": "xyz-player-component",
+        "/stream": "stream"
+      }
     },
-    port:9001
+    port: 9001
   })
 });
 
 
-
 gulp.task('loopback', function () {
-	return gulp.src('./server/server.js')
+  return gulp.src('./server/server.js')
     .pipe(loopbackAngular(
       {
-        apiUrl:apiUrl
+        apiUrl: apiUrl
       }
     ))
     .pipe(rename('lb-services.js'))
@@ -171,45 +173,33 @@ gulp.task('loopback', function () {
 });
 //lb-ng server/server.js client/scripts/services/lb-services.js -u http://0.0.0.0:3000/api && node docs.js
 
-gulp.task('clean', function() {
+gulp.task('clean', function () {
   return del.sync('dist');
 });
 
 
-
-
-
-
-
-
 gulp.task('build', function (callback) {
-  runSequence('clean', 'loopback','sass','bower',
-    [ 'useref', 'copyHtml'],
+  runSequence('clean', 'loopback', 'sass', 'bower',
+    ['useref', 'copyHtml'],
     callback
   )
 });
 
 gulp.task('default', function (callback) {
-  runSequence(['loopback','bower','sass','browserSync:client', 'watch'],
+  runSequence(['loopback', 'bower', 'sass', 'browserSync:client', 'watch'],
     callback
   )
 });
 
 
-
-
-
-
-
-
-gulp.task('watchStream', ['browserSync:stream', 'sass'], function(){
-    gulp.watch('stream/scss/**/*.scss', ['sass']);
-    gulp.watch([
-        'stream/*.html' ,
-        'stream/style.css',
-        'stream/views/**/*.html',
-        'stream/js/**/*.js',
-    ], browserSync.reload);
+gulp.task('watchStream', ['browserSync:stream', 'sass'], function () {
+  gulp.watch('stream/scss/**/*.scss', ['sass']);
+  gulp.watch([
+    'stream/*.html',
+    'stream/style.css',
+    'stream/views/**/*.html',
+    'stream/js/**/*.js',
+  ], browserSync.reload);
 });
 
 
@@ -223,9 +213,9 @@ gulp.task('stream', function (callback) {
 gulp.task('serveApi', function () {
   nodemon({
     script: 'server/server.js',
-   ext: 'js json html jade',
+    ext: 'js json html jade',
     ignore: 'client/*',
-   env: { 'NODE_ENV': 'development' }
+    env: {'NODE_ENV': 'development'}
   })
 });
 
