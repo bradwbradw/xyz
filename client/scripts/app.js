@@ -244,7 +244,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         }
 
       }
-    })
+    })/*
     .state('stream', {
       parent: 'base',
       url: 'stream',
@@ -263,7 +263,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         }
       }
 
-    })
+    })*/
 
     .state('embeds', {
       parent: 'base',
