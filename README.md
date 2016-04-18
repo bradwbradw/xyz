@@ -28,9 +28,15 @@ for Step 1, you can supply an environment variable as such:
 
 ##notes
 
-api call to get playlist from a space:
+###api call to get playlist from a space:
 
-/api/spaces/playlist?spaceId=1234
+`/api/spaces/playlist?spaceId=1234`
+
+###/stream/index.html
+
+serves up the static site for stream embedding
+
+
 
 Run `grunt` for building and `grunt serve` for preview.
 
