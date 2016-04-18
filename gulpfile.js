@@ -22,7 +22,7 @@ var keys = {
   yt: process.env.YT_KEY || 'AIzaSyAv5-et2TSQ3VsA5eKLviq2KjfExzFLxO8'
 };
 
-var apiUrl = process.env.API_URL || 'http://localhost:5005/api';
+var apiUrl = process.env.API_URL || 'http://localhost:5005/api/';
 
 console.log('api Url is ', apiUrl);
 
