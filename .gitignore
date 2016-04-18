@@ -2,6 +2,9 @@ node_modules
 dist
 dist/
 dist/*
+stream-dist
+stream-dist/
+stream-dist/*
 docular_generated
 docular_generated/
 docular_generated/*

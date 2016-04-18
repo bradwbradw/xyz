@@ -59,7 +59,7 @@ gulp.task('bower', function () {
     .pipe(gulp.dest('client/vendor'))
 });
 
-gulp.task('copyHtml', function () {
+gulp.task('copyHtml:main', function () {
   return gulp.src([
       'client/views/**/*.html',
       'client/xyz-player-component/*.html'
@@ -67,8 +67,12 @@ gulp.task('copyHtml', function () {
     )
     .pipe(gulp.dest('dist/views'))
 });
+gulp.task('copyHtml:stream', function () {
+  return gulp.src('stream/index.html')
+    .pipe(gulp.dest('stream-dist'))
+});
 
-gulp.task('useref', function () {
+gulp.task('useref:main', function () {
   return gulp.src('client/index.html')
 
     .pipe(replace('%%%facebookAppId', keys.fb))
@@ -81,9 +85,22 @@ gulp.task('useref', function () {
     .pipe(gulp.dest('dist'))
 });
 
+gulp.task('useref:stream', function () {
+  return gulp.src('stream/index.html')
+
+    .pipe(replace('%%%facebookAppId', keys.fb))
+    .pipe(replace('%%%scKey', keys.sc))
+    .pipe(replace('%%%ytKey', keys.yt))
+    .pipe(replace('%%%API_URL', apiUrl))
+    .pipe(useref())
+    //	.pipe(gulpIf('*.js',uglify()))
+    .pipe(gulpIf('*.css', cssnano()))
+    .pipe(gulp.dest('stream-dist'))
+});
+
 gulp.task('build:production', function (callback) {
   runSequence('clean', 'loopback', 'sass', 'bower',
-    ['useref', 'copyHtml'],
+    ['useref:main', 'copyHtml:main'],['useref:stream'],
     callback
   )
 });
@@ -181,7 +198,7 @@ gulp.task('clean', function () {
 
 gulp.task('build', function (callback) {
   runSequence('clean', 'loopback', 'sass', 'bower',
-    ['useref', 'copyHtml'],
+    ['useref:main', 'copyHtml:main'], ['useref:stream'],
     callback
   )
 });
