@@ -34,7 +34,8 @@ for Step 1, you can supply an environment variable as such:
 
 ###/stream/index.html
 
-serves up the static site for stream embedding
+serves up the static site for stream embedding.  
+use '#?playlist=129994120' to set the id of the space you want
 
 
 

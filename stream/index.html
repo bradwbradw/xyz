@@ -5,70 +5,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>XYZ STREAM </title>
 
-  // PLAYLIST ID COMES FROM 'PLAYLIST' query variable
+  <div ng-app="xyzStream">
 
-<h3>hello i am xyz player</h3>
-  <!-- build:js scripts/vendor.js -->
-  <!-- bower:js -->
-  <script src="vendor/angular/angular.js"></script>
-  <script src="vendor/angular-touch/angular-touch.js"></script>
-  <!-- endbower -->
+    <div ng-controller="streamController">
 
-  <!-- endbuild -->
+      <div xyz-player>
 
+      </div>
 
-  <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
+      <!-- build:js scripts/vendor.js -->
+      <!-- bower:js -->
+      <script src="vendor/angular/angular.js"></script>
+      <script src="vendor/angular-touch/angular-touch.js"></script>
+      <script src="vendor/lodash/lodash.js"></script>
+      <!-- endbower -->
 
-  <script src="https://w.soundcloud.com/player/api.js"></script>
+      <!-- endbuild -->
 
+      <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
 
-  <!-- build:js scripts/scripts.js -->
-  <script src="../xyz-player-component/xyz-player-directive.js"></script>
-  <script src="../xyz-player-component/api.service.js"></script>
-  <script src="../xyz-player-component/mock-media-provider/mock-media-provider-service.js"></script>
-  <script src="../xyz-player-component/mock-media-provider/mock-media-provider-controller.js"></script>
-  <script src="../xyz-player-component/youtube-component/youtube-api-service.js"></script>
-  <script src="../xyz-player-component/youtube-component/youtube-directive.js"></script>
-  <script src="../xyz-player-component/youtube-component/youtube-provider-controller.js"></script>
-  <script src="../xyz-player-component/soundcloud-component/soundcloud-directive.js"></script>
-  <!-- endbuild -->
+      <script src="https://w.soundcloud.com/player/api.js"></script>
 
 
-  <!-- build:remove -->
-  <script>
-
-    //FORMAT of apiBaseUrl: 'http://l.h:5000/'
-
-
-    angular.module('xyzPlayer')
-        .constant('serverConfig', {
-          apiBaseUrl: 'http://0.0.0.0:5005/api/',// '/',
-          developing: true
-        })
-        .constant('apiKeys', {
-          sc: 'c29e4129f2bba3771a5472a65cad37e4',
-          yt: 'AIzaSyAv5-et2TSQ3VsA5eKLviq2KjfExzFLxO8',
-          fb_app_id: '1507355422928214'// PROD: '1381485208848570'
-        });
+      <!-- build:js scripts/scripts.js -->
+      <script src="../xyz-player-component/xyz-player-directive.js"></script>
+      <script src="../xyz-player-component/api.service.js"></script>
+      <script src="../xyz-player-component/mock-media-provider/mock-media-provider-service.js"></script>
+      <script src="../xyz-player-component/mock-media-provider/mock-media-provider-controller.js"></script>
+      <script src="../xyz-player-component/youtube-component/youtube-api-service.js"></script>
+      <script src="../xyz-player-component/youtube-component/youtube-directive.js"></script>
+      <script src="../xyz-player-component/youtube-component/youtube-provider-controller.js"></script>
+      <script src="../xyz-player-component/soundcloud-component/soundcloud-directive.js"></script>
+      <!-- endbuild -->
 
 
-  </script>
-  <!-- /build -->
+      <!-- build:remove -->
+      <script>
+
+        //FORMAT of apiBaseUrl: 'http://l.h:5000/'
 
 
-  <!-- build:template  note: grunt build does not work -->
-  <script>
-    angular.module('xyzPlayer')
-        .constant('serverConfig', {
-          apiBaseUrl: '%%%API_URL'
-        })
-        .constant('apiKeys', {
-          sc: '%%%scKey', yt: '%%%ytKey', fb_app_id: '%%%facebookAppId'// PROD: '1381485208848570'
-        });
-  </script>
-  <!-- /build -->
+        angular.module('xyzPlayer')
+            .constant('serverConfig', {
+              apiBaseUrl: 'http://0.0.0.0:5005/api/',// '/',
+              developing: true
+            })
+            .constant('apiKeys', {
+              sc: 'c29e4129f2bba3771a5472a65cad37e4',
+              yt: 'AIzaSyAv5-et2TSQ3VsA5eKLviq2KjfExzFLxO8',
+              fb_app_id: '1507355422928214'// PROD: '1381485208848570'
+            });
 
 
-  </body>
+      </script>
+      <!-- /build -->
+
+
+      <!-- build:template  note: grunt build does not work -->
+      <script>
+        angular.module('xyzPlayer')
+            .constant('serverConfig', {
+              apiBaseUrl: '%%%API_URL'
+            })
+            .constant('apiKeys', {
+              sc: '%%%scKey', yt: '%%%ytKey', fb_app_id: '%%%facebookAppId'// PROD: '1381485208848570'
+            });
+      </script>
+      <!-- /build -->
+
+
+      <script type="text/javascript" src="main.js">
+
+      </script>
+
+
+      </body>
 
 </html>

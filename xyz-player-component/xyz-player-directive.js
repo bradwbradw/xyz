@@ -1,6 +1,6 @@
 "use strict";
 angular.module('xyzPlayer', [])
-  .directive('xyzPlayer', function ($log, $q, $timeout, $rootScope, Api, MockMediaProvider, youTubeApiService, YT_event, SC_event) {
+  .directive('xyzPlayer', function ($log, $q, $timeout, $location, $rootScope, Api, MockMediaProvider, youTubeApiService, YT_event, SC_event) {
 
     return {
       restrict: "A",
@@ -11,6 +11,8 @@ angular.module('xyzPlayer', [])
 
 
       link: function (scope, element, attrs) { //jshint ignore:line
+
+        var targetSpace = attrs.space || $location.search().playlist || false;
 
         scope.soundcloudId = 76067623;
         var mediaProviders = {
@@ -195,7 +197,11 @@ angular.module('xyzPlayer', [])
 
         };
 
-        $q.all([loadPlaylist(attrs.space), serviceProvidersLoaded])
+        if (!targetSpace){
+          return;
+        }
+
+        $q.all([loadPlaylist(targetSpace), serviceProvidersLoaded])
           .then(function (results) {
             $log.debug('all media providers and playlist loaded', results);
             playlist = results[0].playlist;
