@@ -119,6 +119,7 @@ gulp.task('browserSync:client', function () {
       middleware: [historyApiFallback()],
       routes: {
         "/xyz-player-component": "xyz-player-component",
+        "/stream/xyz-player-component": "xyz-player-component",
         "/stream": "stream"
       }
     },

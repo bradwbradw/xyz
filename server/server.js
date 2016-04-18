@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 app.use('/stream',loopback.static(path.resolve(__dirname, '../stream')));
 app.use('/space*',loopback.static(path.resolve(__dirname, '../dist')));
 app.use('/xyz-player-component',loopback.static(path.resolve(__dirname, '../xyz-player-component')));
+app.use('/stream/xyz-player-component',loopback.static(path.resolve(__dirname, '../xyz-player-component')));
 app.use('/sc', loopback.static(path.resolve(__dirname, '../stream/scWidget.html')));
 
 app.use(loopback.token());
