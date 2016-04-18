@@ -43,14 +43,20 @@ gulp.task('clean', function () {
 });
 
 gulp.task('sass', function () {
-  return gulp.src([
+  var mainSass = gulp.src([
       'client/scss/**/*.scss',
-      'client/xyz-player-component/**/*.scss'
+      'xyz-player-component/**/*.scss'
     ]
     )
     .pipe(sass()) // Using gulp-sass
-    .pipe(gulp.dest('client/css'))
+    .pipe(gulp.dest('client/css'));
 
+  var xyzPlayerComponentSass =
+    gulp.src('xyz-player-component/**/*.scss')
+      .pipe(sass())
+      .pipe(gulp.dest('xyz-player-component/css'));
+
+  return [mainSass, xyzPlayerComponentSass];
 
 });
 
@@ -62,15 +68,19 @@ gulp.task('bower', function () {
 gulp.task('copyHtml:main', function () {
   return gulp.src([
       'client/views/**/*.html',
-      'client/xyz-player-component/*.html'
+      'xyz-player-component/*.html'
     ]
     )
     .pipe(gulp.dest('dist/views'))
 });
-gulp.task('copyHtml:stream', function () {
-  return gulp.src('stream/index.html')
+
+//TODO: make a task write css that includes xyz-player-component's css, write it to stream/style.css
+
+ gulp.task('copyCss:stream', function () {
+  return gulp.src('stream/style.css')
     .pipe(gulp.dest('stream-dist'))
 });
+
 
 gulp.task('useref:main', function () {
   return gulp.src('client/index.html')
@@ -100,7 +110,7 @@ gulp.task('useref:stream', function () {
 
 gulp.task('build:production', function (callback) {
   runSequence('clean', 'loopback', 'sass', 'bower',
-    ['useref:main', 'copyHtml:main'],['useref:stream'],
+    ['useref:main', 'copyHtml:main'], ['useref:stream'],
     callback
   )
 });
@@ -116,15 +126,15 @@ var browserSync = require('browser-sync');
 gulp.task('watch', ['browserSync:client', 'sass'], function () {
   gulp.watch([
     'client/scss/**/*.scss',
-    'client/xyz-player-component/**/*.scss'
+    'xyz-player-component/**/*.scss'
   ], ['sass']);
   gulp.watch([
     'client/*.html',
     'client/css/*.css', // this line is actually not supposed to be here, updated sass should get compiled and injected without reloading
     'client/views/**/*.html',
     'client/scripts/**/*.js',
-    'client/xyz-player-component/**/*.js',
-    'client/xyz-player-component/**/*.html',
+    'xyz-player-component/**/*.js',
+    'xyz-player-component/**/*.html',
   ], browserSync.reload);
 });
 
@@ -137,6 +147,7 @@ gulp.task('browserSync:client', function () {
       routes: {
         "/xyz-player-component": "xyz-player-component",
         "/stream/xyz-player-component": "xyz-player-component",
+        "/stream/xyz-player-component/css": "xyz-player-component/css",
         "/stream": "stream"
       }
     },
@@ -198,7 +209,7 @@ gulp.task('clean', function () {
 
 gulp.task('build', function (callback) {
   runSequence('clean', 'loopback', 'sass', 'bower',
-    ['useref:main', 'copyHtml:main'], ['useref:stream'],
+    ['useref:main', 'copyHtml:main'], ['useref:stream', 'copyCss:stream'],
     callback
   )
 });
