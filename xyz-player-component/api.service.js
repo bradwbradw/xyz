@@ -10,11 +10,11 @@ angular.module('xyzPlayer').service('Api', function ($http, serverConfig) {
   };
 
   var getPlaylist = function (spaceId) {
-    return get('api/spaces/playlist?spaceId=' + spaceId)
+    return get('spaces/playlist?spaceId=' + spaceId)
       .then(function (result) {
         return result.data.playlist;
       });
-  }
+  };
 
   var Api = {
     getPlaylist: getPlaylist
