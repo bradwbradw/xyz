@@ -38,7 +38,6 @@ serves up the static site for stream embedding.
 use '#?playlist=129994120' to set the id of the space you want
 
 
-
 ## Testing
 
 Running `gulp test` will run the unit tests with karma.
