@@ -11,6 +11,7 @@
   "dependencies": {
     "body-parser": "1.12.4",
     "bower": "1.6.5",
+    "browser-sync": "^2.11.0",
     "compression": "^1.0.3",
     "connect-history-api-fallback": "^1.1.0",
     "cors": "^2.5.2",
@@ -26,6 +27,7 @@
     "gulp-if": "^2.0.0",
     "gulp-jshint": "^2.0.0",
     "gulp-loopback-sdk-angular": "^0.1.4",
+    "gulp-nodemon": "^2.0.6",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-run": "^1.6.12",
@@ -46,8 +48,8 @@
     "run-sequence": "^1.1.5",
     "serve-favicon": "^2.0.1",
     "soundcloud": "^3.0.1",
-    "gulp-nodemon": "^2.0.6",
-    "browser-sync": "^2.11.0"
+    "supertest": "^1.2.0",
+    "supertest-as-promised": "^3.1.0"
   },
   "devDependencies": {
     "grunt-docular": "^0.2.4",
