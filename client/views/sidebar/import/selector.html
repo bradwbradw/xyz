@@ -31,24 +31,7 @@
   </div>
 
   <div class="song-row" ng-repeat="item in Library.getLocalItems()"
-       ng-if="!Library.getLocalItems().urlResult">
-
-
-    <button class="add" ng-if="!item.error" ng-click="putInSpace(item, $event)">
-      add
-    </button>
-    <button class="play" ng-if="!item.error && Library.isPlayable(item)" ng-click="Player.play(item)">
-      play
-    </button>
-    <a ng-href="{{item.url}}">
-      <span ng-if="!item.error">
-        ({{item.provider}}) {{item.artist}} - {{item.title}} ({{item.provider_id}})
-      </span>
-      <span ng-if="item.error">
-        {{item.error}}
-      </span>
-    </a>
-  </div>
+       ng-if="!Library.getLocalItems().urlResult"  ng-include="'views/partials/search-result.html'"></div>
 </div>
 
 <pre class="debug" ng-if="false">
