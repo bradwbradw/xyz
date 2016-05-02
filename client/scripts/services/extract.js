@@ -17,11 +17,11 @@ angular.module('xyzApp')
       {name: 'bandcamp', domains: ['bandcamp.com', 'www.bandcamp.com']}
     ];
 
-    function convertFromYTEmbedUrl(embedUrl){
-          // example: https://www.youtube.com/embed/xmSEhUwGd4Q?autoplay=1
+    function convertFromYTEmbedUrl(embedUrl) {
+      // example: https://www.youtube.com/embed/xmSEhUwGd4Q?autoplay=1
       var parts = embedUrl.split('embed/');
       parts = parts[1].split('?');
-      var standardUrl = 'https://youtube.com/watch?v='+parts[0];
+      var standardUrl = 'https://youtube.com/watch?v=' + parts[0];
       return standardUrl;
 
     }
@@ -81,15 +81,16 @@ angular.module('xyzApp')
               var ytResults = results[0];
               var scResults = results[1];
 
-              var returnArr = [];
-              _.each(ytResults, function (ytResult) {
-                returnArr = returnArr.concat(Utility.clean.YT.video(ytResult));
-              });
-              _.each(scResults, function (scResult) {
-                returnArr = returnArr.concat(Utility.clean.SC.track(scResult));
-              });
-              return returnArr;
+            var returnArr = [];
+            _.each(ytResults, function (ytResult) {
+//              console.log(ytResult);
+              returnArr.push(Utility.clean.YT.video(ytResult));
             });
+            _.each(scResults, function (scResult) {
+              returnArr.push(Utility.clean.SC.track(scResult));
+            });
+            return returnArr;
+          });
         }
         // text is a URL!
         var inspectPromise = Extract.getData(text);
@@ -143,17 +144,17 @@ angular.module('xyzApp')
                     }
 
                     found.push(cleanUrl);
-/*
-                    Extract.getData(newItem.service, newItem.url)
-                      .then(function (data) {
-                        newItem.data = data;
-                      })
-                      .catch(function (error) {
-                        newItem.data = error;
-                      })
-                      .finally(function () {
-                        found.push(newItem);
-                      })*/
+                    /*
+                     Extract.getData(newItem.service, newItem.url)
+                     .then(function (data) {
+                     newItem.data = data;
+                     })
+                     .catch(function (error) {
+                     newItem.data = error;
+                     })
+                     .finally(function () {
+                     found.push(newItem);
+                     })*/
 
                   }
 
@@ -165,7 +166,7 @@ angular.module('xyzApp')
 
           })
         });
-        return _.unique( found );
+        return _.unique(found);
 
 
       },
@@ -186,33 +187,33 @@ angular.module('xyzApp')
 
         if (service === 'youtube') {
           return Extract.getDataFromYoutube(url)
-            .catch(function(error){
+            .catch(function (error) {
 
-              $log.error('getDataFromYoutube failed for url '+url+' error:'+error);
-            return $q.resolve({error:'invalid youtube url:'+url, url:url});
+              $log.error('getDataFromYoutube failed for url ' + url + ' error:' + error);
+              return $q.resolve({error: 'invalid youtube url:' + url, url: url});
             });
         }
 
         if (service === 'bandcamp') {
           return Extract.getDataFromBandcamp(url)
-            .catch(function(error){
-              $log.error('getDataFromBandcamp failed for url '+url+' error:'+error);
-           return $q.resolve({error:'invalid bandcamp url:'+url, url:url});
+            .catch(function (error) {
+              $log.error('getDataFromBandcamp failed for url ' + url + ' error:' + error);
+              return $q.resolve({error: 'invalid bandcamp url:' + url, url: url});
             });
         }
 
         if (service === 'soundcloud') {
           return Extract.getDataFromSoundcloud(url)
-            .catch(function(error){
-              $log.error('getDataFromSoundcloud failed for url '+url+' error:', error);
-              return $q.resolve({error:'invalid soundcloud url:'+url, url:url});
+            .catch(function (error) {
+              $log.error('getDataFromSoundcloud failed for url ' + url + ' error:', error);
+              return $q.resolve({error: 'invalid soundcloud url:' + url, url: url});
             });
         } else {
           // url could still be bandcamp if the artist has a pro account (custom url)
           return Extract.getDataFromBandcamp(url)
-            .catch(function(error){
-              $log.error('getDataFromBandcamp failed for url '+url+' error:'+error);
-              return $q.resolve({error:'invalid bandcamp url:'+url, url:url});
+            .catch(function (error) {
+              $log.error('getDataFromBandcamp failed for url ' + url + ' error:' + error);
+              return $q.resolve({error: 'invalid bandcamp url:' + url, url: url});
             });
         }
 
@@ -227,22 +228,22 @@ angular.module('xyzApp')
 
         // check to see if it's an embed
         // if so, convert into standard youtube link
-        if( url.indexOf( 'embed') > -1){
+        if (url.indexOf('embed') > -1) {
           url = convertFromYTEmbedUrl(url);
         }
         if (contains(url, 'youtube.com')) {
           // full url - expect "v=" parameter2
           urlParts = url.split('?');
-          if(!_.isArray(urlParts) || urlParts.length < 2) {
+          if (!_.isArray(urlParts) || urlParts.length < 2) {
 
-            console.warn('weird youtube url '+ url);
+            console.warn('weird youtube url ' + url);
             return $q.reject('youtube url has no ? params');
           }
           var usefulPart = urlParts[1];
           var idPartAlmost = usefulPart.split('v=');
-          if(!_.isArray(idPartAlmost) || idPartAlmost.length < 2){
+          if (!_.isArray(idPartAlmost) || idPartAlmost.length < 2) {
 
-            console.warn('weird youtube url '+ url);
+            console.warn('weird youtube url ' + url);
             return $q.reject('youtube url has no id');
           }
           id = idPartAlmost[1].substr(0, 11);
@@ -253,8 +254,8 @@ angular.module('xyzApp')
           id = urlParts[1].substr(0, 11);
         }
         return MediaAPI.YT.get(id)
-          .then(function(result){
-            $log.log('youtube get result:',result);
+          .then(function (result) {
+            $log.log('youtube get result:', result);
             return result;
           })
           .then(Utility.clean.YT.video);
@@ -263,28 +264,28 @@ angular.module('xyzApp')
 
       getDataFromBandcamp: function (url) {
 
-        if(url.indexOf( 'Embedded') > -1){
+        if (url.indexOf('Embedded') > -1) {
           // example: "https://bandcamp.com/EmbeddedPlayer/v=2/track=1190798612/size=large/tracklist=false/artwork=small/ref=http%3A%2F%2Ffacebook.com%2F/"
           var parts = url.split('track=');
 
-          if(!_.isArray(parts) || parts.length <2){
-            console.warn('weird bandcamp url '+ url);
-            return $q.reject('bandcamp confused: url is '+url);
+          if (!_.isArray(parts) || parts.length < 2) {
+            console.warn('weird bandcamp url ' + url);
+            return $q.reject('bandcamp confused: url is ' + url);
           }
           parts = parts[1].split('/');
           var id = parts[0];
 
-          return $q.resolve({provider:'bandcamp', provider_id:id, url:url, kind:'media'});
+          return $q.resolve({provider: 'bandcamp', provider_id: id, url: url, kind: 'media'});
         }
 
-        if(url.indexOf('/track/') < 0){
+        if (url.indexOf('/track/') < 0) {
           // url is not for a track (could be album, artist, merch...)
           var kind = Utility.clean.BC.parseUrlForType(url);
-          return $q.resolve({provider:'bandcamp', url:url, kind:kind})
+          return $q.resolve({provider: 'bandcamp', url: url, kind: kind})
         }
         return Server.getBandcampId(url)
           .then(function (result) {
-            return {provider: 'bandcamp', provider_id: result.data, url:url, kind:'media'};
+            return {provider: 'bandcamp', provider_id: result.data, url: url, kind: 'media'};
           });
 
       },
@@ -297,7 +298,7 @@ angular.module('xyzApp')
         };
 
         return MediaAPI.SC.resolve(url)
-          .then(function(result){
+          .then(function (result) {
 
             return Utility.clean.SC[result.kind](result);
 
