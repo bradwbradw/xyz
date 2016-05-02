@@ -39,11 +39,9 @@ use '#?playlist=129994120' to set the id of the space you want
 
 
 
-Run `grunt` for building and `grunt serve` for preview.
-
 ## Testing
 
-Running `grunt test` will run the unit tests with karma.
+Running `gulp test` will run the unit tests with karma.
 
 
 ## testing the api
@@ -51,3 +49,7 @@ Running `grunt test` will run the unit tests with karma.
 first install jasmine-node:
 
 `npm install -g jasmine-node`
+
+then run with:
+
+`jasmine-node api-test`
