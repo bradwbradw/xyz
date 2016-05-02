@@ -6,11 +6,6 @@ module.exports = {
   "host": constants.api.host,
   "port": constants.api.port,
 
-  "remoting": {
-    "errorHandler": {
-      "disableStackTrace": true
-    }
-  }
 };
 
 

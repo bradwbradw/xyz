@@ -4,11 +4,9 @@ var loopbackAngular = require('gulp-loopback-sdk-angular');
 var bower = require('gulp-bower');
 var rename = require("gulp-rename");
 var useref = require('gulp-useref');
-
 var gulpIf = require('gulp-if');
 var sass = require('gulp-sass');
 var cssnano = require('gulp-cssnano');
-
 var uglify = require('gulp-uglify'),
   concat = require('gulp-concat');
 var replace = require('gulp-replace');
@@ -16,13 +14,11 @@ var replace = require('gulp-replace');
 var del = require('del');
 var runSequence = require('run-sequence');
 
-var keys = {
-  fb: process.env.FB_APP_ID || '1507355422928214',
-  sc: process.env.SC_KEY || 'c29e4129f2bba3771a5472a65cad37e4',
-  yt: process.env.YT_KEY || 'AIzaSyAv5-et2TSQ3VsA5eKLviq2KjfExzFLxO8'
-};
+var constants = require('./constants');
 
-var apiUrl = process.env.API_URL || 'http://localhost:5005/api/';
+var keys = constants.keys;
+
+var apiUrl = 'http://'+ constants.api.host+ ':'+ constants.api.port + constants.api.path + '/';
 
 console.log('api Url is ', apiUrl);
 
@@ -215,6 +211,10 @@ gulp.task('build', function (callback) {
 });
 
 gulp.task('default', function (callback) {
+  runSequence('serve', callback)
+});
+
+gulp.task('serve', function (callback) {
   runSequence(['loopback', 'bower', 'sass', 'browserSync:client', 'watch'],
     callback
   )
