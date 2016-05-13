@@ -13,6 +13,10 @@
       "type": "hasAndBelongsToMany",
       "model": "Song"
     },
+    "contributors": {
+      "type": "hasAndBelongsToMany",
+      "model": "dj"
+    },
     "owner": {
       "type": "belongsTo",
       "model": "dj",

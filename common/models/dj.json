@@ -32,6 +32,10 @@
       "type": "hasMany",
       "model": "Space",
       "foreignKey": "ownerId"
+    },
+    "editableSpaces": {
+      "type": "hasAndBelongsToMany",
+      "model": "Space"
     }
   },
   "acls": [
