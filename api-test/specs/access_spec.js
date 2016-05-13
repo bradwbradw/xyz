@@ -1,3 +1,6 @@
+// test syntax:
+//      http://jasmine.github.io/2.0/introduction.html
+
 var request = require("supertest-as-promised"),
   _ = require('lodash'),
   when = require('when');
@@ -26,12 +29,17 @@ var nonContributorDj;
 var randomAuth; // logged in but not owner or contributor
 var contributorAuth;
 
+var song;
+var song2;
+
+var newSpaceName = _.random(4,9999)+'th wave rock';
+
 var loginAs = function (credentials) {
   return request(apiUrl)
     .post(loginEndpoint)
     .send(credentials)
     .then(function (response) {
-      console.log('response from login: ', JSON.stringify(response.body, null, 2));
+      console.log('\n token for '+credentials.email+' is '+ _.get(response.body, 'id'));
       return response.body;
     })
     .catch(function (err) {
@@ -47,7 +55,7 @@ describe(' space api tests ', function () {
       .then(function (auth) {
 
         authorization = auth;
-        console.log('auth:', authorization);
+//        console.log('auth:', authorization);
         expect(authorization.id).toBeDefined();
         expect(authorization.userId).toBeDefined();
       })
@@ -170,7 +178,7 @@ describe(' space api tests ', function () {
   it('should be able to add a contributor to owned space', function (done) {
 
 
-    console.log('contributor is ', contributorDj);
+//    console.log('contributor is ', contributorDj);
 
     var endpoint1 = 'spaces/' + firstSpace.id + '/contributors/rel/' + contributorDj.id;
 
@@ -202,13 +210,13 @@ describe(' space api tests ', function () {
   });
 
 
-  it('random person should not be able to contribute to a space', function (done) {
+  it('(unimplemented) random person should not be able to add a song to a space', function (done) {
 
     loginAs(fixtures.users.random.credentials)
       .then(function (auth) {
         randomAuth = auth;
 
-        var endpoint = 'spaces/'+firstSpace.id + '/songs';
+        var endpoint = 'spaces/' + firstSpace.id + '/songs';
         request(apiUrl)
           .post(endpoint)
           .set('Authorization', randomAuth.id)
@@ -225,18 +233,21 @@ describe(' space api tests ', function () {
       });
   });
 
-  it('contributor should be able to contribute to a space', function (done) {
+  it('contributor should be able to add a song to a space', function (done) {
 
     loginAs(fixtures.users.contributor.credentials)
       .then(function (auth) {
         contributorAuth = auth;
 
-        var endpoint = 'spaces/'+firstSpace.id + '/songs';
+        var endpoint = 'spaces/' + firstSpace.id + '/songs';
         request(apiUrl)
           .post(endpoint)
           .set('Authorization', contributorAuth.id)
           .send(fixtures.songs.youtube)
           .expect(200)
+          .then(function(response){
+            song = response.body;
+          })
           .catch(function (msg) {
             console.error('url was ' + apiUrl + endpoint);
 
@@ -248,6 +259,142 @@ describe(' space api tests ', function () {
       });
   });
 
+  it('owner should be able to add a song to a space', function (done) {
+
+        var endpoint = 'spaces/' + firstSpace.id + '/songs';
+        request(apiUrl)
+          .post(endpoint)
+          .set('Authorization', authorization.id)
+          .send(fixtures.songs.youtube2)
+          .expect(200)
+          .then(function(response){
+            song2 = response.body;
+          })
+          .catch(function (msg) {
+            console.error('url was ' + apiUrl + endpoint);
+
+            done(msg);
+          })
+          .finally(done);
+  });
+
+
+  it('random person should not be able to delete a song from a space', function (done) {
+
+    var endpoint = 'spaces/' + firstSpace.id + '/songs/'+song.id;
+    request(apiUrl)
+      .del(endpoint)
+      .set('Authorization', randomAuth.id)
+      .send(fixtures.songs.youtube)
+      .expect(401)
+      .catch(function (msg) {
+        console.error('url was ' + apiUrl + endpoint);
+
+        done(msg);
+      })
+      .finally(done);
+
+  });
+
+  it('owner should be able to delete a song from a space', function (done) {
+
+    var endpoint = 'spaces/' + firstSpace.id + '/songs/'+song.id;
+    request(apiUrl)
+      .del(endpoint)
+      .set('Authorization', authorization.id)
+      .send(fixtures.songs.youtube)
+      .expect(204)
+      .catch(function (msg) {
+        console.error('url was ' + apiUrl + endpoint);
+
+        done(msg);
+      })
+      .finally(done);
+
+  });
+
+  it('(unimplemented) contributor should be able to delete a song from a space', function (done) {
+
+    var endpoint = 'spaces/' + firstSpace.id + '/songs/'+song2.id;
+    request(apiUrl)
+      .del(endpoint)
+      .set('Authorization', contributorAuth.id)
+      .send(fixtures.songs.youtube)
+      .expect(204)
+      .catch(function (msg) {
+        console.error('url was ' + apiUrl + endpoint);
+
+        done(msg);
+      })
+      .finally(done);
+
+  });
+
+
+
+  it('owner should be able change name of a space', function (done) {
+
+        var endpoint = 'spaces/' + firstSpace.id;
+
+        var data = {
+          name:newSpaceName
+        };
+
+        request(apiUrl)
+          .put(endpoint)
+          .set('Authorization', authorization.id)
+          .send(data)
+          .expect(200)
+          .then(function(response){
+            song = response.body;
+
+            request(apiUrl)
+              .get(endpoint)
+              .expect(200)
+              .then(function(response){
+                var space = response.body;
+                expect(space.name).toBe(data.name);
+              })
+          })
+          .catch(function (msg) {
+            console.error('url was ' + apiUrl + endpoint);
+
+            done(msg);
+          })
+          .finally(done);
+  });
+
+  it('random person should not be able change name of a space', function (done) {
+
+        var endpoint = 'spaces/' + firstSpace.id;
+
+        var data = {
+          name:'hot dog genre'
+        };
+
+        request(apiUrl)
+          .put(endpoint)
+          .set('Authorization', randomAuth.id)
+          .send(data)
+          .expect(401)
+          .then(function(response){
+            song = response.body;
+
+            request(apiUrl)
+              .get(endpoint)
+              .expect(200)
+              .then(function(response){
+                var space = response.body;
+                expect(space.name).not.toBe(data.name);
+              })
+          })
+          .catch(function (msg) {
+            console.error('url was ' + apiUrl + endpoint);
+
+            done(msg);
+          })
+          .finally(done);
+  });
 
   it('should be able to remove a contributor from owned space', function (done) {
 
