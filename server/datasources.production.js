@@ -1,3 +1,5 @@
+var constants = require('../constants');
+
 module.exports={
   "db": {
     "name": "db",
@@ -6,6 +8,6 @@ module.exports={
   "xyzdb": {
     "name": "xyzdb",
     "connector": "mongodb",
-    "url":process.env.MONGODB_URL
+    "url":constants.mongoUrl
   }
 };
