@@ -45,7 +45,7 @@
     {
       "permission": "ALLOW",
       "principalType": "ROLE",
-      "principalId": "$authenticated",
+      "principalId": "contributor",
       "property": "__create__songs"
     },
     {
@@ -59,6 +59,7 @@
       "principalType": "ROLE",
       "principalId": "$owner",
       "property": "__destroyById__songs"
-    }],
+    }
+  ],
   "methods": {}
 }
