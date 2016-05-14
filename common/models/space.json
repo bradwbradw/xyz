@@ -51,13 +51,13 @@
     {
       "permission": "ALLOW",
       "principalType": "ROLE",
-      "principalId": "$owner",
+      "principalId": "contributor",
       "property": "__updateById__songs"
     },
     {
       "permission": "ALLOW",
       "principalType": "ROLE",
-      "principalId": "$owner",
+      "principalId": "contributor",
       "property": "__destroyById__songs"
     }
   ],

@@ -25,7 +25,7 @@ module.exports = function (app) {
       if (err || !space) {
         reject(err);
       }
-      var userId = context.modelId;
+
       var spaceContributors = space.contributors();
 
       console.log('checking if user '+userId+' is in \n '+ JSON.stringify(spaceContributors,null,2));

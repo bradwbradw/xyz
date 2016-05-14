@@ -313,7 +313,7 @@ describe(' space api tests ', function () {
 
   });
 
-  it('(unimplemented) contributor should be able to delete a song from a space', function (done) {
+  it(' contributor should be able to delete a song from a space', function (done) {
 
     var endpoint = 'spaces/' + firstSpace.id + '/songs/'+song2.id;
     request(apiUrl)
@@ -343,6 +343,38 @@ describe(' space api tests ', function () {
         request(apiUrl)
           .put(endpoint)
           .set('Authorization', authorization.id)
+          .send(data)
+          .expect(200)
+          .then(function(response){
+            song = response.body;
+
+            request(apiUrl)
+              .get(endpoint)
+              .expect(200)
+              .then(function(response){
+                var space = response.body;
+                expect(space.name).toBe(data.name);
+              })
+          })
+          .catch(function (msg) {
+            console.error('url was ' + apiUrl + endpoint);
+
+            done(msg);
+          })
+          .finally(done);
+  });
+
+  it('contributor should be able change name of a space', function (done) {
+
+        var endpoint = 'spaces/' + firstSpace.id;
+
+        var data = {
+          name:newSpaceName+'contrib'
+        };
+
+        request(apiUrl)
+          .put(endpoint)
+          .set('Authorization', contributorAuth.id)
           .send(data)
           .expect(200)
           .then(function(response){
