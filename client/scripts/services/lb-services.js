@@ -1280,6 +1280,60 @@ module.factory(
           method: "PUT"
         },
 
+        // INTERNAL. Use Dj.editableSpaces.findById() instead.
+        "prototype$__findById__editableSpaces": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/djs/:id/editableSpaces/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces.destroyById() instead.
+        "prototype$__destroyById__editableSpaces": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/djs/:id/editableSpaces/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces.updateById() instead.
+        "prototype$__updateById__editableSpaces": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/djs/:id/editableSpaces/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces.link() instead.
+        "prototype$__link__editableSpaces": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/djs/:id/editableSpaces/rel/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces.unlink() instead.
+        "prototype$__unlink__editableSpaces": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/djs/:id/editableSpaces/rel/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces.exists() instead.
+        "prototype$__exists__editableSpaces": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/djs/:id/editableSpaces/rel/:fk",
+          method: "HEAD"
+        },
+
         /**
          * @ngdoc method
          * @name lbServices.Dj#prototype$__get__accessTokens
@@ -1439,6 +1493,31 @@ module.factory(
         // INTERNAL. Use Dj.spaces.count() instead.
         "prototype$__count__spaces": {
           url: urlBase + "/djs/:id/spaces/count",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces() instead.
+        "prototype$__get__editableSpaces": {
+          isArray: true,
+          url: urlBase + "/djs/:id/editableSpaces",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces.create() instead.
+        "prototype$__create__editableSpaces": {
+          url: urlBase + "/djs/:id/editableSpaces",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces.destroyAll() instead.
+        "prototype$__delete__editableSpaces": {
+          url: urlBase + "/djs/:id/editableSpaces",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces.count() instead.
+        "prototype$__count__editableSpaces": {
+          url: urlBase + "/djs/:id/editableSpaces/count",
           method: "GET"
         },
 
@@ -2031,9 +2110,95 @@ module.factory(
           method: "POST"
         },
 
+        // INTERNAL. Use Space.contributors.findById() instead.
+        "::findById::Space::contributors": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Spaces/:id/contributors/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Space.contributors.destroyById() instead.
+        "::destroyById::Space::contributors": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Spaces/:id/contributors/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Space.contributors.updateById() instead.
+        "::updateById::Space::contributors": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Spaces/:id/contributors/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use Space.contributors.link() instead.
+        "::link::Space::contributors": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Spaces/:id/contributors/rel/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use Space.contributors.unlink() instead.
+        "::unlink::Space::contributors": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Spaces/:id/contributors/rel/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Space.contributors.exists() instead.
+        "::exists::Space::contributors": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Spaces/:id/contributors/rel/:fk",
+          method: "HEAD"
+        },
+
         // INTERNAL. Use Space.owner() instead.
         "::get::Space::owner": {
           url: urlBase + "/Spaces/:id/owner",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Space.contributors() instead.
+        "::get::Space::contributors": {
+          isArray: true,
+          url: urlBase + "/Spaces/:id/contributors",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Space.contributors.create() instead.
+        "::create::Space::contributors": {
+          url: urlBase + "/Spaces/:id/contributors",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Space.contributors.createMany() instead.
+        "::createMany::Space::contributors": {
+          isArray: true,
+          url: urlBase + "/Spaces/:id/contributors",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Space.contributors.destroyAll() instead.
+        "::delete::Space::contributors": {
+          url: urlBase + "/Spaces/:id/contributors",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Space.contributors.count() instead.
+        "::count::Space::contributors": {
+          url: urlBase + "/Spaces/:id/contributors/count",
           method: "GET"
         },
 
@@ -2557,6 +2722,416 @@ module.factory(
         R.spaces.updateById = function() {
           var TargetResource = $injector.get("Space");
           var action = TargetResource["::updateById::dj::spaces"];
+          return action.apply(R, arguments);
+        };
+    /**
+     * @ngdoc object
+     * @name lbServices.Dj.editableSpaces
+     * @header lbServices.Dj.editableSpaces
+     * @object
+     * @description
+     *
+     * The object `Dj.editableSpaces` groups methods
+     * manipulating `Space` instances related to `Dj`.
+     *
+     * Call {@link lbServices.Dj#editableSpaces Dj.editableSpaces()}
+     * to query all related instances.
+     */
+
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Dj#editableSpaces
+         * @methodOf lbServices.Dj
+         *
+         * @description
+         *
+         * Queries editableSpaces of dj.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `filter` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Space` object.)
+         * </em>
+         */
+        R.editableSpaces = function() {
+          var TargetResource = $injector.get("Space");
+          var action = TargetResource["::get::dj::editableSpaces"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Dj.editableSpaces#count
+         * @methodOf lbServices.Dj.editableSpaces
+         *
+         * @description
+         *
+         * Counts editableSpaces of dj.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        R.editableSpaces.count = function() {
+          var TargetResource = $injector.get("Space");
+          var action = TargetResource["::count::dj::editableSpaces"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Dj.editableSpaces#create
+         * @methodOf lbServices.Dj.editableSpaces
+         *
+         * @description
+         *
+         * Creates a new instance in editableSpaces of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Space` object.)
+         * </em>
+         */
+        R.editableSpaces.create = function() {
+          var TargetResource = $injector.get("Space");
+          var action = TargetResource["::create::dj::editableSpaces"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Dj.editableSpaces#createMany
+         * @methodOf lbServices.Dj.editableSpaces
+         *
+         * @description
+         *
+         * Creates a new instance in editableSpaces of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Space` object.)
+         * </em>
+         */
+        R.editableSpaces.createMany = function() {
+          var TargetResource = $injector.get("Space");
+          var action = TargetResource["::createMany::dj::editableSpaces"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Dj.editableSpaces#destroyAll
+         * @methodOf lbServices.Dj.editableSpaces
+         *
+         * @description
+         *
+         * Deletes all editableSpaces of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.editableSpaces.destroyAll = function() {
+          var TargetResource = $injector.get("Space");
+          var action = TargetResource["::delete::dj::editableSpaces"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Dj.editableSpaces#destroyById
+         * @methodOf lbServices.Dj.editableSpaces
+         *
+         * @description
+         *
+         * Delete a related item by id for editableSpaces.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for editableSpaces
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.editableSpaces.destroyById = function() {
+          var TargetResource = $injector.get("Space");
+          var action = TargetResource["::destroyById::dj::editableSpaces"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Dj.editableSpaces#exists
+         * @methodOf lbServices.Dj.editableSpaces
+         *
+         * @description
+         *
+         * Check the existence of editableSpaces relation to an item by id.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for editableSpaces
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Space` object.)
+         * </em>
+         */
+        R.editableSpaces.exists = function() {
+          var TargetResource = $injector.get("Space");
+          var action = TargetResource["::exists::dj::editableSpaces"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Dj.editableSpaces#findById
+         * @methodOf lbServices.Dj.editableSpaces
+         *
+         * @description
+         *
+         * Find a related item by id for editableSpaces.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for editableSpaces
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Space` object.)
+         * </em>
+         */
+        R.editableSpaces.findById = function() {
+          var TargetResource = $injector.get("Space");
+          var action = TargetResource["::findById::dj::editableSpaces"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Dj.editableSpaces#link
+         * @methodOf lbServices.Dj.editableSpaces
+         *
+         * @description
+         *
+         * Add a related item by id for editableSpaces.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for editableSpaces
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Space` object.)
+         * </em>
+         */
+        R.editableSpaces.link = function() {
+          var TargetResource = $injector.get("Space");
+          var action = TargetResource["::link::dj::editableSpaces"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Dj.editableSpaces#unlink
+         * @methodOf lbServices.Dj.editableSpaces
+         *
+         * @description
+         *
+         * Remove the editableSpaces relation to an item by id.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for editableSpaces
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.editableSpaces.unlink = function() {
+          var TargetResource = $injector.get("Space");
+          var action = TargetResource["::unlink::dj::editableSpaces"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Dj.editableSpaces#updateById
+         * @methodOf lbServices.Dj.editableSpaces
+         *
+         * @description
+         *
+         * Update a related item by id for editableSpaces.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for editableSpaces
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Space` object.)
+         * </em>
+         */
+        R.editableSpaces.updateById = function() {
+          var TargetResource = $injector.get("Space");
+          var action = TargetResource["::updateById::dj::editableSpaces"];
           return action.apply(R, arguments);
         };
 
@@ -3809,6 +4384,60 @@ module.factory(
           method: "HEAD"
         },
 
+        // INTERNAL. Use Space.contributors.findById() instead.
+        "prototype$__findById__contributors": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Spaces/:id/contributors/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Space.contributors.destroyById() instead.
+        "prototype$__destroyById__contributors": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Spaces/:id/contributors/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Space.contributors.updateById() instead.
+        "prototype$__updateById__contributors": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Spaces/:id/contributors/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use Space.contributors.link() instead.
+        "prototype$__link__contributors": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Spaces/:id/contributors/rel/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use Space.contributors.unlink() instead.
+        "prototype$__unlink__contributors": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Spaces/:id/contributors/rel/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Space.contributors.exists() instead.
+        "prototype$__exists__contributors": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Spaces/:id/contributors/rel/:fk",
+          method: "HEAD"
+        },
+
         // INTERNAL. Use Space.owner() instead.
         "prototype$__get__owner": {
           url: urlBase + "/Spaces/:id/owner",
@@ -3837,6 +4466,31 @@ module.factory(
         // INTERNAL. Use Space.songs.count() instead.
         "prototype$__count__songs": {
           url: urlBase + "/Spaces/:id/songs/count",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Space.contributors() instead.
+        "prototype$__get__contributors": {
+          isArray: true,
+          url: urlBase + "/Spaces/:id/contributors",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Space.contributors.create() instead.
+        "prototype$__create__contributors": {
+          url: urlBase + "/Spaces/:id/contributors",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Space.contributors.destroyAll() instead.
+        "prototype$__delete__contributors": {
+          url: urlBase + "/Spaces/:id/contributors",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Space.contributors.count() instead.
+        "prototype$__count__contributors": {
+          url: urlBase + "/Spaces/:id/contributors/count",
           method: "GET"
         },
 
@@ -4323,6 +4977,60 @@ module.factory(
           method: "PUT"
         },
 
+        // INTERNAL. Use Dj.editableSpaces.findById() instead.
+        "::findById::dj::editableSpaces": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/djs/:id/editableSpaces/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces.destroyById() instead.
+        "::destroyById::dj::editableSpaces": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/djs/:id/editableSpaces/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces.updateById() instead.
+        "::updateById::dj::editableSpaces": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/djs/:id/editableSpaces/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces.link() instead.
+        "::link::dj::editableSpaces": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/djs/:id/editableSpaces/rel/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces.unlink() instead.
+        "::unlink::dj::editableSpaces": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/djs/:id/editableSpaces/rel/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces.exists() instead.
+        "::exists::dj::editableSpaces": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/djs/:id/editableSpaces/rel/:fk",
+          method: "HEAD"
+        },
+
         // INTERNAL. Use Dj.spaces() instead.
         "::get::dj::spaces": {
           isArray: true,
@@ -4352,6 +5060,38 @@ module.factory(
         // INTERNAL. Use Dj.spaces.count() instead.
         "::count::dj::spaces": {
           url: urlBase + "/djs/:id/spaces/count",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces() instead.
+        "::get::dj::editableSpaces": {
+          isArray: true,
+          url: urlBase + "/djs/:id/editableSpaces",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces.create() instead.
+        "::create::dj::editableSpaces": {
+          url: urlBase + "/djs/:id/editableSpaces",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces.createMany() instead.
+        "::createMany::dj::editableSpaces": {
+          isArray: true,
+          url: urlBase + "/djs/:id/editableSpaces",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces.destroyAll() instead.
+        "::delete::dj::editableSpaces": {
+          url: urlBase + "/djs/:id/editableSpaces",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Dj.editableSpaces.count() instead.
+        "::count::dj::editableSpaces": {
+          url: urlBase + "/djs/:id/editableSpaces/count",
           method: "GET"
         },
 
@@ -4990,6 +5730,416 @@ module.factory(
         R.songs.updateById = function() {
           var TargetResource = $injector.get("Song");
           var action = TargetResource["::updateById::Space::songs"];
+          return action.apply(R, arguments);
+        };
+    /**
+     * @ngdoc object
+     * @name lbServices.Space.contributors
+     * @header lbServices.Space.contributors
+     * @object
+     * @description
+     *
+     * The object `Space.contributors` groups methods
+     * manipulating `Dj` instances related to `Space`.
+     *
+     * Call {@link lbServices.Space#contributors Space.contributors()}
+     * to query all related instances.
+     */
+
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Space#contributors
+         * @methodOf lbServices.Space
+         *
+         * @description
+         *
+         * Queries contributors of Space.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `filter` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Dj` object.)
+         * </em>
+         */
+        R.contributors = function() {
+          var TargetResource = $injector.get("Dj");
+          var action = TargetResource["::get::Space::contributors"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Space.contributors#count
+         * @methodOf lbServices.Space.contributors
+         *
+         * @description
+         *
+         * Counts contributors of Space.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        R.contributors.count = function() {
+          var TargetResource = $injector.get("Dj");
+          var action = TargetResource["::count::Space::contributors"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Space.contributors#create
+         * @methodOf lbServices.Space.contributors
+         *
+         * @description
+         *
+         * Creates a new instance in contributors of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Dj` object.)
+         * </em>
+         */
+        R.contributors.create = function() {
+          var TargetResource = $injector.get("Dj");
+          var action = TargetResource["::create::Space::contributors"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Space.contributors#createMany
+         * @methodOf lbServices.Space.contributors
+         *
+         * @description
+         *
+         * Creates a new instance in contributors of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Dj` object.)
+         * </em>
+         */
+        R.contributors.createMany = function() {
+          var TargetResource = $injector.get("Dj");
+          var action = TargetResource["::createMany::Space::contributors"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Space.contributors#destroyAll
+         * @methodOf lbServices.Space.contributors
+         *
+         * @description
+         *
+         * Deletes all contributors of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.contributors.destroyAll = function() {
+          var TargetResource = $injector.get("Dj");
+          var action = TargetResource["::delete::Space::contributors"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Space.contributors#destroyById
+         * @methodOf lbServices.Space.contributors
+         *
+         * @description
+         *
+         * Delete a related item by id for contributors.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for contributors
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.contributors.destroyById = function() {
+          var TargetResource = $injector.get("Dj");
+          var action = TargetResource["::destroyById::Space::contributors"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Space.contributors#exists
+         * @methodOf lbServices.Space.contributors
+         *
+         * @description
+         *
+         * Check the existence of contributors relation to an item by id.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for contributors
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Dj` object.)
+         * </em>
+         */
+        R.contributors.exists = function() {
+          var TargetResource = $injector.get("Dj");
+          var action = TargetResource["::exists::Space::contributors"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Space.contributors#findById
+         * @methodOf lbServices.Space.contributors
+         *
+         * @description
+         *
+         * Find a related item by id for contributors.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for contributors
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Dj` object.)
+         * </em>
+         */
+        R.contributors.findById = function() {
+          var TargetResource = $injector.get("Dj");
+          var action = TargetResource["::findById::Space::contributors"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Space.contributors#link
+         * @methodOf lbServices.Space.contributors
+         *
+         * @description
+         *
+         * Add a related item by id for contributors.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for contributors
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Dj` object.)
+         * </em>
+         */
+        R.contributors.link = function() {
+          var TargetResource = $injector.get("Dj");
+          var action = TargetResource["::link::Space::contributors"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Space.contributors#unlink
+         * @methodOf lbServices.Space.contributors
+         *
+         * @description
+         *
+         * Remove the contributors relation to an item by id.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for contributors
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.contributors.unlink = function() {
+          var TargetResource = $injector.get("Dj");
+          var action = TargetResource["::unlink::Space::contributors"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Space.contributors#updateById
+         * @methodOf lbServices.Space.contributors
+         *
+         * @description
+         *
+         * Update a related item by id for contributors.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for contributors
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Dj` object.)
+         * </em>
+         */
+        R.contributors.updateById = function() {
+          var TargetResource = $injector.get("Dj");
+          var action = TargetResource["::updateById::Space::contributors"];
           return action.apply(R, arguments);
         };
 

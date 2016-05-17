@@ -205,7 +205,8 @@ angular.module('xyzPlayer', [])
           .then(function (results) {
             $log.debug('all media providers and playlist loaded', results);
             playlist = results[0].playlist;
-            space = results[0].space;
+
+            scope.space = results[0].space;
 
             // assuming auto-play, otherwise, bind go() to a button click or something
             if (_.size(playlist) > 0) {
@@ -237,7 +238,6 @@ angular.module('xyzPlayer', [])
         scope.getNowPlaying = getNowPlaying;
         scope.status = status;
         scope.playlist = playlist;
-        scope.space = space;
         scope.nowPlaying = nowPlaying;
         scope.message = message;
 

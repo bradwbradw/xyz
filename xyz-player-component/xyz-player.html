@@ -1,14 +1,10 @@
 <div class="xyz-player" ng-if="spaceIsOpen()">
-  <h3>xyz player </h3>
 
   <h4>{{message}}</h4>
-  <button ng-click="close()"> close</button>
-  <p>space name, owner, permalink goes here</p>
 
+    <center>
+    <h1>{{space.name}} </h1>
   <div class="media-box">
-
-    <h3>media box (container for the different templates for each provider</h3>
-    <h3>current song: {{getNowPlaying().title}}</h3>
 
     <div ng-include="'xyz-player-component/mock-media-provider/mock-media-provider-view.html'"
          ng-controller="mockProviderCtrl"
@@ -36,17 +32,27 @@
 
   </div>
 
-  <div class="media-controls">
-    <h3>media controls</h3>
-    <button ng-click="play()">play</button>
-    <button ng-click="pause()">pause</button>
-  </div>
+        <div ng-if="getNowPlaying().title">
 
-  <div class="progress-bar">
-    <h3>scrubbing / song progress indicator</h3>
-  </div>
-  <div class="volume control">
-    <h3>volume control</h3>
-  </div>
+            <h3 >current song: <br/>{{getNowPlaying().title}}</h3>
 
+            <div class="media-controls">
+
+                <button ng-click="play()">play</button>
+                <button ng-click="pause()">pause</button>
+            </div>
+
+            <div class="progress-bar" ng-if="false">
+                <h3>scrubbing / song progress indicator</h3>
+            </div>
+            <div class="volume control" ng-if="false">
+                <h3>volume control</h3>
+            </div>
+        </div>
+
+        <div ng-if="!getNowPlaying().title">
+            loading...
+        </div>
+
+    </center>
 </div>
