@@ -101,7 +101,9 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             var playlistLoad = Server.getPlaylist(space.id)
               .then(function (result) {
                 $log.debug('playlist load complete:', result);
-                return result.data;
+
+                _.set(_.find(publicSpaces, {id:result.space.id}),'playlist',result.playlist);
+                return result.playlist;
               }).catch(function (err) {
                 $log.error('playlist load failed: ', err);
               });
@@ -116,6 +118,9 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           .then(function (playlists) {
             $log.log('all playlists loaded:', playlists);
             localStorageService.set('playlists', playlists);
+            _.each(playlists, function(playlist){
+
+            })
           })
           .catch(function (err) {
             $log.error(err);
@@ -245,25 +250,25 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
       }
     })/*
-    .state('stream', {
-      parent: 'base',
-      url: 'stream',
-      views: {
-        'main@': {
-          templateUrl: 'views/test/stream.html',
-          controller: 'streamCtrl as stream'
-        }
-      },
-      resolve: {
-        playlist: function (Stream, Server) {
-          return Server.refresh().then(function () {
+     .state('stream', {
+     parent: 'base',
+     url: 'stream',
+     views: {
+     'main@': {
+     templateUrl: 'views/test/stream.html',
+     controller: 'streamCtrl as stream'
+     }
+     },
+     resolve: {
+     playlist: function (Stream, Server) {
+     return Server.refresh().then(function () {
 
-            return Stream.reloadPlaylist();
-          });
-        }
-      }
+     return Stream.reloadPlaylist();
+     });
+     }
+     }
 
-    })*/
+     })*/
 
     .state('embeds', {
       parent: 'base',
