@@ -1,5 +1,5 @@
 <a ui-sref="space({id:space.id})">
-    {{space.name }} {{space.public? '' : '(private)'}}
+   {{space.name }}  <br/> {{space.public? '' : '(private)'}}
 </a>
 
 <span ng-if="space.owner"> (owned by {{space.owner.name}})</span>
@@ -7,10 +7,11 @@
     loading...
 </div>
 <div ng-if="space.playlist">
-    <img ng-src="{{space.playlist[0].pic}}" class="space-thumbnail">
+    <img ng-src="{{space.playlist[0].pic}}" >
 </div>
 
-<button ng-click="playSpace(space.id)">play</button>
+<button ng-click="playSpace(space.id)" ng-if="space.playlist[0]">play</button>
+<span ng-if="!space.playlist[0]">(empty)</span>
 <pre class="debug" ng-if="false">
   {{space  | json}}
 

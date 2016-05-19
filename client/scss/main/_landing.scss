@@ -1,12 +1,21 @@
-.landing-container{
+.landing-section {
 
-.space-thumbnail {
+  .space-thumbnail {
+    height: 120px;
+    vertical-align: top;
 
-  display:inline-block;
-  img{
+    display: inline-block;
+    img {
 
-    max-width:100px;
-    max-height:100px;
+      width: 100px;
+    }
   }
+  display:block;
+  margin-bottom:3em;
 }
+
+.login-info {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }

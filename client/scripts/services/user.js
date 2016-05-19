@@ -109,6 +109,9 @@ angular.module('xyzApp')
                 User.spaces = spaces;
                 return User.spaces;
             },
+            appendSpace: function(space){
+              User.spaces.push(space);
+            },
 
             fetchSpaces: function () {
                 return Dj.spaces({id: User.get().id}).$promise
@@ -122,7 +125,7 @@ angular.module('xyzApp')
 //        space.ownerId = User.get().id;
                 Dj.spaces.create({id: User.get().id}, space, _.noop)
                     .$promise
-                    .then(User.fetchSpaces)
+                    .then(User.appendSpace)
                     .catch(function (err) {
                         return $q.reject(err);
                     });

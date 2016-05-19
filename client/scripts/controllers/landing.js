@@ -8,29 +8,13 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('LandingCtrl', function ($rootScope, $scope, $q, Dj, User, Server, Space, publicSpaces) {
+  .controller('LandingCtrl', function ($rootScope, $scope, $q, $timeout, Dj, User, Server, Space, publicSpaces) {
 
     $scope.Dj = Dj;//.findById({id:'5684f858d4b1e4996ec6d9bf'});
 
     $scope.User = User;
 
     $scope.publicSpaces = publicSpaces;
-
-    /*
-
-     var registerData = {};
-
-     $scope.registerData = registerData;
-
-     $scope.handleRegister = function(){
-     return Dj.login(registerData, _.noop)
-     .$promise
-     .catch(function(err){
-     return $q.reject(err);
-     });
-     console.log('register handled:');
-     };
-     */
 
     $scope.showError = function (error) {
       if (error.error.message) {
@@ -47,11 +31,6 @@ angular.module('xyzApp')
 
     $rootScope.lb = Server.loopback;
 
-
-    $scope.deleteSpace = function (space) {
-      //return Dj.spaces.destroyById({id:User.get().id,fk:space.id}, _.noop)
-    };
-
     var thePlayingSpace = false;
 
     var playSpace = function(space){
@@ -62,10 +41,54 @@ angular.module('xyzApp')
       return thePlayingSpace;
     };
 
-    //TODO remove this
-//    playSpace('mock');
+
+
+    var addingSpace;
+    var resetAdding = function(){
+      addingSpace = false;
+    };
+
+    var isAdding = function(){
+      return addingSpace;
+    };
+
+    var setAdding = function(){
+      addingSpace = true;
+    };
+
+    resetAdding();
+
+
+
+    var editingUser;
+    var resetEditing = function(){
+        editingUser = false;
+    };
+
+    var isEditing = function(){
+      return editingUser;
+    };
+
+    var setEditing = function(){
+      editingUser = true;
+    };
+
+    resetEditing();
+
+
     $scope.playingSpace = playingSpace;
     $scope.playSpace = playSpace;
+
+    $scope.isAdding = isAdding;
+    $scope.setAdding = setAdding;
+    $scope.addingSpace = addingSpace;
+    $scope.resetAdding = resetAdding;
+
+
+    $scope.isEditing = isEditing;
+    $scope.setEditing = setEditing;
+    $scope.editingUser = editingUser;
+    $scope.resetEditing = resetEditing;
 
 
   });

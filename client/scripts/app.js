@@ -87,14 +87,9 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
       onEnter: function (Library, User, Social, $q, $log, publicSpaces, localStorageService, Server) {
 
-        if (User.get()) {
-          User.fetchSpaces;
-        }
-
         Social.FB.refreshFB();
 
-        var fetchPublicSpacePlaylists = function (spaces) {
-
+        var fetchSpacePlaylists = function (spaces) {
 
           var playlistLoads = [];
           _.each(spaces, function (space) {
@@ -103,6 +98,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
                 $log.debug('playlist load complete:', result);
 
                 _.set(_.find(publicSpaces, {id:result.space.id}),'playlist',result.playlist);
+                _.set(_.find(User.spaces, {id:result.space.id}),'playlist',result.playlist);
                 return result.playlist;
               }).catch(function (err) {
                 $log.error('playlist load failed: ', err);
@@ -114,7 +110,8 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
         };
 
-        fetchPublicSpacePlaylists(publicSpaces)
+
+        fetchSpacePlaylists(_.union(publicSpaces, User.spaces))
           .then(function (playlists) {
             $log.log('all playlists loaded:', playlists);
             localStorageService.set('playlists', playlists);
