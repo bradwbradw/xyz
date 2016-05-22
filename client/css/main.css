@@ -85,7 +85,8 @@ body {
  * Address `outline` inconsistency between Chrome and other browsers.
  */
 a {
-  text-decoration: underline; }
+  text-decoration: underline;
+  cursor: pointer; }
 
 a:focus {
   outline: thin dotted; }
