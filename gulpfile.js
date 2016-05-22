@@ -78,6 +78,12 @@ gulp.task('copyHtml:main', function () {
 });
 
 
+ gulp.task('copyImages', function () {
+  return gulp.src('client/images/**/*')
+    .pipe(gulp.dest('dist/images'))
+});
+
+
 gulp.task('useref:main', function () {
   return gulp.src('client/index.html')
 
@@ -106,7 +112,7 @@ gulp.task('useref:stream', function () {
 
 gulp.task('build:production', function (callback) {
   runSequence('clean', 'loopback', 'sass', 'bower',
-    ['useref:main', 'copyHtml:main'], ['useref:stream'],
+    ['useref:main', 'copyHtml:main', 'copyImages'], ['useref:stream'],
     callback
   )
 });
@@ -187,7 +193,7 @@ gulp.task('browserSync:stream', function () {
 
 gulp.task('build', function (callback) {
   runSequence('clean', 'loopback', 'sass', 'bower',
-    ['useref:main', 'copyHtml:main'], ['useref:stream', 'copyCss:stream'],
+    ['useref:main', 'copyHtml:main', 'copyImages'], ['useref:stream', 'copyCss:stream'],
     callback
   )
 });
