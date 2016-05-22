@@ -46,13 +46,9 @@ html {
 body{
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f7fbfc+0,d9edf2+40,60a09f+100 */
 
-  background: #f7fbfc; /* Old browsers */
-  background: -moz-linear-gradient(-45deg, #f7fbfc 0%, #d9edf2 40%, #60a09f 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(-45deg, #f7fbfc 0%, #d9edf2 40%, #60a09f 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(135deg, #f7fbfc 0%, #d9edf2 40%, #60a09f 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7fbfc', endColorstr='#60a09f', GradientType=1); /* IE6-9 fallback on horizontal gradient */
-
+  background-image:('images/grid.png')
 }
+
 body, input, textarea {
     font-family: $base-header-font-family;
     font-size: $base-font-size;
