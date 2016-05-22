@@ -2,7 +2,7 @@
 
 module.exports = {
   api: {
-    host: process.env.API_HOST || '0.0.0.0',
+    host: process.env.API_HOST || '',
     path: process.env.API_URL || '/api',
     port: process.env.PORT || 5005
   },

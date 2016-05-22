@@ -18,7 +18,7 @@ var constants = require('./constants');
 
 var keys = constants.keys;
 
-var apiUrl = 'http://'+ constants.api.host+ ':'+ constants.api.port + constants.api.path + '/';
+var apiUrl = constants.api.path+'/';//'http://'+ constants.api.host+ ':'+ constants.api.port + constants.api.path + '/';
 
 console.log('api Url is ', apiUrl);
 
@@ -111,7 +111,6 @@ gulp.task('build:production', function (callback) {
   )
 });
 
-
 var jshint = require('gulp-jshint');
 var connect = require('gulp-connect');
 var nodemon = require('gulp-nodemon');
@@ -186,23 +185,6 @@ gulp.task('browserSync:stream', function () {
 });
 
 
-gulp.task('loopback', function () {
-  return gulp.src('./server/server.js')
-    .pipe(loopbackAngular(
-      {
-        apiUrl: apiUrl
-      }
-    ))
-    .pipe(rename('lb-services.js'))
-    .pipe(gulp.dest('./client/scripts/services'));
-});
-//lb-ng server/server.js client/scripts/services/lb-services.js -u http://0.0.0.0:3000/api && node docs.js
-
-gulp.task('clean', function () {
-  return del.sync('dist');
-});
-
-
 gulp.task('build', function (callback) {
   runSequence('clean', 'loopback', 'sass', 'bower',
     ['useref:main', 'copyHtml:main'], ['useref:stream', 'copyCss:stream'],
@@ -215,6 +197,7 @@ gulp.task('default', function (callback) {
 });
 
 gulp.task('serve', function (callback) {
+  apiUrl = 'http://localhost'+ ':'+ constants.api.port + constants.api.path + '/';
   runSequence(['loopback', 'bower', 'sass', 'browserSync:client', 'watch'],
     callback
   )

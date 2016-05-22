@@ -1,5 +1,4 @@
 module.exports = function (app) {
-  console.log('ding!');
 
   var Role = app.models.Role;
   Role.registerResolver('contributor', function (role, context, cb) {
