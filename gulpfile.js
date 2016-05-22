@@ -112,7 +112,7 @@ gulp.task('useref:stream', function () {
 
 gulp.task('build:production', function (callback) {
   runSequence('clean', 'loopback', 'sass', 'bower',
-    ['useref:main', 'copyHtml:main', 'copyImages'], ['useref:stream'],
+    ['useref:main', 'copyHtml:main', 'copyImages'], ['useref:stream', 'copyCss:stream'],
     callback
   )
 });
