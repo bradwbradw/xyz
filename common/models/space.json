@@ -39,7 +39,7 @@
     {
       "permission": "ALLOW",
       "principalType": "ROLE",
-      "principalId": "$authenticated",
+      "principalId": "$everyone",
       "property": "__get__songs"
     },
     {
