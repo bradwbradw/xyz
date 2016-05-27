@@ -1,95 +1,98 @@
 <div>
-    <div class="landing-section">
-        <h1>~ X Y Z ~</h1>
+  <div class="landing-section">
+    <h1>~ X Y Z ~</h1>
 
-        <div ng-repeat="space in publicSpaces"
-             ng-include="'views/partials/space-thumbnail.html'"
-             class="space-thumbnail">
+    <md-input>
 
-        </div>
-
-        <div xyz-player
-             space="{{playingSpace()}}"
-             ng-if="playingSpace()">
-
-        </div>
-        {{playingSpace()? playingSpace() : '' }}
-    </div>
-    <div ng-if="!User.loggedIn()" class="landing-section">
-
-        <h4>join to create your own xyz space</h4>
-        <form ng-submit="clearError(registerData).then(User.register).then(User.login).catch(showError)">
-
-            <input ng-model="registerData.email" placeholder="email" type="email" required><br/>
-            <input ng-model="registerData.name" placeholder="name"><br/>
-            <input ng-model="registerData.password" placeholder="password" type="password" required><br/>
-
-            <input type="submit" value="submit"/>
-        </form>
-
-        <h2>or login:</h2>
-        <form ng-submit="clearError(loginData).then(User.login).then(User.fetchSpaces).catch(showError)">
-
-            <input ng-model="loginData.email" placeholder="email" type="email" required><br/>
-            <input ng-model="loginData.password" placeholder="password" type="password" required><br/>
-
-            <input type="submit" value="submit"/>
-        </form>
+    </md-input>
+    <div ng-repeat="space in publicSpaces"
+         ng-include="'views/partials/space-thumbnail.html'"
+         class="space-thumbnail">
 
     </div>
+
+    <div xyz-player
+         space="{{playingSpace()}}"
+         ng-if="playingSpace()">
+
+    </div>
+    {{playingSpace()? playingSpace() : '' }}
+  </div>
+  <div ng-if="!User.loggedIn()" class="landing-section">
+
+    <h4>join to create your own xyz space</h4>
+    <form ng-submit="clearError(registerData).then(User.register).then(User.login).catch(showError)">
+
+      <input ng-model="registerData.email" placeholder="email" type="email" required><br/>
+      <input ng-model="registerData.name" placeholder="name"><br/>
+      <input ng-model="registerData.password" placeholder="password" type="password" required><br/>
+
+      <input type="submit" value="submit"/>
+    </form>
+
+    <h2>or login:</h2>
+    <form ng-submit="clearError(loginData).then(User.login).then(User.fetchSpaces).catch(showError)">
+
+      <input ng-model="loginData.email" placeholder="email" type="email" required><br/>
+      <input ng-model="loginData.password" placeholder="password" type="password" required><br/>
+
+      <input type="submit" value="submit"/>
+    </form>
+
+  </div>
+  <br/>
+  <hr/>
+  <br/>
+  <div ng-if="User.loggedIn()" class="landing-section">
+
     <br/>
-    <hr/>
-    <br/>
-    <div ng-if="User.loggedIn()" class="landing-section">
 
-        <br/>
+    <ul ng-if="User.spaces">
+      <h2 ng-if="User.hasSpaces()">{{User.get().name}}'s spaces:</h2>
+      <li ng-repeat="space in User.spaces"
+          ng-include="'views/partials/space-thumbnail.html'"
+          class="space-thumbnail">
 
-        <ul ng-if="User.spaces">
-            <h2 ng-if="User.hasSpaces()">{{User.get().name}}'s spaces:</h2>
-            <li ng-repeat="space in User.spaces"
-                ng-include="'views/partials/space-thumbnail.html'"
-                class="space-thumbnail">
-
-            </li>
-        </ul>
+      </li>
+    </ul>
       <span ng-if="!User.hasSpaces()">
         create your first space here:<br/>
       </span>
 
-        <div ng-if="isAdding()">
-            <input ng-model="newSpace.name" placeholder="new space name"></input>
-            <br/>
-            <button ng-click="User.addSpace(newSpace).then(resetAdding).catch(showError)">add new space</button>
-        </div>
-        <div ng-if="!isAdding()">
-            <a ng-click="setAdding()"> + new space</a>
-        </div>
-        <div ng-show="isAdding()">
-            <a ng-click="resetAdding()"> (nevermind)</a>
-        </div>
+    <div ng-if="isAdding()">
+      <input ng-model="newSpace.name" placeholder="new space name"></input>
+      <br/>
+      <button ng-click="User.addSpace(newSpace).then(resetAdding).catch(showError)">add new space</button>
+    </div>
+    <div ng-if="!isAdding()">
+      <a ng-click="setAdding()"> + new space</a>
+    </div>
+    <div ng-show="isAdding()">
+      <a ng-click="resetAdding()"> (nevermind)</a>
+    </div>
 
-        <br/>
-        <div class="login-info">
+    <br/>
+    <div class="login-info">
 
-            Logged in as {{User.get().name}}.
-            <br/>
+      Logged in as {{User.get().name}}.
+      <br/>
               <span ng-if="User.get().website"><!-- todo: fix website links (add http if not there) -->
                 Your website is {{User.get().website}}
               </span>
-            <form ng-submit="User.update(new).catch(showError)" ng-if="isEditing()">
+      <form ng-submit="User.update(new).catch(showError)" ng-if="isEditing()">
 
-                <input ng-model="new.name" placeholder="update name">
-                <input ng-model="new.website" placeholder="update website">
-                <br/>
-                <input type="submit" value="update data">
+        <input ng-model="new.name" placeholder="update name">
+        <input ng-model="new.website" placeholder="update website">
+        <br/>
+        <input type="submit" value="update data">
 
-            </form>
-            <div ng-if="!isEditing()"><a ng-click="setEditing()"> (edit)</a></div>
-            <div ng-show="isEditing()"><a ng-click="resetEditing()"> (nevermind)</a></div>
-            <button ng-click="User.logout().catch(showError)">Log out</button>
-        </div>
+      </form>
+      <div ng-if="!isEditing()"><a ng-click="setEditing()"> (edit)</a></div>
+      <div ng-show="isEditing()"><a ng-click="resetEditing()"> (nevermind)</a></div>
+      <button ng-click="User.logout().catch(showError)">Log out</button>
     </div>
+  </div>
 
 
-    <span ng-if="error">{{error}}</span>
+  <span ng-if="error">{{error}}</span>
 </div>

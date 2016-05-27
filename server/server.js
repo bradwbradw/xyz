@@ -3,6 +3,8 @@ var boot = require('loopback-boot');
 var path = require('path');
 var bodyParser = require('body-parser');
 
+var config = require('../constants');
+
 var app = module.exports = loopback();
 
 // configure body parser
@@ -21,6 +23,7 @@ app.use(loopback.token());
 app.start = function() {
   // start the web server
   return app.listen(function() {
+    console.log('--- xyz app on port '+config.api.port+'-----');
     app.emit('started');
     var baseUrl = '';
     if (app.get('loopback-component-explorer')) {
