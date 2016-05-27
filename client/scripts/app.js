@@ -7,6 +7,9 @@ var xyzApp = angular.module("xyzApp",
     'LocalStorageModule',
 //    'ngTouch',
     'ngResource',
+    'ngAria',
+    'ngAnimate',
+    'ngMaterial',
     'lbServices',
     'ls.LiveSet',
     'ls.ChangeStream',
@@ -29,13 +32,14 @@ xyzApp.config(function (localStorageServiceProvider) {
 
 var errorAlert = function (err) {
 
+  var message;
   if (_.isObject(err)) {
-    var message = _.get(err, 'data.error.message', '') + '\n';
+    message = _.get(err, 'data.error.message', '') + '\n';
     message += 'status: ' + _.get(err, 'status', '') + '\n';
     message += _.get(err, 'config.url', '') + '\n';
     message += _.get(err, 'statusText', '') + '\n';
   } else {
-    var message = err;
+    message = err;
   }
 
 
