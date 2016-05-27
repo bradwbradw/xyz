@@ -1,14 +1,14 @@
 .xyz-player {
   color: white;
   z-index: 1;
-  height: 200;
+  height: 200px;
   width: 100vw;
-  background-color: purple;
+  background-color: black;
   text-align: center;
   position: fixed;
   bottom: 3em; }
   .xyz-player .media-box {
-    height: 180;
+    height: 180px;
     width: 100%;
     display: inline-block;
     background-color: lightgoldenrodyellow; }
@@ -16,9 +16,11 @@
     position: fixed;
     bottom: 0;
     height: 3em;
+    width: 100%;
     text-align: center; }
     .xyz-player .media-controls button {
-      color: green; }
+      background-color: white;
+      color: black; }
 
 #xyz-soundcloud-iframe, #widget2 {
   width: 100%;
