@@ -1,4 +1,4 @@
-<html>
+<html ng-app="xyzApp">
 <head>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,18 +20,11 @@
   <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
 </head>
 
-<body ng-app="xyzApp">
+<body >
 
 <div ng-controller="BodyCtrl">
 
-  <div class="main-container" ui-view="main">
-
-  </div>
-
-  <div class="sidebar-container" ui-view="sidebar">
-
-  </div>
-
+  <div ui-view>  </div>
 
 </div>
 
@@ -65,6 +58,8 @@
 <!-- build:js scripts/scripts.js -->
 
 <script src="scripts/app.js"></script>
+<script src="scripts/run.js"></script>
+<script src="scripts/router.js"></script>
 
 <script src="scripts/services/library.js"></script>
 <script src="scripts/services/stream.js"></script>
@@ -84,6 +79,7 @@
 <script src="scripts/controllers/localitems.js"></script>
 <script src="scripts/controllers/import.js"></script>
 <script src="scripts/controllers/space.js"></script>
+<script src="scripts/controllers/bar.js"></script>
 <script src="scripts/services/mediaapi.js"></script>
 <script src="scripts/services/utility.js"></script>
 <script src="scripts/directives/previewing.js"></script>

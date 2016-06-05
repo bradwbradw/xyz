@@ -78,6 +78,9 @@ textarea {
 body {
   margin: 0; }
 
+body * {
+  outline: none; }
+
 /* ==========================================================================
    Links
    ========================================================================== */
@@ -757,7 +760,8 @@ body.old-ie {
 
 .landing-section {
   display: block;
-  margin-bottom: 3em; }
+  margin-bottom: 3em;
+  margin-top: 3em; }
   .landing-section .space-thumbnail {
     height: 120px;
     vertical-align: top;
@@ -765,12 +769,55 @@ body.old-ie {
     .landing-section .space-thumbnail img {
       width: 100px; }
 
-.login-info {
+.user-settings-button {
   position: absolute;
-  bottom: 0;
-  width: 100%; }
+  right: 10em;
+  top: 0; }
+
+.top-bar {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 1.5em;
+  background-color: black;
+  color: white; }
+  .top-bar h1 {
+    font-size: 1.2rem;
+    font-weight: bold; }
+  .top-bar .icon {
+    margin: 0; }
+  .top-bar .login-info {
+    position: absolute;
+    top: 1.5em;
+    right: 0;
+    width: 6em;
+    height: 12em; }
+
+.xyz-click-screen {
+  position: relative;
+  top: 1.5em;
+  height: 100%;
+  width: 100%;
+  z-index: 2; }
 
 .main-container {
+  position: absolute;
+  top: 1.5em; }
+
+.white {
+  color: white; }
+
+.top-bar .logo {
+  cursor: pointer; }
+
+.top-bar .icon {
+  cursor: pointer; }
+
+.top-bar .login-info {
+  color: white;
+  background-color: black; }
+
+.base-container {
   position: absolute;
   top: 0;
   left: 0;
@@ -778,13 +825,8 @@ body.old-ie {
   height: 100vh;
   text-align: center; }
   @media only screen and (min-width: 640px) {
-    .main-container {
+    .base-container {
       position: fixed; } }
-
-.space-title {
-  position: absolute;
-  top: 0;
-  left: 10em; }
 
 .xyz-item {
   height: 4em;
@@ -807,11 +849,6 @@ body.old-ie {
     top: 0;
     left: 80px;
     background-color: lightgreen; }
-
-.xyz-click-screen {
-  height: 100%;
-  width: 100%;
-  z-index: 2; }
 
 .song-table {
   display: table;

@@ -1,6 +1,6 @@
 (function(window, angular, undefined) {'use strict';
 
-var urlBase = "/api";
+var urlBase = "http://localhost:5005/api";
 var authHeader = 'authorization';
 
 function getHost(url) {

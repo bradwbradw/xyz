@@ -42,8 +42,7 @@ angular.module('xyzApp')
     };
 
 
-
-    var addingSpace;
+    var addingSpace = false;
     var resetAdding = function(){
       addingSpace = false;
     };
@@ -56,25 +55,6 @@ angular.module('xyzApp')
       addingSpace = true;
     };
 
-    resetAdding();
-
-
-
-    var editingUser;
-    var resetEditing = function(){
-        editingUser = false;
-    };
-
-    var isEditing = function(){
-      return editingUser;
-    };
-
-    var setEditing = function(){
-      editingUser = true;
-    };
-
-    resetEditing();
-
 
     $scope.playingSpace = playingSpace;
     $scope.playSpace = playSpace;
@@ -84,11 +64,6 @@ angular.module('xyzApp')
     $scope.addingSpace = addingSpace;
     $scope.resetAdding = resetAdding;
 
-
-    $scope.isEditing = isEditing;
-    $scope.setEditing = setEditing;
-    $scope.editingUser = editingUser;
-    $scope.resetEditing = resetEditing;
 
 
   });

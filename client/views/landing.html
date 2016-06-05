@@ -1,10 +1,6 @@
 <div>
   <div class="landing-section">
-    <h1>~ X Y Z ~</h1>
 
-    <md-input>
-
-    </md-input>
     <div ng-repeat="space in publicSpaces"
          ng-include="'views/partials/space-thumbnail.html'"
          class="space-thumbnail">
@@ -72,25 +68,7 @@
     </div>
 
     <br/>
-    <div class="login-info">
 
-      Logged in as {{User.get().name}}.
-      <br/>
-              <span ng-if="User.get().website"><!-- todo: fix website links (add http if not there) -->
-                Your website is {{User.get().website}}
-              </span>
-      <form ng-submit="User.update(new).catch(showError)" ng-if="isEditing()">
-
-        <input ng-model="new.name" placeholder="update name">
-        <input ng-model="new.website" placeholder="update website">
-        <br/>
-        <input type="submit" value="update data">
-
-      </form>
-      <div ng-if="!isEditing()"><a ng-click="setEditing()"> (edit)</a></div>
-      <div ng-show="isEditing()"><a ng-click="resetEditing()"> (nevermind)</a></div>
-      <button ng-click="User.logout().catch(showError)">Log out</button>
-    </div>
   </div>
 
 
