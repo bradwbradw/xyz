@@ -156,7 +156,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         }
       }
     })
-    .state('space.search', {
+    .state('base.space.search', {
 
       url: '',
       views: {
@@ -169,7 +169,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         }
       }
     })
-    .state('space.url', {
+    .state('base.space.url', {
 
       url: '',
       views: {
@@ -182,7 +182,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         }
       }
     })
-    .state('space.explore', {
+    .state('base.space.explore', {
       url: '',
       views: {
         'importControls': {
