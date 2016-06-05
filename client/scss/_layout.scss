@@ -1,0 +1,67 @@
+.landing-section {
+
+
+
+  .space-thumbnail {
+    height: 120px;
+    vertical-align: top;
+
+    display: inline-block;
+    img {
+
+      width: 100px;
+    }
+  }
+  display:block;
+  margin-bottom:3em;
+  margin-top:3em;
+}
+
+.user-settings-button{
+  position:absolute;
+  right:10em;
+  top:0;
+}
+
+
+.top-bar {
+
+  h1 {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: $bar-height;
+  background-color: black;
+  color: white;
+
+  .icon {
+    margin: 0;
+  }
+
+  .login-info {
+    position: absolute;
+    top: $bar-height;
+    right: 0;
+    width: 6em;
+    height: 12em;
+  }
+
+}
+
+
+
+.xyz-click-screen{
+  position:relative;
+  top:$bar-height;
+  height:100%;
+  width:100%;
+  z-index:2;
+}
+
+.main-container{
+  position:absolute;
+  top:$bar-height;
+}

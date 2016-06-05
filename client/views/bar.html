@@ -1,0 +1,29 @@
+<div class="top-bar" layout="row" layout-align="space-between center">
+
+  <h1 ui-sref="base.landing" class="logo">XYZ</h1>
+
+
+  <h1 class="bar-title" ng-if="title()">    {{title()}} </h1>
+  <md-icon class="icon material-design-icons white"
+           ng-class="{active:isEditing()}"
+           ng-click="toggleEditing()">
+    settings
+  </md-icon>
+
+  <div class="login-info" ng-if="isEditing()" >
+
+    Logged in as {{User.get().name}}.
+      <span ng-if="User.get().website"><!-- todo: fix website links (add http if not there) -->
+        Your website is {{User.get().website}}
+      </span>
+    <form ng-submit="User.update(new).catch(showError)">
+
+      <input ng-model="new.name" placeholder="update name">
+      <input ng-model="new.website" placeholder="update website">
+      <input type="submit" value="update data">
+
+    </form>
+
+    <button ng-click="User.logout().catch(showError)">Log out</button>
+  </div>
+</div>
