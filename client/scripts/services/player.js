@@ -52,7 +52,20 @@ angular.module('xyzApp')
       },
       show: function(item){
         Player.current = item;
+      },
+      //^^^^ Above were here just for sidebar media player
+      // \/\/\/ below are now as of introducing site-wide player
+
+      playingSpaceId: false,
+
+      playSpace: function(spaceId){
+        Player.playingSpaceId = spaceId;
+      },
+
+      getPlayingSpaceId: function(){
+        return Player.playingSpaceId;
       }
+
     };
 
     return Player;

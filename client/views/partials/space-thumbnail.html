@@ -10,7 +10,9 @@
     <img ng-src="{{space.playlist[0].pic}}" >
 </div>
 
-<button ng-click="playSpace(space.id)" ng-if="space.playlist[0]">play</button>
+<button ng-click="Player.playSpace(space.id)" ng-if="space.playlist[0]">
+  play
+</button>
 <span ng-if="!space.playlist[0]">(empty)</span>
 <pre class="debug" ng-if="false">
   {{space  | json}}

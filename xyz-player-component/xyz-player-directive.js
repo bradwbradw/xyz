@@ -31,7 +31,7 @@ angular.module('xyzPlayer', [])
         };
 
         var defaultProviderFunctions = {
-          play: {}, pause: {}, volume: {},
+          play: {}, pause: {}, volume: {}
         };
 
         var providerInitFunctions = {
@@ -103,7 +103,6 @@ angular.module('xyzPlayer', [])
           $log.debug('youtube provider onready');
           providerInitFunctions.youtube();
 
-
         });
         $rootScope.$on('soundcloud_is_ready', function () {
           $log.debug('soundcloud provider onready');
@@ -111,56 +110,39 @@ angular.module('xyzPlayer', [])
 
         });
 
-        /*
-
-         var tag = document.createElement('script');
-         tag.src = "https://www.youtube.com/iframe_api";
-         var firstScriptTag = document.getElementsByTagName('script')[0];
-         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-         var player;
-
-         youTubeApiService.onReady(function () {
-
-         $log.debug('youtube onready');
-
-         providerInitFunctions.youtube();
-         });
-         */
-
-        //TODO turn into actual callbacks after SC, YT providers load.
-
-
         $timeout(function () {
-
-//          mediaProviders.soundcloud.loading.resolve('soundcloud!');
+          // todo - code in bandcamp loading (faked)
           mediaProviders.bandcamp.loading.resolve('bandcamp!');
         }, 1000);
 
-        var serviceProvidersLoaded = $q.all([mediaProviders.youtube.loading.promise, mediaProviders.soundcloud.loading.promise, mediaProviders.bandcamp.loading.promise, mediaProviders.mock.loading.promise]);
+        var serviceProvidersLoaded = $q.all(
+          [
+            mediaProviders.youtube.loading.promise,
+            mediaProviders.soundcloud.loading.promise,
+            mediaProviders.bandcamp.loading.promise,
+            mediaProviders.mock.loading.promise
+          ]);
 
         var loadPlaylist = function (spaceId) {
-
           return Api.getPlaylist(spaceId);
         };
-
 
         var status = 'initializing';
         var playlist = false;
         var space = false;
+        var nowPlaying = {};
 
         var play = function () {
           console.log('play button clicked, so will play ', getNowPlaying().provider);
           mediaProviders[getNowPlaying().provider].play();
-
         };
+
         var pause = function () {
           mediaProviders[getNowPlaying().provider].pause();
         };
 
-        var nowPlaying = {};
         var getNowPlaying = function () {
-          return nowPlaying;
+          return _.find(playlist, nowPlaying);
         };
 
         var setNowPlaying = function (songObj) {
@@ -197,27 +179,36 @@ angular.module('xyzPlayer', [])
 
         };
 
+
+        var loadAndPlay = function(spaceId){
+          $q.all([loadPlaylist(spaceId), serviceProvidersLoaded])
+                  .then(function (results) {
+                    playlist = results[0].playlist;
+                    scope.space = results[0].space;
+
+                    // assuming auto-play, otherwise, bind go() to a button click or something
+                    if (_.size(playlist) > 0) {
+                      go();
+                      message = '';
+                    } else {
+                      message = 'playlist has 0 songs';
+                    }
+
+                  });
+        };
+
         if (!targetSpace){
           return;
+        } else {
+          loadAndPlay(targetSpace);
         }
 
-        $q.all([loadPlaylist(targetSpace), serviceProvidersLoaded])
-          .then(function (results) {
-            $log.debug('all media providers and playlist loaded', results);
-            playlist = results[0].playlist;
 
-            scope.space = results[0].space;
-
-            // assuming auto-play, otherwise, bind go() to a button click or something
-            if (_.size(playlist) > 0) {
-              go();
-              message = '';
-            } else {
-              message = 'playlist has 0 songs';
-            }
+        attrs.$observe('space', function(spaceId){
+          loadAndPlay(spaceId);
+        });
 
 
-          });
 
         var message = '';
         var spaceOpen = true;

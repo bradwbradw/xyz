@@ -1,10 +1,20 @@
 <div class="base-container">
 
   <div ui-view="bar"></div>
-  <div ui-view="main" class="main-container" ></div>
+  <div ui-view="main" class="main-container"></div>
 
-  <div ui-view="sidebar" class="sidebar-container" >
+  <div ui-view="sidebar" class="sidebar-container">
+  </div>
 
+
+  <div ui-view="xyzPlayer"></div>
+
+  <div ng-controller="SiteWidePlayerCtrl">
+    <div xyz-player
+         space="{{Player.getPlayingSpaceId()}}"
+         ng-if="Player.getPlayingSpaceId()">
+
+    </div>
   </div>
 
 </div>

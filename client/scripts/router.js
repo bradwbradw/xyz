@@ -4,7 +4,6 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
   $stateProvider
     .state('base', {
-      abstract: 'true',
       templateUrl: 'views/base.html',
       resolve: {
         publicSpaces: function (Space) {
@@ -27,8 +26,16 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         space: function () {
           return false;
         }
-      }
+      }/*,
+      views:{
+        'xyzPlayer': {
+          template: '<div xyz-player ',
+          controller: function(){
 
+          }
+        }
+      }
+*/
 
     })
     .state('base.landing', {

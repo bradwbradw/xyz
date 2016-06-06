@@ -7,12 +7,6 @@
 
     </div>
 
-    <div xyz-player
-         space="{{playingSpace()}}"
-         ng-if="playingSpace()">
-
-    </div>
-    {{playingSpace()? playingSpace() : '' }}
   </div>
   <div ng-if="!User.loggedIn()" class="landing-section">
 
@@ -43,7 +37,7 @@
 
     <br/>
 
-    <ul ng-if="User.spaces">
+    <ul ng-if="User.spaces" class="user-spaces-container">
       <h2 ng-if="User.hasSpaces()">{{User.get().name}}'s spaces:</h2>
       <li ng-repeat="space in User.spaces"
           ng-include="'views/partials/space-thumbnail.html'"

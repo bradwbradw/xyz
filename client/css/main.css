@@ -804,6 +804,9 @@ body.old-ie {
   position: absolute;
   top: 1.5em; }
 
+.user-spaces-container {
+  margin-bottom: 400px; }
+
 .white {
   color: white; }
 
@@ -824,9 +827,6 @@ body.old-ie {
   width: 100vw;
   height: 100vh;
   text-align: center; }
-  @media only screen and (min-width: 640px) {
-    .base-container {
-      position: fixed; } }
 
 .xyz-item {
   height: 4em;

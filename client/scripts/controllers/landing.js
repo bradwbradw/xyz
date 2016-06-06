@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('LandingCtrl', function ($rootScope, $scope, $q, $timeout, Dj, User, Server, Space, publicSpaces) {
+  .controller('LandingCtrl', function ($rootScope, $scope, $q, $timeout, $log, Dj, User, Server, Space, publicSpaces, Player) {
 
     $scope.Dj = Dj;//.findById({id:'5684f858d4b1e4996ec6d9bf'});
 
@@ -31,17 +31,6 @@ angular.module('xyzApp')
 
     $rootScope.lb = Server.loopback;
 
-    var thePlayingSpace = false;
-
-    var playSpace = function(space){
-      thePlayingSpace = space;
-    };
-
-    var playingSpace = function(){
-      return thePlayingSpace;
-    };
-
-
     var addingSpace = false;
     var resetAdding = function(){
       addingSpace = false;
@@ -55,14 +44,12 @@ angular.module('xyzApp')
       addingSpace = true;
     };
 
-
-    $scope.playingSpace = playingSpace;
-    $scope.playSpace = playSpace;
-
     $scope.isAdding = isAdding;
     $scope.setAdding = setAdding;
     $scope.addingSpace = addingSpace;
     $scope.resetAdding = resetAdding;
+
+    $scope.Player = Player;
 
 
 
