@@ -205,6 +205,7 @@ angular.module('xyzPlayer', [])
 
 
         attrs.$observe('space', function(spaceId){
+          pause();
           loadAndPlay(spaceId);
         });
 
