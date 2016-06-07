@@ -19,5 +19,8 @@
     "angular-mocks": "1.4.1"
   },
   "appPath": "client",
-  "moduleName": "xyzApp"
+  "moduleName": "xyzApp",
+  "resolutions": {
+    "angular": "~1.5.6"
+  }
 }
