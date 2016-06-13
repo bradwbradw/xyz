@@ -1,4 +1,4 @@
-xyzApp.run(function($rootScope, $log){
+xyzApp.run(function($rootScope, $state, $log){
 
 
   $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {

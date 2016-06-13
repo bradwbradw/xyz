@@ -1,4 +1,3 @@
-
 xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 
@@ -27,15 +26,15 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           return false;
         }
       }/*,
-      views:{
-        'xyzPlayer': {
-          template: '<div xyz-player ',
-          controller: function(){
+       views:{
+       'xyzPlayer': {
+       template: '<div xyz-player ',
+       controller: function(){
 
-          }
-        }
-      }
-*/
+       }
+       }
+       }
+       */
 
     })
     .state('base.landing', {
@@ -160,6 +159,9 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             }
           }
 
+        },
+        contributors: function (Server, $stateParams) {
+          return Server.getContributors($stateParams.id);
         }
       }
     })
@@ -200,7 +202,10 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
         }
       }
-    });
+    })
+    .state('error',{
+    template: '<h4>error</h4>'
+  });
   $urlRouterProvider.otherwise('/');
 
 

@@ -83,7 +83,9 @@ angular.module('xyzApp')
           // ... and so on...
           // fixme: make more generic, somehow
           //  so that
-        }
+        },
+
+
       },
 
       getBandcampId: function (url) {
@@ -103,6 +105,13 @@ angular.module('xyzApp')
 
       refresh: function () {
         return get('refresh');
+      },
+
+      getContributors: function(spaceId){
+        return get('Spaces/'+spaceId+'/contributors')
+          .then(function(result){
+            return result.data;
+          });
       },
 
       getLibrary: function () {
