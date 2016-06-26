@@ -14,10 +14,10 @@
   <div class="user-settings" ng-if="settingsOpen()">
 
       <div ng-if="User.get().website"><!-- todo: fix website links (add http if not there) -->
-        Logged in as <a ng-href="{{fixUrl(User.get().website)}}">{{User.get().name}}</a>.
+        Logged in as<br/> <a ng-href="{{fixUrl(User.get().website)}}">{{User.get().name}}</a>
       </div>
       <div ng-if="!User.get().website"><!-- todo: fix website links (add http if not there) -->
-        Logged in as {{User.get().name}}.
+        Logged in as<br/> {{User.get().name}}
       </div>
 
       <button ng-click="toggleEditing()" >edit info</button>
