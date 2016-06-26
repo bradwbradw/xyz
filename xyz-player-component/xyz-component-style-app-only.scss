@@ -14,7 +14,11 @@
     width:100%;
     display: inline-block;
 
-    background-color:lightgoldenrodyellow;
+    background:none;
+  }
+
+  iframe{
+    border:none;
   }
 
   .media-controls{
