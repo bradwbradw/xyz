@@ -42,12 +42,19 @@
     margin: 0;
   }
 
-  .login-info {
+  .user-settings {
     position: absolute;
     top: $bar-height;
     right: 0;
-    width: 6em;
-    height: 12em;
+    width: 12em;
+    height: 50vh;
+    max-width: 50vw;
+    a{
+      color: $light-link;
+      &:hover{
+        color: $light-link-hover
+      }
+    }
   }
 
 }

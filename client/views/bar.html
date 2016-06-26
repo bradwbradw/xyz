@@ -3,26 +3,43 @@
   <h1 ui-sref="base.landing" class="logo">XYZ</h1>
 
 
-  <h1 class="bar-title" ng-if="title()">    {{title()}} </h1>
+  <h1 class="bar-title" ng-if="title()"> {{title()}} </h1>
   <md-icon class="icon material-design-icons white"
            ng-class="{active:isEditing()}"
-           ng-click="toggleEditing()">
+           ng-click="toggleSettings()"
+           ng-if="User.get()">
     settings
   </md-icon>
 
-  <div class="login-info" ng-if="isEditing()" >
+  <div class="user-settings" ng-if="settingsOpen()">
 
-    Logged in as {{User.get().name}}.
-      <span ng-if="User.get().website"><!-- todo: fix website links (add http if not there) -->
-        Your website is {{User.get().website}}
-      </span>
-    <form ng-submit="User.update(new).catch(showError)">
+      <div ng-if="User.get().website"><!-- todo: fix website links (add http if not there) -->
+        Logged in as <a ng-href="{{fixUrl(User.get().website)}}">{{User.get().name}}</a>.
+      </div>
+      <div ng-if="!User.get().website"><!-- todo: fix website links (add http if not there) -->
+        Logged in as {{User.get().name}}.
+      </div>
 
-      <input ng-model="new.name" placeholder="update name">
-      <input ng-model="new.website" placeholder="update website">
-      <input type="submit" value="update data">
+      <button ng-click="toggleEditing()" >edit info</button>
 
-    </form>
+      <form ng-submit="User.update(new).catch(showError)" ng-show="userIsEditing()">
+
+        <input ng-model="new.name" placeholder="update name">
+        <input ng-model="new.website" placeholder="update website">
+        <input type="submit" value="update data">
+
+      </form>
+
+
+    <h4>Social Media</h4>
+    <div ng-if="!Social.FB.isConnected() && !Social.FB.isConnecting() ">
+      Facebook: not connected
+      <a class="link-button" ng-click="Social.FB.setConnecting().then(Social.FB.login).then(Social.FB.refreshFB)">(connect)</a>
+    </div>
+    <div ng-if="Social.FB.isConnecting()">Facebook: connecting...</div>
+    <div ng-if="Social.FB.isConnected()">
+      Facebook: &#10003;
+    </div>
 
     <button ng-click="User.logout().catch(showError)">Log out</button>
   </div>

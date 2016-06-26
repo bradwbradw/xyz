@@ -12,7 +12,6 @@
 
 angular.module('xyzApp')
   .config(function (ezfbProvider, apiKeys) {
-    console.log('api fb ', apiKeys);
 
     ezfbProvider.setInitParams({
       // Facebook App ID

@@ -3,11 +3,7 @@
 <div ng-hide="sidebarClosed">
 
   <div class="close-button" ng-click="sidebarClosed = true"> [X] </div>
-  <h1><a ui-sref="base">XYZ</a></h1>
 
-  <h3 ng-if="false">
-    Our goal is to make the curation, discovery, and enjoyment of networked music streams better.
-  </h3>
   <h4 ng-if="space.id">
     <a ng-href="stream/index.html#?playlist={{space.id}}" target="_blank">
       --&gt stream link
@@ -24,7 +20,7 @@
       <h4>edit {{space.name}} details:</h4>
       name:<input ng-model="space.name">
         <span class="checkbox">
-          public:<input type="checkbox" ng-model="space.public"></input>
+          public:<input type="checkbox" ng-model="space.public"/>
       </span>
       <br/>
         <span ng-if="space.startTime"> Space started playing at {{space.startTime | date:"mediumTime"}}</span>
@@ -57,14 +53,6 @@
   <br/>
   <hr/>
 
-  <div ng-if="!FB.isConnected() && !FB.isConnecting() ">
-    Facebook: not connected
-    <a class="link-button" ng-click="FB.setConnecting().then(FB.login).then(FB.refreshFB)">(connect)</a>
-  </div>
-  <div ng-if="FB.isConnecting()">Facebook: connecting...</div>
-  <div ng-if="FB.isConnected()">
-    Facebook: &#10003;
-  </div>
 
 
   <hr/>
