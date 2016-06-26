@@ -10,12 +10,12 @@
   </div>
   <div ng-if="!User.loggedIn()" class="landing-section">
 
-    <h4>join to create your own xyz space</h4>
+    <h4>Sign up</h4>
     <form ng-submit="clearError(registerData).then(User.register).then(User.login).catch(showError)">
 
+      <input ng-model="registerData.name" placeholder="your name"><br/>
       <input ng-model="registerData.email" placeholder="email" type="email" required><br/>
-      <input ng-model="registerData.name" placeholder="name"><br/>
-      <input ng-model="registerData.password" placeholder="password" type="password" required><br/>
+      <input ng-model="registerData.password" placeholder="set a password" type="password" required><br/>
 
       <input type="submit" value="submit"/>
     </form>
