@@ -777,6 +777,7 @@ body.old-ie {
 .top-bar {
   position: fixed;
   top: 0;
+  z-index: 2;
   width: 100vw;
   height: 1.5em;
   background-color: black;
@@ -786,12 +787,17 @@ body.old-ie {
     font-weight: bold; }
   .top-bar .icon {
     margin: 0; }
-  .top-bar .login-info {
+  .top-bar .user-settings {
     position: absolute;
     top: 1.5em;
     right: 0;
-    width: 6em;
-    height: 12em; }
+    width: 12em;
+    height: 50vh;
+    max-width: 50vw; }
+    .top-bar .user-settings a {
+      color: white; }
+      .top-bar .user-settings a:hover {
+        color: lime; }
 
 .xyz-click-screen {
   position: relative;
@@ -807,7 +813,47 @@ body.old-ie {
 .user-spaces-container {
   margin-bottom: 400px; }
 
-.white {
+.sidebar-close-button {
+  height: 2em;
+  width: 2em;
+  position: fixed;
+  right: 2em;
+  top: 0;
+  z-index: 5;
+  max-width: 100px;
+  cursor: pointer; }
+
+.sidebar-open-button {
+  right: 2em;
+  bottom: 0;
+  height: 1.5em;
+  width: 2em;
+  z-index: 3;
+  max-width: 100px;
+  cursor: pointer;
+  color: white;
+  background-color: black;
+  position: fixed;
+  top: 0; }
+
+.sidebar-container {
+  background: rgba(200, 180, 220, 0.94);
+  position: absolute;
+  top: 1.5em;
+  width: 100vw;
+  text-align: center; }
+  @media only screen and (min-width: 640px) {
+    .sidebar-container {
+      right: 0;
+      width: 30%;
+      min-width: 30em;
+      max-width: 30em; }
+      .sidebar-container input {
+        width: 80%; } }
+  .sidebar-container .active {
+    background-color: cadetblue; }
+
+.light {
   color: white; }
 
 .top-bar .logo {
@@ -816,9 +862,12 @@ body.old-ie {
 .top-bar .icon {
   cursor: pointer; }
 
-.top-bar .login-info {
+.top-bar .user-settings {
   color: white;
   background-color: black; }
+
+.a {
+  outline: none; }
 
 .base-container {
   position: absolute;
@@ -901,49 +950,12 @@ input {
   margin: 0.3em;
   min-height: 2em; }
 
-.close-button {
-  height: 2em;
-  width: 2em;
-  max-width: 100px;
-  cursor: pointer; }
-
-.open-button {
-  right: 1em;
-  bottom: 0;
-  height: 2em;
-  width: 2em;
-  max-width: 100px;
-  cursor: pointer;
-  background-color: inherit;
-  position: fixed; }
-  @media only screen and (min-width: 640px) {
-    .open-button {
-      top: 0; } }
-
 .link-button {
   cursor: pointer; }
 
 .checkbox, .checkbox * {
   display: inline;
   max-width: 2em; }
-
-.sidebar-container {
-  background: rgba(200, 180, 220, 0.94);
-  position: absolute;
-  top: 100vw;
-  width: 100vw; }
-  @media only screen and (min-width: 640px) {
-    .sidebar-container {
-      top: 0;
-      right: 0;
-      width: 30%;
-      min-width: 30em;
-      max-width: 30em;
-      text-align: center; }
-      .sidebar-container input {
-        width: 80%; } }
-  .sidebar-container .active {
-    background-color: cadetblue; }
 
 .selector-container {
   text-align: left; }

@@ -7,20 +7,20 @@
   text-align: center;
   position: fixed;
   bottom: 3em; }
+  .xyz-player h1 {
+    font-size: 1.5em; }
+  .xyz-player h1, .xyz-player h2, .xyz-player h3, .xyz-player h4, .xyz-player h5 {
+    display: inline-block; }
   .xyz-player .media-box {
     height: 180px;
     width: 100%;
     display: inline-block;
-    background-color: lightgoldenrodyellow; }
-  .xyz-player .media-controls {
-    position: fixed;
-    bottom: 0;
-    height: 3em;
-    width: 100%;
-    text-align: center; }
-    .xyz-player .media-controls button {
-      background-color: white;
-      color: black; }
+    background: black; }
+  .xyz-player iframe {
+    border: none; }
+  .xyz-player .media-controls button {
+    background-color: black;
+    border: none; }
 
 #xyz-soundcloud-iframe, #widget2 {
   width: 100%;
