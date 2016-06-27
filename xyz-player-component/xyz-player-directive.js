@@ -12,8 +12,6 @@ angular.module('xyzPlayer', [])
 
       link: function (scope, element, attrs) { //jshint ignore:line
 
-        var targetSpace = attrs.space || $location.search().playlist || false;
-
         scope.soundcloudId = 76067623;
         var mediaProviders = {
           youtube: {
@@ -48,7 +46,10 @@ angular.module('xyzPlayer', [])
             mediaProviders.mock.onSongDone = MockMediaProvider.onSongDone;
             mediaProviders.mock.loading.resolve();
 
-            $rootScope.$on('mock_song_done', go);
+            $rootScope.$on('mock_song_done', function(){
+              $log.log('mock song has ended, calling go() again');
+              go();
+            });
 
           }, youtube: function () {
 
@@ -63,7 +64,10 @@ angular.module('xyzPlayer', [])
 
             mediaProviders.youtube.loading.resolve('youtube!');
 
-            $rootScope.$on('youtube_has_ended', go);
+            $rootScope.$on('youtube_has_ended', function(){
+              $log.log('youtube has ended, calling go() again');
+              go();
+            });
 
           }, soundcloud: function () {
             mediaProviders.soundcloud.pause = function (provider_id) {
@@ -83,7 +87,10 @@ angular.module('xyzPlayer', [])
             };
 
 
-            $rootScope.$on('soundcloud_has_ended', go);
+            $rootScope.$on('soundcloud_has_ended', function(){
+              $log.log('soundcloud has ended, calling go() again');
+              go();
+            });
 
 
             mediaProviders.soundcloud.loading.resolve('soundcloud!');
@@ -197,19 +204,18 @@ angular.module('xyzPlayer', [])
                   });
         };
 
-        if (!targetSpace){
-          return;
-        } else {
-          loadAndPlay(targetSpace);
-        }
 
 
-        attrs.$observe('space', function(spaceId){
-          pause();
+        attrs.$observe('space', function(spaceId) {
+          if (getNowPlaying()) {
+            pause();
+          }
           loadAndPlay(spaceId);
         });
 
-
+        if($location.search().playlist){
+          attrs.space = $location.search().playlist;
+        }
 
         var message = '';
         var spaceOpen = true;
