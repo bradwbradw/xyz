@@ -1,14 +1,14 @@
-<div class="open-button" ng-show="sidebarClosed" ng-click="sidebarClosed = false"> open </div>
+<div class="sidebar-open-button"
+     ng-show="sidebarClosed"
+     ng-click="sidebarClosed = false">
+  <md-icon class="material-icons light">edit</md-icon>
+</div>
 
 <div ng-hide="sidebarClosed">
 
-  <div class="close-button" ng-click="sidebarClosed = true"> [X] </div>
-
-  <h4 ng-if="space.id">
-    <a ng-href="stream/index.html#?playlist={{space.id}}" target="_blank">
-      --&gt stream link
-    </a>
-  </h4>
+  <div class="sidebar-close-button" ng-click="sidebarClosed = true">
+    <md-icon class="material-icons light">close</md-icon>
+  </div>
 
   <div ng-if="viewer">
 
@@ -23,9 +23,9 @@
           public:<input type="checkbox" ng-model="space.public"/>
       </span>
       <br/>
-        <span ng-if="space.startTime"> Space started playing at {{space.startTime | date:"mediumTime"}}</span>
-        <br/>
-      <button ng-click="Server.setStartTime(space)"> restart Playlist </button>
+      <span ng-if="space.startTime"> Space started playing at {{space.startTime | date:"mediumTime"}}</span>
+      <br/>
+      <button ng-click="Server.setStartTime(space)"> restart Playlist</button>
       <button ng-click="Space.prototype$updateAttributes( {id:space.id},space, _.noop)"> save</button>
       <button ng-click="deleteViaConfirm(Space,space)">delete</button>
 
@@ -43,7 +43,7 @@
       ( this is an XYZ space, made by
       <a ng-if="owner.website"
          ng-href="{{owner.website}}"
-         target=_blank >
+         target=_blank>
         {{space.owner.name}}
       </a>
       {{!owner.website? space.owner.name : ''}}.)
@@ -52,7 +52,6 @@
 
   <br/>
   <hr/>
-
 
 
   <hr/>

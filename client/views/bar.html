@@ -3,8 +3,15 @@
   <h1 ui-sref="base.landing" class="logo">XYZ</h1>
 
 
-  <h1 class="bar-title" ng-if="title()"> {{title()}} </h1>
-  <md-icon class="icon material-design-icons white"
+  <h1 class="bar-title" ng-if="title()"> {{title()}}
+    <a ng-if="space && space.id" ng-href="stream/index.html#?playlist={{space.id}}" target="_blank">
+      <md-icon class="icon material-design-icons light">open_in_new</md-icon>
+
+    </a>
+  </h1>
+
+
+  <md-icon class="icon material-design-icons light"
            ng-class="{active:isEditing()}"
            ng-click="toggleSettings()"
            ng-if="User.get()">
@@ -13,22 +20,22 @@
 
   <div class="user-settings" ng-if="settingsOpen()">
 
-      <div ng-if="User.get().website"><!-- todo: fix website links (add http if not there) -->
-        Logged in as<br/> <a ng-href="{{fixUrl(User.get().website)}}">{{User.get().name}}</a>
-      </div>
-      <div ng-if="!User.get().website"><!-- todo: fix website links (add http if not there) -->
-        Logged in as<br/> {{User.get().name}}
-      </div>
+    <div ng-if="User.get().website"><!-- todo: fix website links (add http if not there) -->
+      Logged in as<br/> <a ng-href="{{fixUrl(User.get().website)}}">{{User.get().name}}</a>
+    </div>
+    <div ng-if="!User.get().website"><!-- todo: fix website links (add http if not there) -->
+      Logged in as<br/> {{User.get().name}}
+    </div>
 
-      <button ng-click="toggleEditing()" >edit info</button>
+    <button ng-click="toggleEditing()">edit info</button>
 
-      <form ng-submit="User.update(new).catch(showError)" ng-show="userIsEditing()">
+    <form ng-submit="User.update(new).catch(showError)" ng-show="userIsEditing()">
 
-        <input ng-model="new.name" placeholder="update name">
-        <input ng-model="new.website" placeholder="update website">
-        <input type="submit" value="update data">
+      <input ng-model="new.name" placeholder="update name">
+      <input ng-model="new.website" placeholder="update website">
+      <input type="submit" value="update data">
 
-      </form>
+    </form>
 
 
     <h4>Social Media</h4>

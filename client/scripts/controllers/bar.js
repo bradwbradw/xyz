@@ -68,6 +68,8 @@ angular.module('xyzApp')
     $scope.fixUrl = fixUrl;
 
     $scope.title = title;
+    $scope.space = space;
+
     $scope.settingsOpen = settingsOpen;
     $scope.userIsEditing = userIsEditing;
 
