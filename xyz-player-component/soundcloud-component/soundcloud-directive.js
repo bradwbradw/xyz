@@ -70,10 +70,10 @@ angular.module("xyzPlayer")
         console.log('SC widget is ', widget);
 
         scope.$watch('soundid', function (newValue, oldValue) {
-          console.log('soundId watch hit, value is ', newValue);
-          if (newValue === oldValue) {
+          if (!newValue || (newValue === oldValue)) {
             return;
           }
+          console.log('soundId watch hit, value is ', newValue);
 
           var newUrl = 'https://api.soundcloud.com/tracks/' + scope.soundid; // NOTE - can also do an artist for the url, might want to load actual url from xyz item
           console.log('soundcloud new url is ', newUrl);

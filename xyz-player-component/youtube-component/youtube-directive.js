@@ -30,12 +30,16 @@ angular.module("xyzPlayer")
         var player;
 
         youTubeApiService.onReady(function() { // equivalent to youtube's 'onYouTubeIframeAPIReady'
+          console.log('youTubeApiService onready scope',scope);
+           console.log('youTubeApiService onready element',element);
           player = setupPlayer(scope, element);
+
           console.warn('emitting youtube_is_ready');
           scope.$emit('youtube_is_ready');
         });
 
         var setupPlayer = function(scope, element) {
+          console.log('YT player element children 0 ', element.children()[0]);
 
           return new YT.Player(element.children()[0], { //jshint ignore:line
             playerVars: {
@@ -100,12 +104,16 @@ angular.module("xyzPlayer")
         });
 
         scope.$watch('videoid', function (newValue, oldValue) {
-          console.log('videoid watch hit. value is ',newValue);
-          if (newValue === oldValue) {
+          if (!newValue || (newValue === oldValue)) {
             return;
           }
+          console.log('videoid watch hit. value is ',newValue);
 
-          player.loadVideoById(scope.videoid);
+          if(player && player.loadVideoById){
+            player.loadVideoById(scope.videoid);
+          } else {
+            throw new Error('big problem - youtube player has no loadVideoById function');
+          }
 
         });
 
