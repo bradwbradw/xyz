@@ -33,9 +33,15 @@ angular.module("xyzPlayer")
           console.log('youTubeApiService onready scope',scope);
            console.log('youTubeApiService onready element',element);
           player = setupPlayer(scope, element);
+          console.log('player is ',player);
 
-          console.warn('emitting youtube_is_ready');
-          scope.$emit('youtube_is_ready');
+          if(player && _.isFunction(player.loadVideoById)){
+            console.warn('emitting youtube_is_ready');
+            scope.$emit('youtube_is_ready');
+          }
+          else{
+            console.error('player does not have loadVideoById function!');
+          }
         });
 
         var setupPlayer = function(scope, element) {
