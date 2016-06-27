@@ -27,9 +27,6 @@ angular.module("xyzPlayer")
          '&amp;visual=true';
          iframeSrc = $sce.trustAsResourceUrl(iframeSrc);*/
 
-        console.log('linking soundcloud directive');
-
-
         /*
          var tag = document.createElement('script');
          tag.src = "https://w.soundcloud.com/player/api.js";
@@ -42,7 +39,7 @@ angular.module("xyzPlayer")
         var widget = $window.SC.Widget('xyz-soundcloud-iframe');
 
         widget.bind(SC.Widget.Events.READY, function () {
-          console.log('SC widget is now Ready');
+//          console.log('SC widget is now Ready');
 
           scope.$emit('soundcloud_is_ready');
 
@@ -67,19 +64,19 @@ angular.module("xyzPlayer")
 
         });
 
-        console.log('SC widget is ', widget);
+//        console.log('SC widget is ', widget);
 
         scope.$watch('soundid', function (newValue, oldValue) {
           if (!newValue || (newValue === oldValue)) {
             return;
           }
-          console.log('soundId watch hit, value is ', newValue);
+//          console.log('soundId watch hit, value is ', newValue);
 
           var newUrl = 'https://api.soundcloud.com/tracks/' + scope.soundid; // NOTE - can also do an artist for the url, might want to load actual url from xyz item
-          console.log('soundcloud new url is ', newUrl);
+//          console.log('soundcloud new url is ', newUrl);
           var options = {
             callback: function (thing) {
-              console.log('ok the song is ready to play ', thing);
+//              console.log('ok the song is ready to play ', thing);
               widget.play();
             }
           };
