@@ -20,6 +20,5 @@ angular.module('xyzPlayer').service('Api', function ($http, serverConfig) {
     getPlaylist: getPlaylist
   };
 
-  console.log('see api ',Api);
   return Api;
 });

@@ -60,7 +60,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           _.each(spaces, function (space) {
             var playlistLoad = Server.getPlaylist(space.id)
               .then(function (result) {
-                $log.debug('playlist load complete:', result);
+//                $log.debug('playlist load complete:', result);
 
                 _.set(_.find(publicSpaces, {id: result.space.id}), 'playlist', result.playlist);
                 _.set(_.find(User.spaces, {id: result.space.id}), 'playlist', result.playlist);
