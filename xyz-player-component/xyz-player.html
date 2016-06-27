@@ -2,61 +2,62 @@
 
   <h4>{{message}}</h4>
 
-    <center>
+  <center>
     <h1>{{space.name}} </h1>
-  <div class="media-box">
 
-    <div ng-include="'xyz-player-component/mock-media-provider/mock-media-provider-view.html'"
-         ng-controller="mockProviderCtrl"
-         ng-if="getNowPlaying().provider === 'mock'"
-    >
+    <span ng-if="getNowPlaying().title">
+
+      <h3>{{getNowPlaying().title}}</h3>
+
+      <span class="media-controls">
+
+        <button ng-click="play()">
+          <md-icon class="material-icons">play_arrow</md-icon>
+        </button>
+        <button ng-click="pause()">
+          <md-icon class="material-icons">pause</md-icon>
+        </button>
+      </span>
+
+      <div class="progress-bar" ng-if="false">
+        <h3>scrubbing / song progress indicator</h3>
+      </div>
+      <div class="volume control" ng-if="false">
+        <h3>volume control</h3>
+      </div>
+    </span>
+
+    <div ng-if="!getNowPlaying().title">
+      loading...
+    </div>
+    <div class="media-box">
+
+      <div ng-include="'xyz-player-component/mock-media-provider/mock-media-provider-view.html'"
+           ng-controller="mockProviderCtrl"
+           ng-if="getNowPlaying().provider === 'mock'"
+      >
+
+      </div>
+
+
+      <div youtube
+           ng-show="getNowPlaying().provider === 'youtube'"
+           videoid="{{youtubeId}}"
+      >
+
+        YT player provider view (i should get replaced)
+
+      </div>
+
+
+      <div soundcloud ng-show="getNowPlaying().provider === 'soundcloud'"
+           soundid={{soundId}}>
+        SC player provider view
+      </div>
+
 
     </div>
 
 
-    <div youtube
-         ng-show="getNowPlaying().provider === 'youtube'"
-         videoid="{{youtubeId}}"
-    >
-
-      YT player provider view (i should get replaced)
-
-    </div>
-
-
-    <div soundcloud ng-show="getNowPlaying().provider === 'soundcloud'"
-      soundid={{soundId}} >
-      SC player provider view
-    </div>
-
-
-  </div>
-
-        <div ng-if="getNowPlaying().title">
-
-            <h3 >current song: <br/>{{getNowPlaying().title}}</h3>
-
-            <div class="media-controls">
-
-                <button ng-click="play()">
-                  <md-icon class="material-icons">play_arrow</md-icon>
-                </button>
-                <button ng-click="pause()">
-                  <md-icon class="material-icons">pause</md-icon>
-                </button>
-            </div>
-
-            <div class="progress-bar" ng-if="false">
-                <h3>scrubbing / song progress indicator</h3>
-            </div>
-            <div class="volume control" ng-if="false">
-                <h3>volume control</h3>
-            </div>
-        </div>
-
-        <div ng-if="!getNowPlaying().title">
-            loading...
-        </div>
-
-    </center>
+  </center>
 </div>
