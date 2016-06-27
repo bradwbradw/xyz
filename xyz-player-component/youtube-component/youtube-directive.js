@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("xyzPlayer")
-  .directive('youtube', function ($log, $window, YT_event, youTubeApiService) {
+  .directive('youtube', function ($log, $window, $q, YT_event, youTubeApiService) {
 
     // from http://plnkr.co/edit/8lxuN8?p=info
     return {
@@ -18,10 +18,6 @@ angular.module("xyzPlayer")
 
       link: function (scope, element, attrs, $rootScope) { //jshint ignore:line
 
-        console.log('linking youtube directive');
-        // as per
-        // https://developers.google.com/youtube/iframe_api_reference#Getting_Started
-
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -29,25 +25,32 @@ angular.module("xyzPlayer")
 
         var player;
 
-        youTubeApiService.onReady(function() { // equivalent to youtube's 'onYouTubeIframeAPIReady'
-          console.log('youTubeApiService onready scope',scope);
-           console.log('youTubeApiService onready element',element);
-          player = setupPlayer(scope, element);
-          console.log('player is ',player);
+        youTubeApiService.apiReady
+          .then(function () {
+            return setupPlayer(scope, element);
+          })/*
+          .then(function(){
+            return youTubeApiService.playerReady;
+          })*/
+          .then(function (p) {
+            player = p;
 
-          if(player && _.isFunction(player.loadVideoById)){
-            console.warn('emitting youtube_is_ready');
-            scope.$emit('youtube_is_ready');
-          }
-          else{
-            console.error('player does not have loadVideoById function!');
-          }
-        });
+            if (player && _.isFunction(player.loadVideoById)) {
+              console.warn('emitting youtube_is_ready');
+              scope.$emit('youtube_is_ready');
+            }
+            else {
+              console.error('player does not have loadVideoById function!');
+            }
+          });
 
-        var setupPlayer = function(scope, element) {
+
+        var setupPlayer = function (scope, element) {
           console.log('YT player element children 0 ', element.children()[0]);
 
-          return new YT.Player(element.children()[0], { //jshint ignore:line
+          var deferred = $q.defer();
+
+          var Player = new YT.Player(element.children()[0], { //jshint ignore:line
             playerVars: {
               autoplay: 1,
               html5: 1,
@@ -64,6 +67,11 @@ angular.module("xyzPlayer")
             videoId: scope.videoid,
 
             events: {
+              'onReady': function(event){
+                console.log('Player ready');
+                deferred.resolve(Player);
+
+              },
               'onStateChange': function (event) {
 
                 var message = {
@@ -86,7 +94,7 @@ angular.module("xyzPlayer")
                     break;
                 }
 
-                if(message.data === 'ENDED'){
+                if (message.data === 'ENDED') {
                   $log.debug('emitting youtube_has_ended');
                   scope.$emit('youtube_has_ended');
                 }
@@ -98,6 +106,7 @@ angular.module("xyzPlayer")
               }
             }
           });
+          return deferred.promise;
         }
 
         scope.$watch('height + width', function (newValue, oldValue) {
@@ -113,9 +122,9 @@ angular.module("xyzPlayer")
           if (!newValue || (newValue === oldValue)) {
             return;
           }
-          console.log('videoid watch hit. value is ',newValue);
+          console.log('videoid watch hit. value is ', newValue);
 
-          if(player && player.loadVideoById){
+          if (player && player.loadVideoById) {
             player.loadVideoById(scope.videoid);
           } else {
             throw new Error('big problem - youtube player has no loadVideoById function');
@@ -138,7 +147,7 @@ angular.module("xyzPlayer")
           player.pauseVideo();
         });
 
-        scope.$on('jump', function(){
+        scope.$on('jump', function () {
           console.log('jumpin');
         });
 

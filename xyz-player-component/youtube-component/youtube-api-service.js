@@ -1,24 +1,22 @@
 "use strict";
 
 angular.module("xyzPlayer")
-  .factory("youTubeApiService", function ($q, $window) {
+  .factory("youTubeApiService", function ($q, $log, $window) {
 
     // borrowed from http://plnkr.co/edit/8lxuN8?p=info
 
 
-    var deferred = $q.defer();
-    var apiReady = deferred.promise;
+    var apiDeferred = $q.defer();
+    var apiReady = apiDeferred.promise;
 
     $window.onYouTubeIframeAPIReady = function () {
-      deferred.resolve();
+      $log.log('youtube API is ready');
+      apiDeferred.resolve();
     };
 
     var youTubeApiService = {
 
-      onReady: function (callback) {
-        apiReady.then(callback);
-      }
-
+      apiReady: apiReady,
     };
 
     return youTubeApiService;
