@@ -1,7 +1,5 @@
 .landing-section {
 
-
-
   .space-thumbnail {
     height: 120px;
     vertical-align: top;
@@ -12,17 +10,16 @@
       width: 100px;
     }
   }
-  display:block;
-  margin-bottom:3em;
-  margin-top:3em;
+  display: block;
+  margin-bottom: 3em;
+  margin-top: 3em;
 }
 
-.user-settings-button{
-  position:absolute;
-  right:10em;
-  top:0;
+.user-settings-button {
+  position: absolute;
+  right: 10em;
+  top: 0;
 }
-
 
 .top-bar {
 
@@ -49,9 +46,9 @@
     width: 12em;
     height: 50vh;
     max-width: 50vw;
-    a{
+    a {
       color: $light-link;
-      &:hover{
+      &:hover {
         color: $light-link-hover
       }
     }
@@ -59,21 +56,72 @@
 
 }
 
-
-
-.xyz-click-screen{
-  position:relative;
-  top:$bar-height;
-  height:100%;
-  width:100%;
-  z-index:2;
+.xyz-click-screen {
+  position: relative;
+  top: $bar-height;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
 }
 
-.main-container{
-  position:absolute;
-  top:$bar-height;
+.main-container {
+  position: absolute;
+  top: $bar-height;
 }
 
-.user-spaces-container{
-  margin-bottom:400px;
+.user-spaces-container {
+  margin-bottom: 400px;
 }
+
+.sidebar-close-button {
+  height: 2em;
+  width: 2em;
+  position: fixed;
+  right: 2em;
+  top: 0;
+  z-index: 5;
+  max-width: 100px;
+  cursor: pointer;
+
+}
+
+.sidebar-open-button {
+  right: 2em;
+  bottom: 0;
+  height: $bar-height;
+  width: 2em;
+  z-index: 3;
+  max-width: 100px;
+  cursor: pointer;
+  color: white;
+  background-color: black;
+  position: fixed;
+  top: 0;
+}
+
+.sidebar-container {
+  background: rgba(200, 180, 220, 0.94);
+  position: absolute;
+  top: $bar-height;
+  width: 100vw;
+
+  text-align: center;
+  @include MQ(M) {
+    right: 0;
+    width: 30%;
+    min-width: $sidebar-max-width;
+    max-width: $sidebar-max-width;
+
+    input {
+      width: 80%;
+    }
+
+  }
+
+  .active {
+    background-color: cadetblue;
+  }
+
+}
+
+

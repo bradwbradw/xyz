@@ -9,12 +9,18 @@
   position:fixed;
   bottom:3em;
 
+  h1{
+    font-size:1.5em;
+  }
+  h1,h2,h3,h4,h5{
+    display: inline-block;
+  }
   .media-box{
     height:180px;
     width:100%;
     display: inline-block;
 
-    background:none;
+    background:black;
   }
 
   iframe{
@@ -22,14 +28,9 @@
   }
 
   .media-controls{
-    position:fixed;
-    bottom:0;
-    height:3em;
-    width:100%;
-    text-align:center;
     button{
-      background-color:white;
-      color:black;
+      background-color:black;
+      border: none
     }
   }
 

@@ -11,32 +11,6 @@ input{
 
 }
 
-.close-button{
-  height:2em;
-  width:2em;
-  max-width:100px;
-  cursor:pointer;
-
-        @include MQ(M) {
-
-        }
-}
-
-.open-button{
-  right:1em;
-  bottom:0;
-  height:2em;
-  width:2em;
-  max-width:100px;
-  cursor:pointer;
-  background-color: inherit;
-  position: fixed;
-
-  @include MQ(M) {
-    top:0;
-  }
-}
-
 
 .link-button{
   cursor:pointer;
