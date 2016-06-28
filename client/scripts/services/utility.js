@@ -175,6 +175,19 @@ angular.module('xyzApp')
         } else {
           return 'https://' + domainOrUrl;
         }
+      },
+      cleanError: function(thing){
+        if(_.isString(thing)){
+          return thing;
+        } else {
+          if(_.get(thing, 'message')){
+            return _.get(thing, 'message');
+          }
+
+          if(_.get(thing, 'error.message')){
+            return _.get(thing, 'error.message');
+          }
+        }
       }
     };
     return Utility;

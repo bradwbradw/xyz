@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('LandingCtrl', function ($rootScope, $scope, $q, $timeout, $log, Dj, User, Server, Space, publicSpaces, Player) {
+  .controller('LandingCtrl', function ($rootScope, $scope, $q, $timeout, $log, Dj, User, Server, Space, publicSpaces, Player, Utility) {
 
     $scope.Dj = Dj;//.findById({id:'5684f858d4b1e4996ec6d9bf'});
 
@@ -17,11 +17,8 @@ angular.module('xyzApp')
     $scope.publicSpaces = publicSpaces;
 
     $scope.showError = function (error) {
-      if (error.error.message) {
-        error = error.error.message;
-      }
 
-      $rootScope.error = error;
+      $rootScope.error = Utility.cleanError(error);
     };
 
     $scope.clearError = function (thing) {
