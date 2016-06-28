@@ -6,21 +6,38 @@
   background-color: black;
   text-align: center;
   position: fixed;
-  bottom: 3em; }
+  bottom: 0; }
   .xyz-player h1 {
     font-size: 1.5em; }
   .xyz-player h1, .xyz-player h2, .xyz-player h3, .xyz-player h4, .xyz-player h5 {
-    display: inline-block; }
-  .xyz-player .media-box {
-    height: 180px;
-    width: 100%;
     display: inline-block;
-    background: black; }
+    margin: 0; }
+  .xyz-player .media-box {
+    height: 200px;
+    position: absolute;
+    top: 3em;
+    width: 100%;
+    left: 0; }
   .xyz-player iframe {
-    border: none; }
+    border: none;
+    height: 100%; }
   .xyz-player .media-controls button {
     background-color: black;
-    border: none; }
+    border: none;
+    max-height: 1em;
+    max-width: 1em;
+    margin: 0;
+    padding: 0; }
+
+.player-title {
+  max-width: 70%;
+  display: inline-block;
+  /* float: left; */
+  white-space: nowrap;
+  overflow: scroll;
+  margin-bottom: -100px;
+  padding-bottom: 100px;
+  /* to hide scrolbar */ }
 
 #xyz-soundcloud-iframe, #widget2 {
   width: 100%;
