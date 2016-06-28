@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SidebarCtrl', function ($scope, $timeout, $q, $window, $state, viewer, space, Space, Social, User, user, Server) {
+  .controller('SidebarCtrl', function ($scope, $timeout, $q, $window, $state, viewer, space, Space, Social, User, user, Server, Utility) {
 
 
     $scope.deleteViaConfirm = function (service, object) {
@@ -30,6 +30,7 @@ angular.module('xyzApp')
 
     var sidebarClosed = true;
 
+    $scope.Utility = Utility
     $scope.sidebarClosed = sidebarClosed;
 
     $scope.viewer = viewer;

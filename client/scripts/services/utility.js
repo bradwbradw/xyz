@@ -19,7 +19,7 @@ angular.module('xyzApp')
           track: function (track) {
 
             var cleaned =
-             {
+            {
               provider: 'soundcloud',
               provider_id: track.id,
               artist: track.user.username,
@@ -34,19 +34,19 @@ angular.module('xyzApp')
               original_data: track
 
             };
-            if (!cleaned.pic && track.user && track.user.avatar_url){
+            if (!cleaned.pic && track.user && track.user.avatar_url) {
               cleaned.pic = track.user && track.user.avatar_url;
             }
 
             return cleaned;
           },
           // warning this function might not work
-          tracks: function(tracks){
+          tracks: function (tracks) {
             var output = [];
-            if (!_.isArray(tracks) ){
+            if (!_.isArray(tracks)) {
               tracks = [tracks];
             }
-            _.each(tracks,function(track){
+            _.each(tracks, function (track) {
               output.push(Utility.clean.SC.track);
             });
             return output;
@@ -139,8 +139,8 @@ angular.module('xyzApp')
         var url;
         if (item.provider === 'youtube') {
           url = 'https://www.youtube.com/embed/'
-          + item.provider_id
-          + '?autoplay=';
+            + item.provider_id
+            + '?autoplay=';
 
           if (playerStatus.autoplay) {
             url += '1';
@@ -152,23 +152,30 @@ angular.module('xyzApp')
         } else if (item.provider === 'soundcloud') {
 
           url = 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'
-          + item.provider_id
-          + '&amp;auto_play='
-          + playerStatus.autoplay
-          + '&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true';
+            + item.provider_id
+            + '&amp;auto_play='
+            + playerStatus.autoplay
+            + '&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true';
 
         } else if (item.provider === 'bandcamp') {
 
           url = 'http://bandcamp.com/EmbeddedPlayer/size=medium/bgcol=ffffff/linkcol=0687f5/tracklist=false/track='
-          + item.provider_id
-          + '/transparent=true/';
+            + item.provider_id
+            + '/transparent=true/';
         } else {
           url = '/iframeUrlProblem';
         }
 
         return $sce.trustAsResourceUrl(url);
-      }
+      },
 
+      fixUrl: function (domainOrUrl) {
+        if (domainOrUrl.indexOf('://') > -1) {
+          return domainOrUrl;
+        } else {
+          return 'https://' + domainOrUrl;
+        }
+      }
     };
     return Utility;
   })

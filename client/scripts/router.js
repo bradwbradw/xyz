@@ -109,10 +109,10 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           controller: 'SidebarCtrl'
         },
         'importControls': {
-          templateUrl: 'views/sidebar/import/control-search.html'
+          templateUrl: 'views/sidebar/sidebar-add.html'
         },
         'importSelector': {
-          templateUrl: 'views/sidebar/import/selector.html'
+          templateUrl: 'views/sidebar/selector.html'
         }
       },
       resolve: {
@@ -165,41 +165,25 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         }
       }
     })
-    .state('base.space.search', {
+    .state('base.space.add', {
 
       url: '',
       views: {
         'importControls': {
-          templateUrl: 'views/sidebar/import/control-search.html'
+          templateUrl: 'views/sidebar/sidebar-add.html'
         },
         'importSelector': {
-          templateUrl: 'views/sidebar/import/selector.html'
+          templateUrl: 'views/sidebar/selector.html'
 
         }
       }
     })
-    .state('base.space.url', {
+    .state('base.space.edit', {
 
       url: '',
       views: {
-        'importControls': {
-          templateUrl: 'views/sidebar/import/control-url.html'
-        },
-        'importSelector': {
-          templateUrl: 'views/sidebar/import/selector.html'
-
-        }
-      }
-    })
-    .state('base.space.explore', {
-      url: '',
-      views: {
-        'importControls': {
-          templateUrl: 'views/sidebar/import/control-explore.html'
-        },
-        'importSelector': {
-          templateUrl: 'views/sidebar/import/selector.html'
-
+        'editSpace': {
+          templateUrl: 'views/sidebar/sidebar-edit.html'
         }
       }
     })

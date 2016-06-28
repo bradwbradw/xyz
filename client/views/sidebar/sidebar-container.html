@@ -12,26 +12,12 @@
 
   <div ng-if="viewer">
 
-    <div ng-if="viewer === 'owner'">
+    <div ng-if="viewer === 'owner' || viewer === 'collaborator'">
       <div
           ng-include="'views/sidebar/import/import-container.html'"
           ng-controller="ImportCtrl">
       </div>
-      <h4>edit {{space.name}} details:</h4>
-      name:<input ng-model="space.name">
-        <span class="checkbox">
-          public:<input type="checkbox" ng-model="space.public"/>
-      </span>
-      <br/>
-      <span ng-if="space.startTime"> Space started playing at {{space.startTime | date:"mediumTime"}}</span>
-      <br/>
-      <button ng-click="Server.setStartTime(space)"> restart Playlist</button>
-      <button ng-click="Space.prototype$updateAttributes( {id:space.id},space, _.noop)"> save</button>
-      <button ng-click="deleteViaConfirm(Space,space)">delete</button>
 
-      <pre ng-if="false" class="debug">
-        {{space | json}}
-      </pre>
 
     </div>
 
@@ -42,7 +28,7 @@
     <div ng-if="viewer === 'guest'">
       ( this is an XYZ space, made by
       <a ng-if="owner.website"
-         ng-href="{{owner.website}}"
+         ng-href="{{Utility.fixUrl(owner.website)}}"
          target=_blank>
         {{space.owner.name}}
       </a>

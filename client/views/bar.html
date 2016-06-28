@@ -21,7 +21,7 @@
   <div class="user-settings" ng-if="settingsOpen()">
 
     <div ng-if="User.get().website"><!-- todo: fix website links (add http if not there) -->
-      Logged in as<br/> <a ng-href="{{fixUrl(User.get().website)}}">{{User.get().name}}</a>
+      Logged in as<br/> <a ng-href="{{Utility.fixUrl(User.get().website)}}">{{User.get().name}}</a>
     </div>
     <div ng-if="!User.get().website"><!-- todo: fix website links (add http if not there) -->
       Logged in as<br/> {{User.get().name}}

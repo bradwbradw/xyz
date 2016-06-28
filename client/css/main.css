@@ -859,12 +859,12 @@ body.old-ie {
 .top-bar .logo {
   cursor: pointer; }
 
-.top-bar .icon {
-  cursor: pointer; }
-
 .top-bar .user-settings {
   color: white;
   background-color: black; }
+
+.icon {
+  cursor: pointer; }
 
 .a {
   outline: none; }

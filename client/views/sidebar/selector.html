@@ -1,9 +1,3 @@
-<!--
-<h3>selector</h3>
-<button ng-click="Library.focusPrev()">right</button>
-<button ng-click="Library.focusNext()" ng-if="!latestFocused()">left</button>
--->
-
 
   <button ng-if="urlResult.kind === 'user'"
           ng-click="MediaAPI.SC.tracksByUser(urlResult.provider_id)
@@ -23,7 +17,7 @@
     {{ Library.getLocalItems().provider }} media detected:
     {{ Library.getLocalItems().artist+' - '+Library.getLocalItems().title }}
     <hr/>
-    <button ng-click="Library.add(Library.getLocalItems())">add to library</button>
+    <button ng-click="Library.add(Library.getLocalItems())">add</button>
     <button ng-if="!item.error && Library.isPlayable(Library.getLocalItems())"
             ng-click="Player.play(Library.getLocalItems())">play
     </button>

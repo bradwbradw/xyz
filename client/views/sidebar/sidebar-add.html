@@ -1,13 +1,13 @@
 
 <div>
-  <h4>Search for media on Youtube and Soundcloud at the same time</h4>
+  <h4>Enter a URL or search terms to find media</h4>
   <input
       ng-model="newText"
       ng-change="examineText(newText)
         .then(updateImportView)
         .catch(invalidLink)"
       ng-model-options="{debounce: 500, updateOn:'default'}"
-      placeholder="type in here to search now"
+      placeholder=""
       >
     <span ng-if="fetchingSongData"> <i>fetching data...</i> </span>
     <!--<span ng-if="Library.getLocalItems()"> {{ newItem.provider }} media detected:

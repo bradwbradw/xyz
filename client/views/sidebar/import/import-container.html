@@ -7,11 +7,9 @@
 
 <h3>add media to {{space.name}}:</h3>
 <ul class="tabs">
-  <li ui-sref="base.space.search" ui-sref-active="active">search
+  <li ui-sref="base.space.add" ui-sref-active="active">Add Media
   </li>
-  <li ui-sref="base.space.url" ui-sref-active="active">load url
-  </li>
-  <li ui-sref="base.space.explore" ui-sref-active="active">explore
+  <li ui-sref="base.space.edit" ui-sref-active="active">Edit Space
   </li>
 </ul>
 
@@ -25,5 +23,7 @@
 <div ui-view="importSelector" class="selector-container">
 
 </div>
+
+<div ui-view="editSpace"></div>
 
 

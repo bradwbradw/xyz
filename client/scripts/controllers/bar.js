@@ -8,7 +8,7 @@
  * 'hub'-like controller used for importing and saving. Connected to many services
  */
 angular.module('xyzApp')
-  .controller('BarCtrl', function ($scope, User, $state, space, Social) {
+  .controller('BarCtrl', function ($scope, User, $state, space, Social, Utility) {
 
     var settingsIsOpen;
     var closeSettings = function(){
@@ -57,15 +57,8 @@ angular.module('xyzApp')
       }
     };
 
-    var fixUrl = function(domainOrUrl){
-      if (domainOrUrl.indexOf('://') > -1){
-        return domainOrUrl;
-      } else {
-        return 'https://'+domainOrUrl;
-      }
-    };
 
-    $scope.fixUrl = fixUrl;
+    $scope.Utility = Utility;
 
     $scope.title = title;
     $scope.space = space;
