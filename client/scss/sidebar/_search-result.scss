@@ -1,0 +1,42 @@
+.search-result{
+
+
+  .search-result {
+    background-color:#c2ccd1;
+    margin-bottom:0.5em;
+  }
+
+  .search-result-actions{
+    background-color:palegreen;
+
+    button{
+      background:none;
+    }
+  }
+
+  .search-result-details{
+    background-color:lightblue;
+    padding:0.5em;
+    border-left: 1px dotted black;
+
+    .provider{
+      font-size:0.7rem;
+    }
+
+    .error{
+      font-color: red;
+    }
+
+    .artist{
+      font-size:1.1rem;
+      margin-bottom:0.5em;
+    }
+    .title{
+      font-size:0.9rem;
+    }
+  }
+
+  margin-bottom:0.5em;
+
+
+}

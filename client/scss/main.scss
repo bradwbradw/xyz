@@ -8,19 +8,19 @@
 @import 'base/wrappers';
 @import 'base/ie';
 
-@import 'import/import';
+@import 'sidebar/import';
 
 @import 'layout';
 @import 'colors';
 
 @import 'main/main-container';
 @import 'main/xyz-item';
-@import 'main/list';
 @import 'main/stream';
 @import 'main/ui-clickable';
 
 @import 'sidebar/sidebar-container';
-@import 'sidebar/selector';
+@import 'sidebar/search-result';
+@import 'sidebar/import';
 
 
 
