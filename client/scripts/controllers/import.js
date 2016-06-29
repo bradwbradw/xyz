@@ -110,6 +110,9 @@ angular.module('xyzApp')
     var isMedia = function(item){
       return _.get(item, 'kind') === 'media';
     };
+
+
+
     $scope.FB = Social.FB;
 
 //    $scope.downloadMorePosts = downloadMorePosts;
