@@ -1,12 +1,4 @@
-<button ng-if="!FB.loggedIn()" ng-click="FB.login().then(FB.loadMe())">login to FB</button>
 
-<div ng-if="FB.isConnected()">
-  <h4>load neat songs from your facebook feed. click the button again to load more</h4><br/>
-  <button ng-click="explore(Social.FB.loadPosts())">more FB posts</button>
-</div>
-<div ng-if="!FB.isConnected()">
-  <h4> click on the button at the bottom to connect to Facebook, then you can load songs that you posted</h4>
-</div>
 <!--
 <button ng-click="explore(MediaAPI.SC.likes())">soundcloud likes</button>
 <button ng-click="explore(MediaAPI.SC.playlists())">soundcloud playlists</button>

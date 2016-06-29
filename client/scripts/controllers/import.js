@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name xyzApp.controller:ImportCtrl
+ * @name xyzApp.controller:AddMediaCtrl
  * @description
- * # ImportCtrl
+ * # AddMediaCtrl
  * 'hub'-like controller used for importing and saving. Connected to many services
  */
 angular.module('xyzApp')
-  .controller('ImportCtrl', function ($timeout, Extract, Library, Social, MediaAPI, Player, localStorageService, $scope, $log, $window, $q) {
+  .controller('AddMediaCtrl', function ($timeout, Extract, Library, Social, MediaAPI, Player, localStorageService, $scope, $log, $window, $q) {
 /*
     Library.currentSpace = $scope.$parent.space;*/
 
@@ -102,9 +102,19 @@ angular.module('xyzApp')
         Social.FB.loadMe();
       });
 
+    var isSoundcloudArtist = function(searchResultItem){
+      return _.get(searchResultItem,'provider') === 'soundcloud'
+        && _.get(searchResultItem,'kind') === 'user';
+    };
+
+    var isMedia = function(item){
+      return _.get(item, 'kind') === 'media';
+    };
     $scope.FB = Social.FB;
 
 //    $scope.downloadMorePosts = downloadMorePosts;
+    $scope.isSoundcloudArtist = isSoundcloudArtist;
+    $scope.isMedia = isMedia;
     $scope.urlResult = urlResult;
     $scope.updateImportView = updateImportView;
     $scope.invalidLink = invalidLink;

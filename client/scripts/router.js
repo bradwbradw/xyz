@@ -112,7 +112,8 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           templateUrl: 'views/sidebar/sidebar-add.html'
         },
         'importSelector': {
-          templateUrl: 'views/sidebar/selector.html'
+          templateUrl: 'views/sidebar/selector.html',
+          controller: 'SidebarCtrl'
         }
       },
       resolve: {

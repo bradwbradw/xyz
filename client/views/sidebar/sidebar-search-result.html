@@ -1,0 +1,29 @@
+
+<!--
+    <img src="{{item.pic}}" width="100" />-->
+    <button class="add" ng-if="!item.error && isMedia(item)" ng-click="putInSpace(item, $event)">
+      add
+    </button>
+    <button class="add" ng-if="isSoundcloudArtist(item)" ng-click="MediaAPI.SC.tracksByUser(item.provider_id)
+        .then(updateImportView)
+        .catch(invalidLink)">
+      load artist tracks
+    </button>
+    <button class="add" ng-if="isSoundcloudArtist(item)" ng-click="MediaAPI.SC.likesByUser(item.provider_id)
+        .then(updateImportView)
+        .catch(invalidLink)">
+      load artist likes
+    </button>
+    <button class="play" ng-if="!item.error && Library.isPlayable(item)" ng-click="Player.play(item)">
+      play
+    </button>
+    <a ng-href="{{item.url}}">
+      <span ng-if="!item.error">
+        ({{item.provider}}) {{item.artist}} - {{item.title}} ({{item.provider_id}})
+      </span>
+      <span ng-if="item.error">
+        {{item.error}}
+      </span>
+    </a>
+
+    <pre class="debug" ng-if="false">{{item | json}}</pre>
