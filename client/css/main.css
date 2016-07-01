@@ -853,6 +853,9 @@ body.old-ie {
   .sidebar-container .active {
     background-color: cadetblue; }
 
+.selector-container {
+  text-align: left; }
+
 .light {
   color: white; }
 
@@ -899,40 +902,6 @@ body.old-ie {
     left: 80px;
     background-color: lightgreen; }
 
-.song-table {
-  display: table;
-  background-color: lightblue; }
-
-.header {
-  background-color: darkcyan;
-  color: white;
-  font-weight: 700; }
-
-.song-row {
-  display: table-row;
-  padding: 0.4em; }
-  .song-row.editing {
-    background-color: white; }
-
-.song-attribute {
-  display: table-cell;
-  padding: 0.7em;
-  overflow: scroll;
-  max-width: 200px; }
-  .song-attribute.few {
-    max-width: 50%; }
-  .song-attribute input {
-    width: 100%; }
-
-button {
-  background-color: black;
-  color: white;
-  text-blink: 5cm; }
-
-.list-outer {
-  height: 100vh;
-  overflow: scroll; }
-
 .sidebar {
   position: fixed;
   top: 0;
@@ -957,7 +926,41 @@ input {
   display: inline;
   max-width: 2em; }
 
-.selector-container {
-  text-align: left; }
-  .selector-container .song-row {
-    border-bottom: solid 1px black; }
+.search-result {
+  margin-bottom: 0.5em; }
+  .search-result .search-result {
+    background-color: #c2ccd1;
+    margin-bottom: 0.5em; }
+  .search-result .search-result-actions {
+    background-color: palegreen; }
+    .search-result .search-result-actions button {
+      background: none; }
+  .search-result .search-result-details {
+    background-color: lightblue;
+    padding: 0.5em;
+    border-left: 1px dotted black; }
+    .search-result .search-result-details .provider {
+      font-size: 0.7rem; }
+    .search-result .search-result-details .error {
+      font-color: red; }
+    .search-result .search-result-details .artist {
+      font-size: 1.1rem;
+      margin-bottom: 0.5em; }
+    .search-result .search-result-details .title {
+      font-size: 0.9rem; }
+
+.tabs {
+  width: 100%;
+  display: flex;
+  flex-direction: row; }
+  .tabs li {
+    background-color: lightblue;
+    flex-grow: 1;
+    text-align: center;
+    height: 3em;
+    padding: 1em 1em;
+    cursor: pointer; }
+
+.preview-box {
+  width: 100%;
+  height: 200px; }

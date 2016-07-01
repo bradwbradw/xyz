@@ -99,19 +99,46 @@ angular.module('xyzApp')
           });
       },
 
-      getPlayhead: function () {
-        return get('playhead');
-      },
-
       refresh: function () {
         return get('refresh');
       },
 
-      getContributors: function(spaceId){
-        return get('Spaces/'+spaceId+'/contributors')
-          .then(function(result){
+      getContributors: function (spaceId) {
+        return get('Spaces/' + spaceId + '/contributors')
+          .then(function (result) {
             return result.data;
           });
+      },
+
+      searchUsers: function (query) {
+        var regexp = '/' + query + '/i';
+        var filter = {
+          filter: {
+            "where": {
+              "name": {
+                "regexp": regexp
+              }
+            }
+          }
+        }
+
+        return Dj.find(filter).$promise
+          .then(function (result) {
+            return result;
+          })
+          .catch(function (err) {
+            return $q.reject(err);
+          });
+      },
+
+      addContributorToSpace: function (spaceId, djId) {
+
+        var url = 'spaces/' + spaceId + '/contributors/rel/' + djId;
+        return put(url)
+          .then(function (result) {
+            return result.data;
+          });
+
       },
 
       getLibrary: function () {

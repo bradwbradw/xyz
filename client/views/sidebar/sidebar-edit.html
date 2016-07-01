@@ -5,6 +5,19 @@ name:<input ng-model="space.name">
           public:<input type="checkbox" ng-model="space.public"/>
       </span>
 <br/>
+Search:
+<input ng-model="userSearchQ"
+       ng-change="searchUsers(userSearchQ)"
+      ng-model-options="{debounce: 500, updateOn:'default'}">
+<div ng-repeat="user in getUserSearchResults()">
+  {{user.name}} <md-icon class="material-icons icon"
+                         ng-click="addToContributors(user)">add_circle</md-icon>
+</div>
+Contributors:
+<div ng-repeat="contributor in contributors">
+  {{contributor | json}}
+</div>
+
 <span ng-if="space.startTime"> Space started playing at {{space.startTime | date:"mediumTime"}}</span>
 <br/>
 <button ng-click="Server.setStartTime(space)"> restart Playlist</button>

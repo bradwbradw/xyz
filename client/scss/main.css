@@ -815,10 +815,10 @@ body.old-ie {
   color: white;
   font-weight: 700; }
 
-.song-row {
+.search-result {
   display: table-row;
   padding: 0.4em; }
-  .song-row.editing {
+  .search-result.editing {
     background-color: white; }
 
 .song-attribute {

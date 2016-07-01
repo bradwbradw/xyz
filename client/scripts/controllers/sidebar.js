@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SidebarCtrl', function ($scope, $timeout, $q, $window, $state, viewer, space, Space, Social, User, user, Server, Utility) {
+  .controller('SidebarCtrl', function ($scope, $timeout, $q, $window, $state, viewer, space, Space, Social, User, user, Server, Utility, contributors) {
 
 
     $scope.deleteViaConfirm = function (service, object) {
@@ -29,8 +29,34 @@ angular.module('xyzApp')
     };
 
     var sidebarClosed = true;
+    var userSearchResults = [];
 
-    $scope.Utility = Utility
+    $scope.searchUsers = function(query){
+      if(query ===''){
+          userSearchResults = [];
+        return;
+      }
+      Server.searchUsers(query)
+        .then(function(results){
+          userSearchResults = results;
+        })
+    };
+
+    $scope.getUserSearchResults = function(){
+      return userSearchResults;
+    };
+
+    var addToContributors = function(user){
+      return Server.addContributorToSpace(space.id, user.id)
+        .then(function(result){
+          $scope.contributors = result;
+        });
+    };
+
+    $scope.addToContributors = addToContributors;
+    $scope.userSearchResults = userSearchResults;
+
+    $scope.Utility = Utility;
     $scope.sidebarClosed = sidebarClosed;
 
     $scope.viewer = viewer;
@@ -38,6 +64,7 @@ angular.module('xyzApp')
     $scope.Space = Space;
 
     $scope.Server = Server;
+    $scope.contributors = contributors;
 
     $scope.FB = Social.FB
   });
