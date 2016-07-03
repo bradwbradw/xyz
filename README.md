@@ -52,3 +52,11 @@ first install jasmine-node:
 then run with:
 
 `jasmine-node api-test`
+
+##Documentation
+
+all data models should be automatically generated with documentation using loopback.
+
+Including getters, setters, querying, etc.
+
+`gulp docs` will generate docs, docs server, and then open it up in the browser
