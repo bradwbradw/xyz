@@ -5,12 +5,12 @@ dist/*
 stream-dist
 stream-dist/
 stream-dist/*
-docular_generated
-docular_generated/
-docular_generated/*
 client/vendor
 .idea/
 .idea
 .tmp
 bower_components/
 .sass-cache/
+/docs/
+docs/
+stream/vendor/soundcloud/vendor/
