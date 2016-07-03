@@ -11,7 +11,12 @@
 //https://github.com/pc035860/angular-easyfb
 
 angular.module('xyzApp')
-  .config(function (ezfbProvider, apiKeys) {
+  .config(function (ezfbProvider, apiKeys, serverConfig) {
+
+    if (serverConfig.developing) {
+      return;
+    } else {
+
 
     ezfbProvider.setInitParams({
       // Facebook App ID
@@ -22,6 +27,7 @@ angular.module('xyzApp')
       // https://developers.facebook.com/docs/javascript/reference/FB.init
       version: 'v2.3'
     });
+  }
   });
 
 angular.module('xyzApp')
