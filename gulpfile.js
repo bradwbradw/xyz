@@ -11,6 +11,8 @@ var uglify = require('gulp-uglify'),
   concat = require('gulp-concat');
 var replace = require('gulp-replace');
 
+var docs = require('gulp-ngdocs');
+
 var del = require('del');
 var runSequence = require('run-sequence');
 
@@ -18,7 +20,7 @@ var constants = require('./constants');
 
 var keys = constants.keys;
 
-var apiUrl = constants.api.path+'/';//'http://'+ constants.api.host+ ':'+ constants.api.port + constants.api.path + '/';
+var apiUrl = constants.api.path + '/';//'http://'+ constants.api.host+ ':'+ constants.api.port + constants.api.path + '/';
 
 console.log('api Url is ', apiUrl);
 
@@ -72,13 +74,13 @@ gulp.task('copyHtml:main', function () {
 
 //TODO: make a task write css that includes xyz-player-component's css, write it to stream/style.css
 
- gulp.task('copyCss:stream', function () {
+gulp.task('copyCss:stream', function () {
   return gulp.src('stream/style.css')
     .pipe(gulp.dest('stream-dist'))
 });
 
 
- gulp.task('copyImages', function () {
+gulp.task('copyImages', function () {
   return gulp.src('client/images/**/*')
     .pipe(gulp.dest('dist/images'))
 });
@@ -122,6 +124,7 @@ var connect = require('gulp-connect');
 var nodemon = require('gulp-nodemon');
 var historyApiFallback = require('connect-history-api-fallback');
 var browserSync = require('browser-sync');
+var open = require('gulp-open');
 
 
 gulp.task('watch', ['browserSync:client', 'sass'], function () {
@@ -203,7 +206,7 @@ gulp.task('default', function (callback) {
 });
 
 gulp.task('serve', function (callback) {
-  apiUrl = 'http://localhost'+ ':'+ constants.api.port + constants.api.path + '/';
+  apiUrl = 'http://localhost' + ':' + constants.api.port + constants.api.path + '/';
   runSequence(['loopback', 'bower', 'sass', 'browserSync:client', 'watch'],
     callback
   )
@@ -238,3 +241,36 @@ gulp.task('serveApi', function () {
 });
 
 
+gulp.task('docs', function () {
+  runSequence('loopback','generate-docs', 'serve-docs', 'open-docs');
+});
+
+gulp.task('generate-docs', function () {
+
+  var options = {
+    scripts: [
+      'http://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js',
+      'http://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-animate.min.js'
+    ]
+  };
+
+  return gulp.src(['./client/scripts/services/lb-services.js'])
+    .pipe(docs.process(options))
+    .pipe(gulp.dest('./docs'));
+
+});
+
+
+gulp.task('serve-docs', function () {
+  connect.server({
+    root: 'docs',
+    livereload: false,
+    fallback: 'docs/index.html',
+    port: 8888
+  })
+});
+gulp.task('open-docs', function(){
+  return gulp.src('').pipe(
+    open({uri: 'http://localhost:8888'})
+  );
+});

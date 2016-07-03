@@ -43,13 +43,5 @@
   "Space": {
     "dataSource": "xyzdb",
     "public": true
-  },
-  "customer": {
-    "dataSource": "xyzdb",
-    "public": true
-  },
-  "review": {
-    "dataSource": "xyzdb",
-    "public": true
   }
 }
