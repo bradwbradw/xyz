@@ -8,7 +8,7 @@
  * Service in the xyzApp.
  */
 angular.module('xyzApp')
-  .service('Utility', function ($sce) {
+  .service('Utility', function ($sce, $rootScope) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
 
@@ -187,7 +187,17 @@ angular.module('xyzApp')
           if(_.get(thing, 'error.message')){
             return _.get(thing, 'error.message');
           }
+
+          if(_.get(thing, 'data.error.errmsg')){
+            if (_.get(thing, 'data.error.errmsg').indexOf('duplicate key error') >-1 ){
+              return 'Already exists';
+            }
+          }
         }
+      },
+      showError: function(error){
+        debugger;
+        $rootScope.showError(Utility.cleanError(error));
       }
     };
     return Utility;
