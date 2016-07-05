@@ -260,7 +260,6 @@ gulp.task('generate-docs', function () {
 
 });
 
-
 gulp.task('serve-docs', function () {
   connect.server({
     root: 'docs',

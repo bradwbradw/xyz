@@ -122,6 +122,9 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           return Library.fetchSpaceAndSongs($stateParams.id)
             .then(Library.space);
         },
+        spaceId: function($stateParams){
+          return $stateParams.id;
+        },
         owner: function (space, Dj) {
           return Dj.findById(
             {
@@ -161,8 +164,8 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           }
 
         },
-        contributors: function (Server, $stateParams) {
-          return Server.getContributors($stateParams.id);
+        contributors: function(){
+          return [];
         }
       }
     })

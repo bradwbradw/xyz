@@ -104,10 +104,11 @@ angular.module('xyzApp')
       },
 
       getContributors: function (spaceId) {
+      return [];/*
         return get('Spaces/' + spaceId + '/contributors')
           .then(function (result) {
             return result.data;
-          });
+          });*/
       },
 
       searchUsers: function (query) {

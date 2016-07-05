@@ -15,8 +15,10 @@ Search:
 </div>
 Contributors:
 <div ng-repeat="contributor in contributors">
-  {{contributor | json}}
+  {{contributor | json}} <md-icon class="material-icons icon"
+                         ng-click="removeFromContributors(contributor)">remove_circle</md-icon>
 </div>
+<p> 2 there are {{count2.count}} contributors</p>
 
 <span ng-if="space.startTime"> Space started playing at {{space.startTime | date:"mediumTime"}}</span>
 <br/>
@@ -24,6 +26,7 @@ Contributors:
 <button ng-click="Space.prototype$updateAttributes( {id:space.id},space)"> save</button>
 <button ng-click="deleteViaConfirm(Space,space)">delete</button>
 
+<div class="error" ng-if="error">{{error}}</div>
 <pre ng-if="false" class="debug">
         {{space | json}}
       </pre>
