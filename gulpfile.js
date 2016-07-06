@@ -12,11 +12,14 @@ var uglify = require('gulp-uglify'),
 var replace = require('gulp-replace');
 
 var docs = require('gulp-ngdocs');
+var exec = require('gulp-exec');
 
 var del = require('del');
 var runSequence = require('run-sequence');
 
 var constants = require('./constants');
+
+var mongoCreds = constants.mongoCreds;
 
 var keys = constants.keys;
 
@@ -272,4 +275,32 @@ gulp.task('open-docs', function(){
   return gulp.src('').pipe(
     open({uri: 'http://localhost:8888'})
   );
+});
+
+gulp.task('copy-staging-db', function(){
+  runSequence('save-db','overwrite-db-local');
+});
+
+gulp.task('save-db', function(done){
+  var hostColonPort = [mongoCreds.hosts[0].host,mongoCreds.hosts[0].port].join(':');
+  var command = 'mongodump -h '+hostColonPort+' -d '+mongoCreds.database+' -u '+mongoCreds.username+' -p '+mongoCreds.password+ ' -o xyzDbDump';
+  return gulp.src('')
+      .pipe(exec(command),function cb(err, stdout, stderr) {
+        console.log(stdout); // outputs the normal messages
+        console.log(stderr); // outputs the error messages
+        done();
+//        return 0; // makes gulp continue even if the command failed
+    })
+    .pipe(exec.reporter())
+});
+gulp.task('overwrite-db-local', function(done){
+  var command = 'mongorestore --drop --host=127.0.0.1:27017 -d xyz xyzDbDump/'+mongoCreds.database;
+    return gulp.src('')
+      .pipe(exec(command),function cb(err, stdout, stderr) {
+        console.log(stdout); // outputs the normal messages
+        console.log(stderr); // outputs the error messages
+        done();
+//        return 0; // makes gulp continue even if the command failed
+    })
+    .pipe(exec.reporter())
 });
