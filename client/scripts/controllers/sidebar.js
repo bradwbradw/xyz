@@ -63,6 +63,7 @@ angular.module('xyzApp')
         .$promise
         .then(function(){
           contributors.push(user);
+          contributors = _.uniq(contributors);
         })
         .catch(Utility.showError);
 
