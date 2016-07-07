@@ -196,7 +196,6 @@ angular.module('xyzApp')
         }
       },
       showError: function(error){
-        debugger;
         $rootScope.showError(Utility.cleanError(error));
       }
     };
