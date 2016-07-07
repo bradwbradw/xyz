@@ -11,6 +11,7 @@ client/vendor
 .tmp
 bower_components/
 .sass-cache/
-/docs/
 docs/
 stream/vendor/soundcloud/vendor/
+
+xyzDbDump/
