@@ -7,3 +7,10 @@
   height: 100vh;
   text-align: center;
 }
+
+.loading-indicator {
+
+  width:100vw;
+  z-index:10000;
+  background-color:pink;
+}
