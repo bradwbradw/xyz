@@ -8,7 +8,7 @@
     </div>
 
   </div>
-  <div ng-if="!User.loggedIn()" class="landing-section">
+  <div ng-if="!User.loggedIn()" class="landing-section" >
 
     <h4>Sign up</h4>
     <form ng-submit="clearError(registerData).then(User.register).then(User.login).catch(showError)">
@@ -30,12 +30,26 @@
     </form>
 
   </div>
-  <br/>
-  <hr/>
-  <br/>
+
   <div ng-if="User.loggedIn()" class="landing-section">
 
     <br/>
+
+    <div ng-if="!User.hasSpaces()">
+      create your first space here:<br/>
+    </div>
+
+    <div ng-if="isAdding()">
+      <input ng-model="newSpace.name" placeholder="new space name"></input>
+      <md-icon class="icon" ng-click="User.addSpace(newSpace).then(resetAdding).catch(showError)">add_circle</md-icon>
+    </div>
+
+    <div ng-if="!isAdding()">
+      <a ng-click="setAdding()"> + new space</a>
+    </div>
+    <div ng-show="isAdding()">
+      <a ng-click="resetAdding()"> (nevermind)</a>
+    </div>
 
     <ul ng-if="User.spaces" class="user-spaces-container">
       <h2 ng-if="User.hasSpaces()">{{User.get().name}}'s spaces:</h2>
@@ -45,21 +59,7 @@
 
       </li>
     </ul>
-      <span ng-if="!User.hasSpaces()">
-        create your first space here:<br/>
-      </span>
 
-    <div ng-if="isAdding()">
-      <input ng-model="newSpace.name" placeholder="new space name"></input>
-      <br/>
-      <button ng-click="User.addSpace(newSpace).then(resetAdding).catch(showError)">add new space</button>
-    </div>
-    <div ng-if="!isAdding()">
-      <a ng-click="setAdding()"> + new space</a>
-    </div>
-    <div ng-show="isAdding()">
-      <a ng-click="resetAdding()"> (nevermind)</a>
-    </div>
 
     <br/>
 

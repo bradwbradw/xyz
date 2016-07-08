@@ -14,11 +14,10 @@ Search:
                          ng-click="addToContributors(user)">add_circle</md-icon>
 </div>
 Contributors:
-<div ng-repeat="contributor in contributors">
+<div ng-repeat="contributor in getContributors()">
   {{contributor | json}} <md-icon class="material-icons icon"
                          ng-click="removeFromContributors(contributor)">remove_circle</md-icon>
 </div>
-<p> 2 there are {{count2.count}} contributors</p>
 
 <span ng-if="space.startTime"> Space started playing at {{space.startTime | date:"mediumTime"}}</span>
 <br/>
