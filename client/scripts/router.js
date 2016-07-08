@@ -9,7 +9,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           return Space.find({filter: {include: "owner", where: {public: true}}})
 
         },
-        user: function (User) {
+        user: function (User, $log, $state) {
 
           if (!User.get() && User.loggedIn()) {
             return User.fetchUserInfo()
@@ -118,9 +118,13 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       },
       resolve: {
 
-        space: function ($stateParams, Space, Library) {
+        space: function ($stateParams, $log, $state, Space, Library) {
           return Library.fetchSpaceAndSongs($stateParams.id)
-            .then(Library.space);
+            .then(Library.space)
+            .catch(function(err){
+              $log.error(err);
+              $state.go('base.landing');
+            });
         },
         spaceId: function($stateParams){
           return $stateParams.id;

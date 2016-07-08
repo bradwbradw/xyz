@@ -177,6 +177,10 @@ angular.module('xyzApp')
         }
       },
       cleanError: function(thing){
+        if(_.isNumber(_.get(thing,'status')) && _.get(thing, 'status') === 404){
+          // 404, 405, etc..
+          return 'sorry, an unknown error occured';
+        }
         if(_.isString(thing)){
           return thing;
         } else {
