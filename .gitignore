@@ -1,15 +1,9 @@
 node_modules
 dist
-dist/
-dist/*
 stream-dist
-stream-dist/
-stream-dist/*
 client/vendor
-.idea/
 .idea
 .tmp
-bower_components/
 .sass-cache/
 docs/
 stream/vendor/soundcloud/vendor/
