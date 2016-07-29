@@ -9,7 +9,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           return Space.find({filter: {include: "owner", where: {public: true}}})
 
         },
-        user: function (User, $log, $state) {
+        user: function (User) {
 
           if (!User.get() && User.loggedIn()) {
             return User.fetchUserInfo()
@@ -63,7 +63,8 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 //                $log.debug('playlist load complete:', result);
 
                 _.set(_.find(publicSpaces, {id: result.space.id}), 'playlist', result.playlist);
-                _.set(_.find(User.spaces, {id: result.space.id}), 'playlist', result.playlist);
+                _.set(_.find(User.getSpaces().own, {id: result.space.id}), 'playlist', result.playlist);
+                _.set(_.find(User.getSpaces().editable, {id: result.space.id}), 'playlist', result.playlist);
                 return result.playlist;
               }).catch(function (err) {
                 $log.error('playlist load failed: ', err);
@@ -76,7 +77,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         };
 
 
-        fetchSpacePlaylists(_.union(publicSpaces, User.spaces))
+        fetchSpacePlaylists(_.union(publicSpaces, User.getSpaces().own, User.getSpaces().editable ))
           .then(function (playlists) {
             $log.log('all playlists loaded:', playlists);
             localStorageService.set('playlists', playlists);

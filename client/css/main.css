@@ -759,6 +759,7 @@ body.old-ie {
   height: 200px; }
 
 .landing-section {
+  width: 95vw;
   display: block;
   margin-bottom: 3em;
   margin-top: 3em; }
@@ -879,6 +880,11 @@ body.old-ie {
   width: 100vw;
   height: 100vh;
   text-align: center; }
+
+.loading-indicator {
+  width: 100vw;
+  z-index: 10000;
+  background-color: pink; }
 
 .xyz-item {
   height: 4em;

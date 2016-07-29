@@ -8,7 +8,7 @@
  * Service in the xyzApp.
  */
 angular.module('xyzApp')
-    .service('User', function ($q, $state, $log, Server, Dj, localStorageService, Space) {
+    .service('User', function ($q, $state, $log, Server, Dj) {
 
         var User = {
 
@@ -21,7 +21,6 @@ angular.module('xyzApp')
                 User.userData = newUserData;
                 return User.userData;
             },
-
             loggedIn: function () {
                 // shouldn't have to do this
                 // https://github.com/strongloop/loopback/issues/1081
@@ -70,7 +69,7 @@ angular.module('xyzApp')
                         // https://github.com/strongloop/loopback/issues/1081
                         window.localStorage.removeItem('$LoopBack$accessTokenId');
                         window.localStorage.removeItem('$LoopBack$currentUserId');
-                        $state.go('base', {}, {reload: true});
+                        $state.go('base.landing', {}, {reload: true});
                     });
             },
 
@@ -86,19 +85,18 @@ angular.module('xyzApp')
                     .then(User.set)
                     .then(User.fetchSpaces)
                     .catch(function (err) {
-                        // if we get here, the session likely expired and the user has to log in again
-                        /*
-                         User.set(false);
-                         User.setSpaces(false);
-                         $state.go($state.current, {}, {reload: true});*/
-
-                        return User.logout();
-                        //    return $q.reject(err);
+                        return $q.reject(err);
                     });
             },
-            spaces: false,
-            hasSpaces: function () {
-                return User.spaces && _.isArray(User.spaces) && User.spaces.length > 0;
+            spaces: {
+                own:[],
+                editable:[]
+            },
+            hasOwnSpaces: function () {
+                return _.size(User.spaces.own) > 0;
+            },
+            hasEditableSpaces: function () {
+                return _.size(User.spaces.editable) > 0;
             },
 
             getSpaces: function () {
@@ -110,11 +108,21 @@ angular.module('xyzApp')
                 return User.spaces;
             },
             appendSpace: function(space){
-              User.spaces.push(space);
+              User.spaces.own.push(space);
             },
 
             fetchSpaces: function () {
-                return Dj.spaces({id: User.get().id}).$promise
+                debugger;
+                return $q.all([
+                    Dj.spaces({id: User.get().id}).$promise,
+                    Dj.editableSpaces({id: User.get().id}).$promise
+                      ])
+                  .then(function(results){
+                      return {
+                          own:results[0],
+                          editable: results[1]
+                      }
+                  })
                     .then(User.setSpaces)
                     .catch(function (err) {
                         return $q.reject(err);
