@@ -16,7 +16,7 @@ angular.module("xyzPlayer")
 
     var youTubeApiService = {
 
-      apiReady: apiReady,
+      apiReady: apiReady
     };
 
     return youTubeApiService;

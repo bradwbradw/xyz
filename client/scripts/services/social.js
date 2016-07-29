@@ -14,7 +14,7 @@ angular.module('xyzApp')
   .config(function (ezfbProvider, apiKeys, serverConfig) {
 
     if (serverConfig.developing) {
-      return;
+
     } else {
 
 
@@ -93,7 +93,7 @@ angular.module('xyzApp')
             })
             .then(function () {
 //              console.log('trying to load me');
-              Social.FB.loadMe;
+              Social.FB.loadMe();
             })
             .catch(function (err) {
               console.error('error loading me:  '+err);

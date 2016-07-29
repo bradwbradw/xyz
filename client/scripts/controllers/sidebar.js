@@ -41,7 +41,6 @@ angular.module('xyzApp')
     $scope.searchUsers = function (query) {
       if (query === '') {
         userSearchResults = [];
-        return;
       } else {
         Server.searchUsers(query)
           .then(function (results) {

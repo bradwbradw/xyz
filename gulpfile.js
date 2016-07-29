@@ -141,7 +141,7 @@ gulp.task('watch', ['browserSync:client', 'sass'], function () {
     'client/views/**/*.html',
     'client/scripts/**/*.js',
     'xyz-player-component/**/*.js',
-    'xyz-player-component/**/*.html',
+    'xyz-player-component/**/*.html'
   ], browserSync.reload);
 });
 
@@ -222,7 +222,7 @@ gulp.task('watchStream', ['browserSync:stream', 'sass'], function () {
     'stream/*.html',
     'stream/style.css',
     'stream/views/**/*.html',
-    'stream/js/**/*.js',
+    'stream/js/**/*.js'
   ], browserSync.reload);
 });
 

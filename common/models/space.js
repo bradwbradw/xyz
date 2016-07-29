@@ -116,9 +116,8 @@ module.exports = function (Space) {
 
             var newPlaylist1 = _.slice(playlist, 0, currentIndex);
             var newPlaylist2 = _.slice(playlist, currentIndex);
-            var newPlaylist = newPlaylist2.concat(newPlaylist1);
 
-            response = newPlaylist;
+            response = newPlaylist2.concat(newPlaylist1);
 
           }
 
@@ -127,7 +126,7 @@ module.exports = function (Space) {
 
 
         cb(null, {space:data,playlist:response, totalLength: totalLength});
-        return;
+
 
       })
   };

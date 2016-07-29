@@ -927,7 +927,7 @@ module.factory(
               var id = LoopBackAuth.currentUserId;
               if (id == null) id = '__anonymous__';
               return id;
-            },
+            }
           },
           interceptor: {
             response: function(response) {
@@ -2241,7 +2241,7 @@ module.factory(
               var id = LoopBackAuth.currentUserId;
               if (id == null) id = '__anonymous__';
               return id;
-            },
+            }
           },
           interceptor: {
             response: function(response) {

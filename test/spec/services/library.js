@@ -50,9 +50,11 @@ describe('Service: Library', function () {
   beforeEach(inject(function ($injector) {
     $httpBackend = $injector.get('$httpBackend');
 
+    //noinspection JSUnusedAssignment
     requestHandler = $httpBackend.whenGET()
       .passThrough();
 
+    //noinspection JSUnusedAssignment
     requestHandler = $httpBackend.whenPOST()
       .passThrough();
 

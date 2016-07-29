@@ -21,8 +21,8 @@ angular.module('xyzApp')
       // example: https://www.youtube.com/embed/xmSEhUwGd4Q?autoplay=1
       var parts = embedUrl.split('embed/');
       parts = parts[1].split('?');
-      var standardUrl = 'https://youtube.com/watch?v=' + parts[0];
-      return standardUrl;
+
+      return 'https://youtube.com/watch?v=' + pats[0];
 
     }
 

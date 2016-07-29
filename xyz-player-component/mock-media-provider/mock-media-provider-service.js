@@ -122,7 +122,7 @@ angular.module("xyzPlayer")
         MockMediaProvider.currentSong = {
           name:'mockMedia - '+provider_id,
           artist:'mockerson',
-          length:provider_id*1,
+          length:provider_id*1
         };
 
         MockMediaProvider.status = 'queued';
@@ -149,7 +149,7 @@ angular.module("xyzPlayer")
       animation:{},
       songInterval:{},
       getPosition: getPosition,
-      backgroundCss: backgroundCss,
+      backgroundCss: {},
       getBackgroundCss:function(){
         return MockMediaProvider.backgroundCss;
       }

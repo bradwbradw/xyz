@@ -74,7 +74,6 @@ angular.module('xyzApp')
 
     };
 
-    var urlResult;
 
 
     $scope.examineText = function (text) {
@@ -115,10 +114,11 @@ angular.module('xyzApp')
 
     $scope.FB = Social.FB;
 
+
 //    $scope.downloadMorePosts = downloadMorePosts;
     $scope.isSoundcloudArtist = isSoundcloudArtist;
     $scope.isMedia = isMedia;
-    $scope.urlResult = urlResult;
+    $scope.urlResult = '';
     $scope.updateImportView = updateImportView;
     $scope.invalidLink = invalidLink;
 

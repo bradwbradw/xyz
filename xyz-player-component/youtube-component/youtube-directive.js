@@ -59,7 +59,7 @@ angular.module("xyzPlayer")
               color: "white",
               iv_load_policy: 3,
               showinfo: 1,
-              controls: 1,
+              controls: 1
             },
 
             height: scope.height,
