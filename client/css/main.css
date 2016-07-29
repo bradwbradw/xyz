@@ -12,7 +12,6 @@ figcaption,
 figure,
 footer,
 header,
-hgroup,
 main,
 nav,
 section,
@@ -193,7 +192,6 @@ samp {
  * Improve readability of pre-formatted text in all browsers.
  */
 pre {
-  white-space: pre;
   white-space: pre-wrap;
   word-wrap: break-word; }
 
@@ -208,7 +206,6 @@ q {
  */
 q:before,
 q:after {
-  content: '';
   content: none; }
 
 /**
@@ -621,7 +618,7 @@ li {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: fixed;
+  background: none;
   z-index: 10;
   transform: translate3d(0, 0, 0);
   -webkit-transform: translate3d(0, 0, 0); }
@@ -948,7 +945,7 @@ input {
     .search-result .search-result-details .provider {
       font-size: 0.7rem; }
     .search-result .search-result-details .error {
-      font-color: red; }
+      color: red; }
     .search-result .search-result-details .artist {
       font-size: 1.1rem;
       margin-bottom: 0.5em; }

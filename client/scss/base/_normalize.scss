@@ -15,7 +15,6 @@ figcaption,
 figure,
 footer,
 header,
-hgroup,
 main,
 nav,
 section,
@@ -238,7 +237,6 @@ samp {
  */
 
 pre {
-    white-space: pre;
     white-space: pre-wrap;
     word-wrap: break-word;
 }
@@ -257,7 +255,6 @@ q {
 
 q:before,
 q:after {
-    content: '';
     content: none;
 }
 
