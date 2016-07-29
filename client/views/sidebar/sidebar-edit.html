@@ -1,12 +1,13 @@
 <h4>edit {{space.name}} details:</h4>
 
-name:<input ng-model="space.name">
+<label for="space-name">name:</label>
+<input id="space-name" ng-model="space.name">
 <span class="checkbox">
           public:<input type="checkbox" ng-model="space.public"/>
       </span>
 <br/>
-Search:
-<input ng-model="userSearchQ"
+<label for="search-users">Search:</label>
+<input ng-model="userSearchQ" id="search-users"
        ng-change="searchUsers(userSearchQ)"
       ng-model-options="{debounce: 500, updateOn:'default'}">
 <div ng-repeat="user in getUserSearchResults()">

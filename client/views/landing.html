@@ -51,8 +51,8 @@
       <a ng-click="resetAdding()"> (nevermind)</a>
     </div>
 
-    <h2 ng-if="User.hasOwnSpaces()>my own spaces:</h2>
-    <ul ng-if=" User.hasOwnSpaces()" class="user-spaces-container">
+    <h2 ng-if="User.hasOwnSpaces()">my own spaces:</h2>
+    <ul ng-if="User.hasOwnSpaces()" class="user-spaces-container">
     <li ng-repeat="space in User.getSpaces().own"
         ng-include="'views/partials/space-thumbnail.html'"
         class="space-thumbnail">
