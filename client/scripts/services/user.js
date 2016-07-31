@@ -112,7 +112,6 @@ angular.module('xyzApp')
             },
 
             fetchSpaces: function () {
-                debugger;
                 return $q.all([
                     Dj.spaces({id: User.get().id}).$promise,
                     Dj.editableSpaces({id: User.get().id}).$promise

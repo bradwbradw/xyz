@@ -63,6 +63,12 @@
       "permission": "ALLOW",
       "principalType": "ROLE",
       "principalId": "$authenticated",
+      "property": "__get__editableSpaces"
+    },
+    {
+      "permission": "ALLOW",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
       "property": "__create__spaces"
     },
     {

@@ -148,7 +148,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
               return owner;
             });
         },
-        viewer: function (owner, user, User) {
+        viewer: function (owner, user, User, space) {
           var the_user;
 
           if (User.get()) {
@@ -161,7 +161,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             return 'guest';
           } else {
 
-            if (owner.id === the_user.id) {
+            if (owner.id === the_user.id || _.find(space.contributors, {id:the_user.id})) {
               return 'owner';
             } else {
               return 'viewer';

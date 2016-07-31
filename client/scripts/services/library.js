@@ -59,7 +59,7 @@ angular.module('xyzApp')
         if (_.isUndefined(spaceId)){
           spaceId = Library.space().id;
         }
-        return Space.findById({id: spaceId, filter: {include: "songs"}}, _.noop)
+        return Space.findById({id: spaceId, filter: {include: ["songs","contributors"]}}, _.noop)
           .$promise
           .then(function (spaceAndSongs) {
             Library.currentSpace = spaceAndSongs;
