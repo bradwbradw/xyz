@@ -156,8 +156,10 @@ gulp.task('browserSync:client', function () {
         "/stream/xyz-player-component": "xyz-player-component",
         "/stream/xyz-player-component/css": "xyz-player-component/css",
         "/stream": "stream"
-      }
+      },
+
     },
+    notify: false,
     ui: {
       port: 9006
     },
@@ -245,7 +247,7 @@ gulp.task('serveApi', function () {
 
 
 gulp.task('docs', function () {
-  runSequence('loopback','generate-docs', 'serve-docs', 'open-docs');
+  runSequence('loopback', 'generate-docs', 'serve-docs', 'open-docs');
 });
 
 gulp.task('generate-docs', function () {
@@ -271,35 +273,35 @@ gulp.task('serve-docs', function () {
     port: 8888
   })
 });
-gulp.task('open-docs', function(){
+gulp.task('open-docs', function () {
   return gulp.src('').pipe(
     open({uri: 'http://localhost:8888'})
   );
 });
 
-gulp.task('copy-staging-db', function(){
-  runSequence('save-db','overwrite-db-local');
+gulp.task('copy-staging-db', function () {
+  runSequence('save-db', 'overwrite-db-local');
 });
 
-gulp.task('save-db', function(done){
-  var hostColonPort = [mongoCreds.hosts[0].host,mongoCreds.hosts[0].port].join(':');
-  var command = 'mongodump -h '+hostColonPort+' -d '+mongoCreds.database+' -u '+mongoCreds.username+' -p '+mongoCreds.password+ ' -o xyzDbDump';
+gulp.task('save-db', function (done) {
+  var hostColonPort = [mongoCreds.hosts[0].host, mongoCreds.hosts[0].port].join(':');
+  var command = 'mongodump -h ' + hostColonPort + ' -d ' + mongoCreds.database + ' -u ' + mongoCreds.username + ' -p ' + mongoCreds.password + ' -o xyzDbDump';
   return gulp.src('')
-      .pipe(exec(command),function cb(err, stdout, stderr) {
-        console.log(stdout); // outputs the normal messages
-        console.log(stderr); // outputs the error messages
-        done();
+    .pipe(exec(command), function cb(err, stdout, stderr) {
+      console.log(stdout); // outputs the normal messages
+      console.log(stderr); // outputs the error messages
+      done();
 //        return 0; // makes gulp continue even if the command failed
     })
     .pipe(exec.reporter())
 });
-gulp.task('overwrite-db-local', function(done){
-  var command = 'mongorestore --drop --host=127.0.0.1:27017 -d xyz xyzDbDump/'+mongoCreds.database;
-    return gulp.src('')
-      .pipe(exec(command),function cb(err, stdout, stderr) {
-        console.log(stdout); // outputs the normal messages
-        console.log(stderr); // outputs the error messages
-        done();
+gulp.task('overwrite-db-local', function (done) {
+  var command = 'mongorestore --drop --host=127.0.0.1:27017 -d xyz xyzDbDump/' + mongoCreds.database;
+  return gulp.src('')
+    .pipe(exec(command), function cb(err, stdout, stderr) {
+      console.log(stdout); // outputs the normal messages
+      console.log(stderr); // outputs the error messages
+      done();
 //        return 0; // makes gulp continue even if the command failed
     })
     .pipe(exec.reporter())
