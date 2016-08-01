@@ -1,0 +1,27 @@
+<div class="preview-box" ng-include="'views/main/media-player.html'"
+    ng-controller="PreviewCtrl"
+    ng-if="Player.playingItem()">
+
+</div>
+<hr/><br/>
+
+<h3>add media to {{space.name}}:</h3>
+<ul class="tabs">
+  <li ui-sref="base.space.add" ui-sref-active="active">Add Media
+  </li>
+</ul>
+
+
+<div ui-view="importControls">
+
+</div>
+<br/>
+<br/>
+
+<div ui-view="importSelector" class="selector-container">
+
+</div>
+
+<div ui-view="editSpace"></div>
+
+

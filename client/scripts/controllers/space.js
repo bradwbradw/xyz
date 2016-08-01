@@ -10,6 +10,12 @@
 angular.module('xyzApp')
   .controller('SpaceCtrl', function ($scope, $log, $state, Library, Player, space, owner, viewer, contributors) {
 
+    // default tab 'add media' should be open
+    if(viewer === 'contributor' || viewer === 'owner'){
+      $state.go('.add');
+    }
+
+
     var expand = function (song) {
       closeExpanded();
       song.expanded = true;

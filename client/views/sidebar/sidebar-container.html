@@ -12,13 +12,20 @@
 
   <div ng-if="viewer">
 
-    <div ng-if="viewer === 'owner' || viewer === 'collaborator'">
+    <div ng-if="viewer === 'owner'">
       <div
           ng-include="'views/sidebar/sidebar-owner-view.html'"
           ng-controller="AddMediaCtrl">
       </div>
 
 
+    </div>
+
+    <div ng-if="viewer === 'contributor'">
+       <div
+          ng-include="'views/sidebar/sidebar-contributor-view.html'"
+          ng-controller="AddMediaCtrl">
+      </div>
     </div>
 
     <div ng-if="viewer === 'viewer'">

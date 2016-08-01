@@ -14,7 +14,7 @@ angular.module('xyzApp')
     console.log('space is ', Space);
     var space = Space.get({id: spaceId});
     var contributors = Space.contributors({id: spaceId});
-    var getContributors = function(){
+    var getContributors = function () {
       return contributors;
     };
 
@@ -50,8 +50,8 @@ angular.module('xyzApp')
     };
 
     $scope.getUserSearchResults = function () {
-      return _.filter(userSearchResults, function(user){
-        return !_.find(getContributors(), {id:user.id});
+      return _.filter(userSearchResults, function (user) {
+        return !_.find(getContributors(), {id: user.id});
       });
     };
     /*
@@ -72,7 +72,7 @@ angular.module('xyzApp')
           contributors = _.uniq(contributors);
 
         })
-        .catch(function(err){
+        .catch(function (err) {
 
           $log.error(err);
           Utility.showError(err);
@@ -86,6 +86,18 @@ angular.module('xyzApp')
           contributors = _.without(contributors, user);
         })
     };
+
+
+    var saveEdits = function (space) {
+      Space.prototype$updateAttributes({id: space.id}, space)
+        .catch(function (err) {
+          $log.error(err);
+          alert('Sorry, there was an error saving');
+        })
+
+    };
+
+    $scope.saveEdits = saveEdits;
     $scope.userSearchResults = userSearchResults;
 
     $scope.Utility = Utility;

@@ -1,29 +1,35 @@
-<h4>edit {{space.name}} details:</h4>
 
-<label for="space-name">name:</label>
-<input id="space-name" ng-model="space.name">
+<div layout="row" layout-align="start center">
+  <label for="space-name" flex="15">name:</label>
+  <input id="space-name" ng-model="space.name" ng-show="editingName" flex>
+  <div id="space-name" ng-show="!editingName" flex="initial" ><h4>{{space.name}}</h4></div>
+  <md-icon ng-click="editingName = true" flex="initial" ng-hide="editingName">edit</md-icon>
+  <md-icon ng-click="editingName = true" flex="initial" ng-show="editingName">save</md-icon>
+
+</div>
 <span class="checkbox">
           public:<input type="checkbox" ng-model="space.public"/>
       </span>
 <br/>
-<label for="search-users">Search:</label>
+<label for="search-users">Add a contributor:</label>
 <input ng-model="userSearchQ" id="search-users"
        ng-change="searchUsers(userSearchQ)"
-      ng-model-options="{debounce: 500, updateOn:'default'}">
+      ng-model-options="{debounce: 500, updateOn:'default'}"
+  placeholder="search users">
 <div ng-repeat="user in getUserSearchResults()">
   {{user.name}} <md-icon class="material-icons icon"
                          ng-click="addToContributors(user)">add_circle</md-icon>
 </div>
 Contributors:
 <div ng-repeat="contributor in getContributors()">
-  {{contributor | json}} <md-icon class="material-icons icon"
+  {{contributor.name}} <md-icon class="material-icons icon"
                          ng-click="removeFromContributors(contributor)">remove_circle</md-icon>
 </div>
 
 <span ng-if="space.startTime"> Space started playing at {{space.startTime | date:"mediumTime"}}</span>
 <br/>
 <button ng-click="Server.setStartTime(space)"> restart Playlist</button>
-<button ng-click="Space.prototype$updateAttributes( {id:space.id},space)"> save</button>
+<button ng-click="saveEdits(space)"> save</button>
 <button ng-click="deleteViaConfirm(Space,space)">delete</button>
 
 <div class="error" ng-if="error">{{error}}</div>

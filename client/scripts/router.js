@@ -95,6 +95,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     })
 
     .state('base.space', {
+      params:{id:{value:'defaultId'}},
       url: '/space/:id',
       views: {
         'main': {
@@ -161,8 +162,10 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             return 'guest';
           } else {
 
-            if (owner.id === the_user.id || _.find(space.contributors, {id:the_user.id})) {
+            if (owner.id === the_user.id) {
               return 'owner';
+            } else if(_.find(space.contributors, {id:the_user.id})){
+              return 'contributor';
             } else {
               return 'viewer';
             }
