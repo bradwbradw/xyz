@@ -1,11 +1,15 @@
-var loopback = require('loopback');
-var boot = require('loopback-boot');
-var path = require('path');
-var bodyParser = require('body-parser');
+var loopback = require('loopback'),
+  boot = require('loopback-boot'),
+  path = require('path'),
+  bodyParser = require('body-parser'),
+  morgan = require('morgan');
 
 var config = require('../constants');
 
 var app = module.exports = loopback();
+
+
+app.use(morgan('combined'));
 
 // configure body parser
 app.use(bodyParser.urlencoded({extended: true}));
