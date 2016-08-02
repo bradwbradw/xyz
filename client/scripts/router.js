@@ -13,7 +13,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
           if (!User.get() && User.loggedIn()) {
             return User.fetchUserInfo()
-              .catch(errorAlert);
+              .catch(User.logout);
 
           } else {
             return User.get();

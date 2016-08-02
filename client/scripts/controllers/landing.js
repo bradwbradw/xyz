@@ -41,6 +41,11 @@ angular.module('xyzApp')
       addingSpace = true;
     };
 
+    var spaceIsOwned = function(space){
+      return space.ownerId === User.get().id;
+    };
+
+    $scope.spaceIsOwned = spaceIsOwned;
     $scope.isAdding = isAdding;
     $scope.setAdding = setAdding;
     $scope.addingSpace = addingSpace;

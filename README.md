@@ -16,7 +16,7 @@ in terminal, run: `node server/server.js`
 
 ##STEP 2
 
-in another terminal, run: `gulp`
+in another terminal, run: `gulp serve`
 
 ## OPTIONS
 
@@ -60,3 +60,7 @@ all data models should be automatically generated with documentation using loopb
 Including getters, setters, querying, etc.
 
 `gulp docs` will generate docs, docs server, and then open it up in the browser
+
+##Download staging db
+
+`gulp copy-staging-db` will download the staging server database and overwrite your local version with it

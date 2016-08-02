@@ -4,7 +4,7 @@
   <input id="space-name" ng-model="space.name" ng-show="editingName" flex>
   <div id="space-name" ng-show="!editingName" flex="initial" ><h4>{{space.name}}</h4></div>
   <md-icon ng-click="editingName = true" flex="initial" ng-hide="editingName">edit</md-icon>
-  <md-icon ng-click="editingName = true" flex="initial" ng-show="editingName">save</md-icon>
+  <md-icon ng-click="saveEdits(space)" flex="initial" ng-show="editingName">save</md-icon>
 
 </div>
 <span class="checkbox">

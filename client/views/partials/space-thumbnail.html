@@ -1,20 +1,33 @@
-<a ui-sref="base.space({id:space.id})">
-   {{space.name }}  <br/> {{space.public? '' : '(private)'}}
-</a>
+<div class="space-thumbnail" layout="column" layout-align="space-between center">
 
-<span ng-if="space.owner"> (owned by {{space.owner.name}})</span>
-<div ng-if="!space.playlist">
+  <a ui-sref="base.space({id:space.id})">
+    {{space.name }}
+  </a>
+
+  <span ng-if="space.owner"> (owned by {{space.owner.name}})</span>
+  <div ng-if="!space.playlist">
     loading...
-</div>
-<div ng-if="space.playlist">
-    <img ng-src="{{space.playlist[0].pic}}" >
-</div>
+  </div>
+  <div>
+    <img ng-if="space.playlist && space.playlist[0].pic" ng-src="{{space.playlist[0].pic}}">
+    <div ng-if="!space.playlist || !space.playlist[0].pic" class="no-img"></div>
 
-<button ng-click="Player.playSpace(space.id)" ng-if="space.playlist[0]">
-  play
-</button>
-<span ng-if="!space.playlist[0]">(empty)</span>
-<pre class="debug" ng-if="false">
-  {{space  | json}}
 
-</pre>
+    <div class="thumbnail-icons" layout="row" layout-align="space-between center">
+      <div layout="row">
+        <md-icon ng-if="!spaceIsOwned(space)">group</md-icon>
+        <md-icon class="material-icons" ng-if="!space.playlist[0]">fiber_new</md-icon>
+        <md-icon ng-if="!space.public">lock</md-icon>
+      </div>
+      <div>
+        <md-icon class="icon" ng-click="Player.playSpace(space.id)" ng-if="space.playlist[0]">play_arrow</md-icon>
+      </div>
+
+    </div>
+  </div>
+
+  <pre class="debug" ng-if="false">
+    {{space  | json}}
+
+  </pre>
+</div>

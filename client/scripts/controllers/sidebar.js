@@ -88,8 +88,14 @@ angular.module('xyzApp')
     };
 
 
+    $scope.editingName = false;
     var saveEdits = function (space) {
       Space.prototype$updateAttributes({id: space.id}, space)
+        .$promise
+        .then(function(){
+          $scope.editingName = false;
+          $scope.space = Space.get({id: spaceId});
+        })
         .catch(function (err) {
           $log.error(err);
           alert('Sorry, there was an error saving');

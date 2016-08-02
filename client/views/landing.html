@@ -1,11 +1,10 @@
 <div>
   <div class="landing-section">
 
-    <div ng-repeat="space in publicSpaces"
-         ng-include="'views/partials/space-thumbnail.html'"
-         class="space-thumbnail">
-
-    </div>
+    <ul layout-wrap layout-align="space-around left" layout="row">
+      <li ng-repeat="space in publicSpaces"
+          ng-include="'views/partials/space-thumbnail.html'"></li>
+    </ul>
 
   </div>
   <div ng-if="!User.loggedIn()" class="landing-section">
@@ -51,20 +50,14 @@
       <a ng-click="resetAdding()"> (nevermind)</a>
     </div>
 
-    <h2 ng-if="User.hasOwnSpaces()">my own spaces:</h2>
-    <ul ng-if="User.hasOwnSpaces()" class="user-spaces-container">
-    <li ng-repeat="space in User.getSpaces().own"
-        ng-include="'views/partials/space-thumbnail.html'"
-        class="space-thumbnail">
-
-    </li>
-    </ul>
-
-    <h2 ng-if="User.hasEditableSpaces()">spaces I have access to:</h2>
-    <ul ng-if="User.hasEditableSpaces()" class="user-spaces-container">
+    <h2 ng-if="User.hasOwnSpaces() || User.hasEditableSpaces()">my spaces:</h2>
+    <ul class="user-spaces-container" layout-wrap layout-align="space-around left" layout="row">
       <li ng-repeat="space in User.getSpaces().editable"
-          ng-include="'views/partials/space-thumbnail.html'"
-          class="space-thumbnail">
+          ng-include="'views/partials/space-thumbnail.html'" >
+      </li>
+      <li ng-repeat="space in User.getSpaces().own"
+          ng-include="'views/partials/space-thumbnail.html'" >
+
       </li>
     </ul>
 
