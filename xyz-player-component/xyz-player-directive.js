@@ -1,6 +1,6 @@
 "use strict";
 angular.module('xyzPlayer', [])
-  .directive('xyzPlayer', function ($log, $q, $timeout, $location, $rootScope, Api, MockMediaProvider, youTubeApiService, YT_event, SC_event) {
+  .directive('xyzPlayer', function ($log, $q, $timeout, $interval, $location, $rootScope, Api, MockMediaProvider, youTubeApiService, YT_event, SC_event) {
 
     return {
       restrict: "A",
@@ -46,8 +46,8 @@ angular.module('xyzPlayer', [])
             mediaProviders.mock.onSongDone = MockMediaProvider.onSongDone;
             mediaProviders.mock.loading.resolve();
 
-            $rootScope.$on('mock_song_done', function(){
-              $log.log('mock song has ended, calling go() again');
+            $rootScope.$on('mock_song_done', function () {
+              $log.debug('mock song has ended, calling go() again');
               go();
             });
 
@@ -64,8 +64,8 @@ angular.module('xyzPlayer', [])
 
             mediaProviders.youtube.loading.resolve('youtube!');
 
-            $rootScope.$on('youtube_has_ended', function(){
-              $log.log('youtube has ended, calling go() again');
+            $rootScope.$on('youtube_has_ended', function () {
+              $log.debug('youtube has ended, calling go() again');
               go();
             });
 
@@ -87,8 +87,8 @@ angular.module('xyzPlayer', [])
             };
 
 
-            $rootScope.$on('soundcloud_has_ended', function(){
-              $log.log('soundcloud has ended, calling go() again');
+            $rootScope.$on('soundcloud_has_ended', function () {
+              $log.debug('soundcloud has ended, calling go() again');
               go();
             });
 
@@ -120,7 +120,7 @@ angular.module('xyzPlayer', [])
         $timeout(function () {
           // todo - code in bandcamp loading (faked)
           mediaProviders.bandcamp.loading.resolve('bandcamp!');
-        }, 1000);
+        }, 300);
 
         var serviceProvidersLoaded = $q.all(
           [
@@ -139,8 +139,12 @@ angular.module('xyzPlayer', [])
         var space = false;
         var nowPlaying = {};
 
+        var getPlaylist = function(){
+          return playlist;
+        };
+
         var play = function () {
-          console.log('play button clicked, so will play ', getNowPlaying().provider);
+          console.debug('play button clicked, so will play ', getNowPlaying().provider);
           mediaProviders[getNowPlaying().provider].play();
         };
 
@@ -148,8 +152,17 @@ angular.module('xyzPlayer', [])
           mediaProviders[getNowPlaying().provider].pause();
         };
 
+        var next = function(){
+          go();
+        };
+
+
+
         var getNowPlaying = function () {
-          return _.find(playlist, nowPlaying);
+          var now = _.find(_.clone(getPlaylist()), {id:nowPlaying.id});
+//          $log.debug('playlist is ', getPlaylist());
+//          $log.debug('so now is ',now);
+          return now;
         };
 
         var setNowPlaying = function (songObj) {
@@ -157,14 +170,15 @@ angular.module('xyzPlayer', [])
         };
 
         var nextSong = function (songObjThatJustFinished) {
+          console.debug('nextSong called: playlist is ', getPlaylist());
           if (!songObjThatJustFinished) {
-            return playlist[0];
+            return getPlaylist()[0];
           } else {
-            var indexOfSongThatJustFinished = _.indexOf(playlist, songObjThatJustFinished);
-            if (_.size(playlist) === indexOfSongThatJustFinished + 1) {
-              return playlist[0];
+            var indexOfSongThatJustFinished = _.indexOf(getPlaylist(), songObjThatJustFinished);
+            if (_.size(getPlaylist()) === indexOfSongThatJustFinished + 1) {
+              return getPlaylist()[0];
             } else {
-              return playlist[indexOfSongThatJustFinished + 1];
+              return getPlaylist()[indexOfSongThatJustFinished + 1];
             }
           }
 
@@ -187,33 +201,42 @@ angular.module('xyzPlayer', [])
         };
 
 
-        var loadAndPlay = function(spaceId){
+        var loadAndPlay = function (spaceId) {
           $q.all([loadPlaylist(spaceId), serviceProvidersLoaded])
-                  .then(function (results) {
-                    playlist = results[0].playlist;
-                    scope.space = results[0].space;
+            .then(function (results) {
+              playlist = _.get(results[0], 'playlist');
+              scope.space = _.get(results[0], 'space');
 
-                    // assuming auto-play, otherwise, bind go() to a button click or something
-                    if (_.size(playlist) > 0) {
-                      go();
-                      message = '';
-                    } else {
-                      message = 'playlist has 0 songs';
-                    }
+              // assuming auto-play, otherwise, bind go() to a button click or something
+              if (_.size(playlist) > 0) {
+                go();
+                message = '';
+              } else {
+                message = 'playlist has 0 songs';
+              }
 
-                  });
+              $interval(function () {
+                loadPlaylist(spaceId)
+                  .then(function (result) {
+                    playlist = _.get(result, 'playlist');
+                    console.debug('refresh playlist done: first song is '+playlist[0].title);
+//                    scope.space = _.get(results, 'space');
+                  })
+              }, 10 * 1000);
+
+            });
         };
 
 
-
-        attrs.$observe('space', function(spaceId) {
+        attrs.$observe('space', function (spaceId) {
+          $log.debug('space changed: '+spaceId);
           if (getNowPlaying()) {
             pause();
           }
           loadAndPlay(spaceId);
         });
 
-        if($location.search().playlist){
+        if ($location.search().playlist) {
           attrs.space = $location.search().playlist;
         }
 
@@ -241,14 +264,15 @@ angular.module('xyzPlayer', [])
 
         scope.play = play;
         scope.pause = pause;
+        scope.next = next;
         scope.spaceOpen = spaceOpen;
         scope.close = close;
         scope.spaceIsOpen = spaceIsOpen;
 
+        scope.getPlaylist = getPlaylist;
       }
     }
   });
-
 
 
 angular.module('xyzPlayer')
