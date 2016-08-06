@@ -68,7 +68,6 @@ angular.module('xyzApp')
 
     var Extract = {
 
-
       inspectText: function (text) {
         if (!getAllUrlsFromString(text)) {
           // text is not a URL! so search

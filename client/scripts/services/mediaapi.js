@@ -8,7 +8,7 @@
  * Service in the xyzApp.
  */
 angular.module('xyzApp')
-  .service('MediaAPI', function ($http, $window, apiKeys, $q, Utility) {
+  .service('MediaAPI', function ($http, $window, apiKeys, $q, $log, Utility) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
 
@@ -25,33 +25,33 @@ angular.module('xyzApp')
         },
         search: function (query, pages) {
           return $q.when($window.SC.get('/tracks?q=' + query + '&linked_partitioning=1'))
-            .then(function(data){
-              if (data.collection){
+            .then(function (data) {
+              if (data.collection) {
                 return data.collection;
               } else {
                 return data;
               }
             })
-              .catch(function(err){
-                  console.error(err);
-                  return [];
-              });
-        },
-        likes: function(){
-          return $window.SC.get('/me/favorites')
-            .catch(function (error){
-              console.error('media api error ',error);
-              return $q.reject( error );
+            .catch(function (err) {
+              console.error(err);
+              return [];
             });
         },
-        playlists: function(){
+        likes: function () {
+          return $window.SC.get('/me/favorites')
+            .catch(function (error) {
+              console.error('media api error ', error);
+              return $q.reject(error);
+            });
+        },
+        playlists: function () {
           return $window.SC.get('/me/playlists');
         },
-        tracksByUser: function(id){
-          return $window.SC.get('/users/'+id+'/tracks', {limit:300})
-            .then(function(data){
-                var returnArr = [], input;
-              if (data.collection){
+        tracksByUser: function (id) {
+          return $window.SC.get('/users/' + id + '/tracks', {limit: 300})
+            .then(function (data) {
+              var returnArr = [], input;
+              if (data.collection) {
 
                 input = data.collection;
               } else {
@@ -64,11 +64,11 @@ angular.module('xyzApp')
               return returnArr;
             });
         },
-        likesByUser: function(id){
-          return $window.SC.get('/users/'+id+'/favorites', {limit:300})
-               .then(function(data){
-                var returnArr = [], input;
-              if (data.collection){
+        likesByUser: function (id) {
+          return $window.SC.get('/users/' + id + '/favorites', {limit: 300})
+            .then(function (data) {
+              var returnArr = [], input;
+              if (data.collection) {
 
                 input = data.collection;
               } else {
@@ -83,7 +83,9 @@ angular.module('xyzApp')
       },
       YT: {
         search: function (query, limit) {
+          // see https://developers.google.com/youtube/v3/docs/videos/list#http-request
 
+          var searchResults;
           var ytSearchUrl = 'https://www.googleapis.com/youtube/v3/search?key=' + apiKeys.yt
             + '&q=' + query
             + '&part=snippet'
@@ -92,21 +94,52 @@ angular.module('xyzApp')
 //            + '&videoCategoryId=music'
             + '&maxResults=10';
           return $http.get(ytSearchUrl)
-            .then(function (data) {
-              return data.data.items;
-            })
-              .catch(function(response){
-                  var error = 'unknown error';
-                  if (response.data && response.data.error && response.data.errors && _.isArray(response.data.errors)){
-                      error = response.data.errors.join(' , ');
-                  } else if(response.data && response.data.error.message){
-                      error = response.data.error.message;
-                  } else {
+            .then(function (result) {
+              searchResults = _.get(result, 'data.items');
 
-                  }
-                  console.error('youtube search error: ' , error);
-                  return [];
+              var idStrings = [];
+              _.each(searchResults, function (item) {
+                idStrings.push(_.get(item, 'id.videoId'));
               });
+
+              return idStrings.join(',');
+            })
+            .then(function (idString) {
+
+              var contentDetailsUrl = 'https://www.googleapis.com/youtube/v3/videos?key=' + apiKeys.yt
+                + '&id=' + idString
+                + '&part=contentDetails';
+
+              return $http.get(contentDetailsUrl)
+                .then(function (result) {
+                  var detailsResults = _.get(result, 'data.items');
+                  _.each(detailsResults, function (details) {
+                    _.set(_.find(searchResults,
+                      function (result) {
+                        return _.get(result, 'id.videoId') === details.id;
+                      }), 'contentDetails', details.contentDetails);
+                  });
+
+                  return searchResults;
+
+                })
+                .catch(function(err){
+                  $log.error(err);
+                  return $q.resolve(searchResults);
+                })
+            })
+            .catch(function (response) {
+              var error = 'unknown error';
+              if (response.data && response.data.error && response.data.errors && _.isArray(response.data.errors)) {
+                error = response.data.errors.join(' , ');
+              } else if (response.data && response.data.error.message) {
+                error = response.data.error.message;
+              } else {
+
+              }
+              console.error('youtube search error: ', error);
+              return [];
+            });
 
         },
         get: function (id) {

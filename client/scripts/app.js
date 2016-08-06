@@ -30,6 +30,12 @@ xyzApp.config(function (localStorageServiceProvider) {
     .setStorageCookieDomain('');
 });
 
+xyzApp.filter('secondsToDateTime', [function() {
+  return function(seconds) {
+    return new Date(1970, 0, 1).setSeconds(_.round(seconds));
+  };
+}])
+
 var errorAlert = function (err) {
 
   var message;
