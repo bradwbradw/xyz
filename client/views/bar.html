@@ -1,62 +1,60 @@
 <div class="top-bar" layout="row" layout-align="space-between center">
 
-  <h1 ui-sref="base.landing" class="logo">XYZ</h1>
+    <h1 ui-sref="base.landing" class="logo">XYZ</h1>
 
 
-  <h1 class="bar-title" ng-if="title()"> {{title()}}
-    <a ng-if="space && space.id" ng-href="stream/index.html#?playlist={{space.id}}" target="_blank">
-      <md-icon class="icon material-design-icons light">open_in_new</md-icon>
+    <h1 class="bar-title" ng-if="title()"> {{title()}}
+        <a ng-if="space && space.id" ng-href="stream/index.html#?playlist={{space.id}}" target="_blank">
+            <md-icon class="icon material-design-icons light">open_in_new</md-icon>
 
-    </a>
-  </h1>
+        </a>
+    </h1>
 
 
-  <md-icon class="icon material-design-icons light"
-           ng-class="{active:isEditing()}"
-           ng-click="toggleSettings()"
-           ng-if="User.get()">
-    settings
-  </md-icon>
-  <div ng-if="!User.get()"> </div>
+    <md-icon class="icon material-design-icons light"
+             ng-class="{active:isEditing()}"
+             ng-click="toggleSettings()"
+             ng-if="User.get()">
+        settings
+    </md-icon>
+    <div ng-if="!User.get()"></div>
 
-  <div class="user-settings" ng-if="settingsOpen()">
+    <div class="user-settings" ng-if="settingsOpen()">
 
-    <div ng-if="User.get().website"><!-- todo: fix website links (add http if not there) -->
-      Logged in as<br/> <a ng-href="{{Utility.fixUrl(User.get().website)}}">{{User.get().name}}</a>
+        <div ng-if="User.get().website"><!-- todo: fix website links (add http if not there) -->
+            Logged in as<br/> <a ng-href="{{Utility.fixUrl(User.get().website)}}">{{User.get().name}}</a>
+        </div>
+        <div ng-if="!User.get().website"><!-- todo: fix website links (add http if not there) -->
+            Logged in as<br/> {{User.get().name}}
+        </div>
+
+        <button ng-click="toggleEditing()">edit info</button>
+
+        <form ng-submit="User.update(new).catch(showError)" ng-show="userIsEditing()">
+
+            <input ng-model="new.name" placeholder="update name">
+            <input ng-model="new.website" placeholder="update website">
+            <input type="submit" value="update data">
+
+        </form>
+
+
+        <h4>Social Media</h4>
+        <div ng-if="!Social.FB.isConnected() && !Social.FB.isConnecting() ">
+            Facebook: not connected
+            <a class="link-button" ng-click="Social.FB.setConnecting().then(Social.FB.login).then(Social.FB.refreshFB)">(connect)</a>
+        </div>
+        <div ng-if="Social.FB.isConnecting()">Facebook: connecting...</div>
+        <div ng-if="Social.FB.isConnected()">
+            Facebook: &#10003;
+        </div>
+
+        <button ng-click="User.logout().catch(showError)">Log out</button>
     </div>
-    <div ng-if="!User.get().website"><!-- todo: fix website links (add http if not there) -->
-      Logged in as<br/> {{User.get().name}}
-    </div>
-
-    <button ng-click="toggleEditing()">edit info</button>
-
-    <form ng-submit="User.update(new).catch(showError)" ng-show="userIsEditing()">
-
-      <input ng-model="new.name" placeholder="update name">
-      <input ng-model="new.website" placeholder="update website">
-      <input type="submit" value="update data">
-
-    </form>
-
-
-    <h4>Social Media</h4>
-    <div ng-if="!Social.FB.isConnected() && !Social.FB.isConnecting() ">
-      Facebook: not connected
-      <a class="link-button" ng-click="Social.FB.setConnecting().then(Social.FB.login).then(Social.FB.refreshFB)">(connect)</a>
-    </div>
-    <div ng-if="Social.FB.isConnecting()">Facebook: connecting...</div>
-    <div ng-if="Social.FB.isConnected()">
-      Facebook: &#10003;
-    </div>
-
-    <button ng-click="User.logout().catch(showError)">Log out</button>
-  </div>
 </div>
-<md-progress-linear
-    class="loading-indicator"
-    loading
-    md-mode="indeterminate">
-
+<md-progress-linear loading
+                    class="loading-indicator"
+                    md-mode="indeterminate">
 </md-progress-linear>
 
 

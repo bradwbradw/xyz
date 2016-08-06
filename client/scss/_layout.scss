@@ -71,10 +71,30 @@
   z-index: 2;
 }
 
+.base-container {
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+}
+
+.loading-indicator {
+
+  width:100vw;
+  z-index:10000;
+  position:fixed;
+  top: $bar-height;
+}
+
 .main-container {
   position: absolute;
   top: $bar-height;
 }
+
+
 
 .user-spaces-container {
   margin-bottom: 400px;
