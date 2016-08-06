@@ -20,7 +20,7 @@
     </form>
 
     <h2>or login:</h2>
-    <form ng-submit="clearError(loginData).then(User.login).then(User.fetchSpaces).catch(showError)">
+    <form ng-submit="login(loginData)">
 
       <input ng-model="loginData.email" placeholder="email" type="email" required><br/>
       <input ng-model="loginData.password" placeholder="password" type="password" required><br/>

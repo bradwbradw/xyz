@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('LandingCtrl', function ($rootScope, $scope, $q, $timeout, $log, Dj, User, Server, Space, publicSpaces, Player, Utility) {
+  .controller('LandingCtrl', function ($rootScope, $scope, $q, $timeout, $log, Dj, User, Server, Space, publicSpaces, Player, Social, Utility) {
 
     $scope.Dj = Dj;//.findById({id:'5684f858d4b1e4996ec6d9bf'});
 
@@ -16,12 +16,12 @@ angular.module('xyzApp')
 
     $scope.publicSpaces = publicSpaces;
 
-    $scope.showError = function (error) {
+    var showError = function (error) {
 
       $rootScope.error = Utility.cleanError(error);
     };
 
-    $scope.clearError = function (thing) {
+    var clearError = function (thing) {
       $rootScope.error = '';
       return $q.resolve(thing);
     };
@@ -29,30 +29,43 @@ angular.module('xyzApp')
     $rootScope.lb = Server.loopback;
 
     var addingSpace = false;
-    var resetAdding = function(){
+    var resetAdding = function () {
       addingSpace = false;
     };
 
-    var isAdding = function(){
+    var isAdding = function () {
       return addingSpace;
     };
 
-    var setAdding = function(){
+    var setAdding = function () {
       addingSpace = true;
     };
 
-    var spaceIsOwned = function(space){
+    var spaceIsOwned = function (space) {
       return space.ownerId === User.get().id;
     };
 
+    var login = function (loginData) {
+      clearError(loginData)
+        .then(User.login)
+        .then(User.fetchSpaces)
+        .then(function(spaces){
+          Social.FB.refreshFB();
+          Server.fetchAllPlaylists(_.union(publicSpaces, spaces.own, spaces.editable ));
+        })
+        .catch(showError)
+    };
+
+    $scope.login = login;
     $scope.spaceIsOwned = spaceIsOwned;
     $scope.isAdding = isAdding;
     $scope.setAdding = setAdding;
     $scope.addingSpace = addingSpace;
     $scope.resetAdding = resetAdding;
+    $scope.clearError = clearError;
+    $scope.showError = showError;
 
     $scope.Player = Player;
-
 
 
   });

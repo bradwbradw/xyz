@@ -25,16 +25,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         space: function () {
           return false;
         }
-      }/*,
-       views:{
-       'xyzPlayer': {
-       template: '<div xyz-player ',
-       controller: function(){
-
-       }
-       }
-       }
-       */
+      }
 
     })
     .state('base.landing', {
@@ -50,45 +41,10 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         }
 
       },
-      onEnter: function (Library, User, Social, $q, $log, publicSpaces, localStorageService, Server) {
+      onEnter: function (Library, User, Social, $q, $log, publicSpaces, Server) {
 
         Social.FB.refreshFB();
-
-        var fetchSpacePlaylists = function (spaces) {
-
-          var playlistLoads = [];
-          _.each(spaces, function (space) {
-            var playlistLoad = Server.getPlaylist(space.id)
-              .then(function (result) {
-//                $log.debug('playlist load complete:', result);
-
-                _.set(_.find(publicSpaces, {id: result.space.id}), 'playlist', result.playlist);
-                _.set(_.find(User.getSpaces().own, {id: result.space.id}), 'playlist', result.playlist);
-                _.set(_.find(User.getSpaces().editable, {id: result.space.id}), 'playlist', result.playlist);
-                return result.playlist;
-              }).catch(function (err) {
-                $log.error('playlist load failed: ', err);
-              });
-            playlistLoads.push(playlistLoad)
-          });
-
-          return $q.all(playlistLoads);
-
-        };
-
-
-        fetchSpacePlaylists(_.union(publicSpaces, User.getSpaces().own, User.getSpaces().editable ))
-          .then(function (playlists) {
-            $log.log('all playlists loaded:', playlists);
-            localStorageService.set('playlists', playlists);
-            _.each(playlists, function (playlist) {
-
-            })
-          })
-          .catch(function (err) {
-            $log.error(err);
-          });
-
+        Server.fetchAllPlaylists(_.union(publicSpaces, User.getSpaces().own, User.getSpaces().editable ))
 
       }
 

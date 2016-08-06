@@ -2,7 +2,7 @@
 
 angular.module('xyzApp')
 
-  .service('Server', function ($rootScope, $http, $q, serverConfig, Dj, Space) {
+  .service('Server', function ($rootScope, $http, $q, $log, serverConfig, Dj, Space) {
 
     var API = serverConfig.apiBaseUrl;
 
@@ -97,6 +97,34 @@ angular.module('xyzApp')
           .then(function (result) {
             return result.data.playlist;
           });
+      },
+
+      fetchAllPlaylists: function (spaces) {
+
+        var playlistLoads = [];
+        console.log('spaces is ', spaces);
+        _.each(spaces, function (space) {
+          var playlistLoad = Server.getPlaylist(space.id)
+            .then(function (result) {
+//                $log.debug('playlist load complete:', result);
+              _.set(space, 'playlist', result.playlist);
+              return result.playlist;
+            }).catch(function (err) {
+              $log.error('playlist load failed: ', err);
+            });
+          playlistLoads.push(playlistLoad)
+        });
+
+        return $q.all(playlistLoads)
+          .then(function(playlists){
+            $log.log('all playlists loaded:', playlists);
+            return playlists;
+          })
+          .catch(function (err) {
+            $log.error(err);
+            return $q.reject(err);
+          });
+
       },
 
       refresh: function () {
