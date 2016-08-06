@@ -3,7 +3,7 @@ angular.module('xyzApp').
     return function (scope, element, attr) {
       var item = scope.$parent.item;
 
-      var canDrag = attr.xyzDraggable === 'owner';
+      var canDrag = attr.xyzDraggable;
 
       if (_.isUndefined(item)) {
         return;

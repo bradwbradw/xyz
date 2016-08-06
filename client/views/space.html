@@ -4,7 +4,7 @@
 
 <div class="xyz-item" ng-repeat="item in Library.songs()"
      ng-if="Library.songs().length > 0"
-     xyz-draggable="{{viewer}}"
+     xyz-draggable="{{viewer === 'owner' || viewer === 'contributor'}}"
      ng-click="Library.isPlayable(item)? queueIfNotDragging(item): Player.show(item)">
 
   <div class="dot"
