@@ -90,7 +90,7 @@ angular.module('xyzApp')
 
     var putInSpace = function(item, event){
       // if desktop
-      item.x = $window.width;
+      item.x = _.round($window.outerWidth / 4); //should be 25% from left side of screen / window
       item.y = event.y;
       Library.add(item);
     };

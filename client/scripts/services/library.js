@@ -90,7 +90,7 @@ angular.module('xyzApp')
       add: function (song) {
         console.warn('** space is :', Library.currentSpace);
         song.date_created = new Date();
-        return Space.songs.create({id: Library.space().id}, song, _.noop)
+        return Space.songs.create({id: Library.space().id}, song)
           .$promise
           .then(function (result) {
             updateView(result);
@@ -102,14 +102,14 @@ angular.module('xyzApp')
       },
       update: function (id, data) {
         $log.warn('** update', data);
-        return Space.songs.updateById({id: Library.space().id, fk: id}, data, _.noop)
+        return Space.songs.updateById({id: Library.space().id, fk: id}, data)
           .$promise
           .catch(function (err) {
             return $q.reject(err);
           });
       },
       remove: function (id) {
-        return Space.songs.destroyById({id: Library.space().id, fk: id} , _.noop)
+        return Space.songs.destroyById({id: Library.space().id, fk: id} )
           .$promise
           .then(updateView)
           .catch(function (err) {

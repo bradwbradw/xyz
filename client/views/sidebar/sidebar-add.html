@@ -10,27 +10,13 @@
       placeholder=""
       focus
       >
-    <span ng-if="fetchingSongData"> <i>fetching data...</i> </span>
-    <!--<span ng-if="Library.getLocalItems()"> {{ newItem.provider }} media detected:
-      {{ newItem.artist+' - '+newItem.title }}<hr/>
-      <button ng-click="Library.add(newItem)">add to library</button>
-    </span>
-
-    <ul ng-if="newItems">
-      <li ng-repeat="newItem in newItems">
-       <a ng-href="{{newItem.url}}"> ({{newItem.provider}}) {{newItem.artist}} - {{newItem.title}} ({{newItem.provider_id}})
-         </a>
-      </li>
-    </ul>-->
-    <span ng-if="newText && error"> Sorry, {{error}} Please try adjusting the URL
-    </span>
+    <div ng-if="fetchingSongData"> <i>searching...</i> </div>
+    <div ng-if="newText && error"> Sorry, {{error}} Please try adjusting the URL
+    </div>
 </div>
 
 
 <div ng-if="FB.isConnected()">
   <h4>load neat songs from your facebook feed. click the button again to load more</h4><br/>
   <button ng-click="explore(Social.FB.loadPosts())">more FB posts</button>
-</div>
-<div ng-if="!FB.isConnected()">
-  <h4> click on the button at the bottom to connect to Facebook, then you can load songs that you posted</h4>
 </div>
