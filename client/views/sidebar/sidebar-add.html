@@ -8,6 +8,7 @@
         .catch(invalidLink)"
       ng-model-options="{debounce: 500, updateOn:'default'}"
       placeholder=""
+      focus
       >
     <span ng-if="fetchingSongData"> <i>fetching data...</i> </span>
     <!--<span ng-if="Library.getLocalItems()"> {{ newItem.provider }} media detected:

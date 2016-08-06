@@ -30,16 +30,16 @@
 
 <div ng-if="Library.songs().length === 0">
 
-  <div class="xyz-item" style="left:45%; top:10%;">
+  <div class="xyz-item" style="left:45vw; top:10vh;">
 
-    <div class="default dot" ui-sref="space.search">
+    <div class="default dot" ng-click="openSidebar()" >
 
     </div>
 
 
-    <div class="hover" ng-click="clickToOpen()">
+    <div class="hover" ng-click="openSidebar()">
 
-      no items (click to open search panel)
+      Click to find media
 
     </div>
   </div>

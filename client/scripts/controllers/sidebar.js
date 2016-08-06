@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SidebarCtrl', function ($scope, $timeout, $q, $window, $state, $log, viewer, Space, Social, User, user, Server, Utility, spaceId) {
+  .controller('SidebarCtrl', function ($rootScope, $scope, $timeout, $q, $window, $state, $log, viewer, Space, Social, User, user, Server, Utility, spaceId) {
 
 
     console.log('space is ', Space);
@@ -17,6 +17,10 @@ angular.module('xyzApp')
     var getContributors = function () {
       return contributors;
     };
+
+    $rootScope.$on('open-search', function(){
+      $scope.sidebarClosed = false;
+    });
 
     $scope.deleteViaConfirm = function (service, object) {
       console.log('...');

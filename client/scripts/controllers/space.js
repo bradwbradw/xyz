@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SpaceCtrl', function ($scope, $log, $state, Library, Player, space, owner, viewer, contributors) {
+  .controller('SpaceCtrl', function ($rootScope, $scope, $log, $state, Library, Player, space, owner, viewer, contributors) {
 
     // default tab 'add media' should be open
     if(viewer === 'contributor' || viewer === 'owner'){
@@ -62,9 +62,8 @@ angular.module('xyzApp')
     };
 
 
-    var clickToOpen = function(){
-
-      $state.go("space.search");
+    var openSidebar = function(){
+      $rootScope.$emit('open-search');
     };
 
     $scope.queueIfNotDragging = queueIfNotDragging;
@@ -76,7 +75,7 @@ angular.module('xyzApp')
     $scope.expand = expand;
     $scope.Library = Library;
     $scope.closeExpanded = closeExpanded;
-    $scope.clickToOpen = clickToOpen;
+    $scope.openSidebar = openSidebar;
     $scope.contributors = contributors;
 
     $scope.space = space;
