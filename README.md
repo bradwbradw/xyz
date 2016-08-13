@@ -12,11 +12,11 @@ get set up with npm, gulp
 
 ##STEP 1
 
-in terminal, run: `node server/server.js`
+in terminal, run: `./dev.sh`
 
 ##STEP 2
 
-in another terminal, run: `gulp serve`
+in another terminal window, run: `gulp serve`
 
 ## OPTIONS
 
