@@ -14,8 +14,8 @@ router.get('/', function (req, res) {
 // define the about route
 router.post('/send-request', function (req, res) {
   Mail.sendMail({
-      to: 'brasd@xyz.gs',
-      body: 'testing'
+      to: 'brad@xyz.gs',
+      body: '<h3>testing</h3>'
     })
     .then(function (result) {
       res.send('result');

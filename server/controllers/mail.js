@@ -18,7 +18,7 @@ var sendMail = function (data) {
     from: _.get(data,'from','xyz <feedback@xyz.gs>'),
     to: _.get(data, 'to'),
     subject: _.get(data, 'Subject', 'Message from XYZ'),
-    text: _.get(data, 'body')
+    html: _.get(data, 'body')
   };
 
   if (_.find(mailData, !_.isUndefined)){
