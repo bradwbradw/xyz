@@ -53,6 +53,9 @@ then run with:
 
 `jasmine-node api-test`
 
+##Debug
+serverside activity can be debugged as per https://docs.strongloop.com/display/public/LB/Setting+debug+strings
+
 ##Documentation
 
 all data models should be automatically generated with documentation using loopback.
