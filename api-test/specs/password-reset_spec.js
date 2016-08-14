@@ -21,6 +21,7 @@ describe(' password reset tests ', function () {
 
     request(urlBase)
       .post(path)
+      .send({email:'foo@bar.com'})
       //      .set('Authorization', authorization.id)
       .expect(200)
       .then(function (response) {
