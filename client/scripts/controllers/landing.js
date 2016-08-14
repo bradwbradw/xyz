@@ -27,6 +27,7 @@ angular.module('xyzApp')
     };
 
     var showMessage = function (msg) {
+
       $rootScope.message = msg;
     };
 
@@ -68,6 +69,9 @@ angular.module('xyzApp')
       clearMessage();
       clearError();
       Server.resetPassword(email)
+        .then(function(){
+          return 'We received your request.  Please check your email in a few minutes for further instructions.'
+        })
         .then(showMessage)
         .catch(showError)
     };
@@ -81,6 +85,7 @@ angular.module('xyzApp')
     $scope.showError = showError;
     $scope.clearMessage = clearMessage;
     $scope.showMessage = showMessage;
+    $scope.resetPassword = resetPassword;
 
     $scope.Player = Player;
 

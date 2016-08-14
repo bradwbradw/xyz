@@ -5,7 +5,8 @@ angular.module('xyzApp')
   .service('Server', function ($rootScope, $http, $q, $log, serverConfig, Dj, Space) {
 
     var API = serverConfig.apiBaseUrl;
-
+    $log.debug('api url is', API);
+    var domain = API.replace('api/', '');
 
     var resetErrors = function () {
       $rootScope.error = '';
@@ -116,7 +117,7 @@ angular.module('xyzApp')
         });
 
         return $q.all(playlistLoads)
-          .then(function(playlists){
+          .then(function (playlists) {
             $log.log('all playlists loaded:', playlists);
             return playlists;
           })
@@ -132,11 +133,12 @@ angular.module('xyzApp')
       },
 
       getContributors: function (spaceId) {
-      return [];/*
-        return get('Spaces/' + spaceId + '/contributors')
-          .then(function (result) {
-            return result.data;
-          });*/
+        return [];
+        /*
+         return get('Spaces/' + spaceId + '/contributors')
+         .then(function (result) {
+         return result.data;
+         });*/
       },
 
       searchUsers: function (query) {
@@ -206,6 +208,14 @@ angular.module('xyzApp')
 
       updateUser: function (id, token, data) {
         return put('api/djs/' + id + '/?access_token=' + token, data);
+      },
+      resetPassword: function (email) {
+        if (!email) {
+          return $q.reject('please enter the email address you used to sign up');
+        } else {
+          return $http.post(domain+'password-reset/send-request', {email: email});
+
+        }
       }
 
 
