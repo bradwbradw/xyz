@@ -7,10 +7,11 @@
     </ul>
 
   </div>
-  <div ng-if="!User.loggedIn()" class="landing-section">
+  <div ng-if="!User.loggedIn()" class="landing-section" layout="column">
 
     <h4>Sign up</h4>
-    <form ng-submit="clearError(registerData).then(User.register).then(User.login).catch(showError)">
+    <form layout="column" layout-align="center center"
+        ng-submit="clearError(registerData).then(User.register).then(User.login).catch(showError)">
 
       <input ng-model="registerData.name" placeholder="your name"><br/>
       <input ng-model="registerData.email" placeholder="email" type="email" required><br/>
@@ -20,12 +21,31 @@
     </form>
 
     <h2>or login:</h2>
-    <form ng-submit="login(loginData)">
+    <form layout="column" layout-align="center center" ng-submit="login(loginData)" ng-hide="forgotPassword">
 
       <input ng-model="loginData.email" placeholder="email" type="email" required><br/>
-      <input ng-model="loginData.password" placeholder="password" type="password" required><br/>
+      <input
+          ng-model="loginData.password"
+          placeholder="password"
+          type="password"
+          required>
+      <br/>
 
       <input type="submit" value="submit"/>
+      <a ng-click="forgotPassword = true">forgot password?</a>
+
+    </form>
+
+    <form layout="column" layout-align="center center" ng-submit="resetPassword(loginData.email)" ng-show="forgotPassword">
+      <p>Forgot your password? Please enter your email address below, then we'll send you link to reset your
+        password</p>
+      <input ng-model="loginData.email"
+             placeholder="email"
+             type="email"
+             required>
+      <input type="submit" value="Send Password Reset Link"/>
+      <a ng-click="forgotPassword = false">(cancel)</a>
+
     </form>
 
   </div>
@@ -53,10 +73,10 @@
     <h2 ng-if="User.hasOwnSpaces() || User.hasEditableSpaces()">my spaces:</h2>
     <ul class="user-spaces-container" layout-wrap layout-align="space-around left" layout="row">
       <li ng-repeat="space in User.getSpaces().editable"
-          ng-include="'views/partials/space-thumbnail.html'" >
+          ng-include="'views/partials/space-thumbnail.html'">
       </li>
       <li ng-repeat="space in User.getSpaces().own"
-          ng-include="'views/partials/space-thumbnail.html'" >
+          ng-include="'views/partials/space-thumbnail.html'">
 
       </li>
     </ul>
@@ -68,4 +88,5 @@
 
 
   <span ng-if="error">{{error}}</span>
+  <span ng-if="message">{{message}}</span>
 </div>

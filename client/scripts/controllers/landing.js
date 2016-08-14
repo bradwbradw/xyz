@@ -26,6 +26,14 @@ angular.module('xyzApp')
       return $q.resolve(thing);
     };
 
+    var showMessage = function (msg) {
+      $rootScope.message = msg;
+    };
+
+    var clearMessage = function(){
+      $rootScope.message = '';
+    };
+
     $rootScope.lb = Server.loopback;
 
     var addingSpace = false;
@@ -49,13 +57,20 @@ angular.module('xyzApp')
       clearError(loginData)
         .then(User.login)
         .then(User.fetchSpaces)
-        .then(function(spaces){
+        .then(function (spaces) {
           Social.FB.refreshFB();
-          Server.fetchAllPlaylists(_.union(publicSpaces, spaces.own, spaces.editable ));
+          Server.fetchAllPlaylists(_.union(publicSpaces, spaces.own, spaces.editable));
         })
         .catch(showError)
     };
 
+    var resetPassword = function (email) {
+      clearMessage();
+      clearError();
+      Server.resetPassword(email)
+        .then(showMessage)
+        .catch(showError)
+    };
     $scope.login = login;
     $scope.spaceIsOwned = spaceIsOwned;
     $scope.isAdding = isAdding;
@@ -64,6 +79,8 @@ angular.module('xyzApp')
     $scope.resetAdding = resetAdding;
     $scope.clearError = clearError;
     $scope.showError = showError;
+    $scope.clearMessage = clearMessage;
+    $scope.showMessage = showMessage;
 
     $scope.Player = Player;
 
