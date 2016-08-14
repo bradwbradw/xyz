@@ -27,7 +27,7 @@ module.exports = {
   },
   mail:{
     key: process.env.MAILGUN_KEY || 'key-57050be36fbfd2a9d17776fd5d771eb5',
-    domain: process.env.MAILGUN_DOMAIN || 'https://api.mailgun.net/v3/staging-mg.xyz.gs'
+    domain: process.env.MAILGUN_DOMAIN || 'sandbox40b84ff8fde34d70bbfc5f2c1e109cd3.mailgun.org'
   },
   mongoUrl: mongoUrl,
   mongoCreds: mongoCreds

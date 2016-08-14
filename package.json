@@ -48,6 +48,7 @@
     "loopback-connector-mongodb": "^1.15.2",
     "loopback-datasource-juggler": "^2.46.1",
     "loopback-sdk-angular": "^1.7.0",
+    "mailgun-js": "^0.7.12",
     "method-override": "2.3.3",
     "mongodb-uri": "^0.9.7",
     "morgan": "^1.7.0",

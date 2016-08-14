@@ -6,6 +6,8 @@ var loopback = require('loopback'),
 
 var config = require('../constants');
 
+var PasswordReset = require('./routes/password-reset.js');
+
 var app = module.exports = loopback();
 
 
@@ -23,6 +25,8 @@ app.use('/stream/xyz-player-component',loopback.static(path.resolve(__dirname, '
 app.use('/sc', loopback.static(path.resolve(__dirname, '../stream/scWidget.html')));
 
 app.use(loopback.token());
+
+app.use('/password-reset', PasswordReset);
 
 app.start = function() {
   // start the web server
