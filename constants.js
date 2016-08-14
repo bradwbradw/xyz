@@ -25,6 +25,10 @@ module.exports = {
     sc: process.env.SC_KEY || 'c29e4129f2bba3771a5472a65cad37e4',
     yt: process.env.YT_KEY || 'AIzaSyAv5-et2TSQ3VsA5eKLviq2KjfExzFLxO8'
   },
+  mail:{
+    key: process.env.MAILGUN_KEY || 'key-57050be36fbfd2a9d17776fd5d771eb5',
+    domain: process.env.MAILGUN_DOMAIN || 'https://api.mailgun.net/v3/staging-mg.xyz.gs'
+  },
   mongoUrl: mongoUrl,
   mongoCreds: mongoCreds
 
