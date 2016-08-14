@@ -30,6 +30,7 @@ module.exports = {
     domain: process.env.MAILGUN_DOMAIN || 'sandbox40b84ff8fde34d70bbfc5f2c1e109cd3.mailgun.org'
   },
   mongoUrl: mongoUrl,
-  mongoCreds: mongoCreds
+  mongoCreds: mongoCreds,
+  domain: process.env.DOMAIN || 'localhost:5005'
 
 };
