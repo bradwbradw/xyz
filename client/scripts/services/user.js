@@ -78,11 +78,14 @@ angular.module('xyzApp')
           .$promise
           .then(User.set);
       },
+      download: function(){
+        return Dj.getCurrent()
+          .$promise
+          .then(User.set);
+      },
 
       fetchUserInfo: function () {
-        return Dj.getCurrent(_.noop)
-          .$promise
-          .then(User.set)
+        return User.download()
           .then(User.fetchSpaces)
           .catch(function (err) {
             return $q.reject(err);

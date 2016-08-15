@@ -32,14 +32,6 @@ var resetForEmail = function (req, email) {
       }
     });
   });
-  /*
-    .then(function(user){
-
-      return Mail.sendMail({
-          to: 'brad@xyz.gs',
-          body: '<h3>testing</h3>'
-        })
-    });*/
 };
 router.post('/send-request', function (req, res) {
 
@@ -59,7 +51,8 @@ router.post('/send-request', function (req, res) {
   }
 });
 
-router.post('/update', function(req, res){
+router.get('/update', function(req, res){
+
   res.send('finishing password reset')
 });
 

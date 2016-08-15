@@ -28,6 +28,27 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       }
 
     })
+    .state('base.account',{
+      url: '/account',
+      views:{
+        'main':{
+          templateUrl: 'views/account.html',
+          controller: 'AccountCtrl'
+        },
+        'bar': {
+          templateUrl: 'views/bar.html',
+          controller: 'BarCtrl'
+        }
+      },
+      resolve:{
+        user:function(User){
+          return User.download();
+        },
+        tempAccessToken: function($location){
+          return $location.search().access_token;
+        }
+      }
+    })
     .state('base.landing', {
       url: '/',
       views: {
