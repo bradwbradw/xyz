@@ -15,7 +15,7 @@ router.get('/', function (req, res) {
 // define the about route
 
 
-var resetForEmail = function (req, email) {
+var sendPasswordEmail = function (req, email) {
 
   var app = req.app;
   var Dj = app.models.dj;
@@ -33,14 +33,39 @@ var resetForEmail = function (req, email) {
     });
   });
 };
+
+var resetPassword = function (req, password, token) {
+
+  var app = req.app;
+  var Dj = app.models.dj;
+
+  return when.promise(function (resolve, reject) {
+
+    Dj.findById(req.accessToken.userId, function (err, dj) {
+      if (err) {
+        reject(err);
+      }
+      dj.updateAttribute('password', req.body.password, function (err, dj) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+
+      });
+    });
+  })
+};
+
+
 router.post('/send-request', function (req, res) {
 
   var email = _.get(req, 'body.email');
   if (!email) {
-    res.status(400).json({error: 'expecting JSON containing {email:"bla@bla.com"}'});
+    res.status(400).json({error: 'expecting JSON containing {email:"example@domain.com"}'});
   } else {
 
-    resetForEmail(req, email)
+    sendPasswordEmail(req, email)
       .then(function (result) {
         res.json({success: true, email: email});
       })
@@ -51,9 +76,16 @@ router.post('/send-request', function (req, res) {
   }
 });
 
-router.get('/update', function(req, res){
+router.post('/update', function (req, res) {
 
-  res.send('finishing password reset')
+  var password = _.get(req, 'body.password');
+  var token = _.get(req, 'body.token');
+  if (!password || !token) {
+    res.status(400).json({error: 'expecting JSON containing password and token properties'});
+  } else {
+    console.log(password, token);
+    res.send('finishing password reset')
+  }
 });
 
 module.exports = router;

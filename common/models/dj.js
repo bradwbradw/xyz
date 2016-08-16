@@ -1,9 +1,14 @@
 var constants = require('../../constants');
 var Mail = require('../../server/controllers/mail');
 
+
+    var passwordResetUrl = 'http://' + constants.domain + '/account';
+
 module.exports = function(Dj) {
 
   //send verification email after registration
+  // https://github.com/strongloop/loopback-example-user-management
+  /*
   Dj.afterRemote('create', function(context, user, next) {
     console.log('> user.afterRemote triggered');
 
@@ -30,18 +35,22 @@ module.exports = function(Dj) {
         redirectToLinkText: 'Log in'
       });
     });
-  });
+  });*/
 
 
   Dj.on('resetPasswordRequest', function(info) {
     console.log('reset pass info:', info);
-    var url = 'http://' + constants.domain + '/password-reset/update';
-    var html = 'Click <a href="' + url + '?access_token=' +
-        info.accessToken.id + '">here</a> to reset your password';
+    var passwordResetHref = passwordResetUrl + '?access_token=' + info.accessToken.id;
+
+    var html = '<h2>XYZ</h2>' +
+      '<p>Click the link below to reset your password:</p>' +
+      '<a href="' + passwordResetHref + '">'+passwordResetHref+'</a> ' +
+      '';
 
 
       Mail.sendMail({
           to: info.email,
+          subject:'XYZ: password reset',
           body: html
         })
         .then(function(result){

@@ -42,7 +42,10 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       },
       resolve:{
         user:function(User){
-          return User.download();
+          return User.download()
+            .catch(function(){
+              return false;
+            });
         },
         tempAccessToken: function($location){
           return $location.search().access_token;

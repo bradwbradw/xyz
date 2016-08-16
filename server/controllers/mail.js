@@ -17,7 +17,7 @@ var sendMail = function (data) {
   var mailData = {
     from: _.get(data,'from','xyz <feedback@xyz.gs>'),
     to: _.get(data, 'to'),
-    subject: _.get(data, 'Subject', 'Message from XYZ'),
+    subject: _.get(data, 'subject', 'Message from XYZ'),
     html: _.get(data, 'body')
   };
 

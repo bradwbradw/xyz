@@ -209,6 +209,7 @@ angular.module('xyzApp')
       updateUser: function (id, token, data) {
         return put('api/djs/' + id + '/?access_token=' + token, data);
       },
+      // sends the email with a temp access token
       resetPassword: function (email) {
         if (!email) {
           return $q.reject('please enter the email address you used to sign up');
@@ -216,6 +217,10 @@ angular.module('xyzApp')
           return $http.post(domain+'password-reset/send-request', {email: email});
 
         }
+      },
+      // updates the password
+      updatePassword: function (newPassword, token){
+        return $http.post(domain+'password-reset/update', {password: newPassword, token: token})
       }
 
 
