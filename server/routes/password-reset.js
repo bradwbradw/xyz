@@ -34,7 +34,7 @@ var sendPasswordEmail = function (req, email) {
   });
 };
 
-var resetPassword = function (req, password, token) {
+var resetPassword = function (req, password) {
 
   var app = req.app;
   var Dj = app.models.dj;
@@ -45,8 +45,9 @@ var resetPassword = function (req, password, token) {
       if (err) {
         reject(err);
       }
-      dj.updateAttribute('password', req.body.password, function (err, dj) {
+      dj.updateAttribute('password', password, function (err, dj) {
         if (err) {
+          console.error('setting password failed for '+dj.email+': ', err);
           reject(err);
         } else {
           resolve();
@@ -62,6 +63,7 @@ router.post('/send-request', function (req, res) {
 
   var email = _.get(req, 'body.email');
   if (!email) {
+    console.error('expecting JSON containing {email:"example@domain.com"}. received:', req.body);
     res.status(400).json({error: 'expecting JSON containing {email:"example@domain.com"}'});
   } else {
 
@@ -79,12 +81,18 @@ router.post('/send-request', function (req, res) {
 router.post('/update', function (req, res) {
 
   var password = _.get(req, 'body.password');
-  var token = _.get(req, 'body.token');
+  var token = req.accessToken;
   if (!password || !token) {
-    res.status(400).json({error: 'expecting JSON containing password and token properties'});
+    res.status(400).json({error: 'expecting authenticated request, with JSON containing password'});
   } else {
-    console.log(password, token);
-    res.send('finishing password reset')
+    resetPassword(req, password)
+      .then(function () {
+        res.json({});
+      })
+      .catch(function(err){
+        console.error('resetting password failed', JSON.stringify(err, null, 2));
+        res.status(505).json({error:'resetting password failed'});
+      })
   }
 });
 

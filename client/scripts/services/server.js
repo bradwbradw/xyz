@@ -220,7 +220,10 @@ angular.module('xyzApp')
       },
       // updates the password
       updatePassword: function (newPassword, token){
-        return $http.post(domain+'password-reset/update', {password: newPassword, token: token})
+        return $http.post(
+          domain+'password-reset/update',
+          {password: newPassword},
+          {headers:{'Authorization': token}})
       }
 
 
