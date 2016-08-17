@@ -12,10 +12,11 @@ var fixtures = {
   songs: require('../fixtures/songs.js')
 };
 
-var apiUrl = 'http://' + constants.api.host + ':' + constants.api.port + constants.api.path + '/';
 
+var apiUrl = 'http://' + (constants.api.host || 'localhost') + ':' + constants.api.port + constants.api.path + '/';
+
+var contributorDjName = fixtures.users.contributor.name;
 var loginEndpoint = 'djs/login?include=user';
-var authorization;
 var publicSpaces;
 
 var ownSpaces;
@@ -26,6 +27,7 @@ var djs;
 var contributorDj;
 var nonContributorDj;
 
+var authorization;
 var randomAuth; // logged in but not owner or contributor
 var contributorAuth;
 
@@ -47,7 +49,7 @@ var loginAs = function (credentials) {
     })
 };
 
-describe(' space api tests ', function () {
+describe(' space access (permissions) tests ', function () {
 
   it('should login', function (done) {
 
@@ -163,8 +165,9 @@ describe(' space api tests ', function () {
       .then(function (response) {
 //        console.log('response:', response.body);
         djs = response.body;
-        contributorDj = _.find(djs, {name: 'contributor for brad'});
+        contributorDj = _.find(djs, {name: contributorDjName});
 
+        expect(contributorDj).toBeDefined('expecting a contributor Dj named "'+contributorDjName+'", but was not found');
         expect(_.size(djs)).toBeGreaterThan(0);
       })
       .catch(function (msg) {
@@ -176,7 +179,6 @@ describe(' space api tests ', function () {
   });
 
   it('should be able to add a contributor to owned space', function (done) {
-
 
 //    console.log('contributor is ', contributorDj);
 
@@ -197,7 +199,7 @@ describe(' space api tests ', function () {
 
             var actualContributors = response.body;
 
-            var foundContributor = _.find(actualContributors, {name: 'contributor for brad'});
+            var foundContributor = _.find(actualContributors, {name: contributorDjName});
             expect(foundContributor.id).toBe(contributorDj.id);
           })
 
@@ -364,7 +366,8 @@ describe(' space api tests ', function () {
           .finally(done);
   });
 
-  it('contributor should be able change name of a space', function (done) {
+  // undecided if they should or shouldn't ? TODO: verify current behavior
+  xit('contributor should be able change name of a space', function (done) {
 
         var endpoint = 'spaces/' + firstSpace.id;
 
@@ -447,7 +450,7 @@ describe(' space api tests ', function () {
 
             var actualContributors = response.body;
 
-            var foundContributor = _.find(actualContributors, {name: 'contributor for brad'});
+            var foundContributor = _.find(actualContributors, {name: contributorDjName});
             expect(_.isUndefined(foundContributor));//.toBeUndefined();
           })
           .catch(function (msg) {

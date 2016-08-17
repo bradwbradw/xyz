@@ -6,11 +6,11 @@ module.exports = {
       password: "brad"
     }
   },
-
   contributor: {
+      name: 'contributor test dj',
     credentials: {
-      email: "contributor@brad.brad",
-      password: "brad"
+      email:"contributor-test-dj@xyz.gs",
+      password:"cont-pass"
     }
   },
   random:{
