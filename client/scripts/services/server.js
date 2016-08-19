@@ -214,7 +214,11 @@ angular.module('xyzApp')
         if (!email) {
           return $q.reject('please enter the email address you used to sign up');
         } else {
-          return $http.post(domain+'password-reset/send-request', {email: email});
+          return $http.post(domain+'password-reset/send-request', {email: email})
+            .catch(function(response){
+              $log.error(_.get(response, 'data'));
+              return $q.reject(_.get(response, 'data'));
+            });
 
         }
       },

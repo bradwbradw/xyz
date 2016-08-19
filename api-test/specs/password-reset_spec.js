@@ -47,4 +47,25 @@ describe(' password reset tests ', function () {
 
   });
 
+
+  it('should POST to the password reset endpoint', function (done) {
+
+    request(urlBase)
+      .post(path)
+      .send({email:user.credentials.email})
+      //      .set('Authorization', authorization.id)
+      .expect(200)
+      .then(function (response) {
+        console.log('response:', response.body);
+        console.log('you should get the password reset request in email');
+
+      })
+      .catch(function (err) {
+        console.error(err);
+        done(err);
+      })
+      .finally(done);
+
+  });
+
 });
