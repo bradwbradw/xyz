@@ -20,9 +20,7 @@
       "required": true
     }
   },
-  "hidden": [
-    "email"
-  ],
+  "hidden": [],
   "protected": [
     "email"
   ],
