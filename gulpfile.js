@@ -92,9 +92,9 @@ gulp.task('copyImages', function () {
 gulp.task('useref:main', function () {
   return gulp.src('client/index.html')
 
-    .pipe(replace('%%%facebookAppId', keys.fb))
-    .pipe(replace('%%%scKey', keys.sc))
-    .pipe(replace('%%%ytKey', keys.yt))
+    .pipe(replace('%%%facebookAppId', keys.public.fb))
+    .pipe(replace('%%%scKey', keys.public.sc))
+    .pipe(replace('%%%ytKey', keys.public.yt))
     .pipe(replace('%%%API_URL', apiUrl))
     .pipe(useref())
     //	.pipe(gulpIf('*.js',uglify()))
@@ -105,9 +105,9 @@ gulp.task('useref:main', function () {
 gulp.task('useref:stream', function () {
   return gulp.src('stream/index.html')
 
-    .pipe(replace('%%%facebookAppId', keys.fb))
-    .pipe(replace('%%%scKey', keys.sc))
-    .pipe(replace('%%%ytKey', keys.yt))
+    .pipe(replace('%%%facebookAppId', keys.public.fb))
+    .pipe(replace('%%%scKey', keys.public.sc))
+    .pipe(replace('%%%ytKey', keys.public.yt))
     .pipe(replace('%%%API_URL', apiUrl))
     .pipe(useref())
     //	.pipe(gulpIf('*.js',uglify()))
