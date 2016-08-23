@@ -153,10 +153,11 @@ gulp.task('browserSync:client', function () {
       middleware: [historyApiFallback()],
       routes: {
         "/xyz-player-component": "xyz-player-component",
+        "/client":"client",
         "/stream/xyz-player-component": "xyz-player-component",
         "/stream/xyz-player-component/css": "xyz-player-component/css",
         "/stream": "stream"
-      },
+      }
 
     },
     notify: false,

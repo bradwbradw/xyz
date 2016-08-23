@@ -1,7 +1,6 @@
 <html>
 <head>
-  <meta charset="UTF-8">
-  </meta>
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>XYZ STREAM </title>
   <link rel="stylesheet" type="text/css" href="style.css">
@@ -31,6 +30,13 @@
     <script src="https://w.soundcloud.com/player/api.js"></script>
 
 
+    <script type="text/javascript">
+
+      angular.module('xyzApp', []);
+      angular.module('xyzStream', ['xyzPlayer', 'xyzApp']);
+
+    </script>
+
     <!-- build:js scripts/scripts.js -->
     <script src="../xyz-player-component/xyz-player-directive.js"></script>
     <script src="../xyz-player-component/api.service.js"></script>
@@ -40,7 +46,10 @@
     <script src="../xyz-player-component/youtube-component/youtube-directive.js"></script>
     <script src="../xyz-player-component/soundcloud-component/soundcloud-directive.js"></script>
 
-    <script type="text/javascript" src="main.js">
+
+    <script src="../client/scripts/services/mediaapi.js"></script>
+    <script src="../client/scripts/services/Utility.js"></script>
+    <script type="text/javascript" src="stream-controller.js">
 
     </script>
     <!-- endbuild -->
