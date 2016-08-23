@@ -19,9 +19,12 @@ angular.module('xyzApp')
 
 
     var MediaAPI = {
-      SC: {
+      soundcloud: {
         resolve: function (url) {
           return $window.SC.get('/resolve?url=' + url);
+        },
+        get: function(id){
+          return $window.SC.get('/'+id);
         },
         search: function (query, pages) {
           return $q.when($window.SC.get('/tracks?q=' + query + '&linked_partitioning=1'))
@@ -81,7 +84,7 @@ angular.module('xyzApp')
             });
         }
       },
-      YT: {
+      youtube: {
         search: function (query, limit) {
           // see https://developers.google.com/youtube/v3/docs/videos/list#http-request
 

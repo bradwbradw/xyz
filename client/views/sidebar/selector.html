@@ -1,12 +1,12 @@
 
   <button ng-if="urlResult.kind === 'user'"
-          ng-click="MediaAPI.SC.tracksByUser(urlResult.provider_id)
+          ng-click="MediaAPI.soundcloud.tracksByUser(urlResult.provider_id)
         .then(updateImportView)
         .catch(invalidLink)">
     view all tracks by {{urlResult.artist}}
   </button>
   <button ng-if="urlResult.kind === 'user'"
-          ng-click="MediaAPI.SC.likesByUser(urlResult.provider_id)
+          ng-click="MediaAPI.soundcloud.likesByUser(urlResult.provider_id)
         .then(updateImportView)
         .catch(invalidLink)">
     view all likes by {{urlResult.artist}}

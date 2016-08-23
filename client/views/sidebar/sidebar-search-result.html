@@ -5,12 +5,12 @@
     <button class="add" ng-if="!item.error && isMedia(item)" ng-click="putInSpace(item, $event)">
       add
     </button>
-    <button class="add" ng-if="isSoundcloudArtist(item)" ng-click="MediaAPI.SC.tracksByUser(item.provider_id)
+    <button class="add" ng-if="isSoundcloudArtist(item)" ng-click="MediaAPI.soundcloud.tracksByUser(item.provider_id)
         .then(updateImportView)
         .catch(invalidLink)">
       artist tracks
     </button>
-    <button class="add" ng-if="isSoundcloudArtist(item)" ng-click="MediaAPI.SC.likesByUser(item.provider_id)
+    <button class="add" ng-if="isSoundcloudArtist(item)" ng-click="MediaAPI.soundcloud.likesByUser(item.provider_id)
         .then(updateImportView)
         .catch(invalidLink)">
       artist likes

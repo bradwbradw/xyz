@@ -72,8 +72,8 @@ angular.module('xyzApp')
         if (!getAllUrlsFromString(text)) {
           // text is not a URL! so search
 
-          var ytSearch = MediaAPI.YT.search(text);
-          var scSearch = MediaAPI.SC.search(text);
+          var ytSearch = MediaAPI.youtube.search(text);
+          var scSearch = MediaAPI.soundcloud.search(text);
 
           return $q.all([ytSearch, scSearch]).
             then(function (results) {
@@ -252,7 +252,7 @@ angular.module('xyzApp')
           urlParts = url.split('youtu.be/');
           id = urlParts[1].substr(0, 11);
         }
-        return MediaAPI.YT.get(id)
+        return MediaAPI.youtube.get(id)
           .then(function (result) {
             $log.log('youtube get result:', result);
             return result;
@@ -296,7 +296,7 @@ angular.module('xyzApp')
 //            return {provider: 'soundcloud', provider_id: '228009072'};
         };
 
-        return MediaAPI.SC.resolve(url)
+        return MediaAPI.soundcloud.resolve(url)
           .then(function (result) {
 
             return Utility.clean.SC[result.kind](result);
