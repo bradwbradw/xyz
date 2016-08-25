@@ -1,4 +1,4 @@
-var request = require('request-promise');
+
 
 var MediaApi = require('../../server/controllers/media-api.js');
 
