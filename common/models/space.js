@@ -47,11 +47,16 @@ module.exports = function (Space) {
 
         var playlist = [];
         var songs = data && _.isFunction(data.songs)? data.songs() : [];
+
+        songs = _.filter(songs, function(song){
+          return _.isUndefined(song.public) || song.public == true;
+        });
+
         var response = {};
         if (_.size(songs) <= 0) {
-          var response = {
+          response = {
             success: false,
-            error: 'there are no songs in this space'
+            error: 'there are no available songs in this space'
           };
 
           cb(null, {space:data,playlist:response});
@@ -71,7 +76,7 @@ module.exports = function (Space) {
             seedSong = sortedByDate[0];
           }
 
-          var playlist = [seedSong];
+          playlist = [seedSong];
 
           _.each(seedSong.distances, function (song) {
             playlist.push(_.find(songs, 'id', song.id));
@@ -93,7 +98,6 @@ module.exports = function (Space) {
         if (!data.startTime) {
           response = playlist;
         } else {
-
 
           var now = new Date();
           var started = new Date(data.startTime);
