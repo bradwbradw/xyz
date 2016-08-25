@@ -22,3 +22,15 @@
 .a {
   outline: none;
 }
+
+.xyz-item {
+
+  .dot {
+    border-radius: 2em;
+    border: 2px solid rgba(200, 200, 200, 0.6);
+  }
+
+  .unavailable.dot {
+    opacity: 0.3;
+  }
+}

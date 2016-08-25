@@ -8,6 +8,7 @@
      ng-click="Library.isPlayable(item)? queueIfNotDragging(item): Player.show(item)">
 
   <div class="dot"
+       ng-class="{unavailable: (item.attrs.public === false)}"
       >
     <img ng-src="{{item.attrs.pic? item.attrs.pic : 'images/flowers.png'}}">
   </div>
