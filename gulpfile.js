@@ -115,12 +115,6 @@ gulp.task('useref:stream', function () {
     .pipe(gulp.dest('stream-dist'))
 });
 
-gulp.task('build:production', function (callback) {
-  runSequence('clean', 'loopback', 'sass', 'bower',
-    ['useref:main', 'copyHtml:main', 'copyImages'], ['useref:stream', 'copyCss:stream'],
-    callback
-  )
-});
 
 var jshint = require('gulp-jshint');
 var connect = require('gulp-connect');
@@ -199,8 +193,14 @@ gulp.task('browserSync:stream', function () {
   })
 });
 
-
 gulp.task('build', function (callback) {
+  runSequence('clean', 'loopback', 'sass', 'bower',
+    ['useref:main', 'copyHtml:main', 'copyImages'], ['useref:stream', 'copyCss:stream'],
+    callback
+  )
+});
+
+gulp.task('build:production', function (callback) {
   runSequence('clean', 'loopback', 'sass', 'bower',
     ['useref:main', 'copyHtml:main', 'copyImages'], ['useref:stream', 'copyCss:stream'],
     callback
