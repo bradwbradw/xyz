@@ -1,3 +1,5 @@
+"use strict";
+
 var SC = require('node-soundcloud'),
   _ = require('lodash'),
   when = require('when');
