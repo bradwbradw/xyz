@@ -5,21 +5,21 @@ var MediaApi = require('../../server/controllers/media-api.js');
 module.exports = function (Song) {
 
 
-  Song.observe('before save', function (ctx, next) {
+  Song.observe('before save', function (context, next) {
 
-//    console.log('context: ', ctx);
-    if (ctx.instance) {
-      var song = ctx.instance;
-      MediaApi.checkForAvailability(song)
+    // what is context.instance and context.data?
+    // https://docs.strongloop.com/display/APIC/Operation+hooks#Operationhooks-Operationhookcontextobject
+
+    var item = context.instance || context.data;
+    if (item) {
+      MediaApi.checkForAvailability(item)
         .then(function(available){
-          console.log(song.title+' available? ', available);
-          song.public = available;
+          console.log(item.title+' available? ', available);
+          item.public = available;
         })
         .finally(next);
     } else {
-      console.log('Updated %s matching %j',
-        ctx.Model.songs,
-        ctx.where);
+      console.error('Song before save hook error: no item found ');
 
         next();
     }
@@ -28,11 +28,11 @@ module.exports = function (Song) {
   });
 
   /*
-   Song.afterRemote( 'save', function( ctx, next) {
+   Song.afterRemote( 'save', function( context, next) {
    console.log('*** after creating ***');
-   console.log('request: ',ctx.req);
+   console.log('request: ',context.req);
    console.log();
-   console.log('result: ',ctx.result);
+   console.log('result: ',context.result);
    console.log();
 
    next();
