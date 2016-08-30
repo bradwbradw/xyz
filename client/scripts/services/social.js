@@ -11,23 +11,23 @@
 //https://github.com/pc035860/angular-easyfb
 
 angular.module('xyzApp')
-  .config(function (ezfbProvider, apiKeys, serverConfig) {
+  .config(function (ezfbProvider, apiKeys) {
 
-    if (serverConfig.developing) {
+    if (apiKeys.fb_app_id && apiKeys.fb_app_id !== '0' ) {
+
+      ezfbProvider.setInitParams({
+        // Facebook App ID
+        appId: apiKeys.fb_app_id,
+
+        // Module default is `v2.4`.
+        // If you want to use Facebook platform `v2.3`, you'll have to add the following parameter.
+        // https://developers.facebook.com/docs/javascript/reference/FB.init
+        version: 'v2.3'
+      });
 
     } else {
-
-
-    ezfbProvider.setInitParams({
-      // Facebook App ID
-      appId: apiKeys.fb_app_id,
-
-      // Module default is `v2.4`.
-      // If you want to use Facebook platform `v2.3`, you'll have to add the following parameter.
-      // https://developers.facebook.com/docs/javascript/reference/FB.init
-      version: 'v2.3'
-    });
-  }
+      console.warn('not using facebook connector');
+    }
   });
 
 angular.module('xyzApp')
@@ -80,10 +80,10 @@ angular.module('xyzApp')
 
 //          console.log('refreshing fb');
 
-          $timeout(function(){
+          $timeout(function () {
             Social.FB.connecting = false;
             return $q.reject('Facebook seems unreachable');
-          },7500);
+          }, 7500);
           return Social.FB.setConnecting()
             .then(Social.FB.updateLoginStatus)
             .then(function (res) {
@@ -96,7 +96,7 @@ angular.module('xyzApp')
               Social.FB.loadMe();
             })
             .catch(function (err) {
-              console.error('error loading me:  '+err);
+              console.error('error loading me:  ' + err);
               alert(err);
             })
             .finally(function () {
@@ -124,7 +124,7 @@ angular.module('xyzApp')
             .then(function (data) {
               Social.FB.me = data;
             })
-            .catch(function(err){
+            .catch(function (err) {
               return $q.reject(err);
             })
           );
