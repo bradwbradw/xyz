@@ -1,0 +1,32 @@
+<div class="xyz-item"
+     ng-class="{'focused-dot':isExpanded(item)}"
+     xyz-draggable="{{viewer === 'owner' || viewer === 'contributor'}}">
+
+  <div class="dot"
+       ng-class="{unavailable: (item.attrs.public === false)}"
+     ng-click="isExpanded(item)? closeExpanded() : expand(item)">
+
+    <img ng-src="{{item.attrs.pic? item.attrs.pic : 'images/flowers.png'}}">
+  </div>
+
+  <div class="beside-song" ng-if="isExpanded(item)" layout="row">
+
+    <div layout="column">
+
+      <a ng-href="{{item.attrs.url}}" target="_blank" ellipsis ng-bind="item.attrs.title"></a>
+
+      <div>
+        <div media-preview-toggle="item.attrs"></div>
+        <button ng-click="Library.remove(item.id)">remove</button>
+      </div>
+    </div>
+
+
+    <div class="preview-box" media-preview
+         ng-if="Player.playingItem()">
+
+    </div>
+
+  </div>
+
+</div>

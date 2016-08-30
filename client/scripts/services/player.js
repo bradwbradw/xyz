@@ -8,7 +8,7 @@
  * Service in the xyzApp.
  */
 angular.module('xyzApp')
-  .service('Player', function () {
+  .service('Player', function ($log) {
 
     var Player = {
       current: false,
@@ -20,11 +20,12 @@ angular.module('xyzApp')
         if (Player.current && Player.current.attrs) {
           return Player.current.attrs;
         } else {
-          return false;
+          return Player.current;
         }
       },
       playingItem: function(){
         if (Player.current) {
+          $log.log('playing item is ', Player.current);
           return Player.current;
 
         } else {
@@ -48,23 +49,17 @@ angular.module('xyzApp')
             attrs:item
           }
         }
-
+      },
+      stop: function(){
+        Player.current = false;
       },
       show: function(item){
         Player.current = item;
       },
-      //^^^^ Above were here just for sidebar media player
-      // \/\/\/ below are now as of introducing site-wide player
-
-      playingSpaceId: false,
-
-      playSpace: function(spaceId){
-        Player.playingSpaceId = spaceId;
-      },
-
-      getPlayingSpaceId: function(){
-        return Player.playingSpaceId;
+      isPlaying: function(id){
+        return Player.playingAttrs().provider_id === id;
       }
+
 
     };
 

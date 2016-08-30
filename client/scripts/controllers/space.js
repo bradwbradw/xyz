@@ -17,16 +17,17 @@ angular.module('xyzApp')
 
 
     var expand = function (song) {
-      closeExpanded();
+      closeExpanded('ctrl');
       song.expanded = true;
     };
 
-    var closeExpanded = function () {
-      $log.log('closing expanded');
+    var closeExpanded = function (p) {
+      $log.log('closing expanded ',p);
 
-      _.each(Library.songs, function (song) {
+      _.each(Library.songs(), function (song) {
         song.expanded = false;
       });
+      Player.stop();
     };
 
     var queueIfNotDragging = function(item){
@@ -35,15 +36,14 @@ angular.module('xyzApp')
       } else {
         Player.queue(item);
       }
-
         item.justDropped = false;
 
     };
-    var showExpandedView = function (song) {
+    var isExpanded = function (song) {
       if (song.justDropped) {
         return false;
       }
-      return song.hovering || (song.expanded && !song.dragging);
+      return song.expanded && !song.dragging;
     };
 
     var showControlsView = function (song) {
@@ -71,7 +71,7 @@ angular.module('xyzApp')
     $scope.showControlsView = showControlsView;
     $scope.mouseup = mouseup;
     $scope.mouseleave = mouseleave;
-    $scope.showExpandedView = showExpandedView;
+    $scope.isExpanded = isExpanded;
     $scope.expand = expand;
     $scope.Library = Library;
     $scope.closeExpanded = closeExpanded;
