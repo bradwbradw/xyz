@@ -8,13 +8,12 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SpaceCtrl', function ($rootScope, $scope, $log, $state, Library, Player, space, owner, viewer, contributors) {
+  .controller('SpaceCtrl', function ($rootScope, $scope, $log, $state, Library, Player, Space, space, owner, viewer, contributors) {
 
     // default tab 'add media' should be open
-    if(viewer === 'contributor' || viewer === 'owner'){
+    if (viewer === 'contributor' || viewer === 'owner') {
       $state.go('.add');
     }
-
 
     var expand = function (song) {
       closeExpanded('ctrl');
@@ -22,7 +21,7 @@ angular.module('xyzApp')
     };
 
     var closeExpanded = function (p) {
-      $log.log('closing expanded ',p);
+      $log.log('closing expanded ', p);
 
       _.each(Library.songs(), function (song) {
         song.expanded = false;
@@ -30,13 +29,13 @@ angular.module('xyzApp')
       Player.stop();
     };
 
-    var queueIfNotDragging = function(item){
+    var queueIfNotDragging = function (item) {
       if (item.justDropped) {
         return false;
       } else {
         Player.queue(item);
       }
-        item.justDropped = false;
+      item.justDropped = false;
 
     };
     var isExpanded = function (song) {
@@ -61,11 +60,46 @@ angular.module('xyzApp')
 
     };
 
+    var setFirstSong = function (id) {/*
+      Space.update({
+          where: {
+            id: space.id
+          }
+        },
+        {
+          firstSong: id
+        }).$promise
+        .then(function(result){
+          $log.log('result ', result);
+        })
+        .catch(function(err){
+          $log.error(err);
+        })*/
 
-    var openSidebar = function(){
+      space.firstSong = id;
+      space.$save()
+        .then(function(){
+          Library.fetchSpaceAndSongs(space.id)
+            .then(Library.space)
+            .then(function(space){
+              $scope.space = space;
+            })
+
+        });
+    };
+
+    var isFirstSong = function (song) {
+
+      return song.id === space.firstSong;
+
+    };
+
+    var openSidebar = function () {
       $rootScope.$emit('open-search');
     };
 
+    $scope.isFirstSong = isFirstSong;
+    $scope.setFirstSong = setFirstSong;
     $scope.queueIfNotDragging = queueIfNotDragging;
     $scope.Player = Player;
     $scope.showControlsView = showControlsView;

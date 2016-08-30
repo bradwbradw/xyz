@@ -3,7 +3,7 @@
      xyz-draggable="{{viewer === 'owner' || viewer === 'contributor'}}">
 
   <div class="dot"
-       ng-class="{unavailable: (item.attrs.public === false)}"
+       ng-class="{unavailable: (item.attrs.public === false), 'first-song':isFirstSong(item.attrs)}"
      ng-click="isExpanded(item)? closeExpanded() : expand(item)">
 
     <img ng-src="{{item.attrs.pic? item.attrs.pic : 'images/flowers.png'}}">
@@ -17,6 +17,7 @@
 
       <div>
         <div media-preview-toggle="item.attrs"></div>
+        <button ng-click="setFirstSong(item.id)">set first song</button>
         <button ng-click="Library.remove(item.id)">remove</button>
       </div>
     </div>

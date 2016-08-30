@@ -19,6 +19,10 @@
       border: 2px dotted black;
       background-color: rgba(200, 200, 200, 0.6);
     }
+
+    &.first-song {
+      border: 2px solid blue;
+    }
   }
 
   .beside-song {
