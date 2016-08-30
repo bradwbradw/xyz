@@ -24,8 +24,11 @@ var mongoCreds = constants.mongoCreds;
 
 var keys = constants.keys;
 
-var apiUrl = constants.api.path;//'http://'+ constants.api.host+ ':'+ constants.api.port + constants.api.path + '/';
-
+if(process.env.NODE_ENV === 'production'){
+  var apiUrl = constants.api.path;//'http://'+ constants.api.host+ ':'+ constants.api.port + constants.api.path + '/';
+} else {
+  var apiUrl = 'http://localhost:'+ constants.api.port + constants.api.path;
+}
 console.log('api Url is ', apiUrl);
 
 gulp.task('loopback', function () {
