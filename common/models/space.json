@@ -6,7 +6,9 @@
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
+  "properties": {
+    "firstSong":"string"
+  },
   "validations": [],
   "relations": {
     "songs": {

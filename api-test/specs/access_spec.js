@@ -212,7 +212,7 @@ describe(' space access (permissions) tests ', function () {
   });
 
 
-  it('(unimplemented) random person should not be able to add a song to a space', function (done) {
+  it('random person should not be able to add a song to a space', function (done) {
 
     loginAs(fixtures.users.random.credentials)
       .then(function (auth) {
@@ -234,6 +234,7 @@ describe(' space access (permissions) tests ', function () {
 
       });
   });
+
 
   it('contributor should be able to add a song to a space', function (done) {
 
@@ -281,6 +282,49 @@ describe(' space access (permissions) tests ', function () {
   });
 
 
+
+  it('owner should be able to change first song of a space', function (done) {
+
+    var endpoint = 'spaces/' + firstSpace.id;
+
+    var data = {
+      "firstSong":song.id
+    };
+    request(apiUrl)
+      .put(endpoint)
+      .set('Authorization', authorization.id)
+      .send(data)
+      .expect(200)
+      .catch(function (msg) {
+        console.error('url was ' + apiUrl + endpoint);
+
+        done(msg);
+      })
+      .finally(done);
+
+  });
+
+  it('random person should not be able to change first song of a space', function (done) {
+
+    var endpoint = 'spaces/' + firstSpace.id;
+
+    var data = {
+      "firstSong":song.id
+    };
+    request(apiUrl)
+      .put(endpoint)
+      .set('Authorization', randomAuth.id)
+      .send(data)
+      .expect(401)
+      .catch(function (msg) {
+        console.error('url was ' + apiUrl + endpoint);
+
+        done(msg);
+      })
+      .finally(done);
+
+  });
+
   it('random person should not be able to delete a song from a space', function (done) {
 
     var endpoint = 'spaces/' + firstSpace.id + '/songs/'+song.id;
@@ -315,7 +359,7 @@ describe(' space access (permissions) tests ', function () {
 
   });
 
-  it(' contributor should be able to delete a song from a space', function (done) {
+  it('contributor should be able to delete a song from a space', function (done) {
 
     var endpoint = 'spaces/' + firstSpace.id + '/songs/'+song2.id;
     request(apiUrl)
@@ -331,6 +375,7 @@ describe(' space access (permissions) tests ', function () {
       .finally(done);
 
   });
+
 
 
 
