@@ -13,6 +13,7 @@ var replace = require('gulp-replace');
 
 var docs = require('gulp-ngdocs');
 var exec = require('gulp-exec');
+var exit = require('gulp-exit');
 
 var del = require('del');
 var runSequence = require('run-sequence');
@@ -147,7 +148,7 @@ gulp.task('browserSync:client', function () {
       middleware: [historyApiFallback()],
       routes: {
         "/xyz-player-component": "xyz-player-component",
-        "/client":"client",
+        "/client": "client",
         "/stream/xyz-player-component": "xyz-player-component",
         "/stream/xyz-player-component/css": "xyz-player-component/css",
         "/stream": "stream"
@@ -193,9 +194,14 @@ gulp.task('browserSync:stream', function () {
   })
 });
 
+gulp.task('exit', function(){
+  gulp.src('').pipe(exit());
+});
+
 gulp.task('build', function (callback) {
   runSequence('clean', 'loopback', 'sass', 'bower',
     ['useref:main', 'copyHtml:main', 'copyImages'], ['useref:stream', 'copyCss:stream'],
+    'exit',
     callback
   )
 });
@@ -203,6 +209,7 @@ gulp.task('build', function (callback) {
 gulp.task('build:production', function (callback) {
   runSequence('clean', 'loopback', 'sass', 'bower',
     ['useref:main', 'copyHtml:main', 'copyImages'], ['useref:stream', 'copyCss:stream'],
+    'exit',
     callback
   )
 });
