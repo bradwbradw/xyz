@@ -22,7 +22,7 @@ angular.module('xyzApp')
       var parts = embedUrl.split('embed/');
       parts = parts[1].split('?');
 
-      return 'https://youtube.com/watch?v=' + pats[0];
+      return 'https://youtube.com/watch?v=' + parts[0];
 
     }
 
