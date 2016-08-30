@@ -1,39 +1,16 @@
-<div class="xyz-click-screen" ng-click="closeExpanded()">
+<div class="xyz-click-screen" ng-click="closeExpanded('screen')">
 </div>
 
 
-<div class="xyz-item" ng-repeat="item in Library.songs()"
-     ng-if="Library.songs().length > 0"
-     xyz-draggable="{{viewer === 'owner' || viewer === 'contributor'}}"
-     ng-click="Library.isPlayable(item)? queueIfNotDragging(item): Player.show(item)">
-
-  <div class="dot"
-       ng-class="{unavailable: (item.attrs.public === false)}"
-      >
-    <img ng-src="{{item.attrs.pic? item.attrs.pic : 'images/flowers.png'}}">
-  </div>
-
-  <div class="beside-song" ng-if="false">
-    <div class="hover" ng-if="showExpandedView(item)">
-      {{item.attrs.artist}} - {{item.attrs.title}}
-      {{item.attrs.url}}
-    </div>
-
-    <div ng-if="showExpandedView(item) && showControlsView(item)">
-      <button ng-click="Player.play(item)">preview</button>
-      <button ng-click="Library.remove(item.id)">remove</button>
-    </div>
-  </div>
-
-</div>
-</div>
+<div ng-repeat="item in Library.songs()"
+     ng-include="'views/partials/media-item.html'"></div>
 
 
 <div ng-if="Library.songs().length === 0">
 
   <div class="xyz-item" style="left:45vw; top:10vh;">
 
-    <div class="default dot" ng-click="openSidebar()" >
+    <div class="default dot" ng-click="openSidebar()">
 
     </div>
 

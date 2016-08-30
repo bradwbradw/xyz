@@ -15,12 +15,13 @@
         .catch(invalidLink)">
       artist likes
     </button>
-    <button class="play" ng-if="!item.error && Library.isPlayable(item)" ng-click="Player.play(item)">
-      play
-    </button>
+    <div media-preview-toggle="item"></div>
 
   </div>
-  <div layout="column" class="search-result-details">
+  <div layout="column"
+       class="search-result-details"
+       flex="grow"
+       ng-hide="Player.playingItem().attrs.provider_id === item.provider_id">
 
     <div class="provider">
       <a ng-href="{{item.url}}" target="_blank" ng-if="!item.error">
@@ -44,6 +45,10 @@
     </div>
   </div>
 
+  <div ng-if="Player.isPlaying(item.provider_id)"
+  media-preview flex="grow">
+
+  </div>
 
   <pre class="debug" ng-if="false">{{item | json}}</pre>
 </div>
