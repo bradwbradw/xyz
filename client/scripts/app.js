@@ -13,7 +13,8 @@ var xyzApp = angular.module("xyzApp",
     'lbServices',
     'ls.LiveSet',
     'ls.ChangeStream',
-    'xyzPlayer'
+    'xyzPlayer',
+    'dibari.angular-ellipsis'
   ]);
 
 xyzApp.config(function ($httpProvider) {// jshint ignore:line
