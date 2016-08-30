@@ -17,7 +17,7 @@ var mongoCreds = mongoDbUriTool.parse(mongoUrl);
 module.exports = {
   api: {
     host: process.env.API_HOST || '',
-    path: process.env.API_URL || '/api',
+    path: process.env.API_URL || '/api/',
     port: process.env.PORT || 5005
   },
   keys: {

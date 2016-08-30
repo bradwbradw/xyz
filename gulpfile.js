@@ -24,7 +24,7 @@ var mongoCreds = constants.mongoCreds;
 
 var keys = constants.keys;
 
-var apiUrl = constants.api.path + '/';//'http://'+ constants.api.host+ ':'+ constants.api.port + constants.api.path + '/';
+var apiUrl = constants.api.path;//'http://'+ constants.api.host+ ':'+ constants.api.port + constants.api.path + '/';
 
 console.log('api Url is ', apiUrl);
 
