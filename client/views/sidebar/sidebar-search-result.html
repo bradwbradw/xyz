@@ -33,7 +33,10 @@
       {{item.artist}}
     </div>
     <div class="title">
-      {{item.title}} ({{item.length | secondsToDateTime | date:'H:mm:ss'}})
+      {{item.title}}
+      <span ng-if="item.length ">
+        ({{item.length | secondsToDateTime | date:'H:mm:ss'}})
+      </span>
     </div>
 
     <div class="error" ng-if="item.error">
