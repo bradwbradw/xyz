@@ -1,0 +1,9 @@
+
+    <button class="play" ng-if="!item.error && Library.isPlayable(item)"
+            ng-click="Player.play(item)" ng-hide="Player.isPlaying(item.provider_id)">
+      preview
+    </button>
+    <button class="play" ng-if="!item.error && Library.isPlayable(item)"
+            ng-click="Player.stop()" ng-show="Player.isPlaying(item.provider_id)">
+      stop
+    </button>

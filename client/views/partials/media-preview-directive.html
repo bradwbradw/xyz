@@ -1,8 +1,4 @@
-<div ng-if="Library.isPlayable(Player.playingItem())">
-playable media
-  <a ng-click="Library.remove(Player.playingItem().id)">
-    (remove)
-  </a>
+<div ng-if="Library.isPlayable(Player.playingItem())" class="media-preview">
 
   <div ng-if="Player.playingAttrs().provider === 'youtube'">
 
@@ -22,6 +18,9 @@ playable media
 
     </youtube>
 
+    <p>
+      id: [{{Player.playingAttrs().provider_id}}]
+    </p>
   </div>
 
 
@@ -38,11 +37,13 @@ playable media
         scrolling="no"
         frameborder="no"
         ng-src="{{iFrameUrl(Player.playingAttrs(), Player.status)}}"
-        >
+    >
 
     </iframe>
 
-    id: [{{Player.playingAttrs().provider_id}}]
+    <p>
+      id: [{{Player.playingAttrs().provider_id}}]
+    </p>
   </div>
 
 
@@ -64,10 +65,10 @@ playable media
 </div>
 
 <div ng-if="!Library.isPlayable(Player.playingItem())">
-<h2>{{Player.playingAttrs().artist }}
+  <h2>{{Player.playingAttrs().artist }}
     {{Player.playingAttrs().title? ' - '+Player.playingAttrs().title : ''}}
     {{Player.playingAttrs().kind? ' ('+Player.playingAttrs().kind+')' : ''}}
-</h2>
+  </h2>
 
   <br/>
   <a ng-href="{{Player.playingAttrs().url}}" target="_blank"> --> visit page
