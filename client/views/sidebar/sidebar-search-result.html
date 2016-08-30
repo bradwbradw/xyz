@@ -1,5 +1,3 @@
-<!--
-    <img src="{{item.pic}}" width="100" />-->
 <div class="search-result" layout="row">
   <div layout="column" class="search-result-actions">
     <button class="add" ng-if="!item.error && isMedia(item)" ng-click="putInSpace(item, $event)">
@@ -46,8 +44,9 @@
   </div>
 
   <div ng-if="Player.isPlaying(item.provider_id)"
-  media-preview flex="grow">
-
+       media-preview flex="grow"></div>
+  <div>
+    <img class='thumbnail' ng-src="{{item.pic}}" width="200"/>
   </div>
 
   <pre class="debug" ng-if="false">{{item | json}}</pre>
