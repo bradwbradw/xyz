@@ -1,42 +1,38 @@
-.search-result{
-
 
   .search-result {
-    background-color:#c2ccd1;
-    margin-bottom:0.5em;
+    background-color: #c2ccd1;
+    max-height: 200px;
+
+    margin-bottom: 0.5em;
   }
 
-  .search-result-actions{
-    background-color:palegreen;
+  .search-result-actions {
+    background-color: #BFF7FF;
 
-    button{
-      background:none;
+    button {
+      background: none;
     }
   }
 
-  .search-result-details{
-    background-color:lightblue;
-    padding:0.5em;
+  .search-result-details {
+    background-color: white;
+    padding: 0.5em;
     border-left: 1px dotted black;
 
-    .provider{
-      font-size:0.7rem;
+    .provider {
+      font-size: 0.7rem;
     }
 
-    .error{
+    .error {
       color: red;
     }
 
-    .artist{
-      font-size:1.1rem;
-      margin-bottom:0.5em;
+    .artist {
+      font-size: 1.1rem;
+      margin-bottom: 0.5em;
     }
-    .title{
-      font-size:0.9rem;
+    .title {
+      font-size: 0.9rem;
     }
   }
 
-  margin-bottom:0.5em;
-
-
-}
