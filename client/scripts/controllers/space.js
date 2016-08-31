@@ -116,5 +116,9 @@ angular.module('xyzApp')
     $scope.owner = owner;
     $scope.viewer = viewer;
 
+    $scope.bgImage = function(url){
+      return 'url('+url+')';
+    }
+
 
   });

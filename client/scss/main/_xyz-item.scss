@@ -11,6 +11,8 @@
 
   .dot {
 
+    background-size: 70px;
+    background-repeat: no-repeat;
     height: 4em;
     width: 4em;
     overflow: hidden;
@@ -22,6 +24,10 @@
 
     &.first-song {
       border: 2px solid blue;
+    }
+
+    img{
+      height:100%;
     }
   }
 

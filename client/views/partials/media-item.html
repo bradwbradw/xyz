@@ -4,9 +4,10 @@
 
   <div class="dot"
        ng-class="{unavailable: (item.attrs.public === false), 'first-song':isFirstSong(item.attrs)}"
-     ng-click="isExpanded(item)? closeExpanded() : expand(item)">
+       ng-click="isExpanded(item)? closeExpanded() : expand(item)"
+        ng-style="{'background-image':bgImage(item.attrs.pic)}">
 
-    <img ng-src="{{item.attrs.pic? item.attrs.pic : 'images/flowers.png'}}">
+    <img ng-src="">
   </div>
 
   <div class="beside-song" ng-if="isExpanded(item)" layout="row">
