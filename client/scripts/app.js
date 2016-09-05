@@ -14,7 +14,8 @@ var xyzApp = angular.module("xyzApp",
     'ls.LiveSet',
     'ls.ChangeStream',
     'xyzPlayer',
-    'dibari.angular-ellipsis'
+    'dibari.angular-ellipsis',
+    'ngToast'
   ]);
 
 xyzApp.config(function ($httpProvider) {// jshint ignore:line
@@ -31,11 +32,18 @@ xyzApp.config(function (localStorageServiceProvider) {
     .setStorageCookieDomain('');
 });
 
+xyzApp.config(['ngToastProvider', function(ngToastProvider) {
+  ngToastProvider.configure({
+    animation: 'slide',
+    dismissOnTimeout: true
+  });
+}]);
+
 xyzApp.filter('secondsToDateTime', [function() {
   return function(seconds) {
     return new Date(1970, 0, 1).setSeconds(_.round(seconds));
   };
-}])
+}]);
 
 var errorAlert = function (err) {
 

@@ -1,8 +1,10 @@
+
+@import 'variables';
+
 @import "helper-tools/bourbon/bourbon";
 
 @import 'base/normalize';
 @import 'base/mixins';
-@import 'base/variables';
 @import 'base/base';
 @import 'base/utility';
 @import 'base/wrappers';
@@ -18,8 +20,12 @@
 @import 'main/stream';
 @import 'main/ui-clickable';
 
+
+
 @import 'sidebar/search-result';
 @import 'sidebar/import';
 
+@import "helper-tools/bootstrap/alerts";
+@import "helper-tools/toast-animation";
 
 
