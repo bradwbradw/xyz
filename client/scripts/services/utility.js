@@ -8,7 +8,7 @@
  * Service in the xyzApp.
  */
 angular.module('xyzApp')
-  .service('Utility', function ($sce, $rootScope) {
+  .service('Utility', function ($sce, $rootScope, $log, ngToast) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
 
@@ -177,6 +177,8 @@ angular.module('xyzApp')
         }
       },
       cleanError: function(thing){
+
+        var apology = 'Sorry, ';
         if(_.isNumber(_.get(thing,'status')) && _.get(thing, 'status') === 404){
           // 404, 405, etc..
           return 'sorry, an unknown error occured';
@@ -185,22 +187,37 @@ angular.module('xyzApp')
           return thing;
         } else {
           if(_.get(thing, 'message')){
-            return _.get(thing, 'message');
+            return apology+_.get(thing, 'message');
           }
 
           if(_.get(thing, 'error.message')){
-            return _.get(thing, 'error.message');
+            return apology+_.get(thing, 'error.message');
           }
 
           if(_.get(thing, 'data.error.errmsg')){
             if (_.get(thing, 'data.error.errmsg').indexOf('duplicate key error') >-1 ){
-              return 'Already exists';
+              return apology+'Already exists';
             }
           }
+
+          if(_.isObject(_.get(thing, 'data.error.details.messages'))){
+            var out = '';
+            _.each(_.get(thing, 'data.error.details.messages'), function(problem, withThing){
+              out += '  '+withThing+ ': '+problem + '.';
+
+            });
+            return apology+out;
+          }
+
+          $log.error('unknown error format: ',thing);
+          return thing;
         }
       },
       showError: function(error){
-        $rootScope.showError(Utility.cleanError(error));
+        ngToast.create({
+          className: 'danger',
+          content: Utility.cleanError(error)
+        });
       }
     };
     return Utility;
