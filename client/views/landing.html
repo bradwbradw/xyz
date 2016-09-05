@@ -11,7 +11,7 @@
 
     <h4>Sign up</h4>
     <form layout="column" layout-align="center center"
-        ng-submit="clearError(registerData).then(User.register).then(User.login).catch(showError)">
+        ng-submit="register(registerData)">
 
       <input ng-model="registerData.name" placeholder="your name"><br/>
       <input ng-model="registerData.email" placeholder="email" type="email" required><br/>

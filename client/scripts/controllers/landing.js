@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('LandingCtrl', function ($rootScope, $scope, $q, $timeout, $log, Dj, User, Server, Space, publicSpaces, Player, Social, Utility) {
+  .controller('LandingCtrl', function ($rootScope, $scope, $q, $timeout, $log, ngToast, Dj, User, Server, Space, publicSpaces, Player, Social, Utility) {
 
     $scope.Dj = Dj;//.findById({id:'5684f858d4b1e4996ec6d9bf'});
 
@@ -16,10 +16,7 @@ angular.module('xyzApp')
 
     $scope.publicSpaces = publicSpaces;
 
-    var showError = function (error) {
-
-      $rootScope.error = Utility.cleanError(error);
-    };
+    var showError = Utility.showError;
 
     var clearError = function (thing) {
       $rootScope.error = '';
@@ -54,6 +51,12 @@ angular.module('xyzApp')
       return space.ownerId === User.get().id;
     };
 
+    var register = function(registerData){
+
+        User.register(registerData)
+        .then(User.login)
+        .catch(showError)
+    };
     var login = function (loginData) {
       clearError(loginData)
         .then(User.login)
@@ -76,6 +79,7 @@ angular.module('xyzApp')
         .catch(showError)
     };
     $scope.login = login;
+    $scope.register = register;
     $scope.spaceIsOwned = spaceIsOwned;
     $scope.isAdding = isAdding;
     $scope.setAdding = setAdding;
