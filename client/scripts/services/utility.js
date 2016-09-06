@@ -178,6 +178,10 @@ angular.module('xyzApp')
       },
       cleanError: function(thing){
 
+        var codes = {
+          'EMAIL_NOT_FOUND': "Couldn't find that email address."
+        };
+
         var apology = 'Sorry, ';
         if(_.isNumber(_.get(thing,'status')) && _.get(thing, 'status') === 404){
           // 404, 405, etc..
@@ -194,6 +198,7 @@ angular.module('xyzApp')
             return apology+_.get(thing, 'error.message');
           }
 
+
           if(_.get(thing, 'data.error.errmsg')){
             if (_.get(thing, 'data.error.errmsg').indexOf('duplicate key error') >-1 ){
               return apology+'Already exists';
@@ -209,8 +214,19 @@ angular.module('xyzApp')
             return apology+out;
           }
 
+
+          if(_.get(thing, 'error.code')){
+            var code = _.get(thing, 'error.code');
+            var message = _.get(codes, code );
+            if(message){
+              return apology + message;
+            } else {
+              return apology+ ' error code "'+code+'"';
+            }
+          }
+
           $log.error('unknown error format: ',thing);
-          return thing;
+          return angular.toJSON(thing, true);
         }
       },
       showError: function(error){
