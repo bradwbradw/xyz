@@ -64,7 +64,7 @@ angular.module('xyzApp').
 
       function dragDone(event) {
         item.dragging = false;
-//      $log.log('dragDone event:',event);
+        $log.log('dragDone event:',event);
 
         $document.off('touchmove', dragMove);
         $document.off('touchend', dragDone);
@@ -73,8 +73,6 @@ angular.module('xyzApp').
 
         $log.log('startX ' + startX + ' startY ' + startY);
         $log.log('new X ' + item.attrs.x + ' new Y ' + item.attrs.y);
-
-//        item.expanded = false;
 
         if (item.attrs.x !== startX
           || item.attrs.y !== startY) {

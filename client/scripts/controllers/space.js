@@ -24,9 +24,14 @@ angular.module('xyzApp')
       $log.log('closing expanded ', p);
 
       _.each(Library.songs(), function (song) {
-        song.expanded = false;
+
+        if (_.isUndefined(song.justDropped) && song.justDropped !== true) {
+          song.expanded = false;
+          Player.stop();
+        } else {
+          $log.log(' not closing ', song);
+        }
       });
-      Player.stop();
     };
 
     var queueIfNotDragging = function (item) {
