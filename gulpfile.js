@@ -27,7 +27,7 @@ var keys = constants.keys;
 if(process.env.NODE_ENV === 'production'){
   var apiUrl = constants.api.path;//'http://'+ constants.api.host+ ':'+ constants.api.port + constants.api.path + '/';
 } else {
-  var apiUrl = 'http://localhost:'+ constants.api.port + constants.api.path;
+  var apiUrl = 'http://'+ constants.domain + constants.api.path;
 }
 console.log('api Url is ', apiUrl);
 
@@ -222,7 +222,6 @@ gulp.task('default', function (callback) {
 });
 
 gulp.task('serve', function (callback) {
-  apiUrl = 'http://localhost' + ':' + constants.api.port + constants.api.path + '/';
   runSequence(['loopback', 'bower', 'sass', 'browserSync:client', 'watch'],
     callback
   )

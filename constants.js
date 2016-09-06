@@ -13,12 +13,17 @@ var mongoCreds = mongoDbUriTool.parse(mongoUrl);
  }
  */
 
+var port = process.env.PORT || 5005;
+var ip = process.env.IP || 'localhost';
+console.log('ip is ', ip);
+console.log('port is ', port);
+
 
 module.exports = {
   api: {
     host: process.env.API_HOST || '',
     path: process.env.API_URL || '/api/',
-    port: process.env.PORT || 5005
+    port: port
   },
   keys: {
     public: {
@@ -37,6 +42,6 @@ module.exports = {
   },
   mongoUrl: mongoUrl,
   mongoCreds: mongoCreds,
-  domain: process.env.DOMAIN || 'localhost:5005'
+  domain: process.env.DOMAIN || ip +':'+ port
 
 };
