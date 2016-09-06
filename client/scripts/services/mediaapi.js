@@ -12,10 +12,12 @@ angular.module('xyzApp')
     // AngularJS will instantiate a singleton by calling "new" on this function
 
 
+    if ($window.SC && $window.SC.initialize){
+
     $window.SC.initialize({
-      client_id: apiKeys.sc,
-      redirect_uri: 'http://l.h:8080/sc_callback'
+      client_id: apiKeys.sc
     });
+    }
 
 
     var MediaAPI = {
