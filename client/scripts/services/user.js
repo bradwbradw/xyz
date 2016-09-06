@@ -120,9 +120,13 @@ angular.module('xyzApp')
             Dj.editableSpaces({id: User.get().id}).$promise
           ])
           .then(function (results) {
+            var editable = results[1];
+            _.each(editable, function(space){
+              space.userIsContributor = true;
+            });
             return {
               own: results[0],
-              editable: results[1]
+              editable: editable
             }
           })
           .then(User.setSpaces)

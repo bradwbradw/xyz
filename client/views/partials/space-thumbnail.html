@@ -13,14 +13,34 @@
     <div ng-if="!space.playlist || !space.playlist[0].pic" class="no-img"></div>
 
 
-    <div class="thumbnail-icons" layout="row" layout-align="space-between center">
+    <div class="thumbnail-icons" layout="row" layout-align="space-between center" ng-if="space.playlist">
       <div layout="row">
-        <md-icon ng-if="!spaceIsOwned(space)">group</md-icon>
-        <md-icon class="material-icons" ng-if="!space.playlist[0]">fiber_new</md-icon>
-        <md-icon ng-if="!space.public">lock</md-icon>
+        <md-icon class="icon" ng-if="userIsCollaborator(space)">
+          group
+          <md-tooltip md-delay="500">
+            you are a contributor for this space
+          </md-tooltip>
+        </md-icon>
+        <md-icon class="icon" ng-if="!space.playlist[0]">
+          fiber_new
+          <md-tooltip md-delay="500">
+            new (empty) space
+          </md-tooltip>
+        </md-icon>
+        <md-icon class="icon" ng-if="!space.public ">
+          lock
+          <md-tooltip md-delay="500">
+            private space
+          </md-tooltip>
+        </md-icon>
       </div>
       <div>
-        <md-icon class="icon" ng-click="Player.playSpace(space.id)" ng-if="space.playlist[0]">play_arrow</md-icon>
+        <md-icon class="icon-btn" ng-click="Player.playSpace(space.id)" ng-if="space.playlist[0]">
+          play_arrow
+          <md-tooltip md-delay="500">
+            Play the Space
+          </md-tooltip>
+        </md-icon>
       </div>
 
     </div>

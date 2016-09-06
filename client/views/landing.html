@@ -54,7 +54,7 @@
 
     <br/>
 
-    <div ng-if="!User.hasSpaces()">
+    <div ng-if="!User.hasOwnSpaces()">
       create your first space here:<br/>
     </div>
 
@@ -77,7 +77,6 @@
       </li>
       <li ng-repeat="space in User.getSpaces().own"
           ng-include="'views/partials/space-thumbnail.html'">
-
       </li>
     </ul>
 

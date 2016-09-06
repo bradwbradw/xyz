@@ -47,8 +47,8 @@ angular.module('xyzApp')
       addingSpace = true;
     };
 
-    var spaceIsOwned = function (space) {
-      return space.ownerId === User.get().id;
+    var userIsCollaborator = function (space) {
+      return space.userIsContributor;
     };
 
     var register = function(registerData){
@@ -80,7 +80,7 @@ angular.module('xyzApp')
     };
     $scope.login = login;
     $scope.register = register;
-    $scope.spaceIsOwned = spaceIsOwned;
+    $scope.userIsCollaborator = userIsCollaborator;
     $scope.isAdding = isAdding;
     $scope.setAdding = setAdding;
     $scope.addingSpace = addingSpace;

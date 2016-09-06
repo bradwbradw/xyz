@@ -17,12 +17,12 @@
       ng-model-options="{debounce: 500, updateOn:'default'}"
   placeholder="search users">
 <div ng-repeat="user in getUserSearchResults()">
-  {{user.name}} <md-icon class="material-icons icon"
+  {{user.name}} <md-icon class="icon-btn"
                          ng-click="addToContributors(user)">add_circle</md-icon>
 </div>
 Contributors:
 <div ng-repeat="contributor in getContributors()">
-  {{contributor.name}} <md-icon class="material-icons icon"
+  {{contributor.name}} <md-icon class="icon-btn"
                          ng-click="removeFromContributors(contributor)">remove_circle</md-icon>
 </div>
 
