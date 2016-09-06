@@ -8,41 +8,50 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SpaceCtrl', function ($rootScope, $scope, $log, $state, Library, Player, Space, space, owner, viewer, contributors) {
+  .controller('SpaceCtrl', function ($rootScope, $scope, $log, $state, Server, Library, Player, Space, space, owner, viewer, contributors) {
 
     // default tab 'add media' should be open
     if (viewer === 'contributor' || viewer === 'owner') {
       $state.go('.add');
     }
+    var expanded;
 
     var expand = function (song) {
-      closeExpanded('ctrl');
-      song.expanded = true;
+      expanded = song.id;
+//      closeExpanded('ctrl');
+//      song.expanded = true;
     };
 
 
-    var handleDotClick = function(item){
-      if(item.justDropped){
+    var handleDotClick = function (item) {
+      if (item.justDropped) {
         // do nothing
         item.justDropped = false;
       } else {
-        expand(item);
+        if (isExpanded(item)) {
+          // also do nothing
+        } else {
+          closeExpanded();
+          expand(item);
+        }
       }
     };
 
     var closeExpanded = function (source) {
       $log.log('closing expanded ', source);
+      expanded = null;
+      Player.stop();
+      /*
+       _.each(Library.songs(), function (song) {
 
-      _.each(Library.songs(), function (song) {
-
-        if (song.justDropped === true) {
-          $log.log(' not closing ', song);
-        } else {
-          $log.log(' closing ', song);
-          song.expanded = false;
-          Player.stop();
-        }
-      });
+       if (song.justDropped === true) {
+       $log.log(' not closing ', song);
+       } else {
+       $log.log(' closing ', song);
+       song.expanded = false;
+       Player.stop();
+       }
+       });*/
     };
 
     var queueIfNotDragging = function (item) {
@@ -55,15 +64,12 @@ angular.module('xyzApp')
 
     };
     var isExpanded = function (song) {/*
-      if (song.justDropped) {
-        return false;
-      }*/
-      return song.expanded && !song.dragging;
+     if (song.justDropped) {
+     return false;
+     }*/
+      return expanded === song.id;
     };
 
-    var showControlsView = function (song) {
-      return song.expanded;
-    };
 
     var mouseleave = function (song) {
       $log.log('mouseleave');
@@ -76,32 +82,16 @@ angular.module('xyzApp')
 
     };
 
-    var setFirstSong = function (id) {/*
-      Space.update({
-          where: {
-            id: space.id
-          }
-        },
-        {
-          firstSong: id
-        }).$promise
-        .then(function(result){
-          $log.log('result ', result);
+    var setFirstSong = function (id) {
+
+      Server.updateSpace(space.id, {firstSong:id})
+        .then(function (space) {
+          $scope.space.firstSong = id;
+          $log.debug('result is ', space);
         })
         .catch(function(err){
           $log.error(err);
-        })*/
-
-      space.firstSong = id;
-      space.$save()
-        .then(function(){
-          Library.fetchSpaceAndSongs(space.id)
-            .then(Library.space)
-            .then(function(space){
-              $scope.space = space;
-            })
-
-        });
+        })
     };
 
     var isFirstSong = function (song) {
@@ -114,12 +104,26 @@ angular.module('xyzApp')
       $rootScope.$emit('open-search');
     };
 
+    var removeSong = function(songId){
+
+        return Space.songs.destroyById({id: Library.space().id, fk: songId} )
+          .$promise
+          .then(function(){
+            debugger;
+            _.remove(space.songs, {id:songId});
+          })
+          .catch(function (err) {
+            return $q.reject(err);
+          })
+          .finally(updateView);
+    };
+
     $scope.handleDotClick = handleDotClick;
     $scope.isFirstSong = isFirstSong;
     $scope.setFirstSong = setFirstSong;
+    $scope.removeSong = removeSong;
     $scope.queueIfNotDragging = queueIfNotDragging;
     $scope.Player = Player;
-    $scope.showControlsView = showControlsView;
     $scope.mouseup = mouseup;
     $scope.mouseleave = mouseleave;
     $scope.isExpanded = isExpanded;
@@ -133,8 +137,8 @@ angular.module('xyzApp')
     $scope.owner = owner;
     $scope.viewer = viewer;
 
-    $scope.bgImage = function(url){
-      return 'url('+url+')';
+    $scope.bgImage = function (url) {
+      return 'url(' + url + ')';
     }
 
 

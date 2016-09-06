@@ -108,15 +108,6 @@ angular.module('xyzApp')
             return $q.reject(err);
           });
       },
-      remove: function (id) {
-        return Space.songs.destroyById({id: Library.space().id, fk: id} )
-          .$promise
-          .then(updateView)
-          .catch(function (err) {
-            return $q.reject(err);
-          })
-          .finally(updateView);
-      },
       isPlayable: function (item) {
         if (item.attrs && item.attrs.kind) {
           return item.attrs.kind === 'media';

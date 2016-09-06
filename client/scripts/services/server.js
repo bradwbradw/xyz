@@ -57,14 +57,8 @@ angular.module('xyzApp')
 
     var Server = {
 
-      processing: function () {
-
-        return true;
-      },
-
-      setStartTime: function (space) {
-        var now = new Date();
-        return Space.prototype$updateAttributes({id: space.id}, {startTime: now}).$promise;
+      updateSpace: function (spaceId, attrs) {
+        return Space.prototype$updateAttributes({id: spaceId}, attrs).$promise;
 
       },
 
@@ -214,8 +208,8 @@ angular.module('xyzApp')
         if (!email) {
           return $q.reject('please enter the email address you used to sign up');
         } else {
-          return $http.post(domain+'password-reset/send-request', {email: email})
-            .catch(function(response){
+          return $http.post(domain + 'password-reset/send-request', {email: email})
+            .catch(function (response) {
               $log.error(_.get(response, 'data'));
               return $q.reject(_.get(response, 'data'));
             });
@@ -223,11 +217,11 @@ angular.module('xyzApp')
         }
       },
       // updates the password
-      updatePassword: function (newPassword, token){
+      updatePassword: function (newPassword, token) {
         return $http.post(
-          domain+'password-reset/update',
+          domain + 'password-reset/update',
           {password: newPassword},
-          {headers:{'Authorization': token}})
+          {headers: {'Authorization': token}})
       }
 
 

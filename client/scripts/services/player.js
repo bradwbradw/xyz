@@ -51,6 +51,7 @@ angular.module('xyzApp')
         }
       },
       stop: function(){
+        $log.debug('stop player');
         Player.current = false;
       },
       show: function(item){
