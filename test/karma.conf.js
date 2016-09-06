@@ -32,7 +32,7 @@ module.exports = function(config) {
       'client/vendor/angular-mocks/angular-mocks.js',
       // endbower
       'test/ngMockHttp.js',
-      'test/spec/serverConfig.js',
+      'test/spec/test-serverConfig.js',
       "client/scripts/**/*.js",
       "test/spec/**/*.js"
     ],
