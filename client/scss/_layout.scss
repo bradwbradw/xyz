@@ -171,7 +171,8 @@
 }
 
 .ng-toast {
-  position: absolute;
+  position: fixed;
+  z-index:1;
   top: 3em;
   right: 3em;
 
