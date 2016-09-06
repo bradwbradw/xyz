@@ -20,16 +20,27 @@ angular.module('xyzApp')
       song.expanded = true;
     };
 
-    var closeExpanded = function (p) {
-      $log.log('closing expanded ', p);
+
+    var handleDotClick = function(item){
+      if(item.justDropped){
+        // do nothing
+        item.justDropped = false;
+      } else {
+        expand(item);
+      }
+    };
+
+    var closeExpanded = function (source) {
+      $log.log('closing expanded ', source);
 
       _.each(Library.songs(), function (song) {
 
-        if (_.isUndefined(song.justDropped) && song.justDropped !== true) {
+        if (song.justDropped === true) {
+          $log.log(' not closing ', song);
+        } else {
+          $log.log(' closing ', song);
           song.expanded = false;
           Player.stop();
-        } else {
-          $log.log(' not closing ', song);
         }
       });
     };
@@ -43,10 +54,10 @@ angular.module('xyzApp')
       item.justDropped = false;
 
     };
-    var isExpanded = function (song) {
+    var isExpanded = function (song) {/*
       if (song.justDropped) {
         return false;
-      }
+      }*/
       return song.expanded && !song.dragging;
     };
 
@@ -103,6 +114,7 @@ angular.module('xyzApp')
       $rootScope.$emit('open-search');
     };
 
+    $scope.handleDotClick = handleDotClick;
     $scope.isFirstSong = isFirstSong;
     $scope.setFirstSong = setFirstSong;
     $scope.queueIfNotDragging = queueIfNotDragging;

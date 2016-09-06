@@ -4,7 +4,7 @@
 
   <div class="dot"
        ng-class="{unavailable: (item.attrs.public === false), 'first-song':isFirstSong(item.attrs)}"
-       ng-click="isExpanded(item)? closeExpanded() : expand(item)"
+       ng-click="handleDotClick(item)"
         ng-style="{'background-image':bgImage(item.attrs.pic)}">
 
     <img ng-src="">
@@ -29,6 +29,10 @@
 
     </div>
 
+  </div>
+
+  <div class="debug" ng-if="false"> just dropped?
+    {{item.justDropped}}
   </div>
 
 </div>
