@@ -5,7 +5,7 @@
 
     <h1 class="bar-title" ng-if="title()"> {{title()}}
         <a ng-if="space && space.id" ng-href="stream/index.html#?playlist={{space.id}}" target="_blank">
-            <md-icon class="icon material-design-icons light">open_in_new</md-icon>
+            <md-icon class="icon" ng-click="Player.playSpace(space.id)" ng-if="space.playlist[0]">play_arrow</md-icon>
 
         </a>
     </h1>
