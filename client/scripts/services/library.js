@@ -46,6 +46,21 @@ angular.module('xyzApp')
         }
       },
 
+      add: function (song) {
+        song.date_created = new Date();
+        return Space.songs.create({id: Library.space().id}, song)
+          .$promise
+          .then(function (result) {
+            Library.currentSpace.songs.push({
+              attrs:result,
+              id:result.id
+            });
+          })
+          .catch(function (err) {
+            return $q.reject(err);
+          });
+      },
+
       addToLocalItems: function (newItems) {
         //  console.log('ADDING ITEMS:',newItems);
 //        var newArr = _.isArray(newItems) ? newItems : [newItems];
@@ -87,19 +102,6 @@ angular.module('xyzApp')
 
        },*/
 
-      add: function (song) {
-        console.warn('** space is :', Library.currentSpace);
-        song.date_created = new Date();
-        return Space.songs.create({id: Library.space().id}, song)
-          .$promise
-          .then(function (result) {
-            updateView(result);
-            return result;
-          })
-          .catch(function (err) {
-            return $q.reject(err);
-          });
-      },
       update: function (id, data) {
         $log.warn('** update', data);
         return Space.songs.updateById({id: Library.space().id, fk: id}, data)
