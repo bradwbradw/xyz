@@ -124,7 +124,7 @@ var jshint = require('gulp-jshint');
 var connect = require('gulp-connect');
 var nodemon = require('gulp-nodemon');
 var historyApiFallback = require('connect-history-api-fallback');
-var browserSync = require('browser-sync');
+var browserSync = require('browser-sync').create();
 var open = require('gulp-open');
 
 
@@ -144,7 +144,7 @@ gulp.task('watch', ['browserSync:client', 'sass'], function () {
 });
 
 gulp.task('browserSync:client', function () {
-  browserSync({
+  browserSync.init({
     server: {
       baseDir: 'client',
       index: 'index.html',
@@ -158,6 +158,7 @@ gulp.task('browserSync:client', function () {
       }
 
     },
+    ghostMode: false,
     notify: false,
     ui: {
       port: 9006
@@ -167,12 +168,14 @@ gulp.task('browserSync:client', function () {
 });
 
 gulp.task('browserSync:dist', function () {
-  browserSync({
+  browserSync.init({
     server: {
       baseDir: 'dist',
       index: 'index.html',
       middleware: [historyApiFallback()]
     },
+    ghostMode: false,
+    notify: false,
     port: 9000
   })
 });
@@ -183,7 +186,7 @@ gulp.task('trybuild', function (callback) {
 
 
 gulp.task('browserSync:stream', function () {
-  browserSync({
+  browserSync.init({
     server: {
       baseDir: 'stream',
       index: 'index.html',
@@ -193,6 +196,8 @@ gulp.task('browserSync:stream', function () {
         "/stream": "stream"
       }
     },
+    ghostMode: false,
+    notify: false,
     port: 9001
   })
 });
