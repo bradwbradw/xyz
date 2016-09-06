@@ -54,15 +54,6 @@ angular.module('xyzApp')
        });*/
     };
 
-    var queueIfNotDragging = function (item) {
-      if (item.justDropped) {
-        return false;
-      } else {
-        Player.queue(item);
-      }
-      item.justDropped = false;
-
-    };
     var isExpanded = function (song) {/*
      if (song.justDropped) {
      return false;
@@ -109,7 +100,6 @@ angular.module('xyzApp')
         return Space.songs.destroyById({id: Library.space().id, fk: songId} )
           .$promise
           .then(function(){
-            debugger;
             _.remove(space.songs, {id:songId});
           })
           .catch(function (err) {
@@ -122,7 +112,6 @@ angular.module('xyzApp')
     $scope.isFirstSong = isFirstSong;
     $scope.setFirstSong = setFirstSong;
     $scope.removeSong = removeSong;
-    $scope.queueIfNotDragging = queueIfNotDragging;
     $scope.Player = Player;
     $scope.mouseup = mouseup;
     $scope.mouseleave = mouseleave;
