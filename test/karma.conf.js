@@ -28,7 +28,6 @@ module.exports = function(config) {
       'client/vendor/lodash/lodash.js',
       'client/vendor/angular-easyfb/build/angular-easyfb.js',
       'client/vendor/angular-local-storage/dist/angular-local-storage.js',
-      'client/vendor/angular-touch/angular-touch.js',
       'client/vendor/angular-resource/angular-resource.js',
       'client/vendor/angular-mocks/angular-mocks.js',
       // endbower
