@@ -8,7 +8,7 @@ version 0.12.1.
 
 ##STEP 0
 
-get set up with npm, gulp
+get set up with npm, gulp ( optional, but encouraged: mongo )
 
 ##STEP 1
 
@@ -20,11 +20,41 @@ in another terminal window, run: `gulp serve`
 
 ## OPTIONS
 
-for Step 1, you can supply an environment variable as such:
+### connect to a specific database
+for Step 1, you can supply an environment variable as such, to connect to a specific mongo database
 
-`MONGODB_URL=mongodb://localhost node server/server.js`
+`MONGODB_URL=DB_URL ./dev.sh`
 
-^ this will connect to the local mongo database. (default is to connect to the staging database - the one at https://xxxyyyzzz.herokuapp.com/)
+( the default is to connect to your local database )
+
+You can use the staging database URL if you are unable to install mongo locally
+```
+mongodb://heroku_cc7gbkr1:rusl214k9b95o5d7evobgufue6@ds059135.mongolab.com:59135/heroku_cc7gbkr1
+```
+
+### develop using external ip (good for testing mobile devices)
+
+BrowserSync will allow you to load the site using an external ip. It shows what this ip address is when starting `gulp serve`.  The problem is that some of the api calls would still go to `localhost`.  Unless you have port forwarding set up, this will prevent api calls from executing.
+
+You can solve this by setting the IP variable to whatever browserSync is using:
+
+```
+IP=192.168.0.11 gulp serve
+```
+
+TIP: in the console, you will see a line that looks like:
+```
+Generating lbServices for the API endpoint http://localhost:5005/api//
+```
+
+make sure it shows the correct ip address that you specified.  If it doesn't, run: 
+
+```
+IP=192.168... gulp loopback
+```
+and then run the `serve` command
+
+
 
 ##notes
 
