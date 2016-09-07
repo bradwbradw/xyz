@@ -169,7 +169,7 @@ angular.module('xyzPlayer', [])
 
         var getNowPlaying = function () {
           var now = _.find(_.clone(getPlaylist()), {id: nowPlaying.id});
-          $log.debug('playlist is ', getPlaylist());
+//          $log.debug('playlist is ', getPlaylist());
 //          $log.debug('so now is ',now);
           return now;
         };

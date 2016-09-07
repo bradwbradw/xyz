@@ -69,7 +69,7 @@ angular.module('xyzApp')
           });
 
           Playlister.list = playlist;
-          return list;
+          return playlist;
         }
 
       }

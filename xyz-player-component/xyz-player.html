@@ -9,7 +9,7 @@
   </pre>
 
 
-  <pre class="debug">
+  <pre class="debug" ng-if="false">
     id:{{spaceId}}
     space: {{space}}
     playlist: {{playlist}}
@@ -23,11 +23,12 @@
     <h1>{{space.name}} </h1>
 
   <span class="media-controls">
-      <md-icon class="icon light material-icons" ng-click="play()">play_arrow</md-icon>
-      <md-icon class="icon light material-icons" ng-click="pause()">pause</md-icon>
+      <md-icon class="icon-btn light" ng-click="play()">play_arrow</md-icon>
+      <md-icon class="icon-btn light" ng-click="pause()">pause</md-icon>
+      <md-icon class="icon-btn light" ng-click="next()">skip_next</md-icon>
   </span>
 
-    <h3 class="player-title" ng-if="getNowPlaying().title">{{getNowPlaying().title}}</h3>
+    <h3 class="player-title" ng-if="false && getNowPlaying().title">{{getNowPlaying().title}}</h3>
 
     <div class="media-box">
 

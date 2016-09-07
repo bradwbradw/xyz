@@ -14,7 +14,7 @@ angular.module("xyzPlayer")
         startSeconds: "@"
       },
 
-      template: '<div></div>',
+      template: '<div id="xyz-youtube-iframe"></div>',
 
       link: function (scope, element, attrs, $rootScope) { //jshint ignore:line
 
