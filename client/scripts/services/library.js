@@ -2,7 +2,7 @@
 
 angular.module('xyzApp')
 
-  .service('Library', function ($log, $q, Space, Server) {
+  .service('Library', function ($log, $q, Space, Server, Playlister) {
 
     var Library = {
 
@@ -101,6 +101,12 @@ angular.module('xyzApp')
 
       update: function (id, data) {
         $log.warn('** update', data);
+
+//        var i = _.findIndex(Library.currentSpace.songs, {id:id});
+        Playlister.recompute(Library.currentSpace);
+
+//        Library.currentSpace.songs[i] =
+
         return Space.songs.updateById({id: Library.space().id, fk: id}, data)
           .$promise
           .catch(function (err) {

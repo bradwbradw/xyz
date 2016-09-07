@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SpaceCtrl', function ($rootScope, $scope, $log, $state, Server, Library, Player, Space, space, owner, viewer, contributors) {
+  .controller('SpaceCtrl', function ($rootScope, $scope, $log, $state, Server, Library, Player, Playlister, Space, space, owner, viewer, contributors) {
 
     // default tab 'add media' should be open
     if (viewer === 'contributor' || viewer === 'owner') {
@@ -78,6 +78,8 @@ angular.module('xyzApp')
       Server.updateSpace(space.id, {firstSong:id})
         .then(function (space) {
           $scope.space.firstSong = id;
+
+          Playlister.recompute($scope.space);
           $log.debug('result is ', space);
         })
         .catch(function(err){

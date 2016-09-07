@@ -6,7 +6,7 @@ angular.module('xyzPlayer', [])
       restrict: "A",
 
       scope: {
-        playlist:'&'
+        playlist: '<?'
       },
 
       templateUrl: 'xyz-player-component/xyz-player.html',
@@ -14,6 +14,7 @@ angular.module('xyzPlayer', [])
 
       link: function (scope, element, attrs) { //jshint ignore:line
 
+        $log.debug('scope.playlist is ', scope.playlist);
         scope.soundcloudId = 76067623;
         var mediaProviders = {
           youtube: {
@@ -133,7 +134,9 @@ angular.module('xyzPlayer', [])
           ]);
 
         var loadPlaylist = function (spaceId) {
-
+          if (getPlaylist()) {
+            return $q.resolve(getPlaylist());
+          }
           return Api.getPlaylist(spaceId);
         };
 
@@ -142,8 +145,12 @@ angular.module('xyzPlayer', [])
         var space = false;
         var nowPlaying = {};
 
-        var getPlaylist = function(){
-          return playlist;
+        var getPlaylist = function () {
+          if (scope.playlist) {
+            return scope.playlist;
+          } else {
+            return playlist;
+          }
         };
 
         var play = function () {
@@ -155,20 +162,20 @@ angular.module('xyzPlayer', [])
           mediaProviders[getNowPlaying().provider].pause();
         };
 
-        var next = function(){
+        var next = function () {
           go();
         };
 
 
-
         var getNowPlaying = function () {
-          var now = _.find(_.clone(getPlaylist()), {id:nowPlaying.id});
-//          $log.debug('playlist is ', getPlaylist());
+          var now = _.find(_.clone(getPlaylist()), {id: nowPlaying.id});
+          $log.debug('playlist is ', getPlaylist());
 //          $log.debug('so now is ',now);
           return now;
         };
 
         var setNowPlaying = function (songObj) {
+          $log.debug('set now playing to ', songObj);
           nowPlaying = songObj;
         };
 
@@ -207,8 +214,8 @@ angular.module('xyzPlayer', [])
         var loadAndPlay = function (spaceId) {
           $q.all([loadPlaylist(), serviceProvidersLoaded])
             .then(function (results) {
-              playlist = _.get(results[0], 'playlist');
-              scope.space = _.get(results[0], 'space');
+              playlist = _.get(results[0], 'playlist', results[0]);
+              scope.space = _.get(results[0], 'space', scope.space);
 
               // assuming auto-play, otherwise, bind go() to a button click or something
               if (_.size(playlist) > 0) {
@@ -221,8 +228,8 @@ angular.module('xyzPlayer', [])
               $interval(function () {
                 loadPlaylist()
                   .then(function (result) {
-                    playlist = _.get(result, 'playlist');
-                    console.debug('refresh playlist done: first song is '+playlist[0].title);
+                    playlist = _.get(result, 'playlist', result);
+                    console.debug('refresh playlist done: first song is ' + playlist[0].title);
 //                    scope.space = _.get(results, 'space');
                   })
               }, 10 * 1000);
@@ -232,11 +239,13 @@ angular.module('xyzPlayer', [])
 
 
         attrs.$observe('spaceId', function (spaceId) {
-          $log.debug('space changed: '+spaceId);
+          $log.debug('space changed: ' + spaceId);
           if (getNowPlaying()) {
             pause();
           }
-          loadAndPlay(spaceId);
+          if (spaceId !== "") {
+            loadAndPlay(spaceId);
+          }
         });
 
         if ($location.search().playlist) {

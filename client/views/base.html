@@ -10,12 +10,12 @@
 
   <div ui-view="xyzPlayer"></div>
 
-  <div ng-controller="SiteWidePlayerCtrl">
+  <div class="xyz-player-container" ng-controller="SiteWidePlayerCtrl">
     <div xyz-player
-         spaceId="{{getPlayingSpace().id}}"
+         space-id="{{getPlayingSpace().id}}"
          space="{{getPlayingSpace()}}"
          playlist="Playlister.list"
-         ng-if="getPlayingSpace()">
+         ng-show="getPlayingSpace()">
 
     </div>
   </div>
