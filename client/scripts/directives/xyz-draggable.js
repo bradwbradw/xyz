@@ -10,8 +10,8 @@ angular.module('xyzApp').directive('xyzDraggable', function ($document, $log, Li
 
     var startX;
     var startY;
-    var x = parseFloat(item.attrs.x) || 0;
-    var y = parseFloat(item.attrs.y) || 0;
+    var x = parseFloat(item.x) || 0;
+    var y = parseFloat(item.y) || 0;
 
     element.css({
       top: y + 'px',
@@ -62,8 +62,8 @@ angular.module('xyzApp').directive('xyzDraggable', function ($document, $log, Li
         left: x + 'px',
         top: y + 'px'
       });
-      item.attrs.x = x;
-      item.attrs.y = y;
+      item.x = x;
+      item.y = y;
     }
 
     function dragDone(event) {
@@ -76,16 +76,16 @@ angular.module('xyzApp').directive('xyzDraggable', function ($document, $log, Li
       $document.off('mouseup', dragDone);
 
       $log.log('startX ' + startX + ' startY ' + startY);
-      $log.log('new X ' + item.attrs.x + ' new Y ' + item.attrs.y);
+      $log.log('new X ' + item.x + ' new Y ' + item.y);
 
-      if (item.attrs.x !== startX
-        || item.attrs.y !== startY) {
+      if (item.x !== startX
+        || item.y !== startY) {
         // assume that a drag was performed
         $log.debug('set just dropped to true for item ',item);
         item.justDropped = true;
 //        event.stopPropagation();
         // item was actually dragged
-        Library.update(item.id, item.attrs);
+        Library.update(item.id, item);
       } else {
         // assume there was no drag performed (long press)
         $log.debug('set just dropped to false for item ',item);

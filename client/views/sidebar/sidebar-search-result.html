@@ -19,7 +19,7 @@
   <div layout="column"
        class="search-result-details"
        flex="grow"
-       ng-hide="Player.playingItem().attrs.provider_id === item.provider_id">
+       ng-hide="Player.playingItem().provider_id === item.provider_id">
 
     <div class="provider">
       <a ng-href="{{item.url}}" target="_blank" ng-if="!item.error">

@@ -13,15 +13,11 @@ angular.module('xyzApp')
     var Player = {
       current: false,
       status:{
-        autoplay: false,
+        autoplay: true,
         startFrom: 0
       },
       playingAttrs: function () {
-        if (Player.current && Player.current.attrs) {
-          return Player.current.attrs;
-        } else {
-          return Player.current;
-        }
+        return Player.current;
       },
       playingItem: function(){
         if (Player.current) {
@@ -38,17 +34,7 @@ angular.module('xyzApp')
 
       },
       play: function (item) {
-        Player.status.autoplay = true;
-        if(item.id){
-          // the item is already saved (playing from library)
         Player.current = item;
-        } else {
-          // the item is being previewed (not yet saved)
-          Player.current = {
-            saveable:true,
-            attrs:item
-          }
-        }
       },
       stop: function(){
         $log.debug('stop player');

@@ -51,10 +51,7 @@ angular.module('xyzApp')
         return Space.songs.create({id: Library.space().id}, song)
           .$promise
           .then(function (result) {
-            Library.currentSpace.songs.push({
-              attrs:result,
-              id:result.id
-            });
+            Library.currentSpace.songs.push(result);
           })
           .catch(function (err) {
             return $q.reject(err);
@@ -111,8 +108,8 @@ angular.module('xyzApp')
           });
       },
       isPlayable: function (item) {
-        if (item.attrs && item.attrs.kind) {
-          return item.attrs.kind === 'media';
+        if (item && item.kind) {
+          return item.kind === 'media';
         } else if (item.kind) {
           return item.kind === 'media';
         }
@@ -153,13 +150,8 @@ angular.module('xyzApp')
 
       var preparedLibrary = [];
       _.each(rawLibrary, function (song) { //jshint ignore:line
-        preparedLibrary.push(
-          {
-            id: song.id,
-            attrs: song,
-            editing: false
-          }
-        );
+        song.editing = false;
+        preparedLibrary.push(song);
       });
 
       return preparedLibrary;

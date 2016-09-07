@@ -3,9 +3,9 @@
      xyz-draggable="{{viewer === 'owner' || viewer === 'contributor'}}">
 
   <div class="dot"
-       ng-class="{unavailable: (item.attrs.public === false), 'first-song':isFirstSong(item.attrs)}"
+       ng-class="{unavailable: (item.public === false), 'first-song':isFirstSong(item)}"
        ng-click="handleDotClick(item)"
-        ng-style="{'background-image':bgImage(item.attrs.pic)}">
+        ng-style="{'background-image':bgImage(item.pic)}">
 
     <img ng-src="">
   </div>
@@ -14,10 +14,10 @@
 
     <div layout="column">
 
-      <a ng-href="{{item.attrs.url}}" target="_blank" ellipsis ng-bind="item.attrs.title"></a>
+      <a ng-href="{{item.url}}" target="_blank" ellipsis ng-bind="item.title"></a>
 
       <div>
-        <div media-preview-toggle="item.attrs"></div>
+        <div media-preview-toggle="item"></div>
         <button ng-click="setFirstSong(item.id)">set first song</button>
         <button ng-click="removeSong(item.id)">remove</button>
       </div>
