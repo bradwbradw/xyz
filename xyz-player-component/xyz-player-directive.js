@@ -5,7 +5,9 @@ angular.module('xyzPlayer', [])
     return {
       restrict: "A",
 
-      scope: {},
+      scope: {
+        playlist:'&'
+      },
 
       templateUrl: 'xyz-player-component/xyz-player.html',
 
@@ -131,6 +133,7 @@ angular.module('xyzPlayer', [])
           ]);
 
         var loadPlaylist = function (spaceId) {
+
           return Api.getPlaylist(spaceId);
         };
 
@@ -202,7 +205,7 @@ angular.module('xyzPlayer', [])
 
 
         var loadAndPlay = function (spaceId) {
-          $q.all([loadPlaylist(spaceId), serviceProvidersLoaded])
+          $q.all([loadPlaylist(), serviceProvidersLoaded])
             .then(function (results) {
               playlist = _.get(results[0], 'playlist');
               scope.space = _.get(results[0], 'space');
@@ -216,7 +219,7 @@ angular.module('xyzPlayer', [])
               }
 
               $interval(function () {
-                loadPlaylist(spaceId)
+                loadPlaylist()
                   .then(function (result) {
                     playlist = _.get(result, 'playlist');
                     console.debug('refresh playlist done: first song is '+playlist[0].title);
@@ -228,7 +231,7 @@ angular.module('xyzPlayer', [])
         };
 
 
-        attrs.$observe('space', function (spaceId) {
+        attrs.$observe('spaceId', function (spaceId) {
           $log.debug('space changed: '+spaceId);
           if (getNowPlaying()) {
             pause();

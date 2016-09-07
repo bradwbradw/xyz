@@ -12,8 +12,10 @@
 
   <div ng-controller="SiteWidePlayerCtrl">
     <div xyz-player
-         space="{{Player.getPlayingSpaceId()}}"
-         ng-if="Player.getPlayingSpaceId()">
+         spaceId="{{getPlayingSpace().id}}"
+         space="{{getPlayingSpace()}}"
+         playlist="Playlister.list"
+         ng-if="getPlayingSpace()">
 
     </div>
   </div>
