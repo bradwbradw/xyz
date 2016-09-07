@@ -27,7 +27,7 @@ module.exports = {
   },
   keys: {
     public: {
-      fb: process.env.FB_APP_ID || '1507355422928214',
+      fb: process.env.FB_APP_ID || 0,//'1507355422928214',
       sc: process.env.SC_CLIENT_ID || 'cb16ad8471c6da3d93dc120fb8160b89',
       yt: process.env.YT_KEY || 'AIzaSyAv5-et2TSQ3VsA5eKLviq2KjfExzFLxO8'
     },
