@@ -256,7 +256,7 @@ gulp.task('exit', function (done) {
 
 
 gulp.task('build',
-  gulp.series('clean', 'loopback', 'sass', 'bower',
+  gulp.series('clean', 'loopback', 'sass', 'bower','templates',
     gulp.parallel('useref:main', 'copyHtml:main', 'copyImages'),
     gulp.parallel('useref:stream', 'copyCss:stream'), 'exit')
 );
