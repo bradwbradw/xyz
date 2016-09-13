@@ -1,9 +1,78 @@
-<div class="xyz-click-screen" ng-click="closeExpanded('screen')">
-</div>
+<svg xmlns="http://www.w3.org/2000/svg"
+     ng-click="closeExpanded('screen')"
+     class="space-svg-view" >
+
+
+  <path class="playlist-line" ng-attr-d="{{linePath(Playlister.list || [])}}"></path>
+
+  <g ng-repeat="item in space.songs" >
+
+
+    <defs>
+
+      <pattern
+          id="{{'image'+item.id}}"
+          height="100%"
+          width="100%">
+        <image
+            ng-attr-x="{{item.provider === 'youtube'? -50 : -20}}"
+            ng-attr-y="{{item.provider === 'youtube'? -40 : -20}}"
+            ng-attr-height="{{item.provider === 'youtube'? '150px': '100px'}}"
+            ng-attr-width="{{item.provider === 'youtube'? '150px': '100px'}}"
+            ng-href="{{item.pic}}"
+            xlink:href=""/>
+      </pattern>
+    </defs>
+    <circle
+        ng-attr-r="{{dotRadius}}" class="xyz-item"
+        xyz-draggable="item"
+        space="space"
+        can-drag="true"
+        fill="{{Utility.absoluteRef('image'+item.id)}}"
+        ng-attr-stroke="{{isFirstSong(item)? 'blue' : 'lightblue'}}" stroke-width="0.5%"
+         ng-class="{unavailable: (item.public === false), 'first-song':isFirstSong(item)}"
+
+    ng-click="handleDotClick(item, $event)">
+
+    </circle>
+  </g>
+
+
+</svg>
+
+
+  <div class="expanded-popup"
+       ng-style="songExpandedPopupCss()"
+       ng-if="expandedItem()"
+       layout="row">
+
+    <div layout="column">
+
+      <a ng-href="{{expandedItem().url}}"
+         target="_blank"
+         ng-bind="expandedItem().title"
+         ellipsis></a>
+
+      <div>
+        <div media-preview-toggle="expandedItem()"></div>
+        <button ng-click="setFirstSong(expandedItem().id)">set first song</button>
+        <button ng-click="removeSong(expandedItem().id)">remove</button>
+      </div>
+    </div>
+
+
+    <div class="preview-box" media-preview
+         ng-if="Player.playingItem()">
+
+    </div>
+
+  </div>
+
+
 
 
 <div ng-repeat="item in space.songs"
-     ng-include="'views/partials/media-item.html'"></div>
+     ng-include="'views/partials/media-item.html'"  ng-if='false'></div>
 
 
 <div ng-if="Library.songs().length === 0">

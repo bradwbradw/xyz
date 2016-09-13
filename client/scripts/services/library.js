@@ -116,8 +116,8 @@ angular.module('xyzApp')
       isPlayable: function (item) {
         if (item && item.kind) {
           return item.kind === 'media';
-        } else if (item.kind) {
-          return item.kind === 'media';
+        } else {
+          return false;
         }
       },
 

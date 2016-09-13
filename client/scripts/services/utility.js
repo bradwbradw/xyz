@@ -8,7 +8,7 @@
  * Service in the xyzApp.
  */
 angular.module('xyzApp')
-  .service('Utility', function ($sce, $rootScope, $log, ngToast) {
+  .service('Utility', function ($sce, $rootScope, $log, $location, ngToast) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
 
@@ -176,64 +176,68 @@ angular.module('xyzApp')
           return 'https://' + domainOrUrl;
         }
       },
-      cleanError: function(thing){
+      cleanError: function (thing) {
 
         var codes = {
           'EMAIL_NOT_FOUND': "Couldn't find that email address."
         };
 
         var apology = 'Sorry, ';
-        if(_.isNumber(_.get(thing,'status')) && _.get(thing, 'status') === 404){
+        if (_.isNumber(_.get(thing, 'status')) && _.get(thing, 'status') === 404) {
           // 404, 405, etc..
           return 'sorry, an unknown error occured';
         }
-        if(_.isString(thing)){
+        if (_.isString(thing)) {
           return thing;
         } else {
-          if(_.get(thing, 'message')){
-            return apology+_.get(thing, 'message');
+          if (_.get(thing, 'message')) {
+            return apology + _.get(thing, 'message');
           }
 
-          if(_.get(thing, 'error.message')){
-            return apology+_.get(thing, 'error.message');
+          if (_.get(thing, 'error.message')) {
+            return apology + _.get(thing, 'error.message');
           }
 
 
-          if(_.get(thing, 'data.error.errmsg')){
-            if (_.get(thing, 'data.error.errmsg').indexOf('duplicate key error') >-1 ){
-              return apology+'Already exists';
+          if (_.get(thing, 'data.error.errmsg')) {
+            if (_.get(thing, 'data.error.errmsg').indexOf('duplicate key error') > -1) {
+              return apology + 'Already exists';
             }
           }
 
-          if(_.isObject(_.get(thing, 'data.error.details.messages'))){
+          if (_.isObject(_.get(thing, 'data.error.details.messages'))) {
             var out = '';
-            _.each(_.get(thing, 'data.error.details.messages'), function(problem, withThing){
-              out += '  '+withThing+ ': '+problem + '.';
+            _.each(_.get(thing, 'data.error.details.messages'), function (problem, withThing) {
+              out += '  ' + withThing + ': ' + problem + '.';
 
             });
-            return apology+out;
+            return apology + out;
           }
 
 
-          if(_.get(thing, 'error.code')){
+          if (_.get(thing, 'error.code')) {
             var code = _.get(thing, 'error.code');
-            var message = _.get(codes, code );
-            if(message){
+            var message = _.get(codes, code);
+            if (message) {
               return apology + message;
             } else {
-              return apology+ ' error code "'+code+'"';
+              return apology + ' error code "' + code + '"';
             }
           }
 
-          $log.error('unknown error format: ',thing);
+          $log.error('unknown error format: ', thing);
           return angular.toJSON(thing, true);
         }
       },
-      showError: function(error){
+      showError: function (error) {
         ngToast.create({
           className: 'danger',
           content: Utility.cleanError(error)
         });
+      },
+
+      absoluteRef: function (id) {
+        return 'url(' + $location.absUrl() + '#'+id + ')';
       }
     };
     return Utility;

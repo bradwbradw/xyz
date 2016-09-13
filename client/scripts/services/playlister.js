@@ -58,7 +58,9 @@ angular.module('xyzApp')
 
           if (space.firstSong) {
             seedSong = _.find(songs, {id: space.firstSong});
-          } else {
+          }
+
+          if (_.isUndefined(seedSong)) {
             seedSong = _.first(_.sortBy(songs, 'date_saved'));
           }
 
