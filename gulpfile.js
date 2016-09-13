@@ -16,7 +16,6 @@ var exec = require('gulp-exec');
 var exit = require('gulp-exit');
 
 var del = require('del');
-var runSequence = require('run-sequence');
 
 var constants = require('./constants');
 
@@ -24,10 +23,36 @@ var mongoCreds = constants.mongoCreds;
 
 var keys = constants.keys;
 
-if(process.env.NODE_ENV === 'production'){
+var jshint = require('gulp-jshint');
+var connect = require('gulp-connect');
+var nodemon = require('gulp-nodemon');
+var historyApiFallback = require('connect-history-api-fallback');
+var browserSync = require('browser-sync').create();
+var open = require('gulp-open');
+
+var paths = {
+  src: {
+    sass: ['client/scss/**/*.scss', 'xyz-player-component/**/*.scss'],
+    views: ['client/views/**/*.html', 'xyz-player-component/*.html'],
+    scripts: 'client/scripts'
+  }
+};
+
+var appName = 'xyzApp';
+
+var TEMPLATE_HEADER = '\'use strict\';' +
+'var app = window.angular.module(\'' + appName + '\');'
++ 'app.run([\'$templateCache\', function($templateCache) {';
+
+function reloadB (done) {
+  browserSync.reload();
+  done();
+}
+
+if (process.env.NODE_ENV === 'production') {
   var apiUrl = constants.api.path;//'http://'+ constants.api.host+ ':'+ constants.api.port + constants.api.path + '/';
 } else {
-  var apiUrl = 'http://'+ constants.domain + constants.api.path;
+  var apiUrl = 'http://' + constants.domain + constants.api.path;
 }
 console.log('api Url is ', apiUrl);
 
@@ -44,26 +69,30 @@ gulp.task('loopback', function () {
 //lb-ng server/server.js client/scripts/services/lb-services.js -u http://0.0.0.0:3000/api && node docs.js
 
 gulp.task('clean', function () {
-  return del.sync('dist');
+  return del('dist');
 });
 
-gulp.task('sass', function () {
-  var mainSass = gulp.src([
+gulp.task('reload', reloadB);
+
+gulp.task('sass:app', function () {
+
+  return gulp.src([
       'client/scss/**/*.scss',
       'xyz-player-component/**/*.scss'
-    ]
-    )
+    ])
     .pipe(sass()) // Using gulp-sass
-    .pipe(gulp.dest('client/css'));
-
-  var xyzPlayerComponentSass =
-    gulp.src('xyz-player-component/**/*.scss')
-      .pipe(sass())
-      .pipe(gulp.dest('xyz-player-component/css'));
-
-  return [mainSass, xyzPlayerComponentSass];
-
+    .pipe(gulp.dest('client/css'))
+//    .pipe(browserSync.reload({stream: true}));
 });
+gulp.task('sass:player', function () {
+  return gulp.src('xyz-player-component/**/*.scss')
+    .pipe(sass())
+    .pipe(gulp.dest('xyz-player-component/css'))
+//    .pipe(browserSync.reload({stream: true}));
+});
+
+
+gulp.task('sass', gulp.parallel('sass:app', 'sass:player'));
 
 gulp.task('bower', function () {
   return bower()
@@ -74,8 +103,7 @@ gulp.task('copyHtml:main', function () {
   return gulp.src([
       'client/views/**/*.html',
       'xyz-player-component/*.html'
-    ]
-    )
+    ])
     .pipe(gulp.dest('dist/views'))
 });
 
@@ -120,30 +148,7 @@ gulp.task('useref:stream', function () {
 });
 
 
-var jshint = require('gulp-jshint');
-var connect = require('gulp-connect');
-var nodemon = require('gulp-nodemon');
-var historyApiFallback = require('connect-history-api-fallback');
-var browserSync = require('browser-sync').create();
-var open = require('gulp-open');
-
-
-gulp.task('watch', ['browserSync:client', 'sass'], function () {
-  gulp.watch([
-    'client/scss/**/*.scss',
-    'xyz-player-component/**/*.scss'
-  ], ['sass']);
-  gulp.watch([
-    'client/*.html',
-    'client/css/*.css', // this line is actually not supposed to be here, updated sass should get compiled and injected without reloading
-    'client/views/**/*.html',
-    'client/scripts/**/*.js',
-    'xyz-player-component/**/*.js',
-    'xyz-player-component/**/*.html'
-  ], browserSync.reload);
-});
-
-gulp.task('browserSync:client', function () {
+gulp.task('browserSync:client', function (done) {
   browserSync.init({
     server: {
       baseDir: 'client',
@@ -158,16 +163,21 @@ gulp.task('browserSync:client', function () {
       }
 
     },
+    injectChanges:true,
+        logLevel: 'debug',
+        logConnections: true,
     ghostMode: false,
     notify: false,
+    browser:'firefox',
     ui: {
       port: 9006
     },
     port: 9005
-  })
+  });
+  done();
 });
 
-gulp.task('browserSync:dist', function () {
+gulp.task('browserSync:dist', function (done) {
   browserSync.init({
     server: {
       baseDir: 'dist',
@@ -176,16 +186,15 @@ gulp.task('browserSync:dist', function () {
     },
     ghostMode: false,
     notify: false,
+    reloadDelay: 500,
     port: 9000
-  })
-});
-
-gulp.task('trybuild', function (callback) {
-  runSequence('build', 'browserSync:dist', callback);
+  });
+  done();
 });
 
 
-gulp.task('browserSync:stream', function () {
+
+gulp.task('browserSync:stream', function (done) {
   browserSync.init({
     server: {
       baseDir: 'stream',
@@ -198,57 +207,86 @@ gulp.task('browserSync:stream', function () {
     },
     ghostMode: false,
     notify: false,
+    reloadDelay: 500,
     port: 9001
-  })
-});
-
-gulp.task('exit', function(){
-  gulp.src('').pipe(exit());
-});
-
-gulp.task('build', function (callback) {
-  runSequence('clean', 'loopback', 'sass', 'bower',
-    ['useref:main', 'copyHtml:main', 'copyImages'], ['useref:stream', 'copyCss:stream'],
-    'exit',
-    callback
-  )
-});
-
-gulp.task('build:production', function (callback) {
-  runSequence('clean', 'loopback', 'sass', 'bower',
-    ['useref:main', 'copyHtml:main', 'copyImages'], ['useref:stream', 'copyCss:stream'],
-    'exit',
-    callback
-  )
-});
-
-gulp.task('default', function (callback) {
-  runSequence('serve', callback)
-});
-
-gulp.task('serve', function (callback) {
-  runSequence(['loopback', 'bower', 'sass', 'browserSync:client', 'watch'],
-    callback
-  )
+  });
+  done();
 });
 
 
-gulp.task('watchStream', ['browserSync:stream', 'sass'], function () {
-  gulp.watch('stream/scss/**/*.scss', ['sass']);
+
+gulp.task('templates', function () {
+
+  var templateCache = require('gulp-angular-templatecache');
+
+  return gulp.src(paths.src.views)
+    .pipe(templateCache({templateHeader: TEMPLATE_HEADER}))
+    .pipe(gulp.dest(paths.src.scripts));
+});
+
+
+gulp.task('watch:sass', function (done) {
+  gulp.watch(paths.src.sass)
+    .on('change', gulp.series('sass', reloadB) );
+  done()
+});
+
+gulp.task('watch:views', function (done) {
+  gulp.watch(paths.src.views, gulp.series('templates'));
+  done();
+});
+
+gulp.task('watch:code', function (done) {
+
   gulp.watch([
-    'stream/*.html',
+      'client/scripts/**/*.js',
+      'xyz-player-component/**/*.js',
+      'xyz-player-component/**/*.html'
+    ])
+    .on('change', gulp.series('useref:main', 'copyImages', reloadB));
+  done();
+});
+
+gulp.task('watch', gulp.parallel('watch:sass', 'watch:views', 'watch:code'));
+
+gulp.task('exit', function (done) {
+  done();
+  process.exit(0);
+});
+
+
+gulp.task('build',
+  gulp.series('clean', 'loopback', 'sass', 'bower',
+    gulp.parallel('useref:main', 'copyHtml:main', 'copyImages'),
+    gulp.parallel('useref:stream', 'copyCss:stream'), 'exit')
+);
+
+gulp.task('default', function (done) {
+  gulp.series('serve');
+  done();
+});
+
+gulp.task('serve', gulp.parallel('loopback', 'bower', 'sass', 'browserSync:client', 'watch'));
+/*
+
+gulp.task('watchStream', gulp.parallel(['browserSync:stream', 'sass']), function () {
+  gulp.watch('stream/scss/!**!/!*.scss', gulp.series(['sass']));
+  gulp.watch([
+    'stream/!*.html',
     'stream/style.css',
-    'stream/views/**/*.html',
-    'stream/js/**/*.js'
+    'stream/views/!**!/!*.html',
+    'stream/js/!**!/!*.js'
   ], browserSync.reload);
 });
+*/
 
-
+/*
 gulp.task('stream', function (callback) {
-  runSequence(['browserSync:stream', 'watchStream'],
+  gulp.series(
+    gulp.parallel('browserSync:stream', 'watchStream'),
     callback
   )
-});
+});*/
 
 
 gulp.task('serveApi', function () {
@@ -261,8 +299,8 @@ gulp.task('serveApi', function () {
 });
 
 
-gulp.task('docs', function () {
-  runSequence('loopback', 'generate-docs', 'serve-docs', 'open-docs');
+gulp.task('docs', function (done) {
+  gulp.series('loopback', 'generate-docs', 'serve-docs', 'open-docs', done);
 });
 
 gulp.task('generate-docs', function () {
@@ -280,13 +318,14 @@ gulp.task('generate-docs', function () {
 
 });
 
-gulp.task('serve-docs', function () {
+gulp.task('serve-docs', function (done) {
   connect.server({
     root: 'docs',
     livereload: false,
     fallback: 'docs/index.html',
     port: 8888
   })
+  done();
 });
 gulp.task('open-docs', function () {
   return gulp.src('').pipe(
@@ -294,8 +333,8 @@ gulp.task('open-docs', function () {
   );
 });
 
-gulp.task('copy-staging-db', function () {
-  runSequence('save-db', 'overwrite-db-local');
+gulp.task('copy-staging-db', function (done) {
+  gulp.series('save-db', 'overwrite-db-local', done);
 });
 
 gulp.task('save-db', function (done) {
@@ -310,6 +349,7 @@ gulp.task('save-db', function (done) {
     })
     .pipe(exec.reporter())
 });
+
 gulp.task('overwrite-db-local', function (done) {
   var command = 'mongorestore --drop --host=127.0.0.1:27017 -d xyz xyzDbDump/' + mongoCreds.database;
   return gulp.src('')
