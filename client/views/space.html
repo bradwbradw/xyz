@@ -3,7 +3,9 @@
      class="space-svg-view" >
 
 
-  <path class="playlist-line" ng-attr-d="{{linePath(Playlister.list || [])}}"></path>
+  <path class="playlist-line"
+        ng-attr-d="{{linePath(Playlister.list || [])}}"
+  fill="none" stroke="lightgrey"></path>
 
   <g ng-repeat="item in space.songs" >
 
