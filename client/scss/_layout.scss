@@ -111,25 +111,20 @@
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
-  text-align: center;
 }
 
-.loading-indicator {
-
-  width: 100vw;
-  z-index: 10000;
-  position: fixed;
-  top: $bar-height;
-}
 
 .main-container {
-  position: absolute;
+  height: 100vh;
   top: $bar-height;
+  border-bottom: 1px black solid;
+  margin-bottom: 300px;
+
 }
 
 .user-spaces-container {
-  margin-bottom: 400px;
+  border-bottom: 1px black solid;
+  margin-bottom: 300px;
 }
 
 .sidebar-container {
@@ -164,6 +159,15 @@
 
   text-align: left;
 
+}
+
+
+.loading-indicator {
+
+  width: 100vw;
+  z-index: 10000;
+  position: fixed;
+  top: $bar-height;
 }
 
 .search-result {
@@ -222,3 +226,4 @@
   position: absolute;
   right:0;
 }
+
