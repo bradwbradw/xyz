@@ -16,7 +16,7 @@
              ng-if="User.get()">
         settings
     </md-icon>
-    <div ng-if="!User.get()"></div>
+    <div id="signup-login-link" ng-if="!User.get()" ui-sref-active="hidden"> <a ui-sref="base.signup-login"> sign up / login </a></div>
 
     <div class="user-settings-popup" ng-if="settingsOpen()">
 

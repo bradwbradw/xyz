@@ -16,22 +16,6 @@ angular.module('xyzApp')
 
     $scope.publicSpaces = publicSpaces;
 
-    var showError = Utility.showError;
-
-    var clearError = function (thing) {
-      $rootScope.error = '';
-      return $q.resolve(thing);
-    };
-
-    var showMessage = function (msg) {
-
-      $rootScope.message = msg;
-    };
-
-    var clearMessage = function(){
-      $rootScope.message = '';
-    };
-
     $rootScope.lb = Server.loopback;
 
     var addingSpace = false;
@@ -51,45 +35,11 @@ angular.module('xyzApp')
       return space.userIsContributor;
     };
 
-    var register = function(registerData){
-
-        User.register(registerData)
-        .then(User.login)
-        .catch(showError)
-    };
-    var login = function (loginData) {
-      clearError(loginData)
-        .then(User.login)
-        .then(User.fetchSpaces)
-        .then(function (spaces) {
-          Social.FB.refreshFB();
-          Server.fetchAllPlaylists(_.union(publicSpaces, spaces.own, spaces.editable));
-        })
-        .catch(showError)
-    };
-
-    var resetPassword = function (email) {
-      clearMessage();
-      clearError();
-      Server.resetPassword(email)
-        .then(function(){
-          return 'We received your request.  Please check your email in a few minutes for further instructions.'
-        })
-        .then(showMessage)
-        .catch(showError)
-    };
-    $scope.login = login;
-    $scope.register = register;
     $scope.userIsCollaborator = userIsCollaborator;
     $scope.isAdding = isAdding;
     $scope.setAdding = setAdding;
     $scope.addingSpace = addingSpace;
     $scope.resetAdding = resetAdding;
-    $scope.clearError = clearError;
-    $scope.showError = showError;
-    $scope.clearMessage = clearMessage;
-    $scope.showMessage = showMessage;
-    $scope.resetPassword = resetPassword;
 
     $scope.Player = Player;
 

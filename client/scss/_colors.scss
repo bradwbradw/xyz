@@ -4,6 +4,9 @@
 
 .top-bar {
 
+  *, a, a:visited, a:hover{
+    color: white;
+  }
   .logo {
     cursor: pointer;
   }

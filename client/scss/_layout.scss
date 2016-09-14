@@ -220,9 +220,10 @@
   cursor: default;
   margin-left:auto;
   margin-right:auto;
-  width:20%;
+  width:50%;
+  text-align: center;
 }
-#settings-button{
+#settings-button, #signup-login-link{
   position: absolute;
   right:0;
 }

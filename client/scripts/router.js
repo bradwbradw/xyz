@@ -3,7 +3,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
   $stateProvider
     .state('base', {
-      templateUrl: 'views/base.html',
+      templateUrl: 'base.html',
       resolve: {
         publicSpaces: function (Space) {
           return Space.find({filter: {include: "owner", where: {public: true}}})
@@ -28,15 +28,28 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       }
 
     })
+    .state('base.signup-login',{
+      url:'/signup-login',
+      views:{
+        main:{
+          templateUrl: 'signup.html',
+          controller: 'AccountCtrl'
+        },
+        bar:{
+          templateUrl: 'bar.html',
+          controller: 'BarCtrl'
+        }
+      }
+    })
     .state('base.account',{
       url: '/account',
       views:{
         'main':{
-          templateUrl: 'views/account.html',
+          templateUrl: 'account.html',
           controller: 'AccountCtrl'
         },
         'bar': {
-          templateUrl: 'views/bar.html',
+          templateUrl: 'bar.html',
           controller: 'BarCtrl'
         }
       },
@@ -46,9 +59,6 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             .catch(function(){
               return false;
             });
-        },
-        tempAccessToken: function($location){
-          return $location.search().access_token;
         }
       }
     })
@@ -56,11 +66,11 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '/',
       views: {
         'main': {
-          templateUrl: 'views/landing.html',
+          templateUrl: 'landing.html',
           controller: 'LandingCtrl'
         },
         'bar': {
-          templateUrl: 'views/bar.html',
+          templateUrl: 'bar.html',
           controller: 'BarCtrl'
         }
 
@@ -79,22 +89,22 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '/space/:id',
       views: {
         'main': {
-          templateUrl: 'views/space.html',
+          templateUrl: 'space.html',
           controller: 'SpaceCtrl'
         },
         'bar': {
-          templateUrl: 'views/bar.html',
+          templateUrl: 'bar.html',
           controller: 'BarCtrl'
         },
         'sidebar': {
-          templateUrl: 'views/sidebar/sidebar-container.html',
+          templateUrl: 'sidebar/sidebar-container.html',
           controller: 'SidebarCtrl'
         },
         'importControls': {
-          templateUrl: 'views/sidebar/sidebar-add.html'
+          templateUrl: 'sidebar/sidebar-add.html'
         },
         'importSelector': {
-          templateUrl: 'views/sidebar/selector.html',
+          templateUrl: 'sidebar/selector.html',
           controller: 'SidebarCtrl'
         }
       },
@@ -162,10 +172,10 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '',
       views: {
         'importControls': {
-          templateUrl: 'views/sidebar/sidebar-add.html'
+          templateUrl: 'sidebar/sidebar-add.html'
         },
         'importSelector': {
-          templateUrl: 'views/sidebar/selector.html'
+          templateUrl: 'sidebar/selector.html'
 
         }
       }
@@ -175,7 +185,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '',
       views: {
         'editSpace': {
-          templateUrl: 'views/sidebar/sidebar-edit.html'
+          templateUrl: 'sidebar/sidebar-edit.html'
         }
       }
     })

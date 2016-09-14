@@ -57,7 +57,12 @@ angular.module('xyzApp')
       }
     };
 
+    var showSignupLoginLink = function(){
+      $log.log('state current is ', $state.current);
+      return !User.get() && $state.current.indexOf('signup') > -1;
+    };
 
+    $scope.showSignupLoginLink = showSignupLoginLink;
     $scope.Utility = Utility;
 
     $scope.title = title;
