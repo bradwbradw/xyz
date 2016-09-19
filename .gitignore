@@ -10,4 +10,5 @@ stream/vendor/soundcloud/vendor/
 
 xyzDbDump/
 client/scripts/services/lb-services.js
-client/css/main.css
+client/css/
+
