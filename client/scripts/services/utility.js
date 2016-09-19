@@ -40,17 +40,6 @@ angular.module('xyzApp')
 
             return cleaned;
           },
-          // warning this function might not work
-          tracks: function (tracks) {
-            var output = [];
-            if (!_.isArray(tracks)) {
-              tracks = [tracks];
-            }
-            _.each(tracks, function (track) {
-              output.push(Utility.clean.SC.track);
-            });
-            return output;
-          },
 
           user: function (user) {
             return {
@@ -235,7 +224,11 @@ angular.module('xyzApp')
           content: Utility.cleanError(error)
         });
       },
-
+      showMessage: function (message){
+        ngToast.create({
+          content: message
+        });
+      },
       absoluteRef: function (id) {
         return 'url(' + $location.absUrl() + '#'+id + ')';
       }

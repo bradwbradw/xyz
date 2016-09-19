@@ -8,22 +8,23 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('AccountCtrl', function ($rootScope, $scope, $q, $log, $location, $state, Dj, user, Server , User, Utility, Social) {
+  .controller('AccountCtrl', function ($rootScope, $scope, $q, $log, $location, $state, Dj, user, Server, User, Utility) {
 
     var passwordSuccess = false;
 
     var tempAccessToken = $location.search().access_token;
 
-    var changePassword = function(newPassword, newPassword2){
+    var changePassword = function (newPassword, newPassword2) {
       passwordSuccess = false;
 
-      if(newPassword === newPassword2){
+      if (newPassword === newPassword2) {
         Server.updatePassword(newPassword, tempAccessToken)
-          .then(function(response){
+          .then(function (response) {
             $log.log(response);
             passwordSuccess = "Password has been updated";
+            showMessage(passwordSuccess);
           })
-          .catch(function(err){
+          .catch(function (err) {
             $log.error(err);
             passwordSuccess = false;
           });
@@ -32,35 +33,29 @@ angular.module('xyzApp')
       }
     };
 
-
     var showError = Utility.showError;
 
+    var showMessage = Utility.showMessage;
 
-    var showMessage = function (msg) {
-
-      $rootScope.message = msg;
-    };
-
-    var clearMessage = function(){
+    var clearMessage = function () {
       $rootScope.message = '';
     };
 
-    var register = function(registerData){
+    var register = function (registerData) {
 
-        User.register(registerData)
-        .then(User.login)
+      User.register(registerData)
+        .then(function (data) {
+          showMessage("Thanks for signing up! Logging in now ...");
+          return $q.resolve(data);
+        })
+        .then(login)
         .catch(showError)
     };
     var login = function (loginData) {
-        User.login(loginData)
-          .then(function(){
-            $state.go('base.landing')
-          })/*
-        .then(User.fetchSpaces)
-        .then(function (spaces) {
-          Social.FB.refreshFB();
-          Server.fetchAllPlaylists(_.union(publicSpaces, spaces.own, spaces.editable));
-        })*/
+      User.login(loginData)
+        .then(function () {
+          $state.go('base.landing');
+        })
         .catch(showError)
     };
 
@@ -68,7 +63,7 @@ angular.module('xyzApp')
       clearMessage();
       clearError();
       Server.resetPassword(email)
-        .then(function(){
+        .then(function () {
           return 'We received your request.  Please check your email in a few minutes for further instructions.'
         })
         .then(showMessage)

@@ -19,7 +19,7 @@
   <div id="signup-login-link" ng-if="!User.get()" ui-sref-active="hidden"><a ui-sref="base.signup-login"> sign up /
     login </a></div>
 
-  <div class="user-settings-popup" ng-if="settingsOpen()">
+  <div class="user-settings-popup" ng-if="settingsOpen() && User.get()">
 
     <div ng-if="User.get().website"><!-- todo: fix website links (add http if not there) -->
       Logged in as<br/> <a ng-href="{{Utility.fixUrl(User.get().website)}}">{{User.get().name}}</a>
