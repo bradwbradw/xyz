@@ -6,9 +6,10 @@ client/vendor
 .tmp
 .sass-cache/
 docs/
-stream/vendor/soundcloud/vendor/
+/stream/vendor/soundcloud/vendor/
 
 xyzDbDump/
-client/scripts/services/lb-services.js
-client/css/
+/client/scripts/services/lb-services.js
+/client/css/
 
+/xyz-player-component/css/
