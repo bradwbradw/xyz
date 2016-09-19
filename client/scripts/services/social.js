@@ -32,22 +32,14 @@ angular.module('xyzApp')
 
     ezfbProvider.setLoadSDKFunction(function (ezfbAsyncInit) {
 
-    // TODO add the facebook js SDK to the vendor dependencies instead of loading async
-    // then uncomment following line
+      // TODO add the facebook js SDK to the vendor dependencies instead of loading async
+      // then uncomment following line
       //    ezfbAsyncInit();
     });
   });
 
 angular.module('xyzApp')
   .service('Social', function ($window, $q, $timeout, $log, apiKeys, ezfb) {
-    // AngularJS will instantiate a singleton by calling "new" on this function
-
-// initiate auth popup
-//
-    /*
-     */
-
-    var fbEnabled = apiKeys.fb_app_id !== '0';
 
     var Social = {
 
@@ -60,6 +52,7 @@ angular.module('xyzApp')
         profile: {},
 
         // this one is used
+        enabled: apiKeys.fb_app_id !== '0',
         status: false,
         connecting: false,
         isConnected: function () {
@@ -76,7 +69,7 @@ angular.module('xyzApp')
         post_paging: false,
 
         login: function () {
-          if (fbEnabled) {
+          if (Social.FB.enabled) {
 
             return ezfb.login(
               null,
@@ -123,7 +116,7 @@ angular.module('xyzApp')
             });
         },
         updateLoginStatus: function () {
-          if (fbEnabled) {
+          if (Social.FB.enabled) {
 
             return ezfb.getLoginStatus()
               .then(function (response) {
@@ -142,7 +135,7 @@ angular.module('xyzApp')
 
 
         loadMe: function () {
-          if (fbEnabled) {
+          if (Social.FB.enabled) {
 
             return $timeout(ezfb.api('/me')
               .then(function (data) {

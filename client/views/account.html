@@ -1,9 +1,10 @@
-<div ui-view="bar"></div>
 
-<pre class="debug">user: {{user | json}}</pre>
-<pre class="debug">at: {{tempAccessToken}}</pre>
+<pre ng-if="false" class="debug">user: {{user | json}}</pre>
+<pre ng-if="false" class="debug">at: {{tempAccessToken}}</pre>
 
-<form ng-hide="passwordSuccess" ng-submit="changePassword(newPassword, newPassword2)" layout="column" layout-align="center center">
+<div>
+
+<form ng-submit="changePassword(newPassword, newPassword2)" layout="column" layout-align="center center">
 
   <label for="password1">New Password</label>
   <input id="password1" type="password" ng-model="newPassword" required>
@@ -15,4 +16,4 @@
 
 </form>
 
-<p ng-bind="passwordSuccess"></p>
+</div>

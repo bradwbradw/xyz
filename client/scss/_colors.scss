@@ -40,3 +40,17 @@
     opacity: 0.3;
   }
 }
+
+
+  .user-settings-popup {
+    background-color: black;
+    button, input {
+      color: black;
+    }
+    a {
+      color: $light-link;
+      &:hover {
+        color: $light-link-hover
+      }
+    }
+  }
