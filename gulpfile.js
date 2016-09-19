@@ -259,12 +259,11 @@ gulp.task('build',
     gulp.parallel('useref:stream', 'copyCss:stream'), 'exit')
 );
 
-gulp.task('default', function (done) {
-  gulp.series('serve');
-  done();
-});
 
 gulp.task('serve', gulp.parallel('loopback', 'bower', 'sass', 'browserSync:client', 'watch'));
+
+gulp.task('default', gulp.parallel('build','serve'));
+
 /*
 
 gulp.task('watchStream', gulp.parallel(['browserSync:stream', 'sass']), function () {

@@ -16,7 +16,7 @@ in terminal, run: `./dev.sh`
 
 ##STEP 2
 
-in another terminal window, run: `gulp serve`
+in another terminal window, run: `gulp`
 
 ## OPTIONS
 
