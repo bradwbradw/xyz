@@ -11,11 +11,9 @@
 //https://github.com/pc035860/angular-easyfb
 
 angular.module('xyzApp')
-  .config(function ($log, ezfbProvider, apiKeys) {
+  .config(function (ezfbProvider, apiKeys) {
 
-    $log.debug('api keys is ', apiKeys);
-
-    if (apiKeys.fb_app_id && apiKeys.fb_app_id !== '0' ) {
+    if (apiKeys.fb_app_id && apiKeys.fb_app_id !== '0') {
 
       ezfbProvider.setInitParams({
         // Facebook App ID
@@ -28,18 +26,29 @@ angular.module('xyzApp')
       });
 
     } else {
-      console.warn('not using facebook connector');
+      console.log('not using facebook connector');
+
     }
+
+    ezfbProvider.setLoadSDKFunction(function (ezfbAsyncInit) {
+
+    // TODO add the facebook js SDK to the vendor dependencies instead of loading async
+    // then uncomment following line
+      //    ezfbAsyncInit();
+    });
   });
 
 angular.module('xyzApp')
-  .service('Social', function ($window, $q, $timeout, ezfb) {
+  .service('Social', function ($window, $q, $timeout, $log, apiKeys, ezfb) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
 // initiate auth popup
 //
     /*
      */
+
+    var fbEnabled = apiKeys.fb_app_id !== '0';
+
     var Social = {
 
       FB: {
@@ -67,10 +76,17 @@ angular.module('xyzApp')
         post_paging: false,
 
         login: function () {
-          return ezfb.login(
-            null,
-            {scope: 'email,user_likes,user_friends,user_posts,public_profile'}
-          );
+          if (fbEnabled) {
+
+            return ezfb.login(
+              null,
+              {scope: 'email,user_likes,user_friends,user_posts,public_profile'}
+            );
+
+          } else {
+            $log.log('facebook is disabled');
+            return $q.resolve('');
+          }
         },
 
         loggedIn: function () {
@@ -107,29 +123,38 @@ angular.module('xyzApp')
             });
         },
         updateLoginStatus: function () {
+          if (fbEnabled) {
 
-          return ezfb.getLoginStatus()
-            .then(function (response) {
+            return ezfb.getLoginStatus()
+              .then(function (response) {
 
-              Social.FB.status = response.status;
-              return status
-            })
-            .catch(function (err) {
-              return $q.reject(err);
-            });
+                Social.FB.status = response.status;
+                return status
+              })
+              .catch(function (err) {
+                return $q.reject(err);
+              });
+          } else {
+            return $q.resolve('facebook is not enabled');
+          }
 
         },
 
 
         loadMe: function () {
-          return $timeout(ezfb.api('/me')
-            .then(function (data) {
-              Social.FB.me = data;
-            })
-            .catch(function (err) {
-              return $q.reject(err);
-            })
-          );
+          if (fbEnabled) {
+
+            return $timeout(ezfb.api('/me')
+              .then(function (data) {
+                Social.FB.me = data;
+              })
+              .catch(function (err) {
+                return $q.reject(err);
+              })
+            );
+          } else {
+            return $q.resolve('');
+          }
         },
 
         loadFriends: function () {
