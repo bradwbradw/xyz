@@ -7,6 +7,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       resolve: {
         publicSpaces: function (Space) {
           return Space.find({filter: {include: "owner", where: {public: true}}})
+            .$promise;
 
         },
         user: function (User) {
@@ -28,23 +29,23 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       }
 
     })
-    .state('base.signup-login',{
-      url:'/signup-login',
-      views:{
-        main:{
+    .state('base.signup-login', {
+      url: '/signup-login',
+      views: {
+        main: {
           templateUrl: 'signup.html',
           controller: 'AccountCtrl'
         },
-        bar:{
+        bar: {
           templateUrl: 'bar.html',
           controller: 'BarCtrl'
         }
       }
     })
-    .state('base.account',{
+    .state('base.account', {
       url: '/account',
-      views:{
-        'main':{
+      views: {
+        'main': {
           templateUrl: 'account.html',
           controller: 'AccountCtrl'
         },
@@ -53,10 +54,10 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           controller: 'BarCtrl'
         }
       },
-      resolve:{
-        user:function(User){
+      resolve: {
+        user: function (User) {
           return User.download()
-            .catch(function(){
+            .catch(function () {
               return false;
             });
         }
@@ -77,15 +78,21 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       },
       onEnter: function (Library, User, Social, $q, $log, publicSpaces, Server) {
 
+        $log.log('public spaces is ', publicSpaces);
         Social.FB.refreshFB();
-        Server.fetchAllPlaylists(_.union(publicSpaces, User.getSpaces().own, User.getSpaces().editable ))
+        Server.fetchAllPlaylists(
+          _.uniq(_.concat(publicSpaces,[
+            User.getSpaces().own,
+            User.getSpaces().editable]
+          ))
+        )
 
       }
 
     })
 
     .state('base.space', {
-      params:{id:{value:'defaultId'}},
+      params: {id: {value: 'defaultId'}},
       url: '/space/:id',
       views: {
         'main': {
@@ -113,12 +120,12 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         space: function ($stateParams, $log, $state, Space, Library) {
           return Library.fetchSpaceAndSongs($stateParams.id)
             .then(Library.space)
-            .catch(function(err){
+            .catch(function (err) {
               $log.error(err);
               $state.go('base.landing');
             });
         },
-        spaceId: function($stateParams){
+        spaceId: function ($stateParams) {
           return $stateParams.id;
         },
         owner: function (space, Dj) {
@@ -154,7 +161,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
             if (owner.id === the_user.id) {
               return 'owner';
-            } else if(_.find(space.contributors, {id:the_user.id})){
+            } else if (_.find(space.contributors, {id: the_user.id})) {
               return 'contributor';
             } else {
               return 'viewer';
@@ -162,7 +169,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           }
 
         },
-        contributors: function(){
+        contributors: function () {
           return [];
         }
       }
@@ -189,9 +196,9 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         }
       }
     })
-    .state('error',{
-    template: '<h4>error</h4>'
-  });
+    .state('error', {
+      template: '<h4>error</h4>'
+    });
   $urlRouterProvider.otherwise('/');
 
 

@@ -5,11 +5,11 @@
   </a>
 
   <span ng-if="space.owner"> (owned by {{space.owner.name}})</span>
-  <div ng-if="!space.playlist">
+  <div ng-if="!space">
     loading...
   </div>
   <div>
-    <img ng-if="space.playlist && space.playlist[0].pic" ng-src="{{space.playlist[0].pic}}">
+    <img ng-if="space && space.playlist[0].pic" ng-src="{{space.playlist[0].pic}}">
     <div ng-if="!space.playlist || !space.playlist[0].pic" class="no-img"></div>
 
 
