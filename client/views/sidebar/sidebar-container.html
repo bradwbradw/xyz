@@ -14,7 +14,7 @@
 
     <div ng-if="viewer === 'owner'">
       <div
-          ng-include="'views/sidebar/sidebar-owner-view.html'"
+          ng-include="'sidebar/sidebar-owner-view.html'"
           ng-controller="AddMediaCtrl">
       </div>
 
@@ -23,7 +23,7 @@
 
     <div ng-if="viewer === 'contributor'">
        <div
-          ng-include="'views/sidebar/sidebar-contributor-view.html'"
+          ng-include="'sidebar/sidebar-contributor-view.html'"
           ng-controller="AddMediaCtrl">
       </div>
     </div>
