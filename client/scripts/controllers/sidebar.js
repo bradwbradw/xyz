@@ -26,7 +26,7 @@ angular.module('xyzApp')
       console.log('...');
 
       if ($window.confirm('are you sure you want to delete the space?')) {
-        return service.destroyById({id: object.id}, _.noop)
+        return service.destroyById({id: object.id})
           .$promise
           .then(User.fetchSpaces)
           .then(function () {
