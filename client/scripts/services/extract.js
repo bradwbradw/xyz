@@ -107,10 +107,6 @@ angular.module('xyzApp')
         return inspectPromise;
       },
 
-      findURL: function (mess) {
-
-      },
-
       filterOutMusicUrls: function (posts) {
         var found = [];
         var service;
@@ -165,7 +161,7 @@ angular.module('xyzApp')
 
           })
         });
-        return _.unique(found);
+        return _.uniq(found);
 
 
       },
@@ -218,9 +214,7 @@ angular.module('xyzApp')
 
 
       },
-      gatDataAsFBPost: function (post) {
 
-      },
       getDataFromYoutube: function (url) {
 
         var urlParts, id;

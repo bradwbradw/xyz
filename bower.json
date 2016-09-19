@@ -5,7 +5,7 @@
     "angular": "~1.5.6",
     "angular-sanitize": "1.4.1",
     "angular-ui-router": "0.2.15",
-    "lodash": "3.10.1",
+    "lodash": "4.15.0",
     "angular-easyfb": "~1.4.1",
     "angular-local-storage": "~0.2.3",
     "angular-resource": "~1.4.8",
