@@ -34,7 +34,8 @@ var paths = {
   src: {
     sass: ['client/scss/**/*.scss', 'xyz-player-component/**/*.scss'],
     views: ['client/views/**/*.html', 'xyz-player-component/*.html'],
-    scripts: 'client/scripts'
+    scripts: 'client/scripts',
+    index:'client/index.html'
   }
 };
 
@@ -237,7 +238,8 @@ gulp.task('watch:views', function (done) {
 gulp.task('watch:code', function (done) {
 
   gulp.watch([
-      'client/scripts/**/*.js',
+      paths.src.index,
+      paths.src.scripts+'/**/*.js',
       'xyz-player-component/**/*.js',
       'xyz-player-component/**/*.html'
     ])
