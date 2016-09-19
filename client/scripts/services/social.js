@@ -11,7 +11,9 @@
 //https://github.com/pc035860/angular-easyfb
 
 angular.module('xyzApp')
-  .config(function (ezfbProvider, apiKeys) {
+  .config(function ($log, ezfbProvider, apiKeys) {
+
+    $log.debug('api keys is ', apiKeys);
 
     if (apiKeys.fb_app_id && apiKeys.fb_app_id !== '0' ) {
 
