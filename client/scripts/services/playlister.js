@@ -8,6 +8,8 @@ angular.module('xyzApp')
       list: [],
       recompute: function (space) {
 
+        $log.log('recomputing playlist for space ', space);
+
         var distanceBetweenItems = function (song1, song2) {
 
           if (!song1.x || !song1.y || !song2.x || !song2.y) {
@@ -47,6 +49,7 @@ angular.module('xyzApp')
         });
 
         if (_.size(songs) <= 0) {
+          $log.debug('space has no songs: ', space);
           return [];
         } else {
           _.each(songs, function (song) {
@@ -71,6 +74,7 @@ angular.module('xyzApp')
           });
 
           Playlister.list = playlist;
+          $log.debug('computed playlist: ', playlist);
           return playlist;
         }
 

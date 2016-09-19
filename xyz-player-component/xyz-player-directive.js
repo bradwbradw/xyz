@@ -136,6 +136,8 @@ angular.module('xyzPlayer', [])
         var loadPlaylist = function (spaceId) {
           if (getPlaylist()) {
             return $q.resolve(getPlaylist());
+          } else {
+            $log.debug('no playlist found in scope, so loading using space ID ', spaceId);
           }
           return Api.getPlaylist(spaceId);
         };

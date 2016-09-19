@@ -6,7 +6,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       templateUrl: 'base.html',
       resolve: {
         publicSpaces: function (Space) {
-          return Space.find({filter: {include: "owner", where: {public: true}}})
+          return Space.find({filter: {include: ["owner", "songs"], where: {public: true}}})
             .$promise;
 
         },
