@@ -123,7 +123,6 @@ gulp.task('copyImages', function () {
 
 gulp.task('useref:main', function () {
   return gulp.src('client/index.html')
-
     .pipe(replace('%%%facebookAppId', keys.public.fb))
     .pipe(replace('%%%scKey', keys.public.sc))
     .pipe(replace('%%%ytKey', keys.public.yt))
@@ -164,7 +163,6 @@ gulp.task('browserSync:client', function (done) {
 
     },
     injectChanges:true,
-        logLevel: 'debug',
         logConnections: true,
     ghostMode: false,
     notify: false,
