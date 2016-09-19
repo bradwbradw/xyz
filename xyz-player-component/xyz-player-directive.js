@@ -9,7 +9,7 @@ angular.module('xyzPlayer', [])
         playlist: '<?'
       },
 
-      templateUrl: 'xyz-player-component/xyz-player.html',
+      templateUrl: 'xyz-player.html',
 
 
       link: function (scope, element, attrs) { //jshint ignore:line

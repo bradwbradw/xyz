@@ -3,7 +3,7 @@ angular.module('xyzApp').
 
     return {
       restrict: 'A',
-      templateUrl:'views/partials/media-preview-directive.html',
+      templateUrl:'partials/media-preview-directive.html',
       link: function (scope, element, attr) {
 
         scope.iFrameUrl = Utility.iFrameUrl;

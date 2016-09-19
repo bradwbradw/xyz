@@ -6,7 +6,7 @@ angular.module('xyzApp').
       scope:{
         mediaPreviewToggle:'='
       },
-      templateUrl:'views/partials/media-preview-toggle-directive.html',
+      templateUrl:'partials/media-preview-toggle-directive.html',
       link: function (scope, element, attr) {
 
         console.log('scope item is ', scope.mediaPreviewToggle);
