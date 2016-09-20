@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg"
      ng-click="closeExpanded('screen')"
-     class="space-svg-view" >
+     class="space-svg-view">
 
 
   <path class="playlist-line"
         ng-attr-d="{{linePath(Playlister.list || [])}}"
-  fill="none" stroke="lightgrey"></path>
+        d=""
+        fill="none" stroke="lightgrey"></path>
 
-  <g ng-repeat="item in space.songs" >
-
+  <g ng-repeat="item in space.songs">
 
     <defs>
 
@@ -21,20 +21,25 @@
             ng-attr-y="{{item.provider === 'youtube'? -40 : -20}}"
             ng-attr-height="{{item.provider === 'youtube'? '150px': '100px'}}"
             ng-attr-width="{{item.provider === 'youtube'? '150px': '100px'}}"
+            height=""
+            width=""
             ng-href="{{item.pic}}"
-            xlink:href=""/>
+            xlink:href=""></image>
+
       </pattern>
     </defs>
     <circle
-        ng-attr-r="{{dotRadius}}" class="xyz-item"
+        ng-attr-r="{{dotRadius}}"
+        r=""
+        class="xyz-item"
         xyz-draggable="item"
-        space="space"
+        data-space="space"
         can-drag="true"
         fill="{{Utility.absoluteRef('image'+item.id)}}"
         ng-attr-stroke="{{isFirstSong(item)? 'blue' : 'lightblue'}}" stroke-width="0.5%"
-         ng-class="{unavailable: (item.public === false), 'first-song':isFirstSong(item)}"
+        ng-class="{unavailable: (item.public === false), 'first-song':isFirstSong(item)}"
 
-    ng-click="handleDotClick(item, $event)">
+        ng-click="handleDotClick(item, $event)">
 
     </circle>
   </g>
@@ -43,34 +48,32 @@
 </svg>
 
 
-  <div class="expanded-popup"
-       ng-style="songExpandedPopupCss()"
-       ng-if="expandedItem()"
-       layout="row">
+<div class="expanded-popup"
+     ng-style="songExpandedPopupCss()"
+     ng-if="expandedItem()"
+     layout="row">
 
-    <div layout="column">
+  <div layout="column">
 
-      <a ng-href="{{expandedItem().url}}"
-         target="_blank"
-         ng-bind="expandedItem().title"
-         ellipsis></a>
+    <a ng-href="{{expandedItem().url}}"
+       target="_blank"
+       ng-bind="expandedItem().title"
+       ellipsis></a>
 
-      <div>
-        <div media-preview-toggle="expandedItem()"></div>
-        <button ng-click="setFirstSong(expandedItem())">set first song</button>
-        <button ng-click="removeSong(expandedItem().id)">remove</button>
-      </div>
+    <div>
+      <div media-preview-toggle="expandedItem()"></div>
+      <button ng-click="setFirstSong(expandedItem())">set first song</button>
+      <button ng-click="removeSong(expandedItem().id)">remove</button>
     </div>
-
-
-    <div class="preview-box" media-preview
-         ng-if="Player.playingItem()">
-
-    </div>
-
   </div>
 
 
+  <div class="preview-box" media-preview
+       ng-if="Player.playingItem()">
+
+  </div>
+
+</div>
 
 
 <div ng-if="Library.songs().length === 0">
@@ -90,4 +93,4 @@
   </div>
 
 </div>
-<pre class="debug" ng-if="debug">debug</pre>
+<pre class="debug right-panel" ng-if="debug">{{space | json}}</pre>
