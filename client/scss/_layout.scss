@@ -114,7 +114,6 @@
   width: 100vw;
 }
 
-
 .main-container {
   height: 100vh;
   margin-top: $bar-height;
@@ -194,7 +193,6 @@
 
 .space-svg-view{
   height:100%;
-  width:800px;
   width:100vw;
 }
 
@@ -226,5 +224,6 @@
 .bar-icons, #signup-login-link{
   position: absolute;
   right:0;
+  top:0;
 }
 

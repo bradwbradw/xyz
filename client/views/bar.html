@@ -10,53 +10,58 @@
     </a>
   </h1>
 
-  <md-icon id="settings-button" class="icon-btn material-design-icons light"
-           ng-class="{active:isEditing()}"
-           ng-click="toggleSettings()"
-           ng-if="User.get()">
-    settings
-  </md-icon>
-  <div id="signup-login-link" ng-if="!User.get()" ui-sref-active="hidden"><a ui-sref="base.signup-login"> sign up /
-    login </a></div>
+  <div class="bar-icons" >
 
-  <div class="user-settings-popup" ng-if="settingsOpen() && User.get()">
+    <md-icon
+        ng-if="showSpaceEditorIcons()"
+        ng-class="{'active-icon': ('base.space.add' | isState) }"
+        ng-click="parentStateIfActiveElseGoTo('base.space.add')"
+        class="icon-btn">
+      add
+    </md-icon>
 
-    <div ng-if="User.get().website"><!-- todo: fix website links (add http if not there) -->
-      Logged in as<br/> <a ng-href="{{Utility.fixUrl(User.get().website)}}">{{User.get().name}}</a>
-    </div>
-    <div ng-if="!User.get().website"><!-- todo: fix website links (add http if not there) -->
-      Logged in as<br/> {{User.get().name}}
-    </div>
+    <md-icon
+        ng-if="showSpaceEditorIcons()"
+        ng-class="{'active-icon': ('base.space.edit' | isState) }"
+        ng-click="parentStateIfActiveElseGoTo('base.space.edit')"
+        class="icon-btn">
+      edit
+    </md-icon>
 
-    <button ng-click="toggleEditing()">edit info</button>
+    <md-icon
+        ng-if="showSpaceEditorIcons()"
+        ng-class="{'active-icon': ('base.space.info' | isState) }"
+        ng-click="parentStateIfActiveElseGoTo('base.space.info')"
+        class="icon-btn">
+      info
+    </md-icon>
 
-    <form ng-submit="User.update(new).catch(showError)" ng-show="userIsEditing()">
+    <md-icon
+        ng-if="User.get()"
+        id="settings-button"
+        class="icon-btn light"
+        ng-class="{'active-icon':settingsOpen()}"
+        ng-click="toggleSettings()">
+      settings
+    </md-icon>
 
-      <input ng-model="new.name" placeholder="update name">
-      <input ng-model="new.website" placeholder="update website">
-      <input type="submit" value="save">
-
-    </form>
+  </div>
 
 
-    <div ng-if="Social.FB.enabled">
 
-    <h4>Social Media</h4>
 
-      <div ng-if="!Social.FB.isConnected() && !Social.FB.isConnecting() ">
-        Facebook: not connected
-        <a class="link-button" ng-click="Social.FB.setConnecting().then(Social.FB.login).then(Social.FB.refreshFB)">(connect)</a>
-      </div>
-      <div ng-if="Social.FB.isConnecting()">Facebook: connecting...</div>
-      <div ng-if="Social.FB.isConnected()">
-        Facebook: &#10003;
-      </div>
+  <div id="signup-login-link" ng-if="!User.get()" ui-sref-active="hidden">
+    <a ui-sref="base.signup-login">
+      sign up / login
+    </a>
+  </div>
 
-    </div>
-
-    <button ng-click="User.logout().catch(showError)">Log out</button>
+  <div class="user-settings-popup"
+       ng-if="settingsOpen() && User.get()"
+       ng-include="'partials/user-settings-popup.html'">
   </div>
 </div>
+
 <md-progress-linear loading
                     class="loading-indicator"
                     md-mode="indeterminate">

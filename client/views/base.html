@@ -1,11 +1,9 @@
 <div class="base-container">
 
-  <div ui-view="bar" ></div>
-    <toast></toast>
+  <div ui-view="bar"></div>
+  <toast></toast>
   <div ui-view="main" class="main-container"></div>
 
-  <div ui-view="sidebar" class="sidebar-container">
-  </div>
 
 
   <div ui-view="xyzPlayer"></div>
@@ -13,7 +11,7 @@
   <div class="xyz-player-container" ng-controller="SiteWidePlayerCtrl">
     <div xyz-player
          space-id="{{getPlayingSpace().id}}"
-         space="{{getPlayingSpace()}}"
+         data-space="{{getPlayingSpace()}}"
          playlist="Playlister.list"
          ng-show="getPlayingSpace()">
 

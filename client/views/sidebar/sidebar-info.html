@@ -1,0 +1,7 @@
+( this is an XYZ space, made by
+<a ng-if="owner.website"
+   ng-href="{{Utility.fixUrl(owner.website)}}"
+   target=_blank>
+  {{space.owner.name}}
+</a>
+{{!owner.website? space.owner.name : ''}}.)

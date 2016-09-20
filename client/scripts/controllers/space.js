@@ -12,7 +12,7 @@ angular.module('xyzApp')
 
       // default tab 'add media' should be open
       if (viewer === 'contributor' || viewer === 'owner') {
-        $state.go('.add');
+        $state.go('base.space.add');
       }
       var expanded;
 

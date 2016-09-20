@@ -1,0 +1,36 @@
+
+
+    <div ng-if="User.get().website"><!-- todo: fix website links (add http if not there) -->
+      Logged in as<br/> <a ng-href="{{Utility.fixUrl(User.get().website)}}">{{User.get().name}}</a>
+    </div>
+    <div ng-if="!User.get().website"><!-- todo: fix website links (add http if not there) -->
+      Logged in as<br/> {{User.get().name}}
+    </div>
+
+    <button ng-click="toggleEditing()">edit info</button>
+
+    <form ng-submit="User.update(new).catch(showError)" ng-show="userIsEditing()">
+
+      <input ng-model="new.name" placeholder="update name">
+      <input ng-model="new.website" placeholder="update website">
+      <input type="submit" value="save">
+
+    </form>
+
+
+    <div ng-if="Social.FB.enabled">
+
+    <h4>Social Media</h4>
+
+      <div ng-if="!Social.FB.isConnected() && !Social.FB.isConnecting() ">
+        Facebook: not connected
+        <a class="link-button" ng-click="Social.FB.setConnecting().then(Social.FB.login).then(Social.FB.refreshFB)">(connect)</a>
+      </div>
+      <div ng-if="Social.FB.isConnecting()">Facebook: connecting...</div>
+      <div ng-if="Social.FB.isConnected()">
+        Facebook: &#10003;
+      </div>
+
+    </div>
+
+    <button ng-click="User.logout().catch(showError)">Log out</button>

@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SidebarCtrl', function ($rootScope, $scope, $timeout, $q, $window, $state, $log, viewer, Space, Social, User, user, Server, Utility, spaceId) {
+  .controller('EditSpaceCtrl', function ($rootScope, $scope, $timeout, $q, $window, $state, $log, viewer, Space, Social, User, user, Server, Utility, spaceId) {
 
 
     console.log('space is ', Space);
@@ -23,7 +23,6 @@ angular.module('xyzApp')
     });
 
     $scope.deleteViaConfirm = function (service, object) {
-      console.log('...');
 
       if ($window.confirm('are you sure you want to delete the space?')) {
         return service.destroyById({id: object.id})
@@ -58,15 +57,6 @@ angular.module('xyzApp')
         return !_.find(getContributors(), {id: user.id});
       });
     };
-    /*
-     var addToContributors = function(user){
-     return Server.addContributorToSpace(space.id, user.id)
-     .then(function(result){
-     $scope.contributors = result;
-     });
-     };*/
-
-    var count2 = Space.contributors.count({id: spaceId});
 
     $scope.addToContributors = function (user) {
       Space.contributors.link({id: spaceId, fk: user.id}, null)
@@ -83,6 +73,7 @@ angular.module('xyzApp')
         });
 
     };//addToContributors;
+
     $scope.removeFromContributors = function (user) {
       Space.contributors.destroyById({id: spaceId, fk: user.id})
         .$promise
@@ -90,7 +81,6 @@ angular.module('xyzApp')
           contributors = _.without(contributors, user);
         })
     };
-
 
     $scope.editingName = false;
     var saveEdits = function (space) {
@@ -111,7 +101,6 @@ angular.module('xyzApp')
     $scope.userSearchResults = userSearchResults;
 
     $scope.Utility = Utility;
-    $scope.sidebarClosed = sidebarClosed;
 
     $scope.viewer = viewer;
     $scope.space = space;
@@ -119,7 +108,6 @@ angular.module('xyzApp')
 
     $scope.Server = Server;
     $scope.getContributors = getContributors;
-    $scope.count2 = count2;
 
     $scope.FB = Social.FB
   });

@@ -1,3 +1,32 @@
+<h2>add</h2>
+
+
+
+<div>
+  <h4>Enter a URL or search terms to find media</h4>
+  <input
+      ng-model="newText"
+      ng-change="examineText(newText)
+        .then(updateImportView)
+        .catch(invalidLink)"
+      ng-model-options="{debounce: 500, updateOn:'default'}"
+      placeholder=""
+      focus
+      >
+    <div ng-if="fetchingSongData"> <i>searching...</i> </div>
+    <div ng-if="newText && error"> Sorry, {{error}} Please try adjusting the URL
+    </div>
+</div>
+
+
+<div ng-if="FB.isConnected()">
+  <h4>load neat songs from your facebook feed. click the button again to load more</h4><br/>
+  <button ng-click="explore(Social.FB.loadPosts())">more FB posts</button>
+</div><br/>
+<br/>
+
+<div class="selector-container">
+
 
   <button ng-if="urlResult.kind === 'user'"
           ng-click="MediaAPI.soundcloud.tracksByUser(urlResult.provider_id)
@@ -31,4 +60,7 @@
 <pre class="debug" ng-if="debug">
   local items: {{Library.getSearchResults() | json}}
 </pre>
+
+
+</div>
 

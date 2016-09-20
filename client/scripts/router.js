@@ -32,11 +32,11 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     .state('base.signup-login', {
       url: '/signup-login',
       views: {
-        main: {
+        'main': {
           templateUrl: 'signup.html',
           controller: 'AccountCtrl'
         },
-        bar: {
+        'bar': {
           templateUrl: 'bar.html',
           controller: 'BarCtrl'
         }
@@ -75,12 +75,6 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           controller: 'BarCtrl'
         }
 
-      },
-      onEnter: function (Library, User, Social, $q, $log, publicSpaces, Server) {
-
-        $log.log('public spaces is ', publicSpaces);
-        Social.FB.refreshFB();
-
       }
 
     })
@@ -96,17 +90,6 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         'bar': {
           templateUrl: 'bar.html',
           controller: 'BarCtrl'
-        },
-        'sidebar': {
-          templateUrl: 'sidebar/sidebar-container.html',
-          controller: 'SidebarCtrl'
-        },
-        'importControls': {
-          templateUrl: 'sidebar/sidebar-search.html'
-        },
-        'importSelector': {
-          templateUrl: 'sidebar/selector.html',
-          controller: 'SidebarCtrl'
         }
       },
       resolve: {
@@ -170,23 +153,30 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     })
     .state('base.space.add', {
 
-      url: '',
+      url: '/add',
       views: {
-        'importControls': {
-          templateUrl: 'sidebar/sidebar-search.html'
-        },
-        'importSelector': {
-          templateUrl: 'sidebar/selector.html'
-
+        'sidebar':{
+          templateUrl: 'sidebar/sidebar-add.html',
+          controller: 'AddMediaCtrl'
         }
       }
     })
     .state('base.space.edit', {
 
-      url: '',
+      url: '/edit',
       views: {
-        'editSpace': {
-          templateUrl: 'sidebar/sidebar-edit.html'
+        'sidebar': {
+          templateUrl: 'sidebar/sidebar-edit.html',
+          controller:'EditSpaceCtrl'
+        }
+      }
+    })
+    .state('base.space.info', {
+
+      url: '/info',
+      views: {
+        'sidebar': {
+          templateUrl: 'sidebar/sidebar-info.html'
         }
       }
     })

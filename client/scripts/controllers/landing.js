@@ -10,7 +10,9 @@
 angular.module('xyzApp')
   .controller('LandingCtrl', function ($rootScope, $scope, $q, $timeout, $log, ngToast, Dj, User, Server, Space, publicSpaces, Player, Social, Utility) {
 
-    $scope.Dj = Dj;//.findById({id:'5684f858d4b1e4996ec6d9bf'});
+    Social.FB.refreshFB();
+
+    $scope.Dj = Dj;
 
     $scope.User = User;
 
