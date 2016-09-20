@@ -122,19 +122,6 @@ angular.module('xyzApp')
 
       },
 
-      refresh: function () {
-        return get('refresh');
-      },
-
-      getContributors: function (spaceId) {
-        return [];
-        /*
-         return get('Spaces/' + spaceId + '/contributors')
-         .then(function (result) {
-         return result.data;
-         });*/
-      },
-
       searchUsers: function (query) {
         var regexp = '/' + query + '/i';
         var filter = {
@@ -145,7 +132,7 @@ angular.module('xyzApp')
               }
             }
           }
-        }
+        };
 
         return Dj.find(filter).$promise
           .then(function (result) {
