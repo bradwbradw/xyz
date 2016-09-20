@@ -9,3 +9,41 @@
   </div>
 
 </div>
+
+
+<div ng-if="User.loggedIn()" class="landing-section">
+
+  <br/>
+
+  <div ng-if="!User.hasOwnSpaces()">
+    create your first space here:<br/>
+  </div>
+
+  <div ng-if="isAdding()">
+    <input ng-model="newSpace.name" placeholder="new space name">
+    <md-icon class="icon" ng-click="User.addSpace(newSpace).then(resetAdding).catch(showError)">add_circle</md-icon>
+  </div>
+
+  <div ng-if="!isAdding()">
+    <a ng-click="setAdding()"> + new space</a>
+  </div>
+  <div ng-show="isAdding()">
+    <a ng-click="resetAdding()"> (nevermind)</a>
+  </div>
+
+  <h2 ng-if="User.hasOwnSpaces() || User.hasEditableSpaces()">my spaces:</h2>
+
+  <ul class="user-spaces-container"
+      layout-wrap layout-align="space-around left" layout="row">
+    <li ng-repeat="space in User.getSpaces().editable"
+        ng-include="'views/partials/space-thumbnail.html'">
+    </li>
+    <li ng-repeat="space in User.getSpaces().own"
+        ng-include="'views/partials/space-thumbnail.html'">
+    </li>
+  </ul>
+
+
+  <br/>
+
+</div>

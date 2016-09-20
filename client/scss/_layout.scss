@@ -1,5 +1,6 @@
 .landing-section {
   width: 95vw;
+  text-align: center;
   .space-thumbnail {
     margin: 1rem;
     height: 160px;
@@ -118,13 +119,11 @@
   height: 100vh;
   margin-top: $bar-height;
   padding-top: 1.5em;
-  border-bottom: 1px black solid;
   margin-bottom: 300px;
 
 }
 
 .user-spaces-container {
-  border-bottom: 1px black solid;
   margin-bottom: 300px;
 }
 
@@ -224,7 +223,7 @@
   width:50%;
   text-align: center;
 }
-#settings-button, #signup-login-link{
+.bar-icons, #signup-login-link{
   position: absolute;
   right:0;
 }

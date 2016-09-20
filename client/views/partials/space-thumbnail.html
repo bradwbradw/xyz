@@ -4,7 +4,7 @@
     {{space.name }}
   </a>
 
-  <span ng-if="space.owner"> (owned by {{space.owner.name}})</span>
+  <span ng-if="space.owner"> (made by {{space.owner.name}})</span>
   <div ng-if="!space">
     loading...
   </div>
@@ -13,18 +13,12 @@
     <div ng-if="!space.pic" class="no-img"> </div>
 
 
-    <div class="thumbnail-icons" layout="row" layout-align="space-between center" ng-if="space.playlist">
+    <div class="thumbnail-icons" layout="row" layout-align="space-between center" >
       <div layout="row">
         <md-icon class="icon" ng-if="userIsCollaborator(space)">
           group
           <md-tooltip md-delay="500">
             you are a contributor for this space
-          </md-tooltip>
-        </md-icon>
-        <md-icon class="icon" ng-if="!space.playlist[0]">
-          fiber_new
-          <md-tooltip md-delay="500">
-            new (empty) space
           </md-tooltip>
         </md-icon>
         <md-icon class="icon" ng-if="!space.public ">
@@ -35,7 +29,7 @@
         </md-icon>
       </div>
       <div>
-        <md-icon class="icon-btn" ng-click="playSpace(space)" ng-if="space.playlist[0]">
+        <md-icon class="icon-btn" ng-click="playSpace(space)">
           play_arrow
           <md-tooltip md-delay="500">
             Click to Play
