@@ -4,8 +4,10 @@
     loading...
   </div>
 
-  <pre class="debug" ng-repeat="item in playlist" ng-if="false">
-    playlist: {{item.title}}
+  <pre class="debug" ng-if="debug">
+    <span ng-repeat="item in playlist">
+      playlist: {{item.title}}
+    </span>
   </pre>
 
 
