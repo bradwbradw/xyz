@@ -73,6 +73,10 @@ angular.module('xyzApp')
       return User.get() && (viewer === 'owner' || viewer === 'contributor');
     };
 
+    var showInfoButton = function(){
+      return (viewer === 'guest') || (viewer === 'viewer');
+    };
+
     var parentStateIfActiveElseGoTo = function (stateName) {
 
       closeSettings();
@@ -86,6 +90,8 @@ angular.module('xyzApp')
     };
 
 
+
+    $scope.showInfoButton = showInfoButton;
     $scope.parentStateIfActiveElseGoTo = parentStateIfActiveElseGoTo;
     $scope.showSpaceEditorIcons = showSpaceEditorIcons;
     $scope.showSignupLoginLink = showSignupLoginLink;

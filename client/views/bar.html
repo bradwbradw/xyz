@@ -10,7 +10,8 @@
     </a>
   </h1>
 
-  <div class="bar-icons" >
+  <div class="bar-icons" layout-align="end center">
+
 
     <md-icon
         ng-if="showSpaceEditorIcons()"
@@ -29,7 +30,7 @@
     </md-icon>
 
     <md-icon
-        ng-if="showSpaceEditorIcons()"
+        ng-if="showInfoButton()"
         ng-class="{'active-icon': ('base.space.info' | isState) }"
         ng-click="parentStateIfActiveElseGoTo('base.space.info')"
         class="icon-btn">
@@ -45,16 +46,17 @@
       settings
     </md-icon>
 
+    <span id="signup-login-link" ng-if="!User.get()" ui-sref-active="hidden">
+      <a ui-sref="base.signup-login">
+        sign up / login
+      </a>
+    </span>
+
   </div>
 
 
 
 
-  <div id="signup-login-link" ng-if="!User.get()" ui-sref-active="hidden">
-    <a ui-sref="base.signup-login">
-      sign up / login
-    </a>
-  </div>
 
   <div class="user-settings-popup"
        ng-if="settingsOpen() && User.get()"
