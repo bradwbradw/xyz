@@ -67,11 +67,11 @@ angular.module('xyzApp')
 
       };
 
-      var setFirstSong = function (id) {
+      var setFirstSong = function (song) {
 
-        Server.updateSpace(space.id, {firstSong: id})
+        Server.updateSpace(space.id, {firstSong: song.id, pic: song.pic})
           .then(function (space) {
-            $scope.space.firstSong = id;
+            $scope.space.firstSong = song.id;
 
             Playlister.recompute($scope.space);
             $log.debug('result is ', space);
