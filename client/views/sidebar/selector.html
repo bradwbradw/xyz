@@ -13,22 +13,22 @@
   </button>
 <div>
 
-  <div ng-if="Library.getLocalItems().urlResult">
-    {{ Library.getLocalItems().provider }} media detected:
-    {{ Library.getLocalItems().artist+' - '+Library.getLocalItems().title }}
+  <div ng-if="Library.getSearchResults().urlResult">
+    {{ Library.getSearchResults().provider }} media detected:
+    {{ Library.getSearchResults().artist+' - '+Library.getSearchResults().title }}
     <hr/>
-    <button ng-click="Library.add(Library.getLocalItems())">add</button>
-    <button ng-if="!item.error && Library.isPlayable(Library.getLocalItems())"
-            ng-click="Player.play(Library.getLocalItems())">play
+    <button ng-click="Library.add(Library.getSearchResults())">add</button>
+    <button ng-if="!item.error && Library.isPlayable(Library.getSearchResults())"
+            ng-click="Player.play(Library.getSearchResults())">play
     </button>
 
   </div>
 
-  <div ng-repeat="item in Library.getLocalItems()"
-       ng-if="!Library.getLocalItems().urlResult"  ng-include="'sidebar/sidebar-search-result.html'"></div>
+  <div ng-repeat="item in Library.getSearchResults()"
+       ng-if="!Library.getSearchResults().urlResult"  ng-include="'sidebar/sidebar-search-result.html'"></div>
 </div>
 
-<pre class="debug" ng-if="false">
-  {{Library.getLocalItems() | json}}
+<pre class="debug" ng-if="debug">
+  local items: {{Library.getSearchResults() | json}}
 </pre>
 

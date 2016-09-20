@@ -16,19 +16,6 @@ angular.module('xyzApp')
 
     var newItem = '';
 
-    var addToLocalItems = function (newItems) {
-      Library.localItems = Library.localItems.concat(newItems);
-    };
-/*
-
-    var downloadMorePosts = function () {
-
-      Social.FB.loadPosts()
-        .then(Extract.filterOutMusicUrls)
-        .then(Library.addToLocalItems);
-    };
-*/
-
     var explore = function (serviceLoader) {
 
       serviceLoader
@@ -47,7 +34,7 @@ angular.module('xyzApp')
               console.error('download posts failed:',error);
             });
         })
-        .then(Library.addToLocalItems)
+        .then(Library.addToSearchResults)
 
         .catch(function(error){
           console.error('import ctrl error ',error);
@@ -57,7 +44,7 @@ angular.module('xyzApp')
     };
 
     var updateImportView = function (new_) {
-      $timeout(Library.addToLocalItems(new_));
+      $timeout(Library.addToSearchResults(new_));
       $scope.fetchingSongData = false;
 
     };

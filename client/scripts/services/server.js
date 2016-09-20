@@ -42,14 +42,6 @@ angular.module('xyzApp')
         if (!resource.$promise) {
           return $q.reject('no promise found in resource');
         }
-        /*
-         if (resource.$promise.$resolved) {
-         return resource.$promise.resolve(resource);
-         // or maybe $q.resolve(resource);
-         } else {
-         return resource.$promise.reject('something bad happened');
-         // or maybe $q.reject(resource);
-         }*/
       };
 
       return lbResourceCall({}, data, resPromise).$promise;
@@ -78,48 +70,13 @@ angular.module('xyzApp')
           // ... and so on...
           // fixme: make more generic, somehow
           //  so that
-        },
+        }
 
 
       },
 
       getBandcampId: function (url) {
         return get('bandcampHelper?url=' + url);
-      },
-
-      getPlaylist: function (spaceId) {
-        return get('spaces/playlist?spaceId=' + spaceId)
-          .then(function (result) {
-            return result.data.playlist;
-          });
-      },
-
-      fetchAllPlaylists: function (spaces) {
-
-        var playlistLoads = [];
-        console.log('spaces is ', spaces);
-        _.each(spaces, function (space) {
-          var playlistLoad = Server.getPlaylist(space.id)
-            .then(function (result) {
-//                $log.debug('playlist load complete:', result);
-              _.set(space, 'playlist', result.playlist);
-              return result.playlist;
-            }).catch(function (err) {
-              $log.error('playlist load failed: ', err);
-            });
-          playlistLoads.push(playlistLoad)
-        });
-
-        return $q.all(playlistLoads)
-          .then(function (playlists) {
-            $log.log('all playlists loaded:', playlists);
-            return playlists;
-          })
-          .catch(function (err) {
-            $log.error(err);
-            return $q.reject(err);
-          });
-
       },
 
       searchUsers: function (query) {
@@ -153,43 +110,6 @@ angular.module('xyzApp')
 
       },
 
-      getLibrary: function () {
-        return get('api/songs');
-      },
-
-      addSong: function (song) {
-        return post('api/songs', song);
-      },
-
-      updateSong: function (id, data) {
-        return put('api/songs/' + id, data);
-      },
-
-      deleteSong: function (id) {
-        return restDelete('api/songs/' + id);
-      },
-
-      registerDj: function (data) {
-        var theResource = Dj.create({}, data, resPromise);
-        return theResource.$promise;
-//        return post('api/djs', data);
-      },
-
-      login: function (data) {
-        return Dj.login({}, data, resPromise).$promise;
-      },
-
-      logout: function (token) {
-        return post('api/djs/logout?access_token=' + token);
-      },
-
-      getUser: function (data) {
-        return get('api/djs/' + data.userId + '?access_token=' + data.accessToken);
-      },
-
-      updateUser: function (id, token, data) {
-        return put('api/djs/' + id + '/?access_token=' + token, data);
-      },
       // sends the email with a temp access token
       resetPassword: function (email) {
         if (!email) {

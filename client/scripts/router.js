@@ -80,12 +80,6 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
         $log.log('public spaces is ', publicSpaces);
         Social.FB.refreshFB();
-        Server.fetchAllPlaylists(
-          _.uniq(_.concat(publicSpaces,[
-            User.getSpaces().own,
-            User.getSpaces().editable]
-          ))
-        )
 
       }
 
@@ -108,7 +102,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           controller: 'SidebarCtrl'
         },
         'importControls': {
-          templateUrl: 'sidebar/sidebar-add.html'
+          templateUrl: 'sidebar/sidebar-search.html'
         },
         'importSelector': {
           templateUrl: 'sidebar/selector.html',
@@ -179,7 +173,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '',
       views: {
         'importControls': {
-          templateUrl: 'sidebar/sidebar-add.html'
+          templateUrl: 'sidebar/sidebar-search.html'
         },
         'importSelector': {
           templateUrl: 'sidebar/selector.html'

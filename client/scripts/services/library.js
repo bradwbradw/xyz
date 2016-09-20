@@ -13,17 +13,10 @@ angular.module('xyzApp')
       songs: function () {
         return Library.currentSpace.songs;
       },
-      localItems: [],
-      getLocalItems: function () {
+      searchResults: [],
+      getSearchResults: function () {
 
-        return Library.localItems;
-      },
-      focused: function () {
-        if (Library.localItems.length > -1) {
-          return Library.localItems.length - 1;
-        } else {
-          return 0;
-        }
+        return Library.searchResults;
       },
 
       add: function (song) {
@@ -38,17 +31,15 @@ angular.module('xyzApp')
           });
       },
 
-      addToLocalItems: function (newItems) {
-
-        Library.localItems = newItems;
-
+      addToSearchResults: function (newItems) {
+        Library.searchResults = newItems;
       },
 
       fetchSpaceAndSongs: function (spaceId) {
         if (_.isUndefined(spaceId)){
           spaceId = Library.space().id;
         }
-        return Space.findById({id: spaceId, filter: {include: ["songs","contributors"]}}, _.noop)
+        return Space.findById({id: spaceId, filter: {include: ["songs","contributors"]}})
           .$promise
           .then(function (spaceAndSongs) {
             Library.currentSpace = spaceAndSongs;
