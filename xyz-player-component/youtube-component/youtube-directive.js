@@ -36,7 +36,6 @@ angular.module("xyzPlayer")
             player = p;
 
             if (player && _.isFunction(player.loadVideoById)) {
-              console.warn('emitting youtube_is_ready');
               scope.$emit('youtube_is_ready');
             }
             else {
@@ -68,7 +67,7 @@ angular.module("xyzPlayer")
 
             events: {
               'onReady': function(event){
-                console.log('Player ready');
+                $log.debug('Player ready');
                 deferred.resolve(Player);
 
               },
@@ -95,12 +94,12 @@ angular.module("xyzPlayer")
                 }
 
                 if (message.data === 'ENDED') {
-                  $log.debug('emitting youtube_has_ended');
+//                  $log.debug('emitting youtube_has_ended');
                   scope.$emit('youtube_has_ended');
                 }
 
                 scope.$apply(function () {
-                  console.log('emitting message from youtube directive:', message);
+//                  console.log('emitting message from youtube directive:', message);
                   scope.$emit(message.event, message.data);
                 });
               }
@@ -122,7 +121,7 @@ angular.module("xyzPlayer")
           if (!newValue || (newValue === oldValue)) {
             return;
           }
-          console.log('videoid watch hit. value is ', newValue);
+          $log.debug('videoid watch hit. value is ', newValue);
 
           if (player && player.loadVideoById) {
             player.loadVideoById(scope.videoid);
@@ -139,16 +138,12 @@ angular.module("xyzPlayer")
         });
 
         scope.$on(YT_event.PLAY, function () {
-          console.log("playin video");
+          $log.debug("playin video");
           player.playVideo();
         });
 
         scope.$on(YT_event.PAUSE, function () {
           player.pauseVideo();
-        });
-
-        scope.$on('jump', function () {
-          console.log('jumpin');
         });
 
       }
