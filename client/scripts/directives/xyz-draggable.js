@@ -98,8 +98,8 @@ angular.module('xyzApp').directive('xyzDraggable', function ($document, $log, Li
         item.y = y;
         $log.log('item x is now ', item.x);
 
-        scope.$apply();
-        Playlister.recompute(scope.space);
+//        scope.$apply();
+//        Playlister.recompute(scope.space);
       }
 
       function dragDone(event) {
