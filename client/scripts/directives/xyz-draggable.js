@@ -1,9 +1,10 @@
-angular.module('xyzApp').directive('xyzDraggable', function ($document, $log, Library, Playlister) {
+angular.module('xyzApp').directive('xyzDraggable', function ($document, $log, Library) {
   return {
     scope: {
       xyzDraggable: '<',
       canDrag: '=',
-      space:'='
+      space:'=',
+      viewer:'='
     },
     link: function (scope, element, attr) {
       var item = scope.xyzDraggable;
@@ -121,7 +122,9 @@ angular.module('xyzApp').directive('xyzDraggable', function ($document, $log, Li
           item.justDropped = true;
 //        event.stopPropagation();
           // item was actually dragged
-          Library.update(item.id, item);
+          if(scope.viewer === 'owner' || scope.viewer === 'contributor'){
+            Library.update(item.id, item);
+          }
 
         } else {
           // assume there was no drag performed (long press)
