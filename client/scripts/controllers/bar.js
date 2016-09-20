@@ -23,7 +23,8 @@ angular.module('xyzApp')
     };
     var toggleSettings = function () {
 
-      if (!$state.is('base.space')) {
+      if (!$state.is('base.space') && $state.includes('base.space')) {
+        // we are in a substate of base.space
         $state.go('^');
       }
 
