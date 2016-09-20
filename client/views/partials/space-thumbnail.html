@@ -9,8 +9,8 @@
     loading...
   </div>
   <div>
-    <img ng-if="space && space.playlist[0].pic" ng-src="{{space.playlist[0].pic}}">
-    <div ng-if="!space.playlist || !space.playlist[0].pic" class="no-img"></div>
+    <img ng-if="space && space.pic" ng-src="{{space.pic}}">
+    <div ng-if="!space.pic" class="no-img"> </div>
 
 
     <div class="thumbnail-icons" layout="row" layout-align="space-between center" ng-if="space.playlist">
