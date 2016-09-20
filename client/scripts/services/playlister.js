@@ -6,6 +6,9 @@ angular.module('xyzApp')
 
     var Playlister = {
       list: [],
+      getList: function(){
+        return Playlister.list;
+      },
       recompute: function (space) {
 
         $log.log('recomputing playlist for space ', space);
@@ -73,7 +76,8 @@ angular.module('xyzApp')
             playlist.push(_.find(songs, 'id', song.id));
           });
 
-          Playlister.list = playlist;
+          Playlister.list = _.uniqBy(playlist,'id');
+          
           $log.debug('computed playlist: ', playlist);
           return playlist;
         }

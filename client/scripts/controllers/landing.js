@@ -17,6 +17,7 @@ angular.module('xyzApp')
     $scope.User = User;
 
     $scope.publicSpaces = publicSpaces;
+    $log.log('public spaces is ', publicSpaces);
 
     $rootScope.lb = Server.loopback;
 

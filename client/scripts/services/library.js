@@ -3,7 +3,7 @@
 //noinspection JSUnresolvedVariable
 angular.module('xyzApp')
 
-  .service('Library', function ($log, $q, Space, Server, Playlister) {
+  .service('Library', function ($log, $q, Space, Server, Utility, Playlister) {
 
     var Library = {
 
@@ -18,6 +18,49 @@ angular.module('xyzApp')
       getSearchResults: function () {
 
         return Library.searchResults;
+      },
+      Spaces:{
+        map:{},
+        getSync:function(){
+          return Library.Spaces.map;
+        },
+        get: function(){
+          if( _.size(Library.Spaces.map) > 0){
+            return $q.resolve(Library.Spaces.getSync());
+          } else {
+            return Library.Spaces.downloadAll()
+              .then(Library.Spaces.makeMap)
+              .then(Library.Spaces.set);
+          }
+        },
+        getById:function(id){
+          var found = _.find(Library.Spaces.map, {id:id});
+          if(found){
+            return $q.resolve(found);
+          } else {
+            return Library.Spaces.downloadOne(id)
+              .then(Library.Spaces.addToMap);
+          }
+        },
+        set: function(data){
+          Library.Spaces.map = data;
+          return data;
+        },
+        makeMap: function(list){
+          return _.keyBy(list, 'id');
+        },
+        addToMap: function(newOne){
+          _.set(Library.Spaces.map, newOne.id, newOne);
+          return newOne;
+        },
+        downloadAll: function(){
+          return Space.find({filter: {include: ["owner", "songs"], where: {public: true}}})
+            .$promise;
+        },
+        downloadOne: function(id){
+          return Space.findOne({filter: {include: ["owner", "songs", "contributors"], where: {id:id}}})
+            .$promise;
+        }
       },
 
       add: function (song) {
@@ -40,8 +83,7 @@ angular.module('xyzApp')
         if (_.isUndefined(spaceId)){
           spaceId = Library.space().id;
         }
-        return Space.findById({id: spaceId, filter: {include: ["songs","contributors"]}})
-          .$promise
+        return Library.Spaces.getById(spaceId)
           .then(function (spaceAndSongs) {
             Library.currentSpace = spaceAndSongs;
             Library.currentSpace.songs = prepareLibrary(spaceAndSongs.songs);
@@ -86,6 +128,7 @@ angular.module('xyzApp')
       var preparedLibrary = [];
       _.each(rawLibrary, function (song) { //jshint ignore:line
         song.editing = false;
+        _.unset(song, 'original_data');
         preparedLibrary.push(song);
       });
 
