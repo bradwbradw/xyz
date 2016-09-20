@@ -298,10 +298,6 @@ gulp.task('serveApi', function () {
 });
 
 
-gulp.task('docs', function (done) {
-  gulp.series('loopback', 'generate-docs', 'serve-docs', 'open-docs', done);
-});
-
 gulp.task('generate-docs', function () {
 
   var options = {
@@ -323,14 +319,11 @@ gulp.task('serve-docs', function (done) {
     livereload: false,
     fallback: 'docs/index.html',
     port: 8888
-  })
+  });
   done();
 });
-gulp.task('open-docs', function () {
-  return gulp.src('').pipe(
-    open({uri: 'http://localhost:8888'})
-  );
-});
+
+gulp.task('docs', gulp.series('loopback', 'generate-docs', 'serve-docs'));
 
 gulp.task('copy-staging-db', function (done) {
   gulp.series('save-db', 'overwrite-db-local', done);
