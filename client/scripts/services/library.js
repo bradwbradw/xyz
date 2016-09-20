@@ -1,5 +1,6 @@
 "use strict";
 
+//noinspection JSUnresolvedVariable
 angular.module('xyzApp')
 
   .service('Library', function ($log, $q, Space, Server, Playlister) {
@@ -57,6 +58,7 @@ angular.module('xyzApp')
         return Space.songs.updateById({id: Library.space().id, fk: id}, data)
           .$promise
           .catch(function (err) {
+            $log.error(err);
             return $q.reject(err);
           });
       },
