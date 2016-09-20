@@ -57,7 +57,6 @@ angular.module('xyzApp')
         } else {
           _.each(songs, function (song) {
             song.distances = distancesToOtherItems(song, songs);
-            playlist.push(song);
           });
 
           var seedSong;
@@ -73,11 +72,11 @@ angular.module('xyzApp')
           playlist = [seedSong];
 
           _.each(seedSong.distances, function (song) {
-            playlist.push(_.find(songs, 'id', song.id));
+            playlist.push(_.find(songs, {'id': song.id}));
           });
 
           Playlister.list = _.uniqBy(playlist,'id');
-          
+
           $log.debug('computed playlist: ', playlist);
           return playlist;
         }
