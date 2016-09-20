@@ -6,36 +6,16 @@ angular.module('xyzApp')
 
     var Library = {
 
-      /*
-       // should be same as in index.js database model
-       fields: [
-       'artist',
-       'title',
-       'length',
-       'url',
-       'provider',
-       'provider_id',
-       'pic',
-       'date_saved',
-       'original_data',
-       'description',
-       'x',
-       'y',
-       'kind',
-       'active'
-
-       ], */
-
-      currentSpace: {}, // set by the 'space' resolve
+      currentSpace: {},
       space: function () {
         return Library.currentSpace;
       },
       songs: function () {
         return Library.currentSpace.songs;
       },
-      localItems: [],//localStorageService.get('localItems') || [],
+      localItems: [],
       getLocalItems: function () {
-        // console.warn('getLocalItems: ',Library.localItems);
+
         return Library.localItems;
       },
       focused: function () {
@@ -59,11 +39,8 @@ angular.module('xyzApp')
       },
 
       addToLocalItems: function (newItems) {
-        //  console.log('ADDING ITEMS:',newItems);
-//        var newArr = _.isArray(newItems) ? newItems : [newItems];
-//        Library.localItems.push(newItems);
+
         Library.localItems = newItems;
-//        localStorageService.set('localItems', Library.localItems);
 
       },
 
@@ -79,33 +56,12 @@ angular.module('xyzApp')
 
             return Library.songs(); // returns just the songs
           })
-      }, /*
-       loadLibrary: function () {
-       $log.log('loading songs');
-       return Server.getLibrary()
-       .then(function (response) {
-       Library.songs = prepareLibrary(response.data);
-       return Library.songs;
-       })
-       .catch(function (error) {
-       $log.error(error);
-       return false;
-       });
-       },*/
-      /*
-       getLibrary: function () {
-
-       return Library.currentSpace.songs;
-
-       },*/
+      },
 
       update: function (id, data) {
         $log.warn('** update', data);
 
-//        var i = _.findIndex(Library.currentSpace.songs, {id:id});
         Playlister.recompute(Library.currentSpace);
-
-//        Library.currentSpace.songs[i] =
 
         return Space.songs.updateById({id: Library.space().id, fk: id}, data)
           .$promise
@@ -119,27 +75,7 @@ angular.module('xyzApp')
         } else {
           return false;
         }
-      },
-
-      /*
-
-       focusLeft: function () {
-       Library.focused = Library.focused - 1;
-       },
-       focusRight: function () {
-       Library.focused = Library.focused + 1;
-       },
-       latestFocused: function () {
-       return Library.focused === Library.localItems.length - 1;
-       },
-       getFocusedLocalItemGroup: function () {
-       /!*
-       if (_.isEmpty(Library.localItems)){
-       return false;
-       }
-       return Library.localItems[Library.focused];*!/
-       },
-       */
+      }
 
     };
 
