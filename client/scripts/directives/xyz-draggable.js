@@ -2,7 +2,6 @@ angular.module('xyzApp').directive('xyzDraggable', function ($document, $log, Li
   return {
     scope: {
       xyzDraggable: '<',
-      canDrag: '=',
       space:'=',
       viewer:'='
     },
@@ -19,7 +18,6 @@ angular.module('xyzApp').directive('xyzDraggable', function ($document, $log, Li
         return item.y;
       };
 
-      var canDrag = scope.canDrag;
 
       if (_.isUndefined(item)) {
         return;
@@ -29,24 +27,9 @@ angular.module('xyzApp').directive('xyzDraggable', function ($document, $log, Li
       var startY;
       var x = parseFloat(item.x) || 0;
       var y = parseFloat(item.y) || 0;
-      /*
 
-       element.css({
-       top: y + 'px',
-       left: x + 'px'
-       });
-
-       */
-/*
-      attr.cx = x;
-      attr.cy = y;
-
-      */
       element.attr('cx',x);
       element.attr('cy',y);
-      if (!canDrag) {
-        return;
-      }
 
       var dragPointOffsetX;
       var dragPointOffsetY;

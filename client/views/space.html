@@ -34,7 +34,7 @@
         class="xyz-item"
         xyz-draggable="item"
         data-space="space"
-        can-drag="true"
+         data-viewer="viewer"
         fill="{{Utility.absoluteRef('image'+item.id)}}"
         ng-attr-stroke="{{isFirstSong(item)? 'blue' : 'lightblue'}}" stroke-width="0.5%"
         ng-class="{unavailable: (item.public === false), 'first-song':isFirstSong(item)}"
@@ -58,7 +58,7 @@
     <a ng-href="{{expandedItem().url}}"
        target="_blank"
        ng-bind="expandedItem().title"
-       ellipsis></a>
+       ></a>
 
     <div>
       <div media-preview-toggle="expandedItem()"></div>

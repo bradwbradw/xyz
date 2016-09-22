@@ -167,7 +167,7 @@ gulp.task('browserSync:client', function (done) {
         logConnections: true,
     ghostMode: false,
     notify: false,
-    browser:'firefox',
+    browser:'chrome',
     ui: {
       port: 9006
     },
