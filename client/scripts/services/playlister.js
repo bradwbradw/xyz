@@ -57,18 +57,22 @@ angular.module('xyzApp')
 
           var sort = function (unvisited, currentNode) {
 
+            $log.debug('starting unvisited set is ', _.map(unvisited,'title'));
             safety++;
             if (safety > 100) {
               return [];
             }
-            sorted = _.concat(sorted, currentNode);
             if (_.size(unvisited) === 0) {
               return;
             }
+
+            sorted = _.concat(sorted, currentNode);
+
+            _.remove(unvisited, {id: currentNode.id});
+            $log.debug('just removed ', _.get(currentNode,'title'));
+
             var nextNodeId = _.get(_.first(distancesToOtherItems(currentNode, unvisited)), 'id');
-            var nextNode = _.first(
-              _.remove(unvisited, {id: nextNodeId})
-            );
+            var nextNode = _.find(unvisited, {id: nextNodeId});
             $log.debug('next unvisited set is ', _.map(unvisited,'title'));
             $log.debug('next node is ', _.get(nextNode, 'title'));
             $log.debug('sorted is ', _.map(sorted, 'title'));
@@ -83,7 +87,7 @@ angular.module('xyzApp')
         };
 
         var songs = _.filter(space.songs, function (song) {
-          return _.isUndefined(song.public) || song.public == true;
+          return song.provider_id && (_.isUndefined(song.public) || song.public == true);
         });
 
         songs = _.uniqBy(songs, 'id');
@@ -103,7 +107,7 @@ angular.module('xyzApp')
             seedSong = _.first(_.sortBy(songs, 'date_saved'));
           }
 
-          Playlister.list = sortByNearest(songs, [seedSong]);
+          Playlister.list = sortByNearest(songs, seedSong);
 
           $log.debug('computed playlist: ', Playlister.list);
           return Playlister.list;
