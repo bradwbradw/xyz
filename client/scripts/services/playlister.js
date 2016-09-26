@@ -57,7 +57,7 @@ angular.module('xyzApp')
 
           var sort = function (unvisited, currentNode) {
 
-            $log.debug('starting unvisited set is ', _.map(unvisited,'title'));
+//            $log.debug('starting unvisited set is ', _.map(unvisited,'title'));
             safety++;
             if (safety > 100) {
               return [];
@@ -69,19 +69,19 @@ angular.module('xyzApp')
             sorted = _.concat(sorted, currentNode);
 
             _.remove(unvisited, {id: currentNode.id});
-            $log.debug('just removed ', _.get(currentNode,'title'));
+//            $log.debug('just removed ', _.get(currentNode,'title'));
 
             var nextNodeId = _.get(_.first(distancesToOtherItems(currentNode, unvisited)), 'id');
             var nextNode = _.find(unvisited, {id: nextNodeId});
-            $log.debug('next unvisited set is ', _.map(unvisited,'title'));
-            $log.debug('next node is ', _.get(nextNode, 'title'));
-            $log.debug('sorted is ', _.map(sorted, 'title'));
+//            $log.debug('next unvisited set is ', _.map(unvisited,'title'));
+//            $log.debug('next node is ', _.get(nextNode, 'title'));
+//            $log.debug('sorted is ', _.map(sorted, 'title'));
 
             sort(unvisited, nextNode);
           };
 
           sort(songs, seed);
-          $log.log('all recursive should be donw');
+//          $log.log('all recursive should be done');
 
           return sorted;
         };

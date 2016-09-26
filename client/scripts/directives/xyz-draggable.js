@@ -63,7 +63,7 @@ angular.module('xyzApp').directive('xyzDraggable', function ($document, $log, Li
 
       function dragMove(event) {
         item.dragging = true;
-        $log.log('dragMove event:', event);
+//      $log.log('dragMove event:', event);
         x = event.pageX - dragPointOffsetX;
         y = event.pageY - dragPointOffsetY;
 
