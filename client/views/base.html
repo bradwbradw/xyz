@@ -4,11 +4,10 @@
   <toast></toast>
   <div ui-view="main" class="main-container"></div>
 
-
-
   <div ui-view="xyzPlayer"></div>
 
-  <div class="xyz-player-container" ng-controller="SiteWidePlayerCtrl">
+  <div class="xyz-player-container"
+       ng-controller="SiteWidePlayerCtrl">
     <div xyz-player
          space-id="{{getPlayingSpace().id}}"
          data-space="{{getPlayingSpace()}}"
