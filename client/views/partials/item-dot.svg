@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+
+        <pattern
+                id="{{'image'+item.id}}"
+                height="100%"
+                width="100%">
+            <image
+                    ng-attr-x="{{item.provider === 'youtube'? -50 : -20}}"
+                    ng-attr-y="{{item.provider === 'youtube'? -40 : -20}}"
+                    ng-attr-height="{{item.provider === 'youtube'? '150px': '100px'}}"
+                    ng-attr-width="{{item.provider === 'youtube'? '150px': '100px'}}"
+                    height=""
+                    width=""
+                    ng-href="{{item.pic}}"
+                    xlink:href="">
+            </image>
+
+        </pattern>
+    </defs>
+    <circle
+            ng-attr-r="{{dotRadius}}"
+            r=""
+            class="xyz-item"
+            fill="{{Utility.absoluteRef('image'+item.id)}}"
+            ng-attr-stroke="{{isFirstSong(item)? 'blue' : 'lightblue'}}" stroke-width="0.5%"
+            ng-class="{unavailable: (item.public === false), 'first-song':isFirstSong(item)}"
+    >
+    </circle>
+</svg>

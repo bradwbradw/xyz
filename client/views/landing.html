@@ -36,10 +36,10 @@
   <ul class="user-spaces-container"
       layout-wrap layout-align="space-around left" layout="row">
     <li ng-repeat="space in User.getSpaces().editable"
-        ng-include="'views/partials/space-thumbnail.html'">
+        ng-include="'partials/space-thumbnail.html'">
     </li>
     <li ng-repeat="space in User.getSpaces().own"
-        ng-include="'views/partials/space-thumbnail.html'">
+        ng-include="'partials/space-thumbnail.html'">
     </li>
   </ul>
 

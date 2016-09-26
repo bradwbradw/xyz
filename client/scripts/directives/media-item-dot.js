@@ -1,12 +1,19 @@
-angular.module('xyzApp').directive('xyzDraggable', function ($document, $log, Library) {
+angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $sce, Player, Library, Utility) {
+
   return {
+    restrict: 'A',
+    templateUrl: 'partials/item-dot.svg',
+    templateNamespace: 'svg',
     scope: {
-      xyzDraggable: '<',
-      space:'=',
-      viewer:'='
+      item: '=',
+      space: '=',
+      viewer:'=',
+      dotRadius: '=',
+      isFirstSong: '&'
     },
     link: function (scope, element, attr) {
-      var item = scope.xyzDraggable;
+
+      var item = scope.item;
 
       scope.getX = function (item) {
 
@@ -28,8 +35,8 @@ angular.module('xyzApp').directive('xyzDraggable', function ($document, $log, Li
       var x = parseFloat(item.x) || 0;
       var y = parseFloat(item.y) || 0;
 
-      element.attr('cx',x);
-      element.attr('cy',y);
+      element.find('circle').attr('cx', x);
+      element.find('circle').attr('cy', y);
 
       var dragPointOffsetX;
       var dragPointOffsetY;
@@ -67,23 +74,13 @@ angular.module('xyzApp').directive('xyzDraggable', function ($document, $log, Li
         x = event.pageX - dragPointOffsetX;
         y = event.pageY - dragPointOffsetY;
 
-        /*
 
-         element.css({
-         left: x + 'px',
-         top: y + 'px'
-         });
-         */
-
-      element.attr('cx',x);
-      element.attr('cy',y);
+        element.find('circle').attr('cx', x);
+        element.find('circle').attr('cy', y);
 
         item.x = x;
         item.y = y;
-        $log.log('item x is now ', item.x);
 
-//        scope.$apply();
-//        Playlister.recompute(scope.space);
       }
 
       function dragDone(event) {
@@ -105,7 +102,7 @@ angular.module('xyzApp').directive('xyzDraggable', function ($document, $log, Li
           item.justDropped = true;
 //        event.stopPropagation();
           // item was actually dragged
-          if(scope.viewer === 'owner' || scope.viewer === 'contributor'){
+          if (scope.viewer === 'owner' || scope.viewer === 'contributor') {
             Library.update(item.id, item);
           }
 
@@ -118,6 +115,8 @@ angular.module('xyzApp').directive('xyzDraggable', function ($document, $log, Li
 
 
       }
+
+      scope.Utility = Utility;
     }
   };
 });

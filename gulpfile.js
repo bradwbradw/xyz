@@ -33,7 +33,11 @@ var open = require('gulp-open');
 var paths = {
   src: {
     sass: ['client/scss/**/*.scss', 'xyz-player-component/**/*.scss'],
-    views: ['client/views/**/*.html', 'xyz-player-component/*.html'],
+    views: [
+      'client/views/**/*.html',
+      'xyz-player-component/*.html',
+      'client/views/**/*.svg',
+      'xyz-player-component/*.svg'],
     scripts: 'client/scripts',
     index:'client/index.html'
   }
