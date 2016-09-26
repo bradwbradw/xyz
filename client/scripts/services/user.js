@@ -111,7 +111,14 @@ angular.module('xyzApp')
         return User.spaces;
       },
       appendSpace: function (space) {
-        User.spaces.own.push(space);
+        if(_.isArray(User.spaces.own)){
+          User.spaces.own.push(space);
+        } else {
+          _.set(User.spaces, {
+            own:[space],
+            editable:[]
+          });
+        }
       },
 
       fetchSpaces: function () {
