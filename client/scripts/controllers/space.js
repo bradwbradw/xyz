@@ -21,7 +21,7 @@ angular.module('xyzApp')
       Playlister.recompute(space);
 
       var expand = function (song) {
-        $timeout(function(){
+        $timeout(function () {
           expanded = song.id;
         });
       };
@@ -125,6 +125,23 @@ angular.module('xyzApp')
         };
       };
 
+      var onDragDone = function (item) {
+        $log.debug('done draggging!', item);
+
+        item.justDropped = true;
+
+        if (canEdit()) {
+          Library.update(item.id, item);
+        }
+        Playlister.recompute(Library.currentSpace);
+      };
+
+      var canEdit = function(){
+        return viewer === 'owner' || viewer === 'contributor';
+      };
+
+      $scope.canEdit = canEdit;
+      $scope.onDragDone = onDragDone;
       $scope.handleDotClick = handleDotClick;
       $scope.isFirstSong = isFirstSong;
       $scope.setFirstSong = setFirstSong;

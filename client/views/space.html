@@ -15,7 +15,8 @@
      ng-click="handleDotClick(item, $event)"
      is-first-song="isFirstSong(item)"
       data-space="space"
-      data-viewer="viewer">
+      data-viewer="viewer"
+      done-dragging="onDragDone(item)">
 
   </g>
 
@@ -37,8 +38,8 @@
 
     <div>
       <div media-preview-toggle="expandedItem()"></div>
-      <button ng-click="setFirstSong(expandedItem())">set first song</button>
-      <button ng-click="removeSong(expandedItem().id)">remove</button>
+      <button ng-if="canEdit()" ng-click="setFirstSong(expandedItem())">set first song</button>
+      <button ng-if="canEdit()" ng-click="removeSong(expandedItem().id)">remove</button>
     </div>
   </div>
 

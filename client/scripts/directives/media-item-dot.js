@@ -1,4 +1,4 @@
-angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $sce, Player, Library, Utility) {
+angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $sce, Library, Utility, Playlister) {
 
   return {
     restrict: 'A',
@@ -7,9 +7,10 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
     scope: {
       item: '=',
       space: '=',
-      viewer:'=',
+      viewer: '=',
       dotRadius: '=',
-      isFirstSong: '&'
+      isFirstSong: '&',
+      doneDragging: '&'
     },
     link: function (scope, element, attr) {
 
@@ -97,14 +98,7 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
         if (item.x !== startX
           || item.y !== startY) {
-          // assume that a drag was performed
-          $log.debug('set just dropped to true for item ', item);
-          item.justDropped = true;
-//        event.stopPropagation();
-          // item was actually dragged
-          if (scope.viewer === 'owner' || scope.viewer === 'contributor') {
-            Library.update(item.id, item);
-          }
+          scope.doneDragging(item);
 
         } else {
           // assume there was no drag performed (long press)

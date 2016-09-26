@@ -95,8 +95,6 @@ angular.module('xyzApp')
       update: function (id, data) {
         $log.warn('** update', data);
 
-        Playlister.recompute(Library.currentSpace);
-
         return Space.songs.updateById({id: Library.space().id, fk: id}, data)
           .$promise
           .catch(function (err) {
