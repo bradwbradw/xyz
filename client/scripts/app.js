@@ -23,15 +23,23 @@ xyzApp.config(function (localStorageServiceProvider) {
     .setPrefix('');
 });
 
-xyzApp.config(['ngToastProvider', function(ngToastProvider) {
+var debugIsEnabled = !!(window.localStorage && window.localStorage['d']);
+
+xyzApp.config(function ($logProvider) {
+  $logProvider.debugEnabled(debugIsEnabled);
+});
+
+
+xyzApp.config(['ngToastProvider', function (ngToastProvider) {
   ngToastProvider.configure({
     animation: 'slide',
     dismissOnTimeout: true
   });
 }]);
 
-xyzApp.filter('secondsToDateTime', [function() {
-  return function(seconds) {
+
+xyzApp.filter('secondsToDateTime', [function () {
+  return function (seconds) {
     return new Date(1970, 0, 1).setSeconds(_.round(seconds));
   };
 }]);
