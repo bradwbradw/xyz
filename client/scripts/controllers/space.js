@@ -84,10 +84,11 @@ angular.module('xyzApp')
           })
       };
 
+      var isNowPlaying = function(song) {
+        return song.id === _.get(Playlister.getNowPlaying(), 'id');
+      };
       var isFirstSong = function (song) {
-
         return song.id === space.firstSong;
-
       };
 
       var openSidebar = function () {
@@ -143,6 +144,7 @@ angular.module('xyzApp')
       $scope.canEdit = canEdit;
       $scope.onDragDone = onDragDone;
       $scope.handleDotClick = handleDotClick;
+      $scope.isNowPlaying = isNowPlaying;
       $scope.isFirstSong = isFirstSong;
       $scope.setFirstSong = setFirstSong;
       $scope.removeSong = removeSong;

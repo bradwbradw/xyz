@@ -24,8 +24,10 @@
             r=""
             class="xyz-item"
             fill="{{Utility.absoluteRef('image'+item.id)}}"
-            ng-attr-stroke="{{isFirstSong(item)? 'blue' : 'lightblue'}}" stroke-width="0.5%"
-            ng-class="{unavailable: (item.public === false), 'first-song':isFirstSong(item)}"
+            ng-class="{
+            unavailable: (item.public === false),
+            'first-song':isFirstSong(item),
+            'now-playing':isNowPlaying(item)}"
     >
     </circle>
 </svg>

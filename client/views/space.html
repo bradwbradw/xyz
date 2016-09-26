@@ -13,10 +13,12 @@
      item="item"
      dot-radius="dotRadius"
      ng-click="handleDotClick(item, $event)"
+     is-now-playing="isNowPlaying(item)"
      is-first-song="isFirstSong(item)"
-      data-space="space"
-      data-viewer="viewer"
-      done-dragging="onDragDone(item)">
+      space="space"
+      viewer="viewer"
+      done-dragging="onDragDone(item)"
+  >
 
   </g>
 

@@ -1,4 +1,4 @@
-angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $sce, Library, Utility, Playlister) {
+angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $sce, $timeout, Library, Utility, Playlister) {
 
   return {
     restrict: 'A',
@@ -9,8 +9,10 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
       space: '=',
       viewer: '=',
       dotRadius: '=',
+      isNowPlaying: '&',
       isFirstSong: '&',
-      doneDragging: '&'
+      doneDragging: '&',
+      draggingFirst: '&'
     },
     link: function (scope, element, attr) {
 
@@ -30,14 +32,15 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
       if (_.isUndefined(item)) {
         return;
       }
+      var circleElement = element.find('circle');
 
       var startX;
       var startY;
       var x = parseFloat(item.x) || 0;
       var y = parseFloat(item.y) || 0;
 
-      element.find('circle').attr('cx', x);
-      element.find('circle').attr('cy', y);
+      circleElement.attr('cx', x);
+      circleElement.attr('cy', y);
 
       var dragPointOffsetX;
       var dragPointOffsetY;
@@ -46,7 +49,6 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
       var dragStart = function (event) {
         $log.log('dragStart event:%s,%s', event.screenX, event.screenY);
         $log.log('dragStart event:', event);
-
 
         // Prevent default dragging of selected content
         event.preventDefault();
@@ -70,14 +72,13 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
       element.on('mousedown', dragStart);
 
       function dragMove(event) {
-        item.dragging = true;
 //      $log.log('dragMove event:', event);
         x = event.pageX - dragPointOffsetX;
         y = event.pageY - dragPointOffsetY;
 
 
-        element.find('circle').attr('cx', x);
-        element.find('circle').attr('cy', y);
+        circleElement.attr('cx', x);
+        circleElement.attr('cy', y);
 
         item.x = x;
         item.y = y;
@@ -86,6 +87,7 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
       function dragDone(event) {
         item.dragging = false;
+
         $log.log('dragDone event:', event);
         /*
          $document.off('touchmove', dragMove);
