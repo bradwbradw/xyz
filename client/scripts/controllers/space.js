@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SpaceCtrl', function ($rootScope, $scope, $log, $state, Server, Library, Player, Playlister, Space, space, owner, viewer, contributors) {
+  .controller('SpaceCtrl', function ($rootScope, $timeout, $scope, $log, $state, Server, Library, Player, Playlister, Space, space, owner, viewer, contributors) {
 
       // default tab 'add media' should be open
       if (viewer === 'contributor' || viewer === 'owner') {
@@ -19,8 +19,11 @@ angular.module('xyzApp')
       var dotRadius = 30;
 
       Playlister.recompute(space);
+
       var expand = function (song) {
-        expanded = song.id;
+        $timeout(function(){
+          expanded = song.id;
+        });
       };
 
 
@@ -108,7 +111,7 @@ angular.module('xyzApp')
         if (!expanded || !space.songs) {
           return false;
         } else {
-          $log.debug(_.find(space.songs, {id: expanded}).title);
+          $log.debug('expanded item is ', _.find(space.songs, {id: expanded}).title);
           return _.find(space.songs, {id: expanded});
         }
       };

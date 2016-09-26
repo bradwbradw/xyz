@@ -1,4 +1,4 @@
-
+<pre ng-if="debug">item: {{item.title | json}}</pre>
     <button class="play" ng-if="!item.error && Library.isPlayable(item)"
             ng-click="Player.play(item)" ng-hide="Player.isPlaying(item.provider_id)">
       preview
