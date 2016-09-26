@@ -64,6 +64,10 @@ angular.module('xyzPlayer', [])
               $log.debug('tryin to play');
               $rootScope.$broadcast(YT_event.PLAY);
             };
+            mediaProviders.youtube.stop = function () {
+              $log.debug('tryin to stop');
+              $rootScope.$broadcast(YT_event.STOP);
+            };
 
             mediaProviders.youtube.loading.resolve('youtube!');
 
@@ -83,7 +87,10 @@ angular.module('xyzPlayer', [])
               $rootScope.$broadcast(SC_event.PLAY);
             };
 
-
+            mediaProviders.soundcloud.stop = function () {
+              $log.debug('tryin to stop');
+              $rootScope.$broadcast(SC_event.STOP);
+            };
             mediaProviders.soundcloud.cueAndPlay = function (provider_id) {
               scope.soundId = provider_id;
               return $q.resolve(true);
@@ -165,9 +172,17 @@ angular.module('xyzPlayer', [])
         };
 
         var next = function () {
+          mediaProviders[getNowPlaying().provider].stop();
           go();
         };
 
+        var stopAll = function(){
+          _.each(mediaProviders, function(provider){
+            if(_.isFunction(provider.stop)){
+              provider.stop();
+            }
+          });
+        };
 
         var getNowPlaying = function () {
           var now = _.find(_.clone(getPlaylist()), {id: nowPlaying.id});
@@ -239,12 +254,11 @@ angular.module('xyzPlayer', [])
             });
         };
 
-
         attrs.$observe('spaceId', function (spaceId) {
           $log.debug('space changed: ' + spaceId);
-          if (getNowPlaying()) {
-            pause();
-          }
+          // currently, playlist has already changed due to scope
+          // attribute playlist being mapped to 'Playlister.list'
+            stopAll();
           if (spaceId !== "") {
             loadAndPlay(spaceId);
           }
@@ -297,191 +311,3 @@ angular.module('xyzPlayer')
     STOP: 10, PLAY: 11, PAUSE: 12, STATUS_CHANGE: 13
   });
 
-var mockPlaylist = function () {
-  return {
-    space: {
-      id: "0", name: "mock space", ownerId: "mockerson", public: true, songs: []
-    }, playlist: [{
-      "artist": "an artist",
-      "title": "mock media 5 seconds",
-      "url": "https://mock.url",
-      "provider": "mock",
-      "provider_id": "5", // provider id for mock playlist corresponds to the length of the song
-      "pic": "https://i.ytimg.com/vi/Hphwfq1wLJs/hqdefault.jpg",
-      "description": "Watch the official music video for Rod Stewart's \"Do Ya Think I'm Sexy?\" from his album 'Blondes Have More Fun' The song was released as a single in late ...",
-      "date_saved": "2016-03-11T16:17:17.894Z",
-      "original_data": {
-        "kind": "youtube#searchResult", "etag": "\"q5k97EMVGxODeKcDgp8gnMu79wM/2BEtiXfTPigIUpk2TusIUnGqSxs\"", "id": {
-          "kind": "youtube#video", "videoId": "Hphwfq1wLJs"
-        }, "snippet": {
-          "publishedAt": "2009-10-29T21:26:44.000Z",
-          "channelId": "UCWEtnEiVwUy7mwFeshyAWLA",
-          "title": "Rod Stewart - Da Ya Think I'm Sexy? (Official Video)",
-          "description": "Watch the official music video for Rod Stewart's \"Do Ya Think I'm Sexy?\" from his album 'Blondes Have More Fun' The song was released as a single in late ...",
-          "thumbnails": {
-            "default": {
-              "url": "https://i.ytimg.com/vi/Hphwfq1wLJs/default.jpg", "width": 120, "height": 90
-            }, "medium": {
-              "url": "https://i.ytimg.com/vi/Hphwfq1wLJs/mqdefault.jpg", "width": 320, "height": 180
-            }, "high": {
-              "url": "https://i.ytimg.com/vi/Hphwfq1wLJs/hqdefault.jpg", "width": 480, "height": 360
-            }
-          },
-          "channelTitle": "RhinoEntertainment",
-          "liveBroadcastContent": "none"
-        }
-      },
-      "x": 123,
-      "y": 91,
-      "kind": "media",
-      "id": "0",
-      "date_created": "2016-03-11T16:17:21.209Z",
-      "distances": [{
-        "distance": 226.6142096162551, "id": "56e5c5b395da6211f41e204f"
-      }, {
-        "distance": 279.5943490129942, "id": "56e5c5b495da6211f41e2051"
-      }, {
-        "distance": 291.247317584214, "id": "56e2efa7ff13560481f347d4"
-      }, {
-        "distance": 311.8108400937979, "id": "56e5c5b295da6211f41e204d"
-      }]
-
-    }, {
-      "artist": "another artist",
-      "title": "mock media 10 seconds",
-      "url": "https://mock.url",
-      "provider": "mock",
-      "provider_id": "10",
-      "pic": "https://i.ytimg.com/vi/Hphwfq1wLJs/hqdefault.jpg",
-      "description": "Watch the official music video for Rod Stewart's \"Do Ya Think I'm Sexy?\" from his album 'Blondes Have More Fun' The song was released as a single in late ...",
-      "date_saved": "2016-03-11T16:17:17.894Z",
-      "original_data": {
-        "kind": "youtube#searchResult", "etag": "\"q5k97EMVGxODeKcDgp8gnMu79wM/2BEtiXfTPigIUpk2TusIUnGqSxs\"", "id": {
-          "kind": "youtube#video", "videoId": "Hphwfq1wLJs"
-        }, "snippet": {
-          "publishedAt": "2009-10-29T21:26:44.000Z",
-          "channelId": "UCWEtnEiVwUy7mwFeshyAWLA",
-          "title": "Rod Stewart - Da Ya Think I'm Sexy? (Official Video)",
-          "description": "Watch the official music video for Rod Stewart's \"Do Ya Think I'm Sexy?\" from his album 'Blondes Have More Fun' The song was released as a single in late ...",
-          "thumbnails": {
-            "default": {
-              "url": "https://i.ytimg.com/vi/Hphwfq1wLJs/default.jpg", "width": 120, "height": 90
-            }, "medium": {
-              "url": "https://i.ytimg.com/vi/Hphwfq1wLJs/mqdefault.jpg", "width": 320, "height": 180
-            }, "high": {
-              "url": "https://i.ytimg.com/vi/Hphwfq1wLJs/hqdefault.jpg", "width": 480, "height": 360
-            }
-          },
-          "channelTitle": "RhinoEntertainment",
-          "liveBroadcastContent": "none"
-        }
-      },
-      "x": 123,
-      "y": 91,
-      "kind": "media",
-      "id": "0",
-      "date_created": "2016-03-11T16:17:21.209Z",
-      "distances": [{
-        "distance": 226.6142096162551, "id": "56e5c5b395da6211f41e204f"
-      }, {
-        "distance": 279.5943490129942, "id": "56e5c5b495da6211f41e2051"
-      }, {
-        "distance": 291.247317584214, "id": "56e2efa7ff13560481f347d4"
-      }, {
-        "distance": 311.8108400937979, "id": "56e5c5b295da6211f41e204d"
-      }]
-    },
-
-
-      {
-        "artist": "RhinoEntertainment",
-        "title": "Rod Stewart - Da Ya Think I'm Sexy? (Official Video)",
-        "url": "https://youtube.com/watch?v=Hphwfq1wLJs",
-        "provider": "youtube",
-        "provider_id": "Hphwfq1wLJs",
-        "pic": "https://i.ytimg.com/vi/Hphwfq1wLJs/hqdefault.jpg",
-        "description": "Watch the official music video for Rod Stewart's \"Do Ya Think I'm Sexy?\" from his album 'Blondes Have More Fun' The song was released as a single in late ...",
-        "date_saved": "2016-03-11T16:17:17.894Z",
-        "original_data": {
-          "kind": "youtube#searchResult", "etag": "\"q5k97EMVGxODeKcDgp8gnMu79wM/2BEtiXfTPigIUpk2TusIUnGqSxs\"", "id": {
-            "kind": "youtube#video", "videoId": "Hphwfq1wLJs"
-          }, "snippet": {
-            "publishedAt": "2009-10-29T21:26:44.000Z",
-            "channelId": "UCWEtnEiVwUy7mwFeshyAWLA",
-            "title": "Rod Stewart - Da Ya Think I'm Sexy? (Official Video)",
-            "description": "Watch the official music video for Rod Stewart's \"Do Ya Think I'm Sexy?\" from his album 'Blondes Have More Fun' The song was released as a single in late ...",
-            "thumbnails": {
-              "default": {
-                "url": "https://i.ytimg.com/vi/Hphwfq1wLJs/default.jpg", "width": 120, "height": 90
-              }, "medium": {
-                "url": "https://i.ytimg.com/vi/Hphwfq1wLJs/mqdefault.jpg", "width": 320, "height": 180
-              }, "high": {
-                "url": "https://i.ytimg.com/vi/Hphwfq1wLJs/hqdefault.jpg", "width": 480, "height": 360
-              }
-            },
-            "channelTitle": "RhinoEntertainment",
-            "liveBroadcastContent": "none"
-          }
-        },
-        "x": 123,
-        "y": 91,
-        "kind": "media",
-        "id": "56e2ef91ff13560481f347d2",
-        "date_created": "2016-03-11T16:17:21.209Z",
-        "distances": [{
-          "distance": 226.6142096162551, "id": "56e5c5b395da6211f41e204f"
-        }, {
-          "distance": 279.5943490129942, "id": "56e5c5b495da6211f41e2051"
-        }, {
-          "distance": 291.247317584214, "id": "56e2efa7ff13560481f347d4"
-        }, {
-          "distance": 311.8108400937979, "id": "56e5c5b295da6211f41e204d"
-        }]
-      }, {
-        "artist": "an artist",
-        "title": "mock media 3 seconds",
-        "url": "https://mock.url",
-        "provider": "mock",
-        "provider_id": "3", // provider id for mock playlist corresponds to the length of the song
-        "pic": "https://i.ytimg.com/vi/Hphwfq1wLJs/hqdefault.jpg",
-        "description": "Watch the official music video for Rod Stewart's \"Do Ya Think I'm Sexy?\" from his album 'Blondes Have More Fun' The song was released as a single in late ...",
-        "date_saved": "2016-03-11T16:17:17.894Z",
-        "original_data": {
-          "kind": "youtube#searchResult", "etag": "\"q5k97EMVGxODeKcDgp8gnMu79wM/2BEtiXfTPigIUpk2TusIUnGqSxs\"", "id": {
-            "kind": "youtube#video", "videoId": "Hphwfq1wLJs"
-          }, "snippet": {
-            "publishedAt": "2009-10-29T21:26:44.000Z",
-            "channelId": "UCWEtnEiVwUy7mwFeshyAWLA",
-            "title": "Rod Stewart - Da Ya Think I'm Sexy? (Official Video)",
-            "description": "Watch the official music video for Rod Stewart's \"Do Ya Think I'm Sexy?\" from his album 'Blondes Have More Fun' The song was released as a single in late ...",
-            "thumbnails": {
-              "default": {
-                "url": "https://i.ytimg.com/vi/Hphwfq1wLJs/default.jpg", "width": 120, "height": 90
-              }, "medium": {
-                "url": "https://i.ytimg.com/vi/Hphwfq1wLJs/mqdefault.jpg", "width": 320, "height": 180
-              }, "high": {
-                "url": "https://i.ytimg.com/vi/Hphwfq1wLJs/hqdefault.jpg", "width": 480, "height": 360
-              }
-            },
-            "channelTitle": "RhinoEntertainment",
-            "liveBroadcastContent": "none"
-          }
-        },
-        "x": 123,
-        "y": 91,
-        "kind": "media",
-        "id": "0",
-        "date_created": "2016-03-11T16:17:21.209Z",
-        "distances": [{
-          "distance": 226.6142096162551, "id": "56e5c5b395da6211f41e204f"
-        }, {
-          "distance": 279.5943490129942, "id": "56e5c5b495da6211f41e2051"
-        }, {
-          "distance": 291.247317584214, "id": "56e2efa7ff13560481f347d4"
-        }, {
-          "distance": 311.8108400937979, "id": "56e5c5b295da6211f41e204d"
-        }]
-
-      }]
-  };
-};

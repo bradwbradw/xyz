@@ -58,6 +58,11 @@ angular.module("xyzPlayer")
             widget.pause();
           });
 
+          scope.$on(SC_event.STOP, function () {
+            widget.seekTo(0);
+            widget.pause();
+          });
+
           scope.$on(SC_event.PLAY, function () {
             widget.play();
           });
