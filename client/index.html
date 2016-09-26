@@ -1,8 +1,9 @@
 <html ng-app="xyzApp">
-<head>
+<head ng-controller="HeadCtrl">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="/">
+  <title ng-bind="title()">XYZ</title>
   <!--
     <script type="text/javascript">
       document.write('<base href="' + document.location + '" />');
@@ -19,6 +20,8 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
   <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+
+
 </head>
 
 <body >
@@ -84,6 +87,7 @@
 
 <script src="scripts/controllers/list.js"></script>
 <script src="scripts/controllers/rename.js"></script>
+<script src="scripts/controllers/head.js"></script>
 <script src="scripts/controllers/body.js"></script>
 <script src="scripts/controllers/localitems.js"></script>
 <script src="scripts/controllers/add-media.js"></script>
