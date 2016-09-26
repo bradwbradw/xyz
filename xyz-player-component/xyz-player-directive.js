@@ -1,306 +1,308 @@
 "use strict";
 angular.module('xyzPlayer', [])
-  .directive('xyzPlayer', function ($log, $q, $timeout, $interval, $location, $rootScope, Api, MockMediaProvider, youTubeApiService, YT_event, SC_event) {
+  .directive('xyzPlayer',
+    function ($log,
+              $q,
+              $timeout,
+              $interval,
+              $location,
+              $rootScope,
+              Api,
+              MockMediaProvider,
+              Playlister,
+              youTubeApiService,
+              YT_event,
+              SC_event) {
+      return {
+        restrict: "A",
+        scope: {
+          playlist: '<?'
+        },
+        templateUrl: 'xyz-player.html',
+        link: function (scope, element, attrs) { //jshint ignore:line
 
-    return {
-      restrict: "A",
-
-      scope: {
-        playlist: '<?'
-      },
-
-      templateUrl: 'xyz-player.html',
-
-
-      link: function (scope, element, attrs) { //jshint ignore:line
-
-        $log.debug('scope.playlist is ', scope.playlist);
-        scope.soundcloudId = 76067623;
-        var mediaProviders = {
-          youtube: {
-            loading: $q.defer(), cueAndPlay: function (provider_id) {
-              scope.youtubeId = provider_id;
-              return $q.resolve(true);
+          $log.debug('scope.playlist is ', scope.playlist);
+          scope.soundcloudId = 76067623;
+          var mediaProviders = {
+            youtube: {
+              loading: $q.defer(),
+              cueAndPlay: function (provider_id) {
+                scope.youtubeId = provider_id;
+                return $q.resolve(true);
+              }
+            }, soundcloud: {
+              loading: $q.defer()
+            }, bandcamp: {
+              loading: $q.defer()
+            }, mock: {
+              loading: $q.defer()
             }
-          }, soundcloud: {
-            loading: $q.defer()
-          }, bandcamp: {
-            loading: $q.defer()
-          }, mock: {
-            loading: $q.defer()
-          }
-        };
+          };
 
-        var defaultProviderFunctions = {
-          play: {}, pause: {}, volume: {}
-        };
+          var defaultProviderFunctions = {
+            play: {}, pause: {}, volume: {}
+          };
 
-        var providerInitFunctions = {
-          mock: function () {
-            $log.debug('xyzPlayer sees MockMediaProvider');
-            mediaProviders.mock.play = MockMediaProvider.play;
-            mediaProviders.mock.pause = MockMediaProvider.pause;
-            mediaProviders.mock.cueAndPlay = function (provider_id) {
+          var providerInitFunctions = {
+            mock: function () {
+              $log.debug('xyzPlayer sees MockMediaProvider');
+              mediaProviders.mock.play = MockMediaProvider.play;
+              mediaProviders.mock.pause = MockMediaProvider.pause;
+              mediaProviders.mock.cueAndPlay = function (provider_id) {
 
-              return MockMediaProvider.loadSong(provider_id)
-                .then(MockMediaProvider.play);
+                return MockMediaProvider.loadSong(provider_id)
+                  .then(MockMediaProvider.play);
 
-            };
-            mediaProviders.mock.onSongDone = MockMediaProvider.onSongDone;
-            mediaProviders.mock.loading.resolve();
+              };
+              mediaProviders.mock.onSongDone = MockMediaProvider.onSongDone;
+              mediaProviders.mock.loading.resolve();
 
-            $rootScope.$on('mock_song_done', function () {
-              $log.debug('mock song has ended, calling go() again');
-              go();
-            });
+              $rootScope.$on('mock_song_done', function () {
+                $log.debug('mock song has ended, calling go() again');
+                go();
+              });
 
-          }, youtube: function () {
+            }, youtube: function () {
 
-            mediaProviders.youtube.pause = function () {
-              $log.debug('tryin to pause');
-              $rootScope.$broadcast(YT_event.PAUSE);
-            };
-            mediaProviders.youtube.play = function () {
-              $log.debug('tryin to play');
-              $rootScope.$broadcast(YT_event.PLAY);
-            };
-            mediaProviders.youtube.stop = function () {
-              $log.debug('tryin to stop');
-              $rootScope.$broadcast(YT_event.STOP);
-            };
+              mediaProviders.youtube.pause = function () {
+                $log.debug('tryin to pause');
+                $rootScope.$broadcast(YT_event.PAUSE);
+              };
+              mediaProviders.youtube.play = function () {
+                $log.debug('tryin to play');
+                $rootScope.$broadcast(YT_event.PLAY);
+              };
+              mediaProviders.youtube.stop = function () {
+                $log.debug('tryin to stop');
+                $rootScope.$broadcast(YT_event.STOP);
+              };
 
-            mediaProviders.youtube.loading.resolve('youtube!');
+              mediaProviders.youtube.loading.resolve('youtube!');
 
-            $rootScope.$on('youtube_has_ended', function () {
-              $log.debug('youtube has ended, calling go() again');
-              go();
-            });
+              $rootScope.$on('youtube_has_ended', function () {
+                $log.debug('youtube has ended, calling go() again');
+                go();
+              });
 
-          }, soundcloud: function () {
-            mediaProviders.soundcloud.pause = function (provider_id) {
-              $rootScope.$broadcast(SC_event.PAUSE);
-              return $q.resolve(true);
-            };
+            }, soundcloud: function () {
+              mediaProviders.soundcloud.pause = function (provider_id) {
+                $rootScope.$broadcast(SC_event.PAUSE);
+                return $q.resolve(true);
+              };
 
-            mediaProviders.soundcloud.play = function () {
-              $log.debug('tryin to play');
-              $rootScope.$broadcast(SC_event.PLAY);
-            };
+              mediaProviders.soundcloud.play = function () {
+                $log.debug('tryin to play');
+                $rootScope.$broadcast(SC_event.PLAY);
+              };
 
-            mediaProviders.soundcloud.stop = function () {
-              $log.debug('tryin to stop');
-              $rootScope.$broadcast(SC_event.STOP);
-            };
-            mediaProviders.soundcloud.cueAndPlay = function (provider_id) {
-              scope.soundId = provider_id;
-              return $q.resolve(true);
-            };
+              mediaProviders.soundcloud.stop = function () {
+                $log.debug('tryin to stop');
+                $rootScope.$broadcast(SC_event.STOP);
+              };
+              mediaProviders.soundcloud.cueAndPlay = function (provider_id) {
+                scope.soundId = provider_id;
+                return $q.resolve(true);
+              };
 
 
-            $rootScope.$on('soundcloud_has_ended', function () {
-              $log.debug('soundcloud has ended, calling go() again');
-              go();
-            });
+              $rootScope.$on('soundcloud_has_ended', function () {
+                $log.debug('soundcloud has ended, calling go() again');
+                go();
+              });
 
 
-            mediaProviders.soundcloud.loading.resolve('soundcloud!');
-          }
-        };
-
-        _.each(mediaProviders, function (provider, index) {
-          _.extend(mediaProviders[index], defaultProviderFunctions);
-        });
-
-        MockMediaProvider.onReady(function () {
-          $log.debug('mock media provider onready');
-          providerInitFunctions.mock();
-        });
-
-        $rootScope.$on('youtube_is_ready', function () {
-          $log.debug('youtube provider onready');
-          providerInitFunctions.youtube();
-
-        });
-        $rootScope.$on('soundcloud_is_ready', function () {
-          $log.debug('soundcloud provider onready');
-          providerInitFunctions.soundcloud();
-
-        });
-
-        $timeout(function () {
-          // todo - code in bandcamp loading (faked)
-          mediaProviders.bandcamp.loading.resolve('bandcamp!');
-        }, 300);
-
-        var serviceProvidersLoaded = $q.all(
-          [
-            mediaProviders.youtube.loading.promise,
-            mediaProviders.soundcloud.loading.promise,
-            mediaProviders.bandcamp.loading.promise,
-            mediaProviders.mock.loading.promise
-          ]);
-
-        var loadPlaylist = function (spaceId) {
-          if (getPlaylist()) {
-            return $q.resolve(getPlaylist());
-          } else {
-            $log.debug('no playlist found in scope, so loading using space ID ', spaceId);
-          }
-          return Api.getPlaylist(spaceId);
-        };
-
-        var status = 'initializing';
-        var playlist = false;
-        var space = false;
-        var nowPlaying = {};
-
-        var getPlaylist = function () {
-          if (scope.playlist) {
-            return scope.playlist;
-          } else {
-            return playlist;
-          }
-        };
-
-        var play = function () {
-          console.debug('play button clicked, so will play ', getNowPlaying().provider);
-          mediaProviders[getNowPlaying().provider].play();
-        };
-
-        var pause = function () {
-          mediaProviders[getNowPlaying().provider].pause();
-        };
-
-        var next = function () {
-          mediaProviders[getNowPlaying().provider].stop();
-          go();
-        };
-
-        var stopAll = function(){
-          _.each(mediaProviders, function(provider){
-            if(_.isFunction(provider.stop)){
-              provider.stop();
+              mediaProviders.soundcloud.loading.resolve('soundcloud!');
             }
+          };
+
+          _.each(mediaProviders, function (provider, index) {
+            _.extend(mediaProviders[index], defaultProviderFunctions);
           });
-        };
 
-        var getNowPlaying = function () {
-          var now = _.find(_.clone(getPlaylist()), {id: nowPlaying.id});
+          MockMediaProvider.onReady(function () {
+            $log.debug('mock media provider onready');
+            providerInitFunctions.mock();
+          });
+
+          $rootScope.$on('youtube_is_ready', function () {
+            $log.debug('youtube provider onready');
+            providerInitFunctions.youtube();
+
+          });
+          $rootScope.$on('soundcloud_is_ready', function () {
+            $log.debug('soundcloud provider onready');
+            providerInitFunctions.soundcloud();
+
+          });
+
+          $timeout(function () {
+            // todo - code in bandcamp loading (faked)
+            mediaProviders.bandcamp.loading.resolve('bandcamp!');
+          }, 300);
+
+          var serviceProvidersLoaded = $q.all(
+            [
+              mediaProviders.youtube.loading.promise,
+              mediaProviders.soundcloud.loading.promise,
+              mediaProviders.bandcamp.loading.promise,
+              mediaProviders.mock.loading.promise
+            ]);
+
+          var loadPlaylist = function (spaceId) {
+            if (getPlaylist()) {
+              return $q.resolve(getPlaylist());
+            } else {
+              $log.debug('no playlist found in scope, so loading using space ID ', spaceId);
+            }
+            return Api.getPlaylist(spaceId);
+          };
+
+          var status = 'initializing';
+          var playlist = false;
+          var space = false;
+          var nowPlaying = {};
+
+          var getPlaylist = function () {
+            if (scope.playlist) {
+              return scope.playlist;
+            } else {
+              return playlist;
+            }
+          };
+
+          var play = function () {
+            console.debug('play button clicked, so will play ', Playlister.getNowPlaying().provider);
+            mediaProviders[Playlister.getNowPlaying().provider].play();
+          };
+
+          var pause = function () {
+            mediaProviders[Playlister.getNowPlaying().provider].pause();
+          };
+
+          var next = function () {
+            mediaProviders[Playlister.getNowPlaying().provider].stop();
+            go();
+          };
+
+          var stopAll = function () {
+            _.each(mediaProviders, function (provider) {
+              if (_.isFunction(provider.stop)) {
+                provider.stop();
+              }
+            });
+          };
+/*
+          var Playlister.getNowPlaying = function () {
+            var now = _.find(_.clone(getPlaylist()), {id: nowPlaying.id});
 //          $log.debug('playlist is ', getPlaylist());
 //          $log.debug('so now is ',now);
-          return now;
-        };
+            return now;
+          };*/
 
-        var setNowPlaying = function (songObj) {
-          $log.debug('set now playing to ', songObj);
-          nowPlaying = songObj;
-        };
-
-        var nextSong = function (songObjThatJustFinished) {
-          console.debug('nextSong called: playlist is ', getPlaylist());
-          if (!songObjThatJustFinished) {
-            return getPlaylist()[0];
-          } else {
-            var indexOfSongThatJustFinished = _.indexOf(getPlaylist(), songObjThatJustFinished);
-            if (_.size(getPlaylist()) === indexOfSongThatJustFinished + 1) {
+          var nextSong = function (songObjThatJustFinished) {
+            console.debug('nextSong called: playlist is ', getPlaylist());
+            if (!songObjThatJustFinished) {
               return getPlaylist()[0];
             } else {
-              return getPlaylist()[indexOfSongThatJustFinished + 1];
-            }
-          }
-
-        };
-
-        var go = function () {
-
-          var songToPlay = nextSong(getNowPlaying());
-
-          $log.debug('go called. song to play is: ', songToPlay);
-
-          mediaProviders[songToPlay.provider].cueAndPlay(songToPlay.provider_id)
-            .then(function () {
-              setNowPlaying(songToPlay);
-            })
-            .catch(function (err) {
-              $log.error(err);
-            });
-
-        };
-
-
-        var loadAndPlay = function (spaceId) {
-          $q.all([loadPlaylist(), serviceProvidersLoaded])
-            .then(function (results) {
-              playlist = _.get(results[0], 'playlist', results[0]);
-              scope.space = _.get(results[0], 'space', scope.space);
-
-              // assuming auto-play, otherwise, bind go() to a button click or something
-              if (_.size(playlist) > 0) {
-                go();
-                message = '';
+              var indexOfSongThatJustFinished = _.indexOf(getPlaylist(), songObjThatJustFinished);
+              if (_.size(getPlaylist()) === indexOfSongThatJustFinished + 1) {
+                return getPlaylist()[0];
               } else {
-                message = 'playlist has 0 songs';
+                return getPlaylist()[indexOfSongThatJustFinished + 1];
               }
+            }
 
-              $interval(function () {
-                loadPlaylist()
-                  .then(function (result) {
-                    playlist = _.get(result, 'playlist', result);
-                    console.debug('refresh playlist done: first song is ' + playlist[0].title);
+          };
+
+          var go = function () {
+
+            var songToPlay = nextSong(Playlister.getNowPlaying());
+
+            $log.debug('go called. song to play is: ', songToPlay);
+
+            mediaProviders[songToPlay.provider].cueAndPlay(songToPlay.provider_id)
+              .then(function () {
+                Playlister.setNowPlaying(songToPlay);
+              })
+              .catch(function (err) {
+                $log.error(err);
+              });
+
+          };
+
+
+          var loadAndPlay = function (spaceId) {
+            $q.all([loadPlaylist(), serviceProvidersLoaded])
+              .then(function (results) {
+                playlist = _.get(results[0], 'playlist', results[0]);
+                scope.space = _.get(results[0], 'space', scope.space);
+
+                // assuming auto-play, otherwise, bind go() to a button click or something
+                if (_.size(playlist) > 0) {
+                  go();
+                  message = '';
+                } else {
+                  message = 'playlist has 0 songs';
+                }
+
+                $interval(function () {
+                  loadPlaylist()
+                    .then(function (result) {
+                      playlist = _.get(result, 'playlist', result);
+                      console.debug('refresh playlist done: first song is ' + playlist[0].title);
 //                    scope.space = _.get(results, 'space');
-                  })
-              }, 10 * 1000);
+                    })
+                }, 10 * 1000);
 
-            });
-        };
+              });
+          };
 
-        attrs.$observe('spaceId', function (spaceId) {
-          $log.debug('space changed: ' + spaceId);
-          // currently, playlist has already changed due to scope
-          // attribute playlist being mapped to 'Playlister.list'
+          attrs.$observe('spaceId', function (spaceId) {
+            $log.debug('space changed: ' + spaceId);
+            // currently, playlist has already changed due to scope
+            // attribute playlist being mapped to 'Playlister.list'
             stopAll();
-          if (spaceId !== "") {
-            loadAndPlay(spaceId);
+            if (spaceId !== "") {
+              loadAndPlay(spaceId);
+            }
+          });
+
+          if ($location.search().playlist) {
+            attrs.space = $location.search().playlist;
           }
-        });
 
-        if ($location.search().playlist) {
-          attrs.space = $location.search().playlist;
+          var message = '';
+          var spaceOpen = true;
+
+          var close = function () {
+            spaceOpen = false;
+            $timeout(scope.$destroy);
+            // TODO: currently, destroy annihilates everything
+            // but the calls to go() above keep happening.
+            // should not try to play
+            // (might just be from mock media though..)
+          };
+
+          var spaceIsOpen = function () {
+            return spaceOpen;
+          };
+
+          scope.Playlister = Playlister;
+          scope.status = status;
+          scope.playlist = playlist;
+          scope.message = message;
+
+          scope.play = play;
+          scope.pause = pause;
+          scope.next = next;
+          scope.spaceOpen = spaceOpen;
+          scope.close = close;
+          scope.spaceIsOpen = spaceIsOpen;
+
+          scope.getPlaylist = getPlaylist;
         }
-
-        var message = '';
-        var spaceOpen = true;
-
-        var close = function () {
-          spaceOpen = false;
-          $timeout(scope.$destroy);
-          // TODO: currently, destroy annihilates everything
-          // but the calls to go() above keep happening.
-          // should not try to play
-          // (might just be from mock media though..)
-        };
-
-        var spaceIsOpen = function () {
-          return spaceOpen;
-        };
-
-        scope.getNowPlaying = getNowPlaying;
-        scope.status = status;
-        scope.playlist = playlist;
-        scope.nowPlaying = nowPlaying;
-        scope.message = message;
-
-        scope.play = play;
-        scope.pause = pause;
-        scope.next = next;
-        scope.spaceOpen = spaceOpen;
-        scope.close = close;
-        scope.spaceIsOpen = spaceIsOpen;
-
-        scope.getPlaylist = getPlaylist;
       }
-    }
-  });
+    });
 
 
 angular.module('xyzPlayer')

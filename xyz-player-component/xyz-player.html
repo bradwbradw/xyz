@@ -1,6 +1,6 @@
 <div class="xyz-player" ng-if="spaceIsOpen()">
 
-  <div ng-if="!getNowPlaying().title">
+  <div ng-if="!Playlister.getNowPlaying().title">
     loading...
   </div>
 
@@ -20,7 +20,7 @@
 
   <h4>{{message}}</h4>
 
-  <div ng-show="getNowPlaying()">
+  <div ng-show="Playlister.getNowPlaying()">
 
     <h1>{{space.name}} </h1>
 
@@ -30,19 +30,19 @@
       <md-icon class="icon-btn light" ng-click="next()">skip_next</md-icon>
   </span>
 
-    <h3 class="player-title" ng-if="false && getNowPlaying().title">{{getNowPlaying().title}}</h3>
+    <h3 class="player-title" ng-if="false && Playlister.getNowPlaying().title">{{getNowPlaying().title}}</h3>
 
     <div class="media-box">
 
       <div ng-include="'xyz-player-component/mock-media-provider/mock-media-provider-view.html'"
            ng-controller="mockProviderCtrl"
-           ng-if="getNowPlaying().provider === 'mock'">
+           ng-if="Playlister.getNowPlaying().provider === 'mock'">
 
       </div>
 
 
       <div youtube
-           ng-show="getNowPlaying().provider === 'youtube'"
+           ng-show="Playlister.getNowPlaying().provider === 'youtube'"
            videoid="{{youtubeId}}">
 
         YT player provider view (i should get replaced)
@@ -50,7 +50,7 @@
       </div>
 
 
-      <div soundcloud ng-show="getNowPlaying().provider === 'soundcloud'"
+      <div soundcloud ng-show="Playlister.getNowPlaying().provider === 'soundcloud'"
            soundid={{soundId}}>
         SC player provider view
       </div>

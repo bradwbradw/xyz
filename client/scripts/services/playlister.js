@@ -6,6 +6,13 @@ angular.module('xyzApp')
 
     var Playlister = {
       list: [],
+      nowPlaying:false,
+      setNowPlaying:function(songObj){
+      return Playlister.nowPlaying = songObj;
+      },
+      getNowPlaying:function(){
+      return Playlister.nowPlaying;
+      },
       getList: function () {
         return Playlister.list;
       },
