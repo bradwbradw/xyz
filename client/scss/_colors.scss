@@ -35,7 +35,23 @@
 }
 
 .xyz-item {
+  cursor: pointer;
 
+  stroke-width:5px;
+
+  &.default {
+    stroke: black;
+    background-color: rgba(200, 200, 200, 0.6);
+  }
+
+  &.first-song {
+    stroke: blue;
+  }
+
+  &.now-playing {
+    stroke: yellow;
+
+  }
 
   &.unavailable {
     opacity: 0.3;

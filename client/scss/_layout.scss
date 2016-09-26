@@ -190,6 +190,11 @@
   z-index:4
 }
 
+.xyz-item {
+  position: absolute;
+  display: block;
+  z-index: 3;
+}
 
 .space-svg-view{
   height:100%;
