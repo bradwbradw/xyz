@@ -101,11 +101,12 @@ angular.module('xyzApp')
           .$promise
           .then(function () {
             _.remove(space.songs, {id: songId});
+            closeExpanded('removed a song');
+            Playlister.recompute(space);
           })
           .catch(function (err) {
             return $q.reject(err);
-          })
-          .finally(updateView);
+          });
       };
 
       var expandedItem = function () {
