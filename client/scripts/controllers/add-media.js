@@ -9,8 +9,8 @@
  */
 angular.module('xyzApp')
   .controller('AddMediaCtrl', function ($timeout, Extract, Library, Social, MediaAPI, Player, localStorageService, $scope, $log, $window, $q) {
-/*
-    Library.currentSpace = $scope.$parent.space;*/
+    /*
+     Library.currentSpace = $scope.$parent.space;*/
 
     $scope.space = Library.currentSpace;
 
@@ -20,25 +20,25 @@ angular.module('xyzApp')
 
       serviceLoader
         .then(Extract.filterOutMusicUrls)
-        .then(function(musicUrls){
+        .then(function (musicUrls) {
           var musicItemPromises = [];
-          _.each(musicUrls, function(musicUrl){
+          _.each(musicUrls, function (musicUrl) {
             musicItemPromises.push(Extract.getData(musicUrl));
           });
 
           return $q.all(musicItemPromises)
-            .then(function(result){
+            .then(function (result) {
               return _.uniq(result, 'provider_id');
             })
-            .catch(function(error){
-              console.error('download posts failed:',error);
+            .catch(function (error) {
+              console.error('download posts failed:', error);
             });
         })
         .then(Library.addToSearchResults)
 
-        .catch(function(error){
-          console.error('import ctrl error ',error);
-          alert(error.message? error.message : 'there was an error without message prop');
+        .catch(function (error) {
+          console.error('import ctrl error ', error);
+          alert(error.message ? error.message : 'there was an error without message prop');
         });
 
     };
@@ -49,11 +49,6 @@ angular.module('xyzApp')
 
     };
 
-    var updateArrayOfNewItems = function(arr){
-      $scope.newItems = arr;
-      $scope.fetchingSongData = false;
-    };
-
     var invalidLink = function () {
       $scope.error = 'This looks like an invalid link.';
       $scope.fetchingSongData = false;
@@ -61,20 +56,19 @@ angular.module('xyzApp')
     };
 
 
-
     $scope.examineText = function (text) {
       if (!text) return;
       $scope.fetchingSongData = true;
-      console.log('new text is '+ text);
+      console.log('new text is ' + text);
       return Extract.inspectText(text)
-        .then(function(result){
+        .then(function (result) {
           $scope.urlResult = result;
           return result;
         });
 
     };
 
-    var putInSpace = function(item, event){
+    var putInSpace = function (item, event) {
       // if desktop
       item.x = _.round($window.outerWidth / 4); //should be 25% from left side of screen / window
       item.y = event.y;
@@ -87,21 +81,36 @@ angular.module('xyzApp')
         Social.FB.loadMe();
       });
 
-    var isSoundcloudArtist = function(searchResultItem){
-      return _.get(searchResultItem,'provider') === 'soundcloud'
-        && _.get(searchResultItem,'kind') === 'user';
+    var isSoundcloudArtist = function (searchResultItem) {
+      return _.get(searchResultItem, 'provider') === 'soundcloud'
+        && _.get(searchResultItem, 'kind') === 'user';
     };
 
-    var isMedia = function(item){
+    var isMedia = function (item) {
       return _.get(item, 'kind') === 'media';
     };
 
 
+    var thereAreSearchResults = function () {
+      return _.isArray(Library.getSearchResults()) &&
+        _.size(Library.getSearchResults()) > 0;
+    };
 
     $scope.FB = Social.FB;
 
+    var filters = {
+      "soundcloud": true,
+      "youtube": true
+    };
 
+    var filterAllows = function(item){
+      return filters[item.provider];
+    };
+
+    $scope.filterAllows = filterAllows;
+    $scope.thereAreSearchResults = thereAreSearchResults;
 //    $scope.downloadMorePosts = downloadMorePosts;
+    $scope.filters = filters;
     $scope.isSoundcloudArtist = isSoundcloudArtist;
     $scope.isMedia = isMedia;
     $scope.urlResult = '';

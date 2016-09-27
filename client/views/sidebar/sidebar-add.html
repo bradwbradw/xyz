@@ -13,6 +13,11 @@
       focus
   >
   <div ng-if="fetchingSongData"><i>searching...</i></div>
+  <div class="filters">
+    <md-checkbox ng-repeat="(filterName, value) in filters" ng-model="filters[filterName]" aria-label="{{filterName}}">
+    {{filterName}}
+  </md-checkbox>
+  </div>
   <div ng-if="newText && error"> Sorry, {{error}} Please try adjusting the URL
   </div>
 </div>
@@ -40,11 +45,11 @@
   </button>
 </div>
 <div class="selector-container"
-     ng-if="Library.getSearchResults()[0]">
+     ng-if="thereAreSearchResults()">
 
 
   <div ng-repeat="item in Library.getSearchResults()"
-       ng-if="!Library.getSearchResults().urlResult" ng-include="'sidebar/sidebar-search-result.html'">
+       ng-if="!Library.getSearchResults().urlResult && filterAllows(item)" ng-include="'sidebar/sidebar-search-result.html'">
 
   </div>
 </div>
