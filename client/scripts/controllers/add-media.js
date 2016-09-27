@@ -58,7 +58,7 @@ angular.module('xyzApp')
     var searchInputChanged = function (text) {
       if (!text) return;
       $scope.fetchingSongData = true;
-      return Extract.inspectText(text)
+      return Extract.inspectText(text, filters)
         .then(function (result) {
           $scope.urlResult = result;
           return result;

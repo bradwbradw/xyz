@@ -12,24 +12,28 @@ angular.module('xyzApp')
     // AngularJS will instantiate a singleton by calling "new" on this function
 
 
-    if ($window.SC && $window.SC.initialize){
+    if ($window.SC && $window.SC.initialize) {
 
-    $window.SC.initialize({
-      client_id: apiKeys.sc
-    });
+      $window.SC.initialize({
+        client_id: apiKeys.sc
+      });
     }
-
 
     var MediaAPI = {
       soundcloud: {
         resolve: function (url) {
           return $window.SC.get('/resolve?url=' + url);
         },
-        get: function(id){
-          return $window.SC.get('/'+id);
+        get: function (id) {
+          return $window.SC.get('/' + id);
         },
-        search: function (query, pages) {
-          return $q.when($window.SC.get('/tracks?q=' + query + '&linked_partitioning=1'))
+        search: function (query, limit) {
+          return $q.when(
+            $window.SC.get('/tracks', {
+              q: query,
+              linked_partitioning:'1', // linked_partitioning causes a 'next' link to appear in results, to load next page
+              limit:limit
+            }))
             .then(function (data) {
               if (data.collection) {
                 return data.collection;
@@ -37,6 +41,7 @@ angular.module('xyzApp')
                 return data;
               }
             })
+            .then(Utility.applyProviderName('soundcloud'))
             .catch(function (err) {
               console.error(err);
               return [];
@@ -64,7 +69,7 @@ angular.module('xyzApp')
               }
 
               _.each(input, function (scResult) {
-                returnArr = returnArr.concat(Utility.clean.SC.track(scResult));
+                returnArr = returnArr.concat(Utility.clean.soundcloud.mediaItem(scResult));
               });
               return returnArr;
             });
@@ -80,7 +85,7 @@ angular.module('xyzApp')
                 input = data;
               }
               _.each(input, function (scResult) {
-                returnArr = returnArr.concat(Utility.clean.SC.track(scResult));
+                returnArr = returnArr.concat(Utility.clean.soundcloud.mediaItem(scResult));
               });
               return returnArr;
             });
@@ -97,7 +102,7 @@ angular.module('xyzApp')
             + '&type=video'
             + '&videoEmbeddable=true'
 //            + '&videoCategoryId=music'
-            + '&maxResults=10';
+            + '&maxResults=' + limit;
           return $http.get(ytSearchUrl)
             .then(function (result) {
               searchResults = _.get(result, 'data.items');
@@ -128,11 +133,12 @@ angular.module('xyzApp')
                   return searchResults;
 
                 })
-                .catch(function(err){
+                .catch(function (err) {
                   $log.error(err);
                   return $q.resolve(searchResults);
                 })
             })
+            .then(Utility.applyProviderName('youtube'))
             .catch(function (response) {
               var error = 'unknown error';
               if (response.data && response.data.error && response.data.errors && _.isArray(response.data.errors)) {

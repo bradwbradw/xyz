@@ -14,9 +14,20 @@ angular.module('xyzApp')
 
     var Utility = {
 
+      // use .then(Utility.applyProviderName) to stick resolved data onto object keyed with providerName
+
+      applyProviderName: function (providerName) {
+        return function (input) {
+          var out = {
+            provider: providerName,
+            results: input
+          };
+          return out;
+        }
+      },
       clean: {
-        SC: {
-          track: function (track) {
+        soundcloud: {
+          mediaItem: function (track) {
 
             var cleaned =
             {
@@ -73,8 +84,8 @@ angular.module('xyzApp')
             }
           }
         },
-        YT: {
-          video: function (raw) {
+        youtube: {
+          mediaItem: function (raw) {
 
 
             var cleanData =
@@ -224,13 +235,13 @@ angular.module('xyzApp')
           content: Utility.cleanError(error)
         });
       },
-      showMessage: function (message){
+      showMessage: function (message) {
         ngToast.create({
           content: message
         });
       },
       absoluteRef: function (id) {
-        return 'url(' + $location.absUrl() + '#'+id + ')';
+        return 'url(' + $location.absUrl() + '#' + id + ')';
       }
     };
     return Utility;

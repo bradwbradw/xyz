@@ -68,27 +68,34 @@ angular.module('xyzApp')
 
     var Extract = {
 
-      inspectText: function (text) {
+      inspectText: function (text, filters) {
         if (!getAllUrlsFromString(text)) {
           // text is not a URL! so search
 
-          var ytSearch = MediaAPI.youtube.search(text);
-          var scSearch = MediaAPI.soundcloud.search(text);
+          var searchPromises = [];
+          _.each(filters, function (active, providerName) {
+            if (active) {
+              searchPromises.push(MediaAPI[providerName].search(text, 15));
+            } else {
+              searchPromises.push($q.resolve([]));
+            }
+          });
 
-          return $q.all([ytSearch, scSearch]).
-            then(function (results) {
-              var ytResults = results[0];
-              var scResults = results[1];
+          return $q.all(searchPromises).then(function (resultLists) {
 
-            var returnArr = [];
-            _.each(ytResults, function (ytResult) {
-//              console.log(ytResult);
-              returnArr.push(Utility.clean.YT.video(ytResult));
+            var allResults = [];
+            _.each(['youtube', 'soundcloud'], function (provider) {
+
+              var providerResults = _.get(_.find(resultLists, {provider: provider}),'results',[]);
+
+              var cleanResults = _.map(providerResults, Utility.clean[provider].mediaItem);
+              allResults = _.concat(allResults, cleanResults);
+
             });
-            _.each(scResults, function (scResult) {
-              returnArr.push(Utility.clean.SC.track(scResult));
-            });
-            return returnArr;
+
+              // TODO sort by relevency
+              // ( ie. how close to original search text, and possible other params)
+            return allResults;
           });
         }
         // text is a URL!
@@ -251,7 +258,7 @@ angular.module('xyzApp')
             $log.log('youtube get result:', result);
             return result;
           })
-          .then(Utility.clean.YT.video);
+          .then(Utility.clean.youtube.mediaItem);
 
       },
 
