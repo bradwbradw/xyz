@@ -4,7 +4,7 @@
 
 .top-bar {
 
-  *, a, a:visited, a:hover{
+  *, a, a:visited, a:hover {
     color: white;
   }
   .logo {
@@ -21,6 +21,7 @@
 .icon {
   cursor: default;
 }
+
 .icon-btn {
   cursor: pointer;
 }
@@ -29,7 +30,7 @@
   outline: none;
 }
 
-.main-container{
+.main-container {
 
   border-bottom: 1px darkgrey dotted;
 }
@@ -37,7 +38,7 @@
 .xyz-item {
   cursor: pointer;
 
-  stroke-width:5px;
+  stroke-width: 5px;
 
   &.default {
     stroke: black;
@@ -58,25 +59,41 @@
   }
 }
 
-
-  .user-settings-popup {
-    background-color: black;
-    button, input {
-      color: black;
-    }
-    a {
-      color: $light-link;
-      &:hover {
-        color: $light-link-hover
-      }
+.user-settings-popup {
+  background-color: black;
+  button, input {
+    color: black;
+  }
+  a {
+    color: $light-link;
+    &:hover {
+      color: $light-link-hover
     }
   }
+}
 
+.active-icon {
+  color: lime;
+}
 
-  .active-icon{
-    color:lime;
+.filters {
+  font-size: 0.8em;
+}
+
+.search-result-actions {
+  background-color: #EEE;
+
+  button {
+    background: none;
   }
+}
 
-  .filters{
-    font-size:0.8em;
+.search-result-details {
+
+  background-color: white;
+  border-left: 1px dotted black;
+
+  .error {
+    color: red;
   }
+}

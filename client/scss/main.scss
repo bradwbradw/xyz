@@ -12,13 +12,11 @@
 
 @import 'layout';
 @import 'colors';
+@import 'typography';
 
 @import 'main/stream';
 @import 'main/ui-clickable';
 
-
-
-@import 'sidebar/search-result';
 @import 'sidebar/import';
 
 @import "helper-tools/bootstrap/alerts";
