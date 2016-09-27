@@ -72,11 +72,8 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           templateUrl: 'bar.html',
           controller: 'BarCtrl'
         }
-
       }
-
     })
-
     .state('base.space', {
       params: {id: {value: 'defaultId'}},
       url: '/space/:id',
@@ -153,7 +150,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
       url: '/add',
       views: {
-        'sidebar':{
+        'sidebar@base':{
           templateUrl: 'sidebar/sidebar-add.html',
           controller: 'AddMediaCtrl'
         }
@@ -163,7 +160,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
       url: '/edit',
       views: {
-        'sidebar': {
+        'sidebar@base': {
           templateUrl: 'sidebar/sidebar-edit.html',
           controller:'EditSpaceCtrl'
         }
@@ -173,7 +170,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
       url: '/info',
       views: {
-        'sidebar': {
+        'sidebar@base': {
           templateUrl: 'sidebar/sidebar-info.html'
         }
       }

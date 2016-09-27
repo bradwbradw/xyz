@@ -29,31 +29,6 @@
   }
 }
 
-.sidebar-close-button {
-  height: 2em;
-  width: 2em;
-  position: fixed;
-  right: 2em;
-  top: 0;
-  z-index: 5;
-  max-width: 100px;
-  cursor: pointer;
-
-}
-
-.sidebar-open-button {
-  right: 2em;
-  bottom: 0;
-  height: $bar-height;
-  width: 2em;
-  z-index: 5;
-  max-width: 100px;
-  cursor: pointer;
-  color: white;
-  background-color: black;
-  position: fixed;
-  top: 0;
-}
 
 .user-settings-button {
   position: absolute;
@@ -133,7 +108,7 @@
   top: $bar-height;
   right: 0;
   max-width: 65vw;
-  z-index: 3;
+  z-index: 4;
   text-align: left;
   padding: 0.3em;
 
@@ -148,7 +123,7 @@
 
   .selector-container {
     height: 100vh;
-    padding-bottom: 1000px;
+    padding-bottom: 400px;
     overflow: scroll;
   }
 
@@ -195,7 +170,7 @@
 
 .xyz-player-container {
   position: relative;
-  z-index: 4
+  z-index: 3
 }
 
 .xyz-item {
