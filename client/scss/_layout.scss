@@ -1,5 +1,5 @@
 .landing-section {
-  width: 95vw;
+  width: 100%;
   text-align: center;
   .space-thumbnail {
     margin: 1rem;
@@ -66,11 +66,11 @@
   h1 {
     font-size: 1.4rem;
     font-weight: bold;
-    margin:0;
+    margin: 0;
   }
   position: fixed;
   top: 0;
-  padding-top:2px;
+  padding-top: 2px;
   z-index: 2;
   width: 100vw;
   height: $bar-height;
@@ -83,7 +83,7 @@
 
   .user-settings-popup {
     position: absolute;
-    padding:1em;
+    padding: 1em;
     top: $bar-height;
     right: 0;
     width: 12em;
@@ -115,9 +115,10 @@
 }
 
 .main-container {
+  position: fixed;
+  overflow: scroll;
   height: 100vh;
   margin-top: $bar-height;
-  padding-top: 1.5em;
   margin-bottom: 300px;
 
 }
@@ -127,20 +128,17 @@
 }
 
 .sidebar-container {
-  background: white;
-  border: 1px black solid;
-  position: absolute;
+  background: rgba(220, 220, 220, 0.95);
+  position: fixed;
   top: $bar-height;
-  margin-top: -2px;
-  width: 100vw;
+  right: 0;
+  max-width: 65vw;
   z-index: 3;
+  text-align: left;
+  padding: 0.3em;
 
-  text-align: center;
   @include MQ(M) {
-    right: 0;
-    width: 30%;
-    min-width: $sidebar-max-width;
-    max-width: $sidebar-max-width;
+    width: 300px;
 
     input {
       width: 80%;
@@ -148,18 +146,13 @@
 
   }
 
-  .active {
-    background-color: cadetblue;
+  .selector-container {
+    height:100vh;
+    padding-bottom: 1000px;
+    overflow:scroll;
   }
 
 }
-
-.selector-container {
-
-  text-align: left;
-
-}
-
 
 .loading-indicator {
 
@@ -178,16 +171,15 @@
 
 .ng-toast {
   position: fixed;
-  z-index:1;
+  z-index: 1;
   top: 3em;
   right: 3em;
 
 }
 
-
-.xyz-player-container{
-  position:relative;
-  z-index:4
+.xyz-player-container {
+  position: relative;
+  z-index: 4
 }
 
 .xyz-item {
@@ -196,39 +188,38 @@
   z-index: 3;
 }
 
-.space-svg-view{
-  height:100%;
-  width:100vw;
+.space-svg-view {
+  height: 100%;
+  width: 100vw;
 }
-
 
 .expanded-popup {
 
   height: 250px;
 
-
-    a {
-      max-height: 4rem;
-      overflow: hidden;
-      display: block;
-    }
+  a {
+    max-height: 4rem;
+    overflow: hidden;
+    display: block;
+  }
 }
 
-#bar-logo{
+#bar-logo {
   position: absolute;
-  left:0;
+  left: 0;
 }
 
-#bar-title{
+#bar-title {
   cursor: default;
-  margin-left:auto;
-  margin-right:auto;
-  width:50%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
   text-align: center;
 }
+
 .bar-icons {
   position: absolute;
-  right:0;
-  top:0;
+  right: 0;
+  top: 0;
 }
 

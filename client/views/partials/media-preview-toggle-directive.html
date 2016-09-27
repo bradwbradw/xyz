@@ -1,9 +1,9 @@
 <pre ng-if="debug">item: {{item.title | json}}</pre>
-    <button class="play" ng-if="!item.error && Library.isPlayable(item)"
+    <md-icon class="icon-btn" ng-if="!item.error && Library.isPlayable(item)"
             ng-click="Player.play(item)" ng-hide="Player.isPlaying(item.provider_id)">
-      preview
-    </button>
-    <button class="play" ng-if="!item.error && Library.isPlayable(item)"
+      headset
+    </md-icon>
+    <md-icon class="icon-btn" ng-if="!item.error && Library.isPlayable(item)"
             ng-click="Player.stop()" ng-show="Player.isPlaying(item.provider_id)">
       stop
-    </button>
+    </md-icon>

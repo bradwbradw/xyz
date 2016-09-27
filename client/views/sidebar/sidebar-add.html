@@ -1,7 +1,6 @@
 <h2>add</h2>
 
 
-
 <div>
   <h4>Enter a URL or search terms to find media</h4>
   <input
@@ -12,10 +11,10 @@
       ng-model-options="{debounce: 500, updateOn:'default'}"
       placeholder=""
       focus
-      >
-    <div ng-if="fetchingSongData"> <i>searching...</i> </div>
-    <div ng-if="newText && error"> Sorry, {{error}} Please try adjusting the URL
-    </div>
+  >
+  <div ng-if="fetchingSongData"><i>searching...</i></div>
+  <div ng-if="newText && error"> Sorry, {{error}} Please try adjusting the URL
+  </div>
 </div>
 
 
@@ -23,44 +22,53 @@
   <h4>load neat songs from your facebook feed. click the button again to load more</h4><br/>
   <button ng-click="explore(Social.FB.loadPosts())">more FB posts</button>
 </div><br/>
-<br/>
 
-<div class="selector-container">
+<div class="selector-container"
+     ng-if="urlResult.kind === 'user'">
 
-
-  <button ng-if="urlResult.kind === 'user'"
-          ng-click="MediaAPI.soundcloud.tracksByUser(urlResult.provider_id)
+  <button
+      ng-click="MediaAPI.soundcloud.tracksByUser(urlResult.provider_id)
         .then(updateImportView)
         .catch(invalidLink)">
     view all tracks by {{urlResult.artist}}
   </button>
-  <button ng-if="urlResult.kind === 'user'"
-          ng-click="MediaAPI.soundcloud.likesByUser(urlResult.provider_id)
+  <button
+      ng-click="MediaAPI.soundcloud.likesByUser(urlResult.provider_id)
         .then(updateImportView)
         .catch(invalidLink)">
     view all likes by {{urlResult.artist}}
   </button>
-<div>
+</div>
+<div class="selector-container"
+     ng-if="Library.getSearchResults()[0]">
 
-  <div ng-if="Library.getSearchResults().urlResult">
-    {{ Library.getSearchResults().provider }} media detected:
-    {{ Library.getSearchResults().artist+' - '+Library.getSearchResults().title }}
-    <hr/>
-    <button ng-click="Library.add(Library.getSearchResults())">add</button>
-    <button ng-if="!item.error && Library.isPlayable(Library.getSearchResults())"
-            ng-click="Player.play(Library.getSearchResults())">play
-    </button>
-
-  </div>
 
   <div ng-repeat="item in Library.getSearchResults()"
-       ng-if="!Library.getSearchResults().urlResult"  ng-include="'sidebar/sidebar-search-result.html'"></div>
+       ng-if="!Library.getSearchResults().urlResult" ng-include="'sidebar/sidebar-search-result.html'">
+
+  </div>
+</div>
+
+
+<div class="selector-container"
+     ng-if="Library.getSearchResults().urlResult"
+ng-include="'sidebar/sidebar-search-result.html'"
+ng-init="item = Library.getSearchResults()">
+  {{ Library.getSearchResults().provider }} media detected:
+  {{ Library.getSearchResults().artist+' - '+Library.getSearchResults().title }}
+  <hr/>
+  <button ng-click="Library.add(Library.getSearchResults())">
+    add
+  </button>
+  <button ng-if="!item.error && Library.isPlayable(Library.getSearchResults())"
+          ng-click="Player.play(Library.getSearchResults())">
+    play
+  </button>
+
 </div>
 
 <pre class="debug" ng-if="debug">
   local items: {{Library.getSearchResults() | json}}
 </pre>
 
-
-</div>
 
