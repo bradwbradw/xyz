@@ -1,46 +1,48 @@
-<h2>edit</h2>
+<div class="sidebar-container">
+  <h2>edit</h2>
 
-<div layout="row" layout-align="start center">
-  <label for="space-name-input" flex="15">name:</label>
-  <input id="space-name-input" ng-model="space.name" ng-show="editingName" flex>
-  <div id="space-name" ng-show="!editingName" flex="initial"><h4>{{space.name}}</h4></div>
-  <md-icon ng-click="editingName = true" flex="initial" ng-hide="editingName">edit</md-icon>
-  <md-icon ng-click="saveEdits(space)" flex="initial" ng-show="editingName">save</md-icon>
+  <div layout="row" layout-align="start center">
+    <label for="space-name-input" flex="15">name:</label>
+    <input id="space-name-input" ng-model="space.name" ng-show="editingName" flex>
+    <div id="space-name" ng-show="!editingName" flex="initial"><h4>{{space.name}}</h4></div>
+    <md-icon ng-click="editingName = true" flex="initial" ng-hide="editingName">edit</md-icon>
+    <md-icon ng-click="saveEdits(space)" flex="initial" ng-show="editingName">save</md-icon>
 
-</div>
-<span class="checkbox">
+  </div>
+  <span class="checkbox">
           <label for="public-checkbox">
             public:
           </label>
   <input id="public-checkbox" type="checkbox" ng-model="space.public"/>
       </span>
-<br/>
-<label for="search-users">Add a contributor:</label>
-<input ng-model="userSearchQ" id="search-users"
-       ng-change="searchUsers(userSearchQ)"
-       ng-model-options="{debounce: 500, updateOn:'default'}"
-       placeholder="search users">
-<div ng-repeat="user in getUserSearchResults()">
-  {{user.name}}
-  <md-icon class="icon-btn"
-           ng-click="addToContributors(user)">add_circle
-  </md-icon>
-</div>
-Contributors:
-<div ng-repeat="contributor in getContributors()">
-  {{contributor.name}}
-  <md-icon class="icon-btn"
-           ng-click="removeFromContributors(contributor)">remove_circle
-  </md-icon>
-</div>
+  <br/>
+  <label for="search-users">Add a contributor:</label>
+  <input ng-model="userSearchQ" id="search-users"
+         ng-change="searchUsers(userSearchQ)"
+         ng-model-options="{debounce: 500, updateOn:'default'}"
+         placeholder="search users">
+  <div ng-repeat="user in getUserSearchResults()">
+    {{user.name}}
+    <md-icon class="icon-btn"
+             ng-click="addToContributors(user)">add_circle
+    </md-icon>
+  </div>
+  Contributors:
+  <div ng-repeat="contributor in getContributors()">
+    {{contributor.name}}
+    <md-icon class="icon-btn"
+             ng-click="removeFromContributors(contributor)">remove_circle
+    </md-icon>
+  </div>
 
-<span ng-if="space.startTime"> Space started playing at {{space.startTime | date:"mediumTime"}}</span>
-<br/>
+  <span ng-if="space.startTime"> Space started playing at {{space.startTime | date:"mediumTime"}}</span>
+  <br/>
 
-<button ng-click="saveEdits(space)"> save</button>
-<button ng-click="deleteViaConfirm(Space,space)">delete</button>
+  <button ng-click="saveEdits(space)"> save</button>
+  <button ng-click="deleteViaConfirm(Space,space)">delete</button>
 
-<div class="error" ng-if="error">{{error}}</div>
-<pre ng-if="false" class="debug">
+  <div class="error" ng-if="error">{{error}}</div>
+  <pre ng-if="false" class="debug">
         {{space | json}}
       </pre>
+</div>
