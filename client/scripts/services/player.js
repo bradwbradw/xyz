@@ -21,7 +21,7 @@ angular.module('xyzApp')
       },
       playingItem: function(){
         if (Player.current) {
-          $log.log('playing item is ', Player.current);
+//          $log.debug('playing item is ', Player.current);
           return Player.current;
 
         } else {

@@ -46,7 +46,6 @@ angular.module('xyzApp')
     var updateImportView = function (new_) {
       $timeout(Library.addToSearchResults(new_));
       $scope.fetchingSongData = false;
-
     };
 
     var invalidLink = function () {
@@ -56,14 +55,18 @@ angular.module('xyzApp')
     };
 
 
-    $scope.examineText = function (text) {
+    var searchInputChanged = function (text) {
       if (!text) return;
       $scope.fetchingSongData = true;
-      console.log('new text is ' + text);
       return Extract.inspectText(text)
         .then(function (result) {
           $scope.urlResult = result;
           return result;
+        })
+        .then(updateImportView)
+        .catch(invalidLink)
+        .finally(function(){
+          $scope.fetchingSongData = false;
         });
 
     };
@@ -107,6 +110,7 @@ angular.module('xyzApp')
       return filters[item.provider];
     };
 
+    $scope.searchInputChanged = searchInputChanged;
     $scope.filterAllows = filterAllows;
     $scope.thereAreSearchResults = thereAreSearchResults;
 //    $scope.downloadMorePosts = downloadMorePosts;

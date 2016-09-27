@@ -48,7 +48,7 @@
   </div>
 
   <div ng-if="Player.isPlaying(item.provider_id)"
-       media-preview flex="grow"></div>
+       media-preview flex="grow" class="search-result-details"></div>
   <div ng-hide="Player.playingItem().provider_id === item.provider_id">
     <img class='thumbnail' ng-src="{{item.pic}}" width="200"/>
   </div>

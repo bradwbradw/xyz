@@ -5,10 +5,8 @@
   <h4>Enter a URL or search terms to find media</h4>
   <input
       ng-model="newText"
-      ng-change="examineText(newText)
-        .then(updateImportView)
-        .catch(invalidLink)"
-      ng-model-options="{debounce: 500, updateOn:'default'}"
+      ng-change="searchInputChanged(newText)"
+      ng-model-options="{debounce: 750, updateOn:'default'}"
       placeholder=""
       focus
   >
