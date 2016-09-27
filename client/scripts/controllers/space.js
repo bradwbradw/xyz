@@ -16,7 +16,7 @@ angular.module('xyzApp')
       }
       var expanded;
 
-      var dotRadius = 20;
+      var dotRadius = 15;
 
       Playlister.recompute(space);
 

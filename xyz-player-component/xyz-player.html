@@ -1,4 +1,4 @@
-<div class="xyz-player" ng-if="spaceIsOpen()">
+<div class="xyz-player" ng-show="spaceIsOpen()">
 
   <div ng-if="!Playlister.getNowPlaying().title">
     loading...
@@ -10,19 +10,15 @@
     </span>
   </pre>
 
-
   <pre class="debug" ng-if="false">
     id:{{spaceId}}
     space: {{space}}
     playlist: {{playlist}}
   </pre>
 
-
   <h4>{{message}}</h4>
 
   <div ng-show="Playlister.getNowPlaying()">
-
-    <h1>{{space.name}} </h1>
 
   <span class="media-controls">
       <md-icon class="icon-btn light" ng-click="play()">play_arrow</md-icon>
@@ -30,7 +26,10 @@
       <md-icon class="icon-btn light" ng-click="next()">skip_next</md-icon>
   </span>
 
-    <h3 class="player-title" ng-if="false && Playlister.getNowPlaying().title">{{getNowPlaying().title}}</h3>
+    <span class="media-title">
+      <a ui-sref="base.space({id:spaceId})"> {{spaceName}} </a>
+      <md-icon class="icon-btn light" ng-click="close()">close</md-icon>
+    </span>
 
     <div class="media-box">
 
@@ -40,7 +39,6 @@
 
       </div>
 
-
       <div youtube
            ng-show="Playlister.getNowPlaying().provider === 'youtube'"
            videoid="{{youtubeId}}">
@@ -49,12 +47,10 @@
 
       </div>
 
-
       <div soundcloud ng-show="Playlister.getNowPlaying().provider === 'soundcloud'"
            soundid={{soundId}}>
         SC player provider view
       </div>
-
 
     </div>
   </div>

@@ -28,10 +28,7 @@ angular.module("xyzPlayer")
         youTubeApiService.apiReady
           .then(function () {
             return setupPlayer(scope, element);
-          })/*
-          .then(function(){
-            return youTubeApiService.playerReady;
-          })*/
+          })
           .then(function (p) {
             player = p;
 
@@ -106,7 +103,7 @@ angular.module("xyzPlayer")
             }
           });
           return deferred.promise;
-        }
+        };
 
         scope.$watch('height + width', function (newValue, oldValue) {
           if (newValue === oldValue) {
@@ -118,7 +115,7 @@ angular.module("xyzPlayer")
         });
 
         scope.$watch('videoid', function (newValue, oldValue) {
-          if (!newValue || (newValue === oldValue)) {
+          if ( !newValue || (newValue === oldValue)) {
             return;
           }
           $log.debug('videoid watch hit. value is ', newValue);

@@ -16,12 +16,12 @@ angular.module('xyzPlayer', [])
       return {
         restrict: "A",
         scope: {
-          playlist: '<?'
+          playlist: '<?',
+          spaceName: '='
         },
         templateUrl: 'xyz-player.html',
         link: function (scope, element, attrs) { //jshint ignore:line
 
-          $log.debug('scope.playlist is ', scope.playlist);
           scope.soundcloudId = 76067623;
           var mediaProviders = {
             youtube: {
@@ -258,11 +258,14 @@ angular.module('xyzPlayer', [])
           };
 
           attrs.$observe('spaceId', function (spaceId) {
+
+            spaceOpen = true;
             $log.debug('space changed: ' + spaceId);
             // currently, playlist has already changed due to scope
             // attribute playlist being mapped to 'Playlister.list'
             stopAll();
-            if (spaceId !== "") {
+            if (spaceId !== '') {
+              scope.spaceId = spaceId;
               loadAndPlay(spaceId);
             }
           });
@@ -275,8 +278,9 @@ angular.module('xyzPlayer', [])
           var spaceOpen = true;
 
           var close = function () {
+            stopAll();
             spaceOpen = false;
-            $timeout(scope.$destroy);
+//            $timeout(scope.$destroy);
             // TODO: currently, destroy annihilates everything
             // but the calls to go() above keep happening.
             // should not try to play
