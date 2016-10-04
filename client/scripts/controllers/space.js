@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SpaceCtrl', function ($rootScope, $timeout, $scope, $log, $state, Server, Library, Player, Playlister, Space, space, owner, viewer, contributors, SPACE_DIMENSIONS) {
+  .controller('SpaceCtrl', function ($rootScope, $timeout, $scope, $log, $state, Server, Library, Player, Playlister, Space, space, owner, viewer, contributors, layout_constants) {
 
       // default tab 'add media' should be open
       if (viewer === 'contributor' || viewer === 'owner') {
@@ -16,12 +16,8 @@ angular.module('xyzApp')
       }
       var expanded;
 
-      var dotRadius = 15;
-
-      var spaceDimensions = SPACE_DIMENSIONS;
-
       var computeViewBox = function () {
-        return _.values(spaceDimensions).join(" ");
+        return _.values(layout_constants.SPACE_DIMENSIONS).join(" ");
       };
 
       Playlister.recompute(space);
@@ -62,18 +58,6 @@ angular.module('xyzApp')
 
       var isExpanded = function (song) {
         return expanded === song.id;
-      };
-
-
-      var mouseleave = function (song) {
-        $log.log('mouseleave');
-        song.hovering = false;
-
-      };
-
-      var mouseup = function (song) {
-        $log.log('mouseup');
-
       };
 
       var setFirstSong = function (song) {
@@ -156,8 +140,6 @@ angular.module('xyzApp')
       $scope.setFirstSong = setFirstSong;
       $scope.removeSong = removeSong;
       $scope.Player = Player;
-      $scope.mouseup = mouseup;
-      $scope.mouseleave = mouseleave;
       $scope.isExpanded = isExpanded;
       $scope.expandedItem = expandedItem;
       $scope.expand = expand;
@@ -170,17 +152,9 @@ angular.module('xyzApp')
       $scope.owner = owner;
       $scope.viewer = viewer;
 
-      $scope.dotRadius = dotRadius;
       $scope.computeViewBox = computeViewBox;
-      $scope.spaceDimensions = spaceDimensions;
 
-      $scope.getX = function (item) {
-        $log.log('get x controller', item.x);
-        return item.x;
-      };
-      $scope.getY = function (item) {
-        return item.y;
-      };
+      $scope.layout_constants = layout_constants;
 
       $scope.linePath = function (dirtypoints) {
 
