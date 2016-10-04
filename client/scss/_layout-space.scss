@@ -1,0 +1,69 @@
+
+.sidebar-container {
+  background: rgba(220, 220, 220, 0.95);
+  position: fixed;
+  top: $bar-height;
+  right: 0;
+  max-width: $sidebar-width;
+  z-index: 4;
+  text-align: left;
+  padding: 0.3em;
+
+  @include MQ(M) {
+    width: $sidebar-width;
+
+  }
+
+  .selector-container {
+    height: 100vh;
+    padding-bottom: 400px;
+    overflow: scroll;
+  }
+
+}
+
+.search-result {
+
+  max-height: 200px;
+  margin-bottom: 0.5em;
+
+}
+
+.media-preview {
+  height: 150px;
+  width: 250px;
+}
+
+.search-result-details {
+  padding: 0.5em;
+  min-height: 150px;
+
+  .artist {
+    margin-bottom: 0.5em;
+  }
+  .title {
+    font-size: 0.9rem;
+  }
+}
+
+.space-svg-view {
+  border: 3px dotted pink;
+  margin-left: $space-margin-left;
+  margin-top: $space-margin-top;
+  margin-bottom: $xyz-player-height;
+  margin-right: $sidebar-width;
+}
+
+.expanded-popup {
+  height: 1px;
+  width: 1px;
+  overflow: visible;
+  /* position absolute, left, top is defined inline */
+
+  .dot-title {
+    max-height: 4rem;
+    overflow: hidden;
+    display: block;
+  }
+
+}

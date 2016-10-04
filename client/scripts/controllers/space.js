@@ -112,8 +112,8 @@ angular.module('xyzApp')
         var item = expandedItem();
         return {
           position: 'absolute',
-          top: item.y + 'px',
-          left: item.x + 40 + 'px'
+          top: item.y + layout_constants.SPACE_MARGIN.LEFT + 'px',
+          left: item.x + layout_constants.SPACE_MARGIN.TOP + 'px'
         };
       };
 
