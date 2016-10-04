@@ -20,7 +20,7 @@
         </pattern>
     </defs>
     <circle
-            ng-attr-r="{{dotRadius}}"
+            ng-attr-r="{{layoutConstants.DOT_RADIUS}}"
             r=""
             class="xyz-item"
             fill="{{Utility.absoluteRef('image'+item.id)}}"

@@ -2,11 +2,11 @@
      ng-click="closeExpanded('screen')"
      class="space-svg-view"
      ng-attr-viewbox="{{computeViewBox()}}"
-     ng-attr-height="{{spaceDimensions.height}}"
-     ng-attr-width="{{spaceDimensions.width}}"
-     height=""
-     width=""
-     viewBox=""
+     ng-attr-height="{{layout_constants.SPACE_DIMENSIONS.height}}"
+     ng-attr-width="{{layout_constants.SPACE_DIMENSIONS.width}}"
+     height
+     width
+     viewbox="0 0 0 0"
 >
 
 
@@ -18,14 +18,13 @@
   <g ng-repeat="item in space.songs"
      media-item-dot
      item="item"
-     dot-radius="dotRadius"
      ng-click="handleDotClick(item, $event)"
      is-now-playing="isNowPlaying(item)"
      is-first-song="isFirstSong(item)"
-     space-dimensions="spaceDimensions"
      space="space"
      viewer="viewer"
      done-dragging="onDragDone(item)"
+     layout-constants="layout_constants"
   >
 
   </g>
@@ -39,17 +38,34 @@
      ng-if="expandedItem()"
      layout="row">
 
-  <div layout="column">
+  <div>
 
     <a ng-href="{{expandedItem().url}}"
        target="_blank"
        ng-bind="expandedItem().title"
-    ></a>
+       class="dot-title">
+    </a>
 
-    <div>
-      <div media-preview-toggle="expandedItem()"></div>
-      <button ng-if="canEdit()" ng-click="setFirstSong(expandedItem())">set first song</button>
-      <button ng-if="canEdit()" ng-click="removeSong(expandedItem().id)">remove</button>
+    <div >
+      <div media-preview-toggle="expandedItem()" class="item-button-1">      </div>
+      <md-icon class="icon-btn item-button-2"
+               ng-if="canEdit()"
+               ng-click="setFirstSong(expandedItem())">
+        looks_one
+
+          <md-tooltip md-delay="500">
+            set as first
+          </md-tooltip>
+      </md-icon>
+      <md-icon class="icon-btn item-button-3"
+               ng-if="canEdit()"
+               ng-click="removeSong(expandedItem().id)">
+        delete_forever
+
+          <md-tooltip md-delay="500">
+            remove this item
+          </md-tooltip>
+      </md-icon>
     </div>
   </div>
 

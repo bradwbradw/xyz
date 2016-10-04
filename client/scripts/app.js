@@ -18,11 +18,18 @@ var xyzApp = angular.module("xyzApp",
   ]);
 
 
-xyzApp.constant('SPACE_DIMENSIONS', {
-  minX: 0,
-  minY: 0,
-  width: 600,
-  height: 600
+xyzApp.constant('layout_constants', {
+  SPACE_DIMENSIONS:{
+    minX: 0,
+    minY: 0,
+    width: 600,
+    height: 600
+  },
+  SPACE_MARGIN:{
+    LEFT: 16*3, // corresponds to $space-margin-left in scss variables
+    TOP: 16*3
+  },
+  DOT_RADIUS: 15
 });
 
 xyzApp.config(function (localStorageServiceProvider) {

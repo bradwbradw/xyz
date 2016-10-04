@@ -8,8 +8,7 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
       item: '=',
       space: '=',
       viewer: '=',
-      dotRadius: '=',
-      spaceDimensions: '=',
+      layoutConstants: '=',
       isNowPlaying: '&',
       isFirstSong: '&',
       doneDragging: '&',
@@ -18,17 +17,6 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
     link: function (scope, element, attr) {
 
       var item = scope.item;
-
-      scope.getX = function (item) {
-
-        $log.log('get x directive ', item.x);
-        return item.x;
-      };
-
-      scope.getY = function () {
-        return item.y;
-      };
-
 
       if (_.isUndefined(item)) {
         return;
@@ -78,11 +66,13 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
         y = event.pageY - dragPointOffsetY;
 
         var boundaries = {
-          minX: scope.spaceDimensions.minX + scope.dotRadius,
-          minY: scope.spaceDimensions.minY +  scope.dotRadius,
-          maxX: scope.spaceDimensions.width - scope.dotRadius,
-          maxY: scope.spaceDimensions.height - scope.dotRadius
+          minX: scope.layoutConstants.SPACE_DIMENSIONS.minX + scope.layoutConstants.DOT_RADIUS,
+          minY: scope.layoutConstants.SPACE_DIMENSIONS.minY +  scope.layoutConstants.DOT_RADIUS,
+          maxX: scope.layoutConstants.SPACE_DIMENSIONS.width - scope.layoutConstants.DOT_RADIUS,
+          maxY: scope.layoutConstants.SPACE_DIMENSIONS.height - scope.layoutConstants.DOT_RADIUS
         };
+
+        $log.log(boundaries);
 
         Playlister.recompute(Library.currentSpace);
 
