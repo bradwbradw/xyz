@@ -18,6 +18,13 @@ var xyzApp = angular.module("xyzApp",
   ]);
 
 
+xyzApp.constant('SPACE_DIMENSIONS', {
+  minX: 0,
+  minY: 0,
+  width: 600,
+  height: 600
+});
+
 xyzApp.config(function (localStorageServiceProvider) {
   localStorageServiceProvider
     .setPrefix('');

@@ -8,7 +8,7 @@
  * 'hub'-like controller used for importing and saving. Connected to many services
  */
 angular.module('xyzApp')
-  .controller('AddMediaCtrl', function ($timeout, Extract, Library, Social, MediaAPI, Player, localStorageService, $scope, $log, $window, $q) {
+  .controller('AddMediaCtrl', function ($timeout, Extract, Library, Social, MediaAPI, Player, localStorageService, $scope, $log, $window, $q, SPACE_DIMENSIONS) {
     /*
      Library.currentSpace = $scope.$parent.space;*/
 
@@ -74,7 +74,7 @@ angular.module('xyzApp')
     var putInSpace = function (item, event) {
       // if desktop
       item.x = _.round($window.outerWidth / 4); //should be 25% from left side of screen / window
-      item.y = event.y;
+      item.y = event.y < SPACE_DIMENSIONS.height? event.y : SPACE_DIMENSIONS.height - 20;
       Library.add(item);
     };
 

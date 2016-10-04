@@ -1,6 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg"
      ng-click="closeExpanded('screen')"
-     class="space-svg-view">
+     class="space-svg-view"
+     ng-attr-viewbox="{{computeViewBox()}}"
+     ng-attr-height="{{spaceDimensions.height}}"
+     ng-attr-width="{{spaceDimensions.width}}"
+     height=""
+     width=""
+     viewBox=""
+>
 
 
   <path class="playlist-line"
@@ -15,9 +22,10 @@
      ng-click="handleDotClick(item, $event)"
      is-now-playing="isNowPlaying(item)"
      is-first-song="isFirstSong(item)"
-      space="space"
-      viewer="viewer"
-      done-dragging="onDragDone(item)"
+     space-dimensions="spaceDimensions"
+     space="space"
+     viewer="viewer"
+     done-dragging="onDragDone(item)"
   >
 
   </g>
@@ -71,6 +79,7 @@
   </div>
 
 </div>
+
 
 <pre class="debug right-panel" ng-if="debug">Playlister.List: {{Playlister.getList() | json}}</pre>
 <pre class="debug right-panel" ng-if="debug">space songs: {{space.songs | json}}</pre>

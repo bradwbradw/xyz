@@ -9,6 +9,7 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
       space: '=',
       viewer: '=',
       dotRadius: '=',
+      spaceDimensions: '=',
       isNowPlaying: '&',
       isFirstSong: '&',
       doneDragging: '&',
@@ -72,10 +73,32 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
       element.on('mousedown', dragStart);
 
       function dragMove(event) {
-//      $log.log('dragMove event:', event);
+        $log.log('dragMove event:', event);
         x = event.pageX - dragPointOffsetX;
         y = event.pageY - dragPointOffsetY;
 
+        var boundaries = {
+          minX: scope.spaceDimensions.minX + scope.dotRadius,
+          minY: scope.spaceDimensions.minY +  scope.dotRadius,
+          maxX: scope.spaceDimensions.width - scope.dotRadius,
+          maxY: scope.spaceDimensions.height - scope.dotRadius
+        };
+
+        Playlister.recompute(Library.currentSpace);
+
+        if (x < boundaries.minX) {
+          x = boundaries.minX;
+        }
+        if (y < boundaries.minY) {
+          y = boundaries.minY;
+        }
+
+        if (x > boundaries.maxX) {
+          x = boundaries.maxX;
+        }
+        if (y > boundaries.maxY) {
+          y = boundaries.maxY;
+        }
 
         circleElement.attr('cx', x);
         circleElement.attr('cy', y);

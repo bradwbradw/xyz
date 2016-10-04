@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SpaceCtrl', function ($rootScope, $timeout, $scope, $log, $state, Server, Library, Player, Playlister, Space, space, owner, viewer, contributors) {
+  .controller('SpaceCtrl', function ($rootScope, $timeout, $scope, $log, $state, Server, Library, Player, Playlister, Space, space, owner, viewer, contributors, SPACE_DIMENSIONS) {
 
       // default tab 'add media' should be open
       if (viewer === 'contributor' || viewer === 'owner') {
@@ -17,6 +17,12 @@ angular.module('xyzApp')
       var expanded;
 
       var dotRadius = 15;
+
+      var spaceDimensions = SPACE_DIMENSIONS;
+
+      var computeViewBox = function () {
+        return _.values(spaceDimensions).join(" ");
+      };
 
       Playlister.recompute(space);
 
@@ -84,7 +90,7 @@ angular.module('xyzApp')
           })
       };
 
-      var isNowPlaying = function(song) {
+      var isNowPlaying = function (song) {
         return song.id === _.get(Playlister.getNowPlaying(), 'id');
       };
       var isFirstSong = function (song) {
@@ -138,7 +144,7 @@ angular.module('xyzApp')
         Playlister.recompute(Library.currentSpace);
       };
 
-      var canEdit = function(){
+      var canEdit = function () {
         return viewer === 'owner' || viewer === 'contributor';
       };
 
@@ -165,6 +171,8 @@ angular.module('xyzApp')
       $scope.viewer = viewer;
 
       $scope.dotRadius = dotRadius;
+      $scope.computeViewBox = computeViewBox;
+      $scope.spaceDimensions = spaceDimensions;
 
       $scope.getX = function (item) {
         $log.log('get x controller', item.x);
