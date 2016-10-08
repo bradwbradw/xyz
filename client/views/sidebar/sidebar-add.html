@@ -51,7 +51,7 @@
 
     <div ng-repeat="item in Library.getSearchResults()"
          ng-if="!Library.getSearchResults().urlResult && filterAllows(item)"
-         ng-include="'sidebar/sidebar-search-result.html'">
+         ng-include="'partials/media-inspector.html'">
 
     </div>
   </div>
@@ -59,7 +59,7 @@
 
   <div class="selector-container"
        ng-if="Library.getSearchResults().urlResult"
-       ng-include="'sidebar/sidebar-search-result.html'"
+       ng-include="'partials/media-inspector.html'"
        ng-init="item = Library.getSearchResults()">
     {{ Library.getSearchResults().provider }} media detected:
     {{ Library.getSearchResults().artist+' - '+Library.getSearchResults().title }}
