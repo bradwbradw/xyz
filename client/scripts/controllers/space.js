@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SpaceCtrl', function ($rootScope, $timeout, $scope, $log, $state, Server, Library, Player, Playlister, Space, space, owner, viewer, contributors, layout_constants) {
+  .controller('SpaceCtrl', function ($rootScope, $timeout, $scope, $log, $state, $window, Server, Library, Player, Playlister, Space, space, owner, viewer, contributors, layout_constants) {
 
       // default tab 'add media' should be open
       if (viewer === 'contributor' || viewer === 'owner') {
@@ -87,16 +87,21 @@ angular.module('xyzApp')
 
       var removeSong = function (songId) {
 
-        return Space.songs.destroyById({id: Library.space().id, fk: songId})
-          .$promise
-          .then(function () {
-            _.remove(space.songs, {id: songId});
-            closeExpanded('removed a song');
-            Playlister.recompute(space);
-          })
-          .catch(function (err) {
-            return $q.reject(err);
-          });
+
+        if ($window.confirm('remove this song from the space?')) {
+
+          return Space.songs.destroyById({id: Library.space().id, fk: songId})
+            .$promise
+            .then(function () {
+              _.remove(space.songs, {id: songId});
+              closeExpanded('removed a song');
+              Playlister.recompute(space);
+            })
+            .catch(function (err) {
+              return $q.reject(err);
+            });
+        }
+
       };
 
       var expandedItem = function () {
