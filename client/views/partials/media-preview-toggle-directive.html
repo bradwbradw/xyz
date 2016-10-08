@@ -2,12 +2,12 @@
 <md-icon class="icon-btn" ng-if="!item.error && Library.isPlayable(item)"
          ng-click="Player.stop()" ng-show="Player.isPlaying(item.provider_id)">
   eject
-  <md-tooltip md-delay="500">close preview</md-tooltip>
+  <md-tooltip md-delay="500">Close Preview</md-tooltip>
 </md-icon>
 
 <md-icon class="icon-btn" ng-if="!item.error && Library.isPlayable(item)"
          ng-click="Player.play(item)" ng-hide="Player.isPlaying(item.provider_id)">
   headset
 
-  <md-tooltip md-delay="500">preview</md-tooltip>
+  <md-tooltip md-delay="500">Click to Preview</md-tooltip>
 </md-icon>

@@ -18,13 +18,13 @@
         <md-icon class="icon" ng-if="userIsCollaborator(space)">
           group
           <md-tooltip md-delay="500">
-            you are a contributor for this space
+            You Can Contribute to this Space
           </md-tooltip>
         </md-icon>
         <md-icon class="icon" ng-if="!space.public ">
           lock
           <md-tooltip md-delay="500">
-            private space
+            This is a Private Space
           </md-tooltip>
         </md-icon>
       </div>
@@ -32,7 +32,7 @@
         <md-icon class="icon-btn" ng-click="playSpace(space)">
           play_arrow
           <md-tooltip md-delay="500">
-            Click to Play
+            Play this Space
           </md-tooltip>
         </md-icon>
       </div>

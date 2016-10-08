@@ -5,7 +5,12 @@
 
   <h1 id="bar-title" ng-if="title()"> {{title()}}
     <a ng-if="space && space.id">
-      <md-icon class="icon-btn light" ng-click="playSpace(space)">play_arrow</md-icon>
+      <md-icon class="icon-btn light" ng-click="playSpace(space)">
+        play_arrow
+        <md-tooltip>
+          Play this Space
+        </md-tooltip>
+      </md-icon>
 
     </a>
   </h1>
@@ -19,6 +24,10 @@
         ng-click="parentStateIfActiveElseGoTo('base.space.add')"
         class="icon-btn">
       add
+
+        <md-tooltip>
+          Add to this Space
+        </md-tooltip>
     </md-icon>
 
     <md-icon
@@ -27,6 +36,10 @@
         ng-click="parentStateIfActiveElseGoTo('base.space.edit')"
         class="icon-btn">
       edit
+
+        <md-tooltip>
+          Edit Space Attributes
+        </md-tooltip>
     </md-icon>
 
     <md-icon
@@ -35,6 +48,10 @@
         ng-click="parentStateIfActiveElseGoTo('base.space.info')"
         class="icon-btn">
       info
+
+        <md-tooltip>
+          About this Space
+        </md-tooltip>
     </md-icon>
 
     <md-icon
@@ -44,12 +61,23 @@
         ng-class="{'active-icon':settingsOpen()}"
         ng-click="toggleSettings()">
       settings
+
+        <md-tooltip>
+          Edit User Settings
+        </md-tooltip>
     </md-icon>
 
-    <span id="signup-login-link" ng-if="!User.get()" ui-sref-active="hidden">
-      <a ui-sref="base.signup-login">
-        sign up / login
-      </a>
+    <span id="signup-login-link"
+          ng-if="!User.get()"
+          ui-sref-active="hidden">
+      <md-icon class="icon-btn light"
+               ui-sref="base.signup-login">
+        account_circle
+
+        <md-tooltip>
+          Sign up or Log in
+        </md-tooltip>
+      </md-icon>
     </span>
 
   </div>
