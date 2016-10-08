@@ -88,12 +88,15 @@
   }
 }
 
-.search-result-details {
+.sidebar-container {
 
-  background-color: white;
-  border-left: 1px dotted black;
+  .search-result-details {
 
-  .error {
-    color: red;
+    background-color: white;
+    border-left: 1px dotted black;
+
+    .error {
+      color: red;
+    }
   }
 }

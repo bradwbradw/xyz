@@ -115,10 +115,21 @@ angular.module('xyzApp')
 
       var songExpandedPopupCss = function () {
         var item = expandedItem();
+
+        var topOffset = item.y +
+          layout_constants.SPACE_MARGIN.LEFT +
+          layout_constants.DOT_RADIUS +
+          'px';
+
+        var leftOffset = item.x +
+          layout_constants.SPACE_MARGIN.TOP +
+          layout_constants.DOT_RADIUS +
+          'px';
+
         return {
           position: 'absolute',
-          top: item.y + layout_constants.SPACE_MARGIN.LEFT + 'px',
-          left: item.x + layout_constants.SPACE_MARGIN.TOP + 'px'
+          top: topOffset,
+          left: leftOffset
         };
       };
 

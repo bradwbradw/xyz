@@ -60,10 +60,12 @@
   overflow: visible;
   /* position absolute, left, top is defined inline */
 
-  .dot-title {
-    max-height: 4rem;
-    overflow: hidden;
-    display: block;
+  .expanded-meta-actions{
+    min-height: 1.8em;
+  }
+
+  .search-result{
+    min-width: 1.8em;
   }
 
 }
