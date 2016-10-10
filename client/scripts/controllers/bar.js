@@ -74,7 +74,7 @@ angular.module('xyzApp')
     };
 
     var showInfoButton = function(){
-      return (viewer === 'guest') || (viewer === 'viewer');
+      return (viewer === 'stranger') || (viewer === 'guest');
     };
 
     var parentStateIfActiveElseGoTo = function (stateName) {

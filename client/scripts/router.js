@@ -128,7 +128,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           }
 
           if (!the_user) {
-            return 'guest';
+            return 'stranger';
           } else {
 
             if (owner.id === the_user.id) {
@@ -136,7 +136,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             } else if (_.find(space.contributors, {id: the_user.id})) {
               return 'contributor';
             } else {
-              return 'viewer';
+              return 'guest';
             }
           }
 
