@@ -125,6 +125,36 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
       }
 
+
+      var dotImageXOffset = function(){
+        $log.log('dot radius is ',scope.layoutConstants.DOT_RADIUS);
+        if (item.provider === 'youtube'){
+          return -50;
+        } else {
+          return -20;
+        }
+      };
+      var dotImageYOffset = function(){
+        if (item.provider === 'youtube'){
+          return -40;
+        } else {
+          return -20;
+        }
+      };
+
+      var dotImageHeight = function(){
+        return item.provider === 'youtube'? '150px': '100px';
+      };
+
+      var dotImageWidth = function(){
+        return item.provider === 'youtube'? '150px': '100px';
+      };
+
+      scope.dotImageXOffset = dotImageXOffset;
+      scope.dotImageYOffset = dotImageYOffset;
+      scope.dotImageHeight = dotImageHeight;
+      scope.dotImageWidth = dotImageWidth;
+
       scope.Utility = Utility;
     }
   };
