@@ -143,11 +143,19 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
       };
 
       var dotImageHeight = function(){
-        return item.provider === 'youtube'? '150px': '100px';
+        if (item.provider === 'youtube'){
+          return '150px';
+        } else {
+          return '100px';
+        }
       };
 
       var dotImageWidth = function(){
-        return item.provider === 'youtube'? '150px': '100px';
+        if (item.provider === 'youtube'){
+          return '150px';
+        } else {
+          return '100px';
+        }
       };
 
       scope.dotImageXOffset = dotImageXOffset;
