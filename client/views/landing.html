@@ -13,11 +13,6 @@
 
 <div ng-if="User.loggedIn()" class="landing-section">
 
-  <br/>
-
-  <div ng-if="!User.hasOwnSpaces()">
-    create your first space here:<br/>
-  </div>
 
   <div ng-if="isAdding()">
     <input ng-model="newSpace.name" placeholder="new space name">

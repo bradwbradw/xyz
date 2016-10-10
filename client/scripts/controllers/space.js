@@ -148,6 +148,7 @@ angular.module('xyzApp')
         return viewer === 'owner' || viewer === 'contributor';
       };
 
+
       $scope.canEdit = canEdit;
       $scope.onDragDone = onDragDone;
       $scope.handleDotClick = handleDotClick;
