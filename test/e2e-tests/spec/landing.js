@@ -2,6 +2,7 @@ describe('landing page tests', function () {
 
   beforeAll(function () {
     browser.get('/');
+    browser.waitForAngular();
   });
 
   it('should see some public spaces', function () {
