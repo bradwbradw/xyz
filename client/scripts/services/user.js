@@ -11,15 +11,112 @@ angular.module('xyzApp')
   .service('User', function ($q, $state, $log, Server, Dj) {
 
     var User = {
-
-      userData: false,
-
+      data: {},
       get: function () {
-        return User.userData;
+        if (_.size(User.data) > 0) {
+          return User.data;
+        } else {
+          return false;
+        }
       },
       set: function (newUserData) {
-        User.userData = newUserData;
-        return User.userData;
+        User.data = newUserData;
+        return User.data;
+      },
+      fetch: function () {
+        if (_.size(User.data) > 0) {
+          return $q.resolve(User.get())
+        } else {
+          return User.download();
+        }
+      },
+      download: function () {
+        return Dj.getCurrent()
+          .$promise
+          .then(User.set)
+          .catch(function(err){
+            if(err.status == 401){
+              var noUser = {};
+              return $q.resolve(User.set(noUser));
+            } else {
+              $log.error('error fetching user ', err);
+            }
+          });
+      },
+      update: function (data) {
+        return Dj.prototype$updateAttributes({id: User.get().id}, data, _.noop)
+          .$promise
+          .then(User.set);
+      },
+
+      spaces: {
+        own: [],
+        editable: []
+      },
+      getSpaces: function () {
+        return User.spaces;
+      },
+      setSpaces: function (spaces) {
+        User.spaces = spaces;
+        return User.spaces;
+      },
+      fetchSpaces: function () {
+        if (User.get() && !User.hasOwnSpaces() && !User.hasEditableSpaces()) {
+          return User.downloadSpaces();
+        } else {
+          return $q.resolve(User.getSpaces());
+        }
+      },
+      downloadSpaces: function () {
+        return $q.all([
+          Dj.spaces({id: User.get().id}).$promise,
+          Dj.editableSpaces({id: User.get().id}).$promise
+        ])
+          .then(function (results) {
+            var editable = results[1];
+            _.each(editable, function (space) {
+              space.userIsContributor = true;
+            });
+            return {
+              own: results[0],
+              editable: editable
+            }
+          })
+          .then(User.setSpaces)
+          .catch(function (err) {
+            return $q.reject(err);
+          })
+      },
+      hasOwnSpaces: function () {
+        return _.size(User.spaces.own) > 0;
+      },
+      hasEditableSpaces: function () {
+        return _.size(User.spaces.editable) > 0;
+      },
+
+      appendSpace: function (space) {
+        if (_.isArray(User.spaces.own)) {
+          User.spaces.own.push(space);
+        } else {
+          _.set(User.spaces, {
+            own: [space],
+            editable: []
+          });
+        }
+
+        return space;
+      },
+
+
+      addSpace: function (space) {
+
+        return Dj.spaces.create({id: User.get().id}, space)
+          .$promise
+//          .then(User.appendSpace)
+          .catch(function (err) {
+            return $q.reject(err);
+          });
+
       },
       loggedIn: function () {
         // shouldn't have to do this
@@ -73,97 +170,6 @@ angular.module('xyzApp')
           });
       },
 
-      update: function (data) {
-        return Dj.prototype$updateAttributes({id: User.get().id}, data, _.noop)
-          .$promise
-          .then(User.set);
-      },
-      download: function(){
-        return Dj.getCurrent()
-          .$promise
-          .then(User.set);
-      },
-
-      fetchUserInfo: function () {
-        return User.download()
-          .then(User.fetchSpaces)
-          .catch(function (err) {
-            return $q.reject(err);
-          });
-      },
-      spaces: {
-        own: [],
-        editable: []
-      },
-      hasOwnSpaces: function () {
-        return _.size(User.spaces.own) > 0;
-      },
-      hasEditableSpaces: function () {
-        return _.size(User.spaces.editable) > 0;
-      },
-
-      getSpaces: function () {
-        return User.spaces;
-      },
-
-      setSpaces: function (spaces) {
-        User.spaces = spaces;
-        return User.spaces;
-      },
-      appendSpace: function (space) {
-        if(_.isArray(User.spaces.own)){
-          User.spaces.own.push(space);
-        } else {
-          _.set(User.spaces, {
-            own:[space],
-            editable:[]
-          });
-        }
-      },
-
-      fetchSpaces: function () {
-        return $q.all([
-            Dj.spaces({id: User.get().id}).$promise,
-            Dj.editableSpaces({id: User.get().id}).$promise
-          ])
-          .then(function (results) {
-            var editable = results[1];
-            _.each(editable, function(space){
-              space.userIsContributor = true;
-            });
-            return {
-              own: results[0],
-              editable: editable
-            }
-          })
-          .then(User.setSpaces)
-          .catch(function (err) {
-            return $q.reject(err);
-          })
-      },
-
-      addSpace: function (space) {
-//        space.ownerId = User.get().id;
-        Dj.spaces.create({id: User.get().id}, space, _.noop)
-          .$promise
-          .then(User.appendSpace)
-          .catch(function (err) {
-            return $q.reject(err);
-          });
-
-
-        /*
-         var newSpaces = [];
-         if (User.spaces()) {
-         newSpaces = User.spaces();
-         }
-         newSpaces.push(_.clone(space));
-         User.update({spaces: newSpaces})
-         .then(function () {
-         User.userData.get.spaces = newSpaces;
-         });
-         */
-      }
     };
 
     return User;
