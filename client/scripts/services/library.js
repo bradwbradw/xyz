@@ -68,6 +68,7 @@ angular.module('xyzApp')
           .$promise
           .then(function (result) {
             Library.currentSpace.songs.push(result);
+            return Library.currentSpace;
           })
           .catch(function (err) {
             return $q.reject(err);
