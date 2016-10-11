@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SpaceCtrl', function ($rootScope, $timeout, $scope, $log, $state, $window, Server, Library, Player, Playlister, Space, space, owner, viewer, contributors, layout_constants) {
+  .controller('SpaceCtrl', function ($rootScope, $timeout, $scope, $log, $state, $window, $q, Server, Library, Player, Playlister, Space, space, owner, viewer, contributors, layout_constants) {
 
       var expanded;
 
