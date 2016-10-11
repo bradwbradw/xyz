@@ -1,21 +1,36 @@
+
 <div class="sidebar-container">
-  <h2>edit</h2>
 
-  <div layout="row" layout-align="start center">
-    <label for="space-name-input" flex="15">name:</label>
-    <input id="space-name-input" ng-model="space.name" ng-show="editingName" flex>
-    <div id="space-name" ng-show="!editingName" flex="initial"><h4>{{space.name}}</h4></div>
-    <md-icon ng-click="editingName = true" flex="initial" ng-hide="editingName">edit</md-icon>
-    <md-icon ng-click="saveEdits(space)" flex="initial" ng-show="editingName">save</md-icon>
+  <form id="space-edit-form" name="spaceEditForm">
 
+    <label for="space-name-input" flex="15" >Name</label>
+    <input id="space-name-input"
+           ng-model="space.name"
+           placeholder="(untitled)"
+           name="name"
+           >
+
+
+    <md-checkbox id="public-checkbox"
+           name="public" type="checkbox" ng-model="space.public" aria-label="Public">
+      Public
+    </md-checkbox>
+
+
+    <input type="submit" value="save" ng-click="saveEdits(space)" ng-show="spaceEditForm.$dirty"> </input>
+
+    <pre class="debug" ng-if="false">{{spaceEditForm || json}}</pre>
+  </form>
+
+
+  <label>Contributors</label>
+  <div ng-repeat="contributor in getContributors()">
+    {{contributor.name}}
+    <md-icon class="icon-btn"
+             ng-click="removeFromContributors(contributor)">remove_circle
+    </md-icon>
   </div>
-  <span class="checkbox">
-          <label for="public-checkbox">
-            public:
-          </label>
-  <input id="public-checkbox" type="checkbox" ng-model="space.public"/>
-      </span>
-  <br/>
+
   <label for="search-users">Add a contributor:</label>
   <input ng-model="userSearchQ" id="search-users"
          ng-change="searchUsers(userSearchQ)"
@@ -27,19 +42,10 @@
              ng-click="addToContributors(user)">add_circle
     </md-icon>
   </div>
-  Contributors:
-  <div ng-repeat="contributor in getContributors()">
-    {{contributor.name}}
-    <md-icon class="icon-btn"
-             ng-click="removeFromContributors(contributor)">remove_circle
-    </md-icon>
-  </div>
 
-  <span ng-if="space.startTime"> Space started playing at {{space.startTime | date:"mediumTime"}}</span>
   <br/>
 
-  <button ng-click="saveEdits(space)"> save</button>
-  <button ng-click="deleteViaConfirm(Space,space)">delete</button>
+  <button ng-click="deleteViaConfirm(Space,space)">delete space</button>
 
   <div class="error" ng-if="error">{{error}}</div>
   <pre ng-if="false" class="debug">
