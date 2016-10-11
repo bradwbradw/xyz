@@ -7,7 +7,7 @@
     <a ng-if="space && space.id">
       <md-icon class="icon-btn light" ng-click="playSpace(space)">
         play_arrow
-        <md-tooltip>
+        <md-tooltip md-delay="750">
           Play this Space
         </md-tooltip>
       </md-icon>
@@ -25,7 +25,7 @@
         class="icon-btn">
       add
 
-        <md-tooltip>
+        <md-tooltip md-delay="750">
           Add to this Space
         </md-tooltip>
     </md-icon>
@@ -37,7 +37,7 @@
         class="icon-btn">
       edit
 
-        <md-tooltip>
+        <md-tooltip md-delay="750">
           Edit Space Attributes
         </md-tooltip>
     </md-icon>
@@ -49,7 +49,7 @@
         class="icon-btn">
       info
 
-        <md-tooltip>
+        <md-tooltip md-delay="750">
           About this Space
         </md-tooltip>
     </md-icon>
@@ -62,7 +62,7 @@
         ng-click="toggleSettings()">
       settings
 
-        <md-tooltip>
+        <md-tooltip md-delay="750">
           Edit User Settings
         </md-tooltip>
     </md-icon>
@@ -74,7 +74,7 @@
                ui-sref="base.signup-login">
         account_circle
 
-        <md-tooltip>
+        <md-tooltip md-delay="750">
           Sign up or Log in
         </md-tooltip>
       </md-icon>
