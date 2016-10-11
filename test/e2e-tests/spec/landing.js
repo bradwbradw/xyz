@@ -1,5 +1,3 @@
-
-
 describe('landing page tests', function () {
 
   beforeAll(function () {
@@ -37,7 +35,7 @@ describe('landing page tests', function () {
 
   });
 
-    it('should be able to navigate to a space', function () {
+  it('should be able to navigate to a space', function () {
 
     var spaceLink = element(by.css('.space-thumbnail a'));
 
@@ -51,7 +49,6 @@ describe('landing page tests', function () {
   });
 
 
-
 });
 
 
@@ -60,23 +57,22 @@ describe('landing page tests (logged in)', function () {
   beforeAll(function () {
     browser.get('/signup-login');
 
-    var emailInput = element(by.model('loginData.email'));
-    var passwordInput = element(by.model('loginData.password'));
-    var submitButton = element(by.css('#login-form'));
+    var emailInput = element(by.css('#login-email-field'));
+    var passwordInput = element(by.css('#login-password-field'));
+    var loginForm = element(by.css('#login-form'));
 
     emailInput.sendKeys(browser.params.login.email);
     passwordInput.sendKeys(browser.params.login.password);
-    submitButton.click();
+    loginForm.submit();
 
-    browser.get('/');
+    browser.waitForAngular();
 
   });
 
-  it('should see user settings icon in corner', function(){
+  it('should see user settings icon in corner', function () {
 
     expect(element(by.css('#settings-button')).isPresent()).toBe(true);
   })
-
 
 
 });
