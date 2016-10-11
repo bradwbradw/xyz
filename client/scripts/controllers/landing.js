@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('LandingCtrl', function ($rootScope, $scope, $q, $timeout, $log, ngToast, Dj, User, Server, Space, publicSpaces, Player, Social, Utility) {
+  .controller('LandingCtrl', function ($rootScope, $scope, $q, $timeout, $log, $state, ngToast, Dj, User, Server, Space, publicSpaces, Player, Social, Utility) {
 
     Social.FB.refreshFB();
 
@@ -38,6 +38,15 @@ angular.module('xyzApp')
       return space.userIsContributor;
     };
 
+
+    var createNewSpace = function () {
+      User.addSpace({public:false}).then(function (space) {
+        $log.log('space is ', space);
+        $state.go('base.space.edit', {id:space.id});
+      });
+    };
+
+    $scope.createNewSpace = createNewSpace;
     $scope.userIsCollaborator = userIsCollaborator;
     $scope.isAdding = isAdding;
     $scope.setAdding = setAdding;

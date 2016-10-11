@@ -1,13 +1,15 @@
 <div class="space-thumbnail" layout="column" layout-align="space-between center">
 
+  <div id='space-owner-label'
+        ng-if="space.owner && space.owner.name">
+    {{space.owner.name}}
+  </div>
+
   <a ui-sref="base.space({id:space.id})">
-    {{space.name }}
+    {{space.name? space.name : '(untitled)' }}
   </a>
 
-  <span ng-if="space.owner"> (made by {{space.owner.name}})</span>
-  <div ng-if="!space">
-    loading...
-  </div>
+
   <div>
     <img ng-if="space && space.pic" ng-src="{{space.pic}}">
     <div ng-if="!space.pic" class="no-img"> </div>

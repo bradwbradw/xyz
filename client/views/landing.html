@@ -13,18 +13,7 @@
 
 <div ng-if="User.loggedIn()" class="landing-section">
 
-
-  <div ng-if="isAdding()">
-    <input ng-model="newSpace.name" placeholder="new space name">
-    <md-icon class="icon" ng-click="User.addSpace(newSpace).then(resetAdding).catch(showError)">add_circle</md-icon>
-  </div>
-
-  <div ng-if="!isAdding()">
-    <a ng-click="setAdding()"> + new space</a>
-  </div>
-  <div ng-show="isAdding()">
-    <a ng-click="resetAdding()"> (nevermind)</a>
-  </div>
+  <a id="create-new-space" ng-click="createNewSpace()"> + new space</a>
 
   <h2 ng-if="User.hasOwnSpaces() || User.hasEditableSpaces()">my spaces:</h2>
 
