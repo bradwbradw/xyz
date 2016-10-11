@@ -9,19 +9,13 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           return Library.Spaces.get();
         },
         user: function (User) {
-
-          if (!User.get() && User.loggedIn()) {
-            return User.fetchUserInfo()
-              .catch(User.logout);
-
-          } else {
-            return User.get();
-          }
+          return User.fetch();
         },
-        viewer: function () {
+        // defaults: return false so that dependencies are happy
+        space: function(){
           return false;
         },
-        space: function () {
+        viewer: function(){
           return false;
         }
       }
@@ -51,14 +45,6 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         'bar': {
           templateUrl: 'bar.html',
           controller: 'BarCtrl'
-        }
-      },
-      resolve: {
-        user: function (User) {
-          return User.download()
-            .catch(function () {
-              return false;
-            });
         }
       }
     })
