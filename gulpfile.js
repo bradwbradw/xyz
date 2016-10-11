@@ -108,13 +108,6 @@ gulp.task('bower', function () {
     .pipe(gulp.dest('client/vendor'))
 });
 
-gulp.task('copyHtml:main', function () {
-  return gulp.src([
-    'client/views/**/*.html',
-    'xyz-player-component/*.html'
-  ])
-    .pipe(gulp.dest('dist/views'))
-});
 
 //TODO: make a task write css that includes xyz-player-component's css, write it to stream/style.css
 
@@ -257,7 +250,7 @@ gulp.task('watch', gulp.parallel('watch:sass', 'watch:views', 'watch:code'));
 
 gulp.task('build',
   gulp.series('clean', 'loopback', 'sass', 'bower', 'templates',
-    gulp.parallel('useref:main', 'copyHtml:main', 'copyImages'),
+    gulp.parallel('useref:main', 'copyImages'),
     gulp.parallel('useref:stream', 'copyCss:stream'))
 );
 
