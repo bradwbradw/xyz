@@ -41,6 +41,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       }
     })
     .state('base.account', {
+      /* note - for the moment, this route is only accessed via email password reset link */
       url: '/account',
       views: {
         'main': {

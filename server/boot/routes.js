@@ -1,5 +1,4 @@
-var dsConfig = require('../datasources.json')
-request = require('request'),
+var request = require('request'),
   logger = require('logger'),
   loopback = require('loopback'),
   _ = require('lodash');
@@ -44,7 +43,7 @@ module.exports = function (app) {
 
 
   //send an email with instructions to reset an existing user's password
-  app.post('/request-password-reset', function (req, res, next) {
+  app.post('/request-password-reset', function (req, res) {
     User.resetPassword({
       email: req.body.email
     }, function (err) {
@@ -60,7 +59,7 @@ module.exports = function (app) {
   });
 
   //show password reset form
-  app.get('/reset-password', function (req, res, next) {
+  app.get('/reset-password', function (req, res) {
     if (!req.accessToken) return res.sendStatus(401);
     res.render('password-reset', {
       accessToken: req.accessToken.id
@@ -68,7 +67,7 @@ module.exports = function (app) {
   });
 
   //reset the user's pasword
-  app.post('/reset-password', function (req, res, next) {
+  app.post('/reset-password', function (req, res) {
     if (!req.accessToken) return res.sendStatus(401);
 
     //verify passwords match
@@ -79,7 +78,7 @@ module.exports = function (app) {
 
     User.findById(req.accessToken.userId, function (err, user) {
       if (err) return res.sendStatus(404);
-      user.updateAttribute('password', req.body.password, function (err, user) {
+      user.updateAttribute('password', req.body.password, function (err /*, user*/) {
         if (err) return res.sendStatus(404);
         console.log('> password reset processed successfully');
         res.render('response', {
@@ -91,4 +90,5 @@ module.exports = function (app) {
       });
     });
   });
+
 };
