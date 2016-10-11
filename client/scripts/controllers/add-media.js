@@ -8,7 +8,7 @@
  * 'hub'-like controller used for importing and saving. Connected to many services
  */
 angular.module('xyzApp')
-  .controller('AddMediaCtrl', function ($timeout, Extract, Library, Social, MediaAPI, Player, localStorageService, $scope, $log, $window, $q, layout_constants) {
+  .controller('AddMediaCtrl', function ($timeout, Extract, Library, Social, MediaAPI, Player, Server, localStorageService, $scope, $log, $window, $q, layout_constants) {
     /*
      Library.currentSpace = $scope.$parent.space;*/
 
@@ -65,7 +65,7 @@ angular.module('xyzApp')
         })
         .then(updateImportView)
         .catch(invalidLink)
-        .finally(function(){
+        .finally(function () {
           $scope.fetchingSongData = false;
         });
 
@@ -75,12 +75,21 @@ angular.module('xyzApp')
       // if desktop
       item.x = _.round($window.outerWidth / 4); //should be 25% from left side of screen / window
 
-      if(event.y < layout_constants.SPACE_DIMENSIONS.height){
+      if (event.y < layout_constants.SPACE_DIMENSIONS.height) {
         item.y = event.y;
-      } else{
+      } else {
         item.y = layout_constants.SPACE_DIMENSIONS.height
       }
-      Library.add(item);
+      Library.add(item)
+        .then(function (space) {
+          if (_.size(space.songs) === 1) {
+            var song = _.first(space.songs);
+            Server.updateSpace(space.id, {
+              firstSong: song.id, pic: song.pic
+            });
+
+          }
+        });
     };
 
 
@@ -111,7 +120,7 @@ angular.module('xyzApp')
       "youtube": true
     };
 
-    var filterAllows = function(item){
+    var filterAllows = function (item) {
       return filters[item.provider];
     };
 
