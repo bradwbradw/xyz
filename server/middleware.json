@@ -30,7 +30,9 @@
     }
   },
   "final": {
-    "loopback#urlNotFound": {}
+    "./middleware/serve-index-html": {
+
+    }
   },
   "final:after": {
     "loopback#errorHandler": {}
