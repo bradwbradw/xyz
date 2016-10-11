@@ -13,7 +13,7 @@
   <path class="playlist-line"
         ng-attr-d="{{linePath(Playlister.list || [])}}"
         d=""
-        fill="none" stroke="lightgrey"></path>
+        fill="none" stroke="lightgrey" ng-if="space.songs[0]"></path>
 
   <g ng-repeat="item in space.songs"
      media-item-dot
