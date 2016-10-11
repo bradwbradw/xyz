@@ -72,25 +72,14 @@ use '#?playlist=129994120' to set the id of the space you want
 
 ### end-to-end tests
 
-first install Protractor:
+`gulp test` will build and run tests, specs are located in test/e2e-tests/spec
 
-`npm install -g protractor`
-
-then update webdriver:
-
-`webdriver-manager update`
-
-then start webdriver:
-
-`webdriver-manager start`
-
-
+`gulp e2e-test` will just run the tests (without building first)
 
 more info: http://www.protractortest.org/#/
 
 ### unit tests
-Running `gulp test` will run the unit tests with karma.
-
+tba
 
 ### testing the api
 

@@ -1,14 +1,25 @@
-describe('landing page tests', function() {
-  it('should see some public spaces', function() {
+describe('landing page tests', function () {
+
+  beforeAll(function () {
     browser.get('/');
-
-
-    var todoList = element.all(by.repeater('space in publicSpaces'));
-/*
-    element(by.model('todoList.todoText')).sendKeys('write first protractor test');
-    element(by.css('[value="add"]')).click();
-*/
-
-    expect(todoList.count()).toBeGreaterThan(1);
   });
+
+  it('should see some public spaces', function () {
+
+    var publicSpaces = element.all(by.repeater('space in publicSpaces'));
+
+    expect(publicSpaces.count()).toBeGreaterThan(1);
+  });
+
+  it('should be able to navigate to account', function () {
+
+    var accountLink = element(by.id('signup-login-link'));
+
+    accountLink.click();
+
+    expect(browser.getLocationAbsUrl())
+      .toContain('signup-login');
+  });
+
+
 });

@@ -354,7 +354,7 @@ gulp.task('overwrite-db-local', function (done) {
     .pipe(exec.reporter())
 });
 
-gulp.task('test-e2e', function () {
+gulp.task('e2e-test', function () {
 
   return gulp.src(paths.e2eTests + '/spec/**/*.js')
     .pipe(protractor({
@@ -368,4 +368,4 @@ gulp.task('test-e2e', function () {
     });
 });
 
-gulp.task('test', gulp.series(['build', 'test-e2e']));
+gulp.task('test', gulp.series(['build', 'e2e-test']));
