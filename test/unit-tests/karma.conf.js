@@ -31,10 +31,10 @@ module.exports = function(config) {
       'client/vendor/angular-resource/angular-resource.js',
       'client/vendor/angular-mocks/angular-mocks.js',
       // endbower
-      'test/ngMockHttp.js',
-      'test/spec/test-serverConfig.js',
+      'test/unit-tests/ngMockHttp.js',
+      'test/unit-tests/spec/test-serverConfig.js',
       "client/scripts/**/*.js",
-      "test/spec/**/*.js"
+      "test/unit-tests/spec/**/*.js"
     ],
 
 

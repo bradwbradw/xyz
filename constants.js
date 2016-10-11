@@ -16,7 +16,7 @@ var mongoCreds = mongoDbUriTool.parse(mongoUrl);
 var port = process.env.PORT || 5005;
 var ip = process.env.IP || 'localhost';
 console.log('ip is ', ip);
-console.log('port is ', port);
+console.log('api / built app port is ', port);
 
 
 module.exports = {

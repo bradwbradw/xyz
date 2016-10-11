@@ -13,7 +13,6 @@ var replace = require('gulp-replace');
 
 var docs = require('gulp-ngdocs');
 var exec = require('gulp-exec');
-var exit = require('gulp-exit');
 
 var del = require('del');
 
@@ -30,6 +29,8 @@ var historyApiFallback = require('connect-history-api-fallback');
 var browserSync = require('browser-sync').create();
 var open = require('gulp-open');
 
+var protractor = require('gulp-angular-protractor');
+
 var paths = {
   src: {
     sass: ['client/scss/**/*.scss', 'xyz-player-component/**/*.scss'],
@@ -39,17 +40,19 @@ var paths = {
       'client/views/**/*.svg',
       'xyz-player-component/*.svg'],
     scripts: 'client/scripts',
-    index:'client/index.html'
-  }
+    index: 'client/index.html'
+  },
+
+  e2eTests: './test/e2e-tests'
 };
 
 var appName = 'xyzApp';
 
 var TEMPLATE_HEADER = '\'use strict\';' +
-'var app = window.angular.module(\'' + appName + '\');'
-+ 'app.run([\'$templateCache\', function($templateCache) {';
+  'var app = window.angular.module(\'' + appName + '\');'
+  + 'app.run([\'$templateCache\', function($templateCache) {';
 
-function reloadB (done) {
+function reloadB(done) {
   browserSync.reload();
   done();
 }
@@ -60,6 +63,7 @@ if (process.env.NODE_ENV === 'production') {
   var apiUrl = 'http://' + constants.domain + constants.api.path;
 }
 console.log('api Url is ', apiUrl);
+console.log('domain is ', constants.domain);
 
 gulp.task('loopback', function () {
   return gulp.src('./server/server.js')
@@ -82,9 +86,9 @@ gulp.task('reload', reloadB);
 gulp.task('sass:app', function () {
 
   return gulp.src([
-      'client/scss/**/*.scss',
-      'xyz-player-component/**/*.scss'
-    ])
+    'client/scss/**/*.scss',
+    'xyz-player-component/**/*.scss'
+  ])
     .pipe(sass()) // Using gulp-sass
     .pipe(gulp.dest('client/css'))
 //    .pipe(browserSync.reload({stream: true}));
@@ -106,9 +110,9 @@ gulp.task('bower', function () {
 
 gulp.task('copyHtml:main', function () {
   return gulp.src([
-      'client/views/**/*.html',
-      'xyz-player-component/*.html'
-    ])
+    'client/views/**/*.html',
+    'xyz-player-component/*.html'
+  ])
     .pipe(gulp.dest('dist/views'))
 });
 
@@ -167,11 +171,11 @@ gulp.task('browserSync:client', function (done) {
       }
 
     },
-    injectChanges:true,
-        logConnections: true,
+    injectChanges: true,
+    logConnections: true,
     ghostMode: false,
     notify: false,
-    browser:'chrome',
+    browser: 'chrome',
     ui: {
       port: 9006
     },
@@ -196,7 +200,6 @@ gulp.task('browserSync:dist', function (done) {
 });
 
 
-
 gulp.task('browserSync:stream', function (done) {
   browserSync.init({
     server: {
@@ -217,7 +220,6 @@ gulp.task('browserSync:stream', function (done) {
 });
 
 
-
 gulp.task('templates', function () {
 
   var templateCache = require('gulp-angular-templatecache');
@@ -230,7 +232,7 @@ gulp.task('templates', function () {
 
 gulp.task('watch:sass', function (done) {
   gulp.watch(paths.src.sass)
-    .on('change', gulp.series('sass', reloadB) );
+    .on('change', gulp.series('sass', reloadB));
   done()
 });
 
@@ -242,54 +244,48 @@ gulp.task('watch:views', function (done) {
 gulp.task('watch:code', function (done) {
 
   gulp.watch([
-      paths.src.index,
-      paths.src.scripts+'/**/*.js',
-      'xyz-player-component/**/*.js',
-      'xyz-player-component/**/*.html'
-    ])
+    paths.src.index,
+    paths.src.scripts + '/**/*.js',
+    'xyz-player-component/**/*.js',
+    'xyz-player-component/**/*.html'
+  ])
     .on('change', gulp.series('useref:main', 'copyImages', reloadB));
   done();
 });
 
 gulp.task('watch', gulp.parallel('watch:sass', 'watch:views', 'watch:code'));
 
-gulp.task('exit', function (done) {
-  done();
-  process.exit(0);
-});
-
-
 gulp.task('build',
-  gulp.series('clean', 'loopback', 'sass', 'bower','templates',
+  gulp.series('clean', 'loopback', 'sass', 'bower', 'templates',
     gulp.parallel('useref:main', 'copyHtml:main', 'copyImages'),
-    gulp.parallel('useref:stream', 'copyCss:stream'), 'exit')
+    gulp.parallel('useref:stream', 'copyCss:stream'))
 );
 
 
 gulp.task('serve', gulp.parallel('loopback', 'bower', 'sass', 'browserSync:client', 'watch'));
 
-gulp.task('default', gulp.parallel('build','serve'));
+gulp.task('default', gulp.parallel('build', 'serve'));
 
 /*
 
-gulp.task('watchStream', gulp.parallel(['browserSync:stream', 'sass']), function () {
-  gulp.watch('stream/scss/!**!/!*.scss', gulp.series(['sass']));
-  gulp.watch([
-    'stream/!*.html',
-    'stream/style.css',
-    'stream/views/!**!/!*.html',
-    'stream/js/!**!/!*.js'
-  ], browserSync.reload);
-});
-*/
+ gulp.task('watchStream', gulp.parallel(['browserSync:stream', 'sass']), function () {
+ gulp.watch('stream/scss/!**!/!*.scss', gulp.series(['sass']));
+ gulp.watch([
+ 'stream/!*.html',
+ 'stream/style.css',
+ 'stream/views/!**!/!*.html',
+ 'stream/js/!**!/!*.js'
+ ], browserSync.reload);
+ });
+ */
 
 /*
-gulp.task('stream', function (callback) {
-  gulp.series(
-    gulp.parallel('browserSync:stream', 'watchStream'),
-    callback
-  )
-});*/
+ gulp.task('stream', function (callback) {
+ gulp.series(
+ gulp.parallel('browserSync:stream', 'watchStream'),
+ callback
+ )
+ });*/
 
 
 gulp.task('serveApi', function () {
@@ -357,3 +353,19 @@ gulp.task('overwrite-db-local', function (done) {
     })
     .pipe(exec.reporter())
 });
+
+gulp.task('test-e2e', function () {
+
+  return gulp.src(paths.e2eTests + '/spec/**/*.js')
+    .pipe(protractor({
+      'configFile': paths.e2eTests + '/config.js',
+      'args': ['--baseUrl', 'http://'+constants.domain],
+      'autoStartStopServer': true,
+      'debug': false
+    }))
+    .on('error', function (e) {
+      throw e
+    });
+});
+
+gulp.task('test', gulp.series(['build', 'test-e2e']));

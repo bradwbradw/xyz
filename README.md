@@ -70,10 +70,29 @@ use '#?playlist=129994120' to set the id of the space you want
 
 ## Testing
 
+### end-to-end tests
+
+first install Protractor:
+
+`npm install -g protractor`
+
+then update webdriver:
+
+`webdriver-manager update`
+
+then start webdriver:
+
+`webdriver-manager start`
+
+
+
+more info: http://www.protractortest.org/#/
+
+### unit tests
 Running `gulp test` will run the unit tests with karma.
 
 
-## testing the api
+### testing the api
 
 first install jasmine-node:
 
