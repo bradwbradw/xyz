@@ -22,6 +22,7 @@
     "forever-monitor": "^1.7.0",
     "grunt": "^0.4.5",
     "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-angular-protractor": "^0.1.4",
     "gulp-angular-templatecache": "^2.0.0",
     "gulp-bower": "0.0.11",
     "gulp-concat": "^2.6.0",
