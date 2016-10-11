@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 module.exports = function (app) {
 
   var Role = app.models.Role;
@@ -18,7 +20,7 @@ module.exports = function (app) {
     if (!userId) {
       return reject(); // do not allow anonymous users
     }
-    // check if userId is in team table for the given project id
+    // check if userId is in contributors list for the given space id
     context.model.findById(context.modelId, {include: 'contributors'}, function (err, space) {
 
       if (err || !space) {
