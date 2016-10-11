@@ -19,13 +19,13 @@ angular.module('xyzApp')
 
         return Library.searchResults;
       },
-      Spaces:{
-        map:{},
-        getSync:function(){
+      Spaces: {
+        map: {},
+        getSync: function () {
           return Library.Spaces.map;
         },
-        get: function(){
-          if( _.size(Library.Spaces.map) > 0){
+        get: function () {
+          if (_.size(Library.Spaces.map) > 0) {
             return $q.resolve(Library.Spaces.getSync());
           } else {
             return Library.Spaces.downloadAll()
@@ -33,32 +33,31 @@ angular.module('xyzApp')
               .then(Library.Spaces.set);
           }
         },
-        getById:function(id){
-          var found = _.find(Library.Spaces.map, {id:id});
-          if(found){
+        getById: function (id) {
+          var found = _.find(Library.Spaces.map, {id: id});
+          if (found) {
             return $q.resolve(found);
           } else {
-            return Library.Spaces.downloadOne(id)
-              .then(Library.Spaces.addToMap);
+            return Library.Spaces.downloadOne(id);
           }
         },
-        set: function(data){
+        set: function (data) {
           Library.Spaces.map = data;
           return data;
         },
-        makeMap: function(list){
+        makeMap: function (list) {
           return _.keyBy(list, 'id');
         },
-        addToMap: function(newOne){
+        addToMap: function (newOne) {
           _.set(Library.Spaces.map, newOne.id, newOne);
           return newOne;
         },
-        downloadAll: function(){
+        downloadAll: function () {
           return Space.find({filter: {include: ["owner", "songs"], where: {public: true}}})
             .$promise;
         },
-        downloadOne: function(id){
-          return Space.findOne({filter: {include: ["owner", "songs", "contributors"], where: {id:id}}})
+        downloadOne: function (id) {
+          return Space.findOne({filter: {include: ["owner", "songs", "contributors"], where: {id: id}}})
             .$promise;
         }
       },
@@ -80,7 +79,7 @@ angular.module('xyzApp')
       },
 
       fetchSpaceAndSongs: function (spaceId) {
-        if (_.isUndefined(spaceId)){
+        if (_.isUndefined(spaceId)) {
           spaceId = Library.space().id;
         }
         return Library.Spaces.getById(spaceId)
