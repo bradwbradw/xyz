@@ -10,10 +10,6 @@
 angular.module('xyzApp')
   .controller('SpaceCtrl', function ($rootScope, $timeout, $scope, $log, $state, $window, Server, Library, Player, Playlister, Space, space, owner, viewer, contributors, layout_constants) {
 
-      // default tab 'add media' should be open
-      if (viewer === 'contributor' || viewer === 'owner') {
-        $state.go('base.space.add');
-      }
       var expanded;
 
       var computeViewBox = function () {
@@ -87,7 +83,6 @@ angular.module('xyzApp')
 
       var removeSong = function (songId) {
 
-
         if ($window.confirm('remove this song from the space?')) {
 
           return Space.songs.destroyById({id: Library.space().id, fk: songId})
@@ -147,7 +142,6 @@ angular.module('xyzApp')
       var canEdit = function () {
         return viewer === 'owner' || viewer === 'contributor';
       };
-
 
       $scope.canEdit = canEdit;
       $scope.onDragDone = onDragDone;
