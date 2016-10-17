@@ -11,7 +11,7 @@ module.exports = function(config) {
     autoWatch: true,
 
     // base path, that will be used to resolve files and exclude
-    basePath: '../',
+    basePath: '../../',
 
     // testing framework to use (jasmine/mocha/qunit/...)
     // as well as any additional frameworks (requirejs/chai/sinon/...)
@@ -31,9 +31,9 @@ module.exports = function(config) {
       'client/vendor/angular-resource/angular-resource.js',
       'client/vendor/angular-mocks/angular-mocks.js',
       // endbower
+      "client/scripts/**/*.js",
       'test/unit-tests/ngMockHttp.js',
       'test/unit-tests/spec/test-serverConfig.js',
-      "client/scripts/**/*.js",
       "test/unit-tests/spec/**/*.js"
     ],
 

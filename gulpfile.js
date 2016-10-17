@@ -30,6 +30,7 @@ var browserSync = require('browser-sync').create();
 var open = require('gulp-open');
 
 var protractor = require('gulp-angular-protractor');
+var karmaServer = require('karma').Server;
 
 var paths = {
   src: {
@@ -43,7 +44,8 @@ var paths = {
     index: 'client/index.html'
   },
 
-  e2eTests: './test/e2e-tests'
+  e2eTests: 'test/e2e-tests',
+  unitTests: 'test/unit-tests',
 };
 
 var appName = 'xyzApp';
@@ -352,13 +354,22 @@ gulp.task('e2e-test', function () {
   return gulp.src(paths.e2eTests + '/spec/**/*.js')
     .pipe(protractor({
       'configFile': paths.e2eTests + '/config.js',
-      'args': ['--baseUrl', 'http://'+constants.domain],
+      'args': ['--baseUrl', 'http://' + constants.domain],
       'autoStartStopServer': true,
       'debug': false
     }))
     .on('error', function (e) {
       throw e
     });
+});
+
+gulp.task('unit-test', function (done) {
+  new karmaServer({
+    configFile: __dirname + '/' + paths.unitTests + '/karma.conf.js',
+    singleRun: true
+  }, done)
+    .start();
+
 });
 
 gulp.task('test', gulp.series(['build', 'e2e-test']));
