@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('xyzApp')
-  .controller('BodyCtrl', function ($rootScope, $window, $scope, $log, $stateParams, localStorageService, Utility, Playlister) {
+  .controller('BodyCtrl', function ($rootScope, $window, $scope, $log, $timeout, $stateParams, localStorageService, Utility, Playlister) {
 
     $rootScope.askConfirm = function (callback, thing, error) {
       if ($window.confirm) {
@@ -12,8 +12,17 @@ angular.module('xyzApp')
 
     var playingSpace;
     var playSpace = function (space) {
-      Playlister.recompute(space);
-      playingSpace = space;
+
+      // hack (forces watch on spaceId in xyz-player-directive to trigger
+      // having been changed (line 260 in xyz-player-directive.js)
+      $timeout(function () {
+        playingSpace = '';
+
+        $timeout(function () {
+          Playlister.recompute(space);
+          playingSpace = space;
+        })
+      });
     };
 
     var getPlayingSpace = function () {
