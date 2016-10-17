@@ -280,6 +280,7 @@ angular.module('xyzPlayer', [])
           var close = function () {
             stopAll();
             spaceOpen = false;
+            Playlister.nowPlaying = false;
 //            $timeout(scope.$destroy);
             // TODO: currently, destroy annihilates everything
             // but the calls to go() above keep happening.
