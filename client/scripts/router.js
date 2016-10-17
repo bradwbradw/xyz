@@ -134,8 +134,6 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       }
     })
     .state('base.space.add', {
-
-      url: '/add',
       views: {
         'sidebar@base':{
           templateUrl: 'sidebar/sidebar-add.html',
@@ -144,8 +142,6 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       }
     })
     .state('base.space.edit', {
-
-      url: '/edit',
       views: {
         'sidebar@base': {
           templateUrl: 'sidebar/sidebar-edit.html',
@@ -154,8 +150,6 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       }
     })
     .state('base.space.info', {
-
-      url: '/info',
       views: {
         'sidebar@base': {
           templateUrl: 'sidebar/sidebar-info.html'
