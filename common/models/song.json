@@ -52,6 +52,9 @@
     }
   },
   "validations": [],
+  "hidden":[
+    "original_data"
+  ],
   "relations": {
     "Spaces": {
       "type": "hasAndBelongsToMany",
