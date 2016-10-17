@@ -3,7 +3,7 @@
 //noinspection JSUnresolvedVariable
 angular.module('xyzApp')
 
-  .service('Library', function ($log, $q, Space, Server, Utility, Playlister) {
+  .service('Library', function ($log, $q, Space) {
 
     var Library = {
 
@@ -18,48 +18,6 @@ angular.module('xyzApp')
       getSearchResults: function () {
 
         return Library.searchResults;
-      },
-      Spaces: {
-        map: {},
-        getSync: function () {
-          return Library.Spaces.map;
-        },
-        get: function () {
-          if (_.size(Library.Spaces.map) > 0) {
-            return $q.resolve(Library.Spaces.getSync());
-          } else {
-            return Library.Spaces.downloadAll()
-              .then(Library.Spaces.makeMap)
-              .then(Library.Spaces.set);
-          }
-        },
-        getById: function (id) {
-          var found = _.find(Library.Spaces.map, {id: id});
-          if (found) {
-            return $q.resolve(found);
-          } else {
-            return Library.Spaces.downloadOne(id);
-          }
-        },
-        set: function (data) {
-          Library.Spaces.map = data;
-          return data;
-        },
-        makeMap: function (list) {
-          return _.keyBy(list, 'id');
-        },
-        addToMap: function (newOne) {
-          _.set(Library.Spaces.map, newOne.id, newOne);
-          return newOne;
-        },
-        downloadAll: function () {
-          return Space.find({filter: {include: ["owner", "songs"], where: {public: true}}})
-            .$promise;
-        },
-        downloadOne: function (id) {
-          return Space.findOne({filter: {include: ["owner", "songs", "contributors"], where: {id: id}}})
-            .$promise;
-        }
       },
 
       add: function (song) {
@@ -77,19 +35,6 @@ angular.module('xyzApp')
 
       addToSearchResults: function (newItems) {
         Library.searchResults = newItems;
-      },
-
-      fetchSpaceAndSongs: function (spaceId) {
-        if (_.isUndefined(spaceId)) {
-          spaceId = Library.space().id;
-        }
-        return Library.Spaces.getById(spaceId)
-          .then(function (spaceAndSongs) {
-            Library.currentSpace = spaceAndSongs;
-            Library.currentSpace.songs = prepareLibrary(spaceAndSongs.songs);
-
-            return Library.songs(); // returns just the songs
-          })
       },
 
       update: function (id, data) {
@@ -110,27 +55,6 @@ angular.module('xyzApp')
         }
       }
 
-    };
-
-    var updateView = function (response) {
-      reportSuccess(response);
-//      $log.log('update view');
-      Library.fetchSpaceAndSongs();
-    };
-    var reportSuccess = function (response) {
-//      $log.log('success', response);
-    };
-
-    var prepareLibrary = function (rawLibrary) {
-
-      var preparedLibrary = [];
-      _.each(rawLibrary, function (song) { //jshint ignore:line
-        song.editing = false;
-        _.unset(song, 'original_data');
-        preparedLibrary.push(song);
-      });
-
-      return preparedLibrary;
     };
 
 

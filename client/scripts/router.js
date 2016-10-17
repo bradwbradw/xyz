@@ -1,21 +1,24 @@
 xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 
+//noinspection JSUnresolvedVariable
   $stateProvider
     .state('base', {
       templateUrl: 'base.html',
       resolve: {
-        publicSpaces: function (Library) {
-          return Library.Spaces.get();
+        spacesResolve: function (Spaces, user) {
+          // depending on user is important, because internally,
+          // Spaces checks for user ID from User service
+          return Spaces.get();
         },
         user: function (User) {
           return User.fetch();
         },
         // defaults: return false so that dependencies are happy
-        space: function(){
+        space: function () {
           return false;
         },
-        viewer: function(){
+        viewer: function () {
           return false;
         }
       }
@@ -76,11 +79,10 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       },
       resolve: {
 
-        space: function ($stateParams, $log, $state, Space, Library) {
-          return Library.fetchSpaceAndSongs($stateParams.id)
-            .then(Library.space)
+        space: function (spaceId, $log, $state, Spaces) {
+          return Spaces.getById(spaceId)
             .catch(function (err) {
-              $log.error(err);
+              $log.error('could not get space by id ' + spaceId, err);
               $state.go('base.landing');
             });
         },
@@ -90,7 +92,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         owner: function (space, Dj) {
           return Dj.findById(
             {
-              id: space.ownerId,
+              id: _.get(space, 'owner.id') ,
               filter: {
                 fields: {
                   id: true,
@@ -98,7 +100,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
                   website: true
                 }
               }
-            }, _.noop)
+            })
             .$promise
             .then(function (owner) {
               space.owner = owner;
@@ -128,14 +130,14 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
           }
 
         },
-        contributors: function () {
-          return [];
+        contributors: function (space) {
+          return _.get(space,'contributors', []);
         }
       }
     })
     .state('base.space.add', {
       views: {
-        'sidebar@base':{
+        'sidebar@base': {
           templateUrl: 'sidebar/sidebar-add.html',
           controller: 'AddMediaCtrl'
         }
@@ -145,7 +147,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       views: {
         'sidebar@base': {
           templateUrl: 'sidebar/sidebar-edit.html',
-          controller:'EditSpaceCtrl'
+          controller: 'EditSpaceCtrl'
         }
       }
     })

@@ -2,7 +2,7 @@
   <div class="landing-section">
 
     <ul layout-wrap layout-align="space-around left" layout="row">
-      <li ng-repeat="space in publicSpaces"
+      <li ng-repeat="space in Spaces.getPublic()"
           ng-include="'partials/space-thumbnail.html'"></li>
     </ul>
 
@@ -19,10 +19,10 @@
 
   <ul class="user-spaces-container"
       layout-wrap layout-align="space-around left" layout="row">
-    <li ng-repeat="space in User.getSpaces().editable"
+    <li ng-repeat="space in Spaces.getEditable()"
         ng-include="'partials/space-thumbnail.html'">
     </li>
-    <li ng-repeat="space in User.getSpaces().own"
+    <li ng-repeat="space in Spaces.getOwn()"
         ng-include="'partials/space-thumbnail.html'">
     </li>
   </ul>
@@ -31,3 +31,23 @@
   <br/>
 
 </div>
+
+<pre class="debug" ng-if="false">
+  map:
+{{Spaces.map | json}}
+</pre>
+
+<pre class="debug" ng-if="false">
+  public:
+{{Spaces.getPublic() | json}}
+</pre>
+
+<pre class="debug" ng-if="false">
+  own:
+{{Spaces.getOwn() | json}}
+</pre>
+
+<pre class="debug" ng-if="false">
+  editable:
+{{Spaces.getEditable() | json}}
+</pre>

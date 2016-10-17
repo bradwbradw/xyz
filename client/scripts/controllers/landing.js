@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('LandingCtrl', function ($rootScope, $scope, $q, $timeout, $log, $state, ngToast, Dj, User, Server, Space, publicSpaces, Player, Social, Utility) {
+  .controller('LandingCtrl', function ($rootScope, $scope, $q, $timeout, $log, $state, ngToast, Dj, User, Server, Space, Spaces, spacesResolve, Player, Social) {
 
     Social.FB.refreshFB();
 
@@ -16,8 +16,8 @@ angular.module('xyzApp')
 
     $scope.User = User;
 
-    $scope.publicSpaces = publicSpaces;
-    $log.log('public spaces is ', publicSpaces);
+    $scope.Spaces = Spaces;
+    $log.log('public spaces is ', Spaces.getPublic());
 
     $rootScope.lb = Server.loopback;
 
