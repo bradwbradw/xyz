@@ -65,7 +65,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       }
     })
     .state('base.space', {
-      params: {id: {value: 'defaultId'}},
+      params: {id: {value: null}},
       url: '/space/:id',
       views: {
         'main': {

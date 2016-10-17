@@ -55,6 +55,13 @@ angular.module('xyzApp')
         _.set(Spaces.map, newOne.id, newOne);
         return newOne;
       },
+      extend: function(spaceWithNewAttrs){
+        _.extend(Spaces.map[spaceWithNewAttrs.id], spaceWithNewAttrs);
+        return Spaces.map[spaceWithNewAttrs.id];
+      },
+      removeFromMap: function(space){
+        _.unset(Spaces.map, space.id)
+      },
       downloadAll: function () {
         return Space.find({filter: {include: spaceIncludeFields, where: {public: true}}})
           .$promise;

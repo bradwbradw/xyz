@@ -8,19 +8,12 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('EditSpaceCtrl', function ($rootScope, $scope, $timeout, $q, $window, $state, $stateParams, $log, viewer, Space, Social, User, user, Server, Utility, Library, spaceId) {
-
-    var space = Space.get({id: spaceId});
-    var contributors = Space.contributors({id: spaceId});
-
-    console.log('space is ', Space);
-    console.log('User is ', User);
-    console.log('user is ', user);
+  .controller('EditSpaceCtrl', function ($rootScope, $scope, $timeout, $q, $window, $state, $stateParams, $log, viewer, space, Social, User, user, Server, Utility, Library, Spaces, Space, spaceId) {
 
     var userSearchResults = [];
 
     var getContributors = function () {
-      return contributors;
+      return space.contributors;
     };
 
     var deleteViaConfirm = function (service, object) {
@@ -28,7 +21,7 @@ angular.module('xyzApp')
       if ($window.confirm('are you sure you want to delete the space?')) {
         return service.destroyById({id: object.id})
           .$promise
-          .then(User.fetchSpaces)
+          .then(Spaces.removeFromMap)
           .then(function () {
             $state.go('base.landing');
           })
@@ -57,7 +50,7 @@ angular.module('xyzApp')
 
     var getUserSearchResults = function () {
       return _.filter(userSearchResults, function (u) {
-        return !_.find(contributors, {id: u.id});
+        return !_.find(space.contributors, {id: u.id});
       });
     };
 
@@ -65,12 +58,11 @@ angular.module('xyzApp')
       Space.contributors.link({id: spaceId, fk: user.id}, null)
         .$promise
         .then(function () {
-          contributors.push(user);
-          contributors = _.uniq(contributors);
-
+          space.contributors.push(user);
+          space.contributors = _.uniq(space.contributors);
+          Spaces.extend(space);
         })
         .catch(function (err) {
-
           $log.error(err);
           Utility.showError(err);
         });
@@ -81,17 +73,16 @@ angular.module('xyzApp')
       Space.contributors.unlink({id: spaceId, fk: user.id})
         .$promise
         .then(function () {
-          contributors = _.without(contributors, user);
-        })
+          space.contributors = _.without(space.contributors, user);
+          Spaces.extend(space);
+        });
     };
 
-    var saveEdits = function (space) {
-      Space.prototype$updateAttributes({id: space.id}, space)
+    var saveEdits = function (updatedSpace) {
+      Space.prototype$updateAttributes({id: space.id}, updatedSpace)
         .$promise
         .then(function () {
-          $scope.editingName = false;
-          $scope.space = Space.get({id: spaceId});
-//          $state.transitionTo($state.current, $stateParams, {reload: true, inherit: false, notify: true});
+          Spaces.addToMap(_.extend(space, updatedSpace))
         })
         .catch(function (err) {
           $log.error(err);
@@ -113,8 +104,9 @@ angular.module('xyzApp')
     $scope.Utility = Utility;
 
     $scope.viewer = viewer;
-    $scope.space = space;
-    $scope.Space = Space;
+    $scope.Spaces = Spaces;
+
+    $scope.space = _.cloneDeep(space);
 
     $scope.Server = Server;
     $scope.getContributors = getContributors;
