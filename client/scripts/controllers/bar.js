@@ -8,7 +8,7 @@
  * 'hub'-like controller used for importing and saving. Connected to many services
  */
 angular.module('xyzApp')
-  .controller('BarCtrl', function ($scope, User, $timeout, $state, space, Social, viewer, Utility, Playlister) {
+  .controller('BarCtrl', function ($scope, $timeout, $state, User, Spaces, Social, viewer, Utility, Playlister) {
 
     var settingsIsOpen;
 
@@ -56,8 +56,8 @@ angular.module('xyzApp')
     stopEditing();
 
     var title = function () {
-      if (space) {
-        return space.name
+      if (Spaces.current()) {
+        return _.get(Spaces.current(),'name' , '(untitled)');
       }
       if ($state.is('base.space')) {
         return $state.params;
@@ -99,7 +99,7 @@ angular.module('xyzApp')
     $scope.Playlister = Playlister;
 
     $scope.title = title;
-    $scope.space = space;
+    $scope.Spaces = Spaces;
 
     $scope.settingsOpen = settingsOpen;
     $scope.userIsEditing = userIsEditing;

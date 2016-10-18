@@ -4,8 +4,8 @@
 
 
   <h1 id="bar-title" ng-if="title()"> {{title()}}
-    <a ng-if="space && space.id">
-      <md-icon class="icon-btn light" ng-click="playSpace(space)">
+    <a ng-if="Spaces.current()">
+      <md-icon class="icon-btn light" ng-click="playSpace(Spaces.current())">
         play_arrow
         <md-tooltip md-delay="750">
           Play this Space
