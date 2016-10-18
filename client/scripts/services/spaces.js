@@ -16,7 +16,7 @@ angular.module('xyzApp')
 
     var api = {
       update: function (updatedSpace) {
-        return Space.prototype$updateAttributes({id: updatedSpace.id}, updatedSpace)
+        return Space.prototype$updateAttributes({id: id()}, updatedSpace)
           .$promise
       },
       removeFromContributors: function (user) {
@@ -39,7 +39,7 @@ angular.module('xyzApp')
     };
 
     var removeFromMap = function (space) {
-      _.unset(Spaces.map, space.id)
+      _.unset(Spaces.map, space.id);
     };
 
     var Spaces = {
@@ -93,7 +93,9 @@ angular.module('xyzApp')
       },
       deleteForever: function(space){
         return api.deleteSpace(space)
-          .then(removeFromMap)
+          .then(function(){
+            removeFromMap(space);
+          })
           .catch(function(err){
             $log.error(err);
             Utility.showError("Sorry, couldn't delete the space. Please try again later");
@@ -102,7 +104,7 @@ angular.module('xyzApp')
       saveAndUpdateMap: function (apiFn, params, predictedUpdatedAttrs) {
         return api[apiFn].apply(this, params)
           .then(function () {
-            extend(predictedUpdatedAttrs);
+            extend(predictedUpdatedAttrs || _.first(params));
           })
           .catch(function (err) {
             $log.error(err);

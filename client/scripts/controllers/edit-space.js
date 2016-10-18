@@ -8,30 +8,28 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('EditSpaceCtrl', function ($rootScope, $scope, $timeout, $q, $window, $state, $stateParams, $log, viewer, space, Social, User, user, Server, Utility, Library, Spaces, Space, spaceId) {
+  .controller('EditSpaceCtrl', function ($rootScope, $scope, $timeout, $q, $window, $state, $stateParams, $log, viewer, Social, User, user, Server, Utility, Library, Spaces) {
 
     var userSearchResults = [];
 
-    var getContributors = function () {
-      return space.contributors;
+    var spaceEdits = {
+      name: _.get(Spaces.current(), 'name'),
+      public: _.get(Spaces.current(), 'public')
+
     };
 
-    var deleteViaConfirm = function (service, object) {
 
-      if ($window.confirm('are you sure you want to delete the space?')) {
-        return service.destroyById({id: object.id})
-          .$promise
-          .then(Spaces.removeFromMap)
+    var deleteViaConfirm = function () {
+
+      var space = Spaces.current();
+      var name = _.get(space, 'name', '(untitled)');
+      if ($window.confirm('are you sure you want to delete the space "' + name + '"?')) {
+        return Spaces.deleteForever(space)
           .then(function () {
             $state.go('base.landing');
           })
-          .catch(function (err) {
-            return $q.reject(err);
-          });
       }
-
     };
-
 
     var searchUsers = function (query) {
       if (query === '') {
@@ -50,45 +48,24 @@ angular.module('xyzApp')
 
     var getUserSearchResults = function () {
       return _.filter(userSearchResults, function (u) {
-        return !_.find(space.contributors, {id: u.id});
+        return !_.find(Spaces.current().contributors, {id: u.id});
       });
     };
 
     var addToContributors = function (user) {
-      Space.contributors.link({id: spaceId, fk: user.id}, null)
-        .$promise
-        .then(function () {
-          space.contributors.push(user);
-          space.contributors = _.uniq(space.contributors);
-          Spaces.extend(space);
-        })
-        .catch(function (err) {
-          $log.error(err);
-          Utility.showError(err);
-        });
-
-    };//addToContributors;
-
-    var removeFromContributors = function (user) {
-      Space.contributors.unlink({id: spaceId, fk: user.id})
-        .$promise
-        .then(function () {
-          space.contributors = _.without(space.contributors, user);
-          Spaces.extend(space);
-        });
+      Spaces.saveAndUpdateMap('addToContributors', [user], {
+        contributors: _.union(Spaces.current().contributors, [user])
+      });
     };
 
-    var saveEdits = function (updatedSpace) {
-      Space.prototype$updateAttributes({id: space.id}, updatedSpace)
-        .$promise
-        .then(function () {
-          Spaces.addToMap(_.extend(space, updatedSpace))
-        })
-        .catch(function (err) {
-          $log.error(err);
-          alert('Sorry, there was an error saving');
-        })
+    var removeFromContributors = function (user) {
+      Spaces.saveAndUpdateMap('removeFromContributors', [user], {
+        contributors: _.without(Spaces.current().contributors, user)
+      })
+    };
 
+    var saveEdits = function (edits) {
+      Spaces.saveAndUpdateMap('update', [edits], edits);
     };
 
     $scope.addToContributors = addToContributors;
@@ -99,17 +76,15 @@ angular.module('xyzApp')
 
     $scope.deleteViaConfirm = deleteViaConfirm;
     $scope.saveEdits = saveEdits;
-    $scope.userSearchResults = userSearchResults;
 
     $scope.Utility = Utility;
 
     $scope.viewer = viewer;
     $scope.Spaces = Spaces;
 
-    $scope.space = _.cloneDeep(space);
+    $scope.spaceEdits = spaceEdits;
 
     $scope.Server = Server;
-    $scope.getContributors = getContributors;
 
     $scope.FB = Social.FB
   });
