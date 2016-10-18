@@ -73,6 +73,41 @@ describe('landing page tests (logged in)', function () {
   it('should see user settings icon in corner', function () {
 
     expect(element(by.css('#settings-button')).isPresent()).toBe(true);
+  });
+
+  fdescribe('create and delete a space', function () {
+    afterAll(function () {
+
+      browser.get('space/'+spaceId);
+      browser.waitForAngular();
+
+      var addButton = element(by.css('#edit-space'));
+      addButton.click();
+      browser.waitForAngular();
+      var deleteButton = element(by.css('.sidebar-container button'));
+      deleteButton.click();
+
+    });
+
+    it('should be able to create a space', function () {
+
+      var createSpaceButton = element(by.css('#create-new-space'));
+
+      createSpaceButton.click();
+      browser.getLocationAbsUrl()
+        .then(function(url){
+
+          console.log('0000 url is ', url);
+          var parts = url.split('space/');
+          spaceId = _.last(parts);
+          console.log('1111 id is ', spaceId);
+
+          expect(url)
+            .toContain('space');
+        });
+
+
+    });
   })
 
 
