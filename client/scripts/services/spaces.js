@@ -1,12 +1,45 @@
 //noinspection JSUnresolvedVariable
 angular.module('xyzApp')
 
-  .service('Spaces', function ($log, $q, Space, User, Dj) {
+  .service('Spaces', function ($log, $q, $stateParams, Space, User, Dj, Utility) {
 
+    $log.log('state params is ', $stateParams);
     var spaceIncludeFields = ["owner", "songs", "contributors"];
 
     var uid = function () {
       return _.get(User.get(), 'id');
+    };
+
+    var id = function () {
+      return _.get($stateParams, 'id');
+    };
+
+    var api = {
+      update: function (updatedSpace) {
+        return Space.prototype$updateAttributes({id: updatedSpace.id}, updatedSpace)
+          .$promise
+      },
+      removeFromContributors: function (user) {
+        return Space.contributors.unlink({id: id(), fk: user.id})
+          .$promise
+      },
+      addToContributors: function (user) {
+        return Space.contributors.link({id: id(), fk: user.id}, null)
+          .$promise
+      },
+      deleteSpace: function (space) {
+        return Space.destroyById({id: space.id})
+          .$promise
+      }
+    };
+
+    var extend = function (updatedAttrs) {
+      _.extend(Spaces.map[id()], updatedAttrs);
+      return Spaces.map[id()];
+    };
+
+    var removeFromMap = function (space) {
+      _.unset(Spaces.map, space.id)
     };
 
     var Spaces = {
@@ -20,14 +53,14 @@ angular.module('xyzApp')
         } else {
 
           var userSpaces;
-          if(uid()){
+          if (uid()) {
             userSpaces = Spaces.downloadUserSpaces();
           } else {
             userSpaces = $q.resolve([]);
           }
 
           return $q.all([Spaces.downloadAll(), userSpaces])
-            .then(function(results){
+            .then(function (results) {
               return _.flatten(results);
             })
             .then(Spaces.makeMap)
@@ -43,6 +76,9 @@ angular.module('xyzApp')
             .then(Spaces.addToMap);
         }
       },
+      current: function(){
+        return _.get(Spaces.map, id());
+      },
       set: function (data) {
         Spaces.map = data;
         return data;
@@ -55,12 +91,26 @@ angular.module('xyzApp')
         _.set(Spaces.map, newOne.id, newOne);
         return newOne;
       },
-      extend: function(spaceWithNewAttrs){
-        _.extend(Spaces.map[spaceWithNewAttrs.id], spaceWithNewAttrs);
-        return Spaces.map[spaceWithNewAttrs.id];
+      deleteForever: function(space){
+        return api.deleteSpace(space)
+          .then(removeFromMap)
+          .catch(function(err){
+            $log.error(err);
+            Utility.showError("Sorry, couldn't delete the space. Please try again later");
+          });
       },
-      removeFromMap: function(space){
-        _.unset(Spaces.map, space.id)
+      saveAndUpdateMap: function (apiFn, params, predictedUpdatedAttrs) {
+        return api[apiFn].apply(this, params)
+          .then(function () {
+            extend(predictedUpdatedAttrs);
+          })
+          .catch(function (err) {
+            $log.error(err);
+            Utility.showError("sorry, there was an error while updating space. Please try again soon.")
+          });
+        // TODO
+        // .then(checkAndHandle) makes a simple get request to space
+        // and verifies that edits were correct
       },
       downloadAll: function () {
         return Space.find({filter: {include: spaceIncludeFields, where: {public: true}}})
@@ -90,9 +140,6 @@ angular.module('xyzApp')
       isEditable: function (space) {
         return User.get() && _.find(_.get(space, 'contributors'), {id: User.get().id});
       },
-      isOwnOrIsEditable: function (space) {
-        return Spaces.isOwn(space) || Spaces.isEditable(space);
-      },
       getPublic: function () {
         return _.filter(Spaces.map, Spaces.isPublic);
       },
@@ -101,9 +148,6 @@ angular.module('xyzApp')
       },
       getEditable: function () {
         return _.filter(Spaces.map, Spaces.isEditable);
-      },
-      getOwnOrEditable: function () {
-        return _.filter(Spaces.map, Spaces.isOwnOrIsEditable)
       }
     };
 

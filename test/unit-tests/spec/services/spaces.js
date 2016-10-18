@@ -6,7 +6,7 @@ fdescribe('Service: Spaces', function () {
   beforeEach(module('xyzApp'));
 
   // instantiate service
-  var Spaces, $log, $q, Space, User, Dj, Server, Utility, Playlister;
+  var Spaces, $log, $q, $stateParams, Space, User, Dj, Utility;
   var $httpBackend, requestHandler;
 
   beforeEach(angular.mock.http.init);
@@ -33,16 +33,15 @@ fdescribe('Service: Spaces', function () {
     $httpBackend.verifyNoOutstandingRequest();
   });
 
-  beforeEach(inject(function (_$log_, _$q_, _Space_, _User_, _Dj_, _Server_, _Utility_, _Playlister_) {
+  beforeEach(inject(function (_$log_, _$q_, _$stateParams_, _Space_, _User_, _Dj_, _Utility_) {
     Spaces = _Spaces_;
       $log = _$log_;
       $q = _$q_;
+      $stateParams = _$stateParams_;
       Space = _Space;
       User = _User_;
       Dj = _Dj_;
-      Server = _Server_;
       Utility = _Utility_;
-      Playlister = _Playlister_;
   }));
 
   it('should have Spaces', function () {
