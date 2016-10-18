@@ -8,8 +8,7 @@
  * Service in the xyzApp.
  */
 angular.module('xyzApp')
-  .service('Utility', function ($sce, $rootScope, $log, $location, ngToast) {
-    // AngularJS will instantiate a singleton by calling "new" on this function
+  .service('Utility', function ($sce, $rootScope, $log, $location, ngToast, localStorageService) {
 
 
     var Utility = {
@@ -242,7 +241,19 @@ angular.module('xyzApp')
       },
       absoluteRef: function (id) {
         return 'url(' + $location.absUrl() + '#' + id + ')';
+      },
+
+      setSiteWidePlayerEnabledTo: function (enabled) {
+        localStorageService.set('sitewide-player', enabled);
+      },
+      isSideWidePlayerEnabled: function () {
+        if (_.isNull(localStorageService.get('sitewide-player'))) {
+          return true;
+        } else {
+          return localStorageService.get('sitewide-player');
+        }
       }
+
     };
     return Utility;
   })

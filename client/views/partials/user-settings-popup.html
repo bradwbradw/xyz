@@ -18,6 +18,15 @@
     </form>
 
 
+    <md-checkbox ng-model="swpEnabled"
+                 ng-init = "swpEnabled = Utility.isSideWidePlayerEnabled()"
+                 ng-change = "Utility.setSiteWidePlayerEnabledTo(swpEnabled)"
+                 aria-label="Sitewide Player Enabled"
+                 >
+      <md-tooltip> disabling can improve site responsiveness </md-tooltip>
+    </md-checkbox>
+
+
     <div ng-if="Social.FB.enabled">
 
     <h4>Social Media</h4>
@@ -32,5 +41,6 @@
       </div>
 
     </div>
+
 
     <button ng-click="User.logout().catch(showError)">Log out</button>

@@ -9,7 +9,7 @@
   <div ui-view="xyzPlayer"></div>
 
   <div class="xyz-player-container"
-       ng-controller="SiteWidePlayerCtrl">
+       ng-controller="SiteWidePlayerCtrl" ng-if="Utility.isSideWidePlayerEnabled()">
     <div xyz-player
          space-id="{{getPlayingSpace().id}}"
          data-space-name="getPlayingSpace().name"

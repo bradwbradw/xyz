@@ -90,7 +90,6 @@ angular.module('xyzApp')
     };
 
 
-
     $scope.showInfoButton = showInfoButton;
     $scope.parentStateIfActiveElseGoTo = parentStateIfActiveElseGoTo;
     $scope.showSpaceEditorIcons = showSpaceEditorIcons;
