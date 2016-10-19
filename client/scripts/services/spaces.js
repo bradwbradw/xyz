@@ -30,6 +30,10 @@ angular.module('xyzApp')
       deleteSpace: function (space) {
         return Space.destroyById({id: space.id})
           .$promise
+      },
+      createItem: function(item){
+        return Space.songs.create({id: id()}, item)
+        .$promise
       }
     };
 

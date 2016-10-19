@@ -8,11 +8,9 @@
  * 'hub'-like controller used for importing and saving. Connected to many services
  */
 angular.module('xyzApp')
-  .controller('AddMediaCtrl', function ($timeout, Extract, Library, Social, MediaAPI, Player, Server, localStorageService, $scope, $log, $window, $q, layout_constants) {
-    /*
-     Library.currentSpace = $scope.$parent.space;*/
+  .controller('AddMediaCtrl', function ($timeout, Extract, Library, Social, MediaAPI, Player, Server, Space, Spaces, space, Utility, localStorageService, $scope, $log, $window, $q, layout_constants) {
 
-    $scope.space = Library.currentSpace;
+    var space = Spaces.current();
 
     var newItem = '';
 
@@ -72,7 +70,7 @@ angular.module('xyzApp')
     };
 
     var putInSpace = function (item, event) {
-      // if desktop
+
       item.x = _.round($window.outerWidth / 4); //should be 25% from left side of screen / window
 
       if (event.y < layout_constants.SPACE_DIMENSIONS.height) {
@@ -80,14 +78,20 @@ angular.module('xyzApp')
       } else {
         item.y = layout_constants.SPACE_DIMENSIONS.height
       }
-      Library.add(item)
-        .then(function (space) {
-          if (_.size(space.songs) === 1) {
-            var song = _.first(space.songs);
-            Server.updateSpace(space.id, {
-              firstSong: song.id, pic: song.pic
-            });
+      var currentItems = _.get(Spaces.current(), 'songs');
 
+      Spaces.saveAndUpdateMap('createItem', [item], {
+        songs: _.concat(currentItems, item)
+      })
+        .then(function () {
+          // set as first song to play if it is the only song
+          var items = _.get(Spaces.current(), 'songs');
+          if (_.size(items) === 1) {
+            var newFirst = {
+              firstSong: _.get(_.first(items), 'id'),
+              pic: _.get(_.first(items), 'pic')
+            };
+            Spaces.saveAndUpdateMap('update', [newFirst], newFirst)
           }
         });
     };
