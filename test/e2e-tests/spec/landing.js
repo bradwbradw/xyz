@@ -1,3 +1,6 @@
+var helpers = require('../helpers'),
+  _ = require('lodash');
+
 describe('landing page tests', function () {
 
   beforeAll(function () {
@@ -7,7 +10,7 @@ describe('landing page tests', function () {
 
   it('should see some public spaces', function () {
 
-    var publicSpaces = element.all(by.repeater('space in publicSpaces'));
+    var publicSpaces = element.all(by.repeater('space in Spaces.getPublic()'));
 
     expect(publicSpaces.count()).toBeGreaterThan(1);
   });
@@ -56,26 +59,16 @@ describe('landing page tests', function () {
 describe('landing page tests (logged in)', function () {
 
   beforeAll(function () {
-    browser.get('/signup-login');
-
-    var emailInput = element(by.css('#login-email-field'));
-    var passwordInput = element(by.css('#login-password-field'));
-    var loginForm = element(by.css('#login-form'));
-
-    emailInput.sendKeys(browser.params.login.email);
-    passwordInput.sendKeys(browser.params.login.password);
-    loginForm.submit();
-
-    browser.waitForAngular();
-
+    helpers.login(browser);
+    browser.get('/');
   });
 
   it('should see user settings icon in corner', function () {
 
-    expect(element(by.css('#settings-button')).isPresent()).toBe(true);
+    expect(element(by.css('#user-settings')).isPresent()).toBe(true);
   });
 
-  fdescribe('create and delete a space', function () {
+  xdescribe('create and delete a space', function () {
     afterAll(function () {
 
       browser.get('space/'+spaceId);
@@ -86,7 +79,8 @@ describe('landing page tests (logged in)', function () {
       browser.waitForAngular();
       var deleteButton = element(by.css('.sidebar-container button'));
       deleteButton.click();
-
+      // FIXME alert causes failure, probably because of chromedriver version
+      // see https://github.com/mllrsohn/gulp-protractor/issues/120
     });
 
     it('should be able to create a space', function () {
