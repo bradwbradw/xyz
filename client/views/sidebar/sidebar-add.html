@@ -64,7 +64,7 @@
     {{ Library.getSearchResults().provider }} media detected:
     {{ Library.getSearchResults().artist+' - '+Library.getSearchResults().title }}
     <hr/>
-    <button ng-click="Library.add(Library.getSearchResults())">
+    <button ng-click="putInSpace(Library.getSearchResults())">
       add
     </button>
     <button ng-if="!item.error && Library.isPlayable(Library.getSearchResults())"

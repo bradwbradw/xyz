@@ -1,4 +1,4 @@
-angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $sce, $timeout, Library, Utility, Playlister) {
+angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $sce, $timeout, Library, Utility, Spaces, Playlister) {
 
   return {
     restrict: 'A',
@@ -6,8 +6,8 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
     templateNamespace: 'svg',
     scope: {
       item: '=',
-      space: '=',
       viewer: '=',
+      space: '=',
       layoutConstants: '=',
       isNowPlaying: '&',
       isFirstSong: '&',
@@ -15,6 +15,8 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
       draggingFirst: '&'
     },
     link: function (scope, element, attr) {
+
+      var space = scope.space;
 
       var item = scope.item;
 
@@ -74,7 +76,7 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
         $log.log(boundaries);
 
-        Playlister.recompute(Library.currentSpace);
+        Playlister.recompute(Spaces.current());
 
         if (x < boundaries.minX) {
           x = boundaries.minX;

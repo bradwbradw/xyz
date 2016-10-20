@@ -8,9 +8,7 @@
  * 'hub'-like controller used for importing and saving. Connected to many services
  */
 angular.module('xyzApp')
-  .controller('AddMediaCtrl', function ($timeout, Extract, Library, Social, MediaAPI, Player, Server, Space, Spaces, space, Utility, localStorageService, $scope, $log, $window, $q, layout_constants) {
-
-    var space = Spaces.current();
+  .controller('AddMediaCtrl', function ($timeout, Extract, Library, Social, MediaAPI, Player, Playlister, Server, Space, Spaces, space, Utility, localStorageService, $scope, $log, $window, $q, layout_constants) {
 
     var newItem = '';
 
@@ -87,11 +85,10 @@ angular.module('xyzApp')
           // set as first song to play if it is the only song
           var items = _.get(Spaces.current(), 'songs');
           if (_.size(items) === 1) {
-            var newFirst = {
-              firstSong: _.get(_.first(items), 'id'),
-              pic: _.get(_.first(items), 'pic')
-            };
-            Spaces.saveAndUpdateMap('update', [newFirst], newFirst)
+            Spaces.setFirstSong(_.first(items))
+              .then(function(){
+                Playlister.recompute(Spaces.current());
+              });
           }
         });
     };
