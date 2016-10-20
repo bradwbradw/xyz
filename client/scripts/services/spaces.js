@@ -31,9 +31,17 @@ angular.module('xyzApp')
         return Space.destroyById({id: space.id})
           .$promise
       },
-      createItem: function(item){
+      createItem: function (item) {
         return Space.songs.create({id: id()}, item)
-        .$promise
+          .$promise
+      },
+      updateItem: function (item) {
+        return Space.songs.updateById({id: id(), fk: _.get(item, 'id')}, item)
+          .$promise
+      },
+      removeItem: function (item) {
+          return Space.songs.destroyById({id: id(), fk: item.id})
+            .$promise
       }
     };
 
@@ -80,7 +88,7 @@ angular.module('xyzApp')
             .then(Spaces.addToMap);
         }
       },
-      current: function(){
+      current: function () {
         return _.get(Spaces.map, id());
       },
       set: function (data) {
@@ -95,16 +103,47 @@ angular.module('xyzApp')
         _.set(Spaces.map, newOne.id, newOne);
         return newOne;
       },
-      deleteForever: function(space){
+      deleteForever: function (space) {
         return api.deleteSpace(space)
-          .then(function(){
+          .then(function () {
             removeFromMap(space);
           })
-          .catch(function(err){
+          .catch(function (err) {
             $log.error(err);
             Utility.showError("Sorry, couldn't delete the space. Please try again later");
           });
       },
+
+      /**
+       * @ngdoc method
+       * @name saveAndUpdateMap
+       * @methodOf Spaces
+       *
+       * @description
+       *
+       * Call this to both send data to server and update map object
+       * so that local UI is up to date.  map will only update if API request
+       * succeeds.
+       *
+       * @param {String=} apiFn
+       * name of function to call ( see api object above )
+       *
+       * @param {Array=} params
+       * the list of arguments to pass to apiFn
+       *
+       * @param {Object=} predictedUpdatedAttrs
+       *  An Object that contains key:value pairs that correspond to
+       *  the new values of the space's properties after the request succeeds.
+       *  The space will be modified using the lodash _.extend(predictedUpdateAttrs).
+       *  The space will only be modified if the Api request succeeds.
+       *
+       * @returns {Promise}
+       * Resolves after the api and map updating operations finish, or rejects if
+       * there was an api error.
+       * It is discouraged to use the value that this returns.
+       * Instead keep your templates bound to the value coming from the map (Spaces.currentSpace())
+       *
+       */
       saveAndUpdateMap: function (apiFn, params, predictedUpdatedAttrs) {
         return api[apiFn].apply(this, params)
           .then(function () {
@@ -154,6 +193,13 @@ angular.module('xyzApp')
       },
       getEditable: function () {
         return _.filter(Spaces.map, Spaces.isEditable);
+      },
+      setFirstSong: function (song) {
+        var newFirst = {
+          firstSong: _.get(song, 'id'),
+          pic: _.get(song, 'pic')
+        };
+        return Spaces.saveAndUpdateMap('update', [newFirst], newFirst)
       }
     };
 

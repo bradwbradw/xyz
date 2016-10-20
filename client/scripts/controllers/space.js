@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SpaceCtrl', function ($rootScope, $timeout, $scope, $log, $state, $window, $q, Server, Library, Player, Playlister, Space, space, owner, viewer, contributors, layout_constants) {
+  .controller('SpaceCtrl', function ($rootScope, $timeout, $scope, $log, $state, $window, $q, Server, Library, Player, Playlister, Spaces, owner, viewer, contributors, layout_constants) {
 
       var expanded;
 
@@ -16,7 +16,7 @@ angular.module('xyzApp')
         return _.values(layout_constants.SPACE_DIMENSIONS).join(" ");
       };
 
-      Playlister.recompute(space);
+      Playlister.recompute(Spaces.current());
 
       var expand = function (song) {
         $timeout(function () {
@@ -56,55 +56,44 @@ angular.module('xyzApp')
         return expanded === song.id;
       };
 
-      var setFirstSong = function (song) {
-
-        Server.updateSpace(space.id, {firstSong: song.id, pic: song.pic})
-          .then(function (space) {
-            $scope.space.firstSong = song.id;
-
-            Playlister.recompute($scope.space);
-            $log.debug('result is ', space);
-          })
-          .catch(function (err) {
-            $log.error(err);
-          })
-      };
-
       var isNowPlaying = function (song) {
         return song.id === _.get(Playlister.getNowPlaying(), 'id');
       };
       var isFirstSong = function (song) {
-        return song.id === space.firstSong;
+        return song.id === _.get(Spaces.current(),'firstSong');
+      };
+
+      var setFirstSongThenRecompute = function(item){
+        Spaces.setFirstSong(item)
+          .then(function(){
+            Playlister.recompute(Spaces.current());
+          })
       };
 
       var openSidebar = function () {
         $rootScope.$emit('open-search');
       };
 
-      var removeSong = function (songId) {
+      var removeSong = function (item) {
 
-        if ($window.confirm('remove this song from the space?')) {
-
-          return Space.songs.destroyById({id: Library.space().id, fk: songId})
-            .$promise
+        if ($window.confirm('remove this song? '+item.name)) {
+          Spaces.saveAndUpdateMap('removeItem', [item], {
+            songs: _.without(_.get(Spaces.current(), 'songs'), {id: _.get(item, 'id')})
+          })
             .then(function () {
-              _.remove(space.songs, {id: songId});
               closeExpanded('removed a song');
-              Playlister.recompute(space);
-            })
-            .catch(function (err) {
-              return $q.reject(err);
+              Playlister.recompute(Spaces.current());
             });
         }
 
       };
 
       var expandedItem = function () {
-        if (!expanded || !space.songs) {
+        if (!expanded || !_.get(Spaces.current(),'songs')) {
           return false;
         } else {
-          $log.debug('expanded item is ', _.find(space.songs, {id: expanded}).title);
-          return _.find(space.songs, {id: expanded});
+          $log.debug('expanded item is ', _.find(_.get(Spaces.current(),'songs'), {id: expanded}).title);
+          return _.find(_.get(Spaces.current(),'songs'), {id: expanded});
         }
       };
 
@@ -134,9 +123,16 @@ angular.module('xyzApp')
         item.justDropped = true;
 
         if (canEdit()) {
-          Library.update(item.id, item);
+          var updatedItems = _.get(Spaces.current(), 'songs');
+          updatedItems[_.findIndex(updatedItems, {id: item.id})] = item;
+          Spaces.saveAndUpdateMap('updateItem', [item], {
+            songs: updatedItems
+          }).then(function () {
+            Playlister.recompute(Spaces.current());
+          });
+        } else {
+          Playlister.recompute(Spaces.current());
         }
-        Playlister.recompute(Library.currentSpace);
       };
 
       var canEdit = function () {
@@ -148,7 +144,7 @@ angular.module('xyzApp')
       $scope.handleDotClick = handleDotClick;
       $scope.isNowPlaying = isNowPlaying;
       $scope.isFirstSong = isFirstSong;
-      $scope.setFirstSong = setFirstSong;
+      $scope.setFirstSongThenRecompute = setFirstSongThenRecompute;
       $scope.removeSong = removeSong;
       $scope.Player = Player;
       $scope.isExpanded = isExpanded;
@@ -159,7 +155,7 @@ angular.module('xyzApp')
       $scope.openSidebar = openSidebar;
       $scope.contributors = contributors;
 
-      $scope.space = space;
+      $scope.Spaces = Spaces;
       $scope.owner = owner;
       $scope.viewer = viewer;
 
