@@ -19,6 +19,7 @@
 
 
     <md-icon
+        id="add-to-space"
         ng-if="showSpaceEditorIcons()"
         ng-class="{'active-icon': ('base.space.add' | isState) }"
         ng-click="parentStateIfActiveElseGoTo('base.space.add')"
@@ -31,6 +32,7 @@
     </md-icon>
 
     <md-icon
+        id="edit-space"
         ng-if="showSpaceEditorIcons()"
         ng-class="{'active-icon': ('base.space.edit' | isState) }"
         ng-click="parentStateIfActiveElseGoTo('base.space.edit')"
@@ -43,6 +45,7 @@
     </md-icon>
 
     <md-icon
+        id="space-info"
         ng-if="showInfoButton()"
         ng-class="{'active-icon': ('base.space.info' | isState) }"
         ng-click="parentStateIfActiveElseGoTo('base.space.info')"
@@ -55,6 +58,7 @@
     </md-icon>
 
     <md-icon
+        id="user-settings"
         ng-if="User.get()"
         id="settings-button"
         class="icon-btn light"
