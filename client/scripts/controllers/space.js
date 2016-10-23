@@ -16,7 +16,7 @@ angular.module('xyzApp')
         return _.values(layout_constants.SPACE_DIMENSIONS).join(" ");
       };
 
-      Playlister.recompute(Spaces.current());
+      Playlister.recompute();
 
       var expand = function (song) {
         $timeout(function () {
@@ -57,16 +57,19 @@ angular.module('xyzApp')
       };
 
       var isNowPlaying = function (song) {
-        return song.id === _.get(Playlister.getNowPlaying(), 'id');
-      };
-      var isFirstSong = function (song) {
-        return song.id === _.get(Spaces.current(),'firstSong');
+        var nowPlayingId = _.get(Playlister.getNowPlaying(), 'id');
+        return nowPlayingId && ( song.id === nowPlayingId );
       };
 
-      var setFirstSongThenRecompute = function(item){
+      var isFirstSong = function (song) {
+        var firstSongId = _.get(Spaces.current(), 'firstSong');
+        return firstSongId && ( song.id === firstSongId );
+      };
+
+      var setFirstSongThenRecompute = function (item) {
         Spaces.setFirstSong(item)
-          .then(function(){
-            Playlister.recompute(Spaces.current());
+          .then(function () {
+            Playlister.recompute();
           })
       };
 
@@ -76,24 +79,24 @@ angular.module('xyzApp')
 
       var removeSong = function (item) {
 
-        if ($window.confirm('remove this song? '+item.name)) {
+        if ($window.confirm('remove this song? ' + item.title)) {
           Spaces.saveAndUpdateMap('removeItem', [item], {
-            songs: _.without(_.get(Spaces.current(), 'songs'), {id: _.get(item, 'id')})
+            songs: _.reject(_.get(Spaces.current(), 'songs'), {id: _.get(item, 'id')})
           })
             .then(function () {
               closeExpanded('removed a song');
-              Playlister.recompute(Spaces.current());
+              Playlister.recompute();
             });
         }
 
       };
 
       var expandedItem = function () {
-        if (!expanded || !_.get(Spaces.current(),'songs')) {
+        if (!expanded || !_.get(Spaces.current(), 'songs')) {
           return false;
         } else {
-          $log.debug('expanded item is ', _.find(_.get(Spaces.current(),'songs'), {id: expanded}).title);
-          return _.find(_.get(Spaces.current(),'songs'), {id: expanded});
+          $log.debug('expanded item is ', _.find(_.get(Spaces.current(), 'songs'), {id: expanded}).title);
+          return _.find(_.get(Spaces.current(), 'songs'), {id: expanded});
         }
       };
 
@@ -128,10 +131,10 @@ angular.module('xyzApp')
           Spaces.saveAndUpdateMap('updateItem', [item], {
             songs: updatedItems
           }).then(function () {
-            Playlister.recompute(Spaces.current());
+            Playlister.recompute();
           });
         } else {
-          Playlister.recompute(Spaces.current());
+          Playlister.recompute();
         }
       };
 
@@ -158,6 +161,8 @@ angular.module('xyzApp')
       $scope.Spaces = Spaces;
       $scope.owner = owner;
       $scope.viewer = viewer;
+
+      $scope.currentSpace = Spaces.current();
 
       $scope.computeViewBox = computeViewBox;
 

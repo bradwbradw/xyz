@@ -2,21 +2,24 @@
 
 angular.module('xyzApp')
 
-  .service('Playlister', function ($log, $q, Space, Server) {
+  .service('Playlister', function ($log, $q, Spaces) {
 
     var Playlister = {
       list: [],
-      nowPlaying:false,
-      setNowPlaying:function(songObj){
-      return Playlister.nowPlaying = songObj;
+      nowPlaying: false,
+      setNowPlaying: function (songObj) {
+        return Playlister.nowPlaying = songObj;
       },
-      getNowPlaying:function(){
-      return Playlister.nowPlaying;
+      getNowPlaying: function () {
+        return Playlister.nowPlaying;
       },
       getList: function () {
         return Playlister.list;
       },
       recompute: function (space) {
+        if (!space){
+          space = Spaces.current();
+        }
 
         $log.log('recomputing playlist for space ', space);
 
@@ -75,7 +78,7 @@ angular.module('xyzApp')
 
             sorted = _.concat(sorted, currentNode);
 
-            _.remove(unvisited, {id: currentNode.id});
+            _.remove(unvisited, {id: _.get(currentNode, 'id')});
 //            $log.debug('just removed ', _.get(currentNode,'title'));
 
             var nextNodeId = _.get(_.first(distancesToOtherItems(currentNode, unvisited)), 'id');
@@ -114,7 +117,12 @@ angular.module('xyzApp')
             seedSong = _.first(_.sortBy(songs, 'date_saved'));
           }
 
-          Playlister.list = sortByNearest(songs, seedSong);
+          if (_.size(songs) > 1) {
+            Playlister.list = sortByNearest(songs, seedSong);
+
+          } else {
+            Playlister.list = songs;
+          }
 
           $log.debug('computed playlist: ', Playlister.list);
           return Playlister.list;

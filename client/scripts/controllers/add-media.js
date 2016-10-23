@@ -78,19 +78,20 @@ angular.module('xyzApp')
       }
       var currentItems = _.get(Spaces.current(), 'songs');
 
+      var checkForIsFirstSong = function () {
+        var items = _.get(Spaces.current(), 'songs');
+        if (_.size(items) === 1) {
+          return Spaces.setFirstSong(_.first(items))
+        } else {
+          return $q.resolve();
+        }
+      };
+
       Spaces.saveAndUpdateMap('createItem', [item], {
         songs: _.concat(currentItems, item)
       })
-        .then(function () {
-          // set as first song to play if it is the only song
-          var items = _.get(Spaces.current(), 'songs');
-          if (_.size(items) === 1) {
-            Spaces.setFirstSong(_.first(items))
-              .then(function(){
-                Playlister.recompute(Spaces.current());
-              });
-          }
-        });
+        .then(checkForIsFirstSong)
+        .then(Playlister.recompute);
     };
 
 

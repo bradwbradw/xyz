@@ -31,6 +31,7 @@ angular.module('xyzApp')
             var cleaned =
             {
               provider: 'soundcloud',
+              id:'SC-'+track.id,
               provider_id: track.id,
               artist: track.user.username,
               title: track.title,
@@ -86,7 +87,6 @@ angular.module('xyzApp')
         youtube: {
           mediaItem: function (raw) {
 
-
             var cleanData =
             {
               provider: 'youtube',
@@ -106,6 +106,7 @@ angular.module('xyzApp')
               cleanData.provider_id = raw.id;
             }
             cleanData.url = 'https://youtube.com/watch?v=' + cleanData.provider_id;
+            cleanData.id = 'YT-'+cleanData.provider_id;
 
             //PT#M#S
             if (raw.contentDetails && raw.contentDetails.duration) {

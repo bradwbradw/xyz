@@ -14,9 +14,7 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
       doneDragging: '&',
       draggingFirst: '&'
     },
-    link: function (scope, element, attr) {
-
-      var space = scope.space;
+    link: function (scope, element) {
 
       var item = scope.item;
 
@@ -76,7 +74,7 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
         $log.log(boundaries);
 
-        Playlister.recompute(Spaces.current());
+        Playlister.recompute();
 
         if (x < boundaries.minX) {
           x = boundaries.minX;
