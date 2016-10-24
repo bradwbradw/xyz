@@ -72,11 +72,15 @@ use '#?playlist=129994120' to set the id of the space you want
 
 ### end-to-end tests
 
-`gulp test` will build and run tests, specs are located in test/e2e-tests/spec
+- 1) please edit `test/e2e-tests/protractor-config.js` to set your test email and password (don't commit that change)
 
-`gulp e2e-test` will just run the tests (without building first)
+- 2) start server by doing command: `./dev.sh` (or ensure server is already running)
+  
+- 3) open a new terminal tab, and do `gulp webdriver`.  you should see the webdriver update and then start. You might also see  "Selenium is already running on port 4444. Or some other service is." which means it has started, so you can proceed to step 4
 
-more info: http://www.protractortest.org/#/
+- 4) open a new terminal tab, and do `gulp e2e-test`. This command should cause a browser window to open, and the test scripts will run
+
+If you are adding to the test scripts, check out http://www.protractortest.org/#/api to see what commands you can call.
 
 ### unit tests
 tba

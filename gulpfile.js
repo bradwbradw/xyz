@@ -32,6 +32,8 @@ var open = require('gulp-open');
 var protractor = require('gulp-angular-protractor');
 var karmaServer = require('karma').Server;
 
+var childProcess = require('child_process');
+
 var paths = {
   src: {
     sass: ['client/scss/**/*.scss', 'xyz-player-component/**/*.scss'],
@@ -349,13 +351,36 @@ gulp.task('overwrite-db-local', function (done) {
     .pipe(exec.reporter())
 });
 
+gulp.task('webdriver', function (done) {
+  var updateCmd = './node_modules/protractor/bin/webdriver-manager update';
+  var startCmd = './node_modules/protractor/bin/webdriver-manager start';
+
+  var proc = childProcess.exec(updateCmd + ' && '+startCmd);
+  proc.stdout.on('data', function (data) {
+    console.log(data);
+  });
+  proc.stderr.on('data', function (error) {
+    console.log(error);
+  });
+
+//  proc.on('ready', done);
+
+  proc.on('close', function (code) {
+    console.log('child process exited with code ', code);
+    done();
+  });
+
+  return proc;
+
+});
+
 gulp.task('e2e-test', function () {
 
   return gulp.src(paths.e2eTests + '/spec/**/*.js')
     .pipe(protractor({
-      'configFile': paths.e2eTests + '/config.js',
+      'configFile': paths.e2eTests + '/protractor-config.js',
       'args': ['--baseUrl', 'http://' + constants.domain],
-      'autoStartStopServer': true,
+      'autoStartStopServer': false,
       'debug': false
     }))
     .on('error', function (e) {
