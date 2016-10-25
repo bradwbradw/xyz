@@ -13,10 +13,10 @@ angular.module('xyzApp')
     var errMessages = {
       11000: "That one is already in the space"
     };
-    var populateError = function(response){
+    var populateError = function (response) {
       var code = _.get(response, 'data.error.code');
       var msg = _.get(errMessages, code);
-      if(msg){
+      if (msg) {
         _.set(response, 'data.error.niceMessage', msg);
       }
       return response;
@@ -46,7 +46,7 @@ angular.module('xyzApp')
       createItem: function (item) {
         return Space.songs.create({id: id()}, item)
           .$promise
-          .catch(function(response){
+          .catch(function (response) {
             return $q.reject(populateError(response));
           })
       },
@@ -55,8 +55,8 @@ angular.module('xyzApp')
           .$promise
       },
       removeItem: function (item) {
-          return Space.songs.destroyById({id: id(), fk: item.id})
-            .$promise
+        return Space.songs.destroyById({id: id(), fk: item.id})
+          .$promise
       }
     };
 
