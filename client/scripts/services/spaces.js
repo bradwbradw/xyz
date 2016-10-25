@@ -10,6 +10,18 @@ angular.module('xyzApp')
       return _.get(User.get(), 'id');
     };
 
+    var errMessages = {
+      11000: "That one is already in the space"
+    };
+    var populateError = function(response){
+      var code = _.get(response, 'data.error.code');
+      var msg = _.get(errMessages, code);
+      if(msg){
+        _.set(response, 'data.error.niceMessage', msg);
+      }
+      return response;
+    };
+
     var id = function () {
       return _.get($stateParams, 'id');
     };
@@ -34,6 +46,9 @@ angular.module('xyzApp')
       createItem: function (item) {
         return Space.songs.create({id: id()}, item)
           .$promise
+          .catch(function(response){
+            return $q.reject(populateError(response));
+          })
       },
       updateItem: function (item) {
         return Space.songs.updateById({id: id(), fk: _.get(item, 'id')}, item)
@@ -151,7 +166,10 @@ angular.module('xyzApp')
           })
           .catch(function (err) {
             $log.error(err);
-            Utility.showError("sorry, there was an error while updating space. Please try again soon.")
+            var defaultMessage = "sorry, there was an error while updating space. Please try again soon.";
+            var message = _.get(err, 'data.error.niceMessage', defaultMessage);
+
+            Utility.showError(message);
           });
         // TODO
         // .then(checkAndHandle) makes a simple get request to space
