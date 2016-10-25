@@ -10,252 +10,259 @@
 angular.module('xyzApp')
   .service('Utility', function ($sce, $rootScope, $log, $location, ngToast, localStorageService) {
 
-
-    var Utility = {
-
-      // use .then(Utility.applyProviderName) to stick resolved data onto object keyed with providerName
-
-      applyProviderName: function (providerName) {
-        return function (input) {
-          var out = {
-            provider: providerName,
-            results: input
-          };
-          return out;
-        }
-      },
-      clean: {
-        soundcloud: {
-          mediaItem: function (track) {
-
-            var cleaned =
-            {
-              provider: 'soundcloud',
-              id:'SC-'+track.id,
-              provider_id: track.id,
-              artist: track.user.username,
-              title: track.title,
-              description: track.description,
-              length: track.duration / 1000,
-              url: track.permalink_url,
-              stream: track.stream_url,
-              pic: track.artwork_url,
-              date_saved: new Date(),
-              kind: 'media',
-              original_data: track
-
-            };
-            if (!cleaned.pic && track.user && track.user.avatar_url) {
-              cleaned.pic = track.user && track.user.avatar_url;
-            }
-
-            return cleaned;
-          },
-
-          user: function (user) {
-            return {
-              provider: 'soundcloud',
-              provider_id: user.id,
-              artist: user.username,
-              description: user.description,
-              url: user.permalink_url,
-              pic: user.avatar_url,
-              date_saved: new Date(),
-              kind: 'user',
-              original_data: user
-
-            }
-          },
-
-          playlist: function (playlist) {
-            return {
-              provider: 'soundcloud',
-              provider_id: playlist.id,
-              artist: playlist.user.username,
-              title: playlist.title,
-              length: playlist.duration / 1000,
-              description: playlist.description,
-              url: playlist.permalink_url,
-              pic: playlist.artwork_url,
-              date_saved: new Date(),
-              kind: 'playlist',
-              original_data: playlist
-
-            }
+      var random = function (n) {
+          var text = "";
+          var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+          for (var i = 0; i < n; i++){
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
           }
-        },
-        youtube: {
-          mediaItem: function (raw) {
-
-            var cleanData =
-            {
-              provider: 'youtube',
-              artist: raw.snippet.channelTitle,
-              title: raw.snippet.title,
-              description: raw.snippet.description,
-              pic: raw.snippet.thumbnails.high.url, //"http://img.youtube.com/vi/" + raw.id + "/0.jpg",
-              date_saved: new Date(),
-              kind: 'media',
-              original_data: raw
-
-            };
-
-            if (raw.id.videoId) {
-              cleanData.provider_id = raw.id.videoId;
-            } else {
-              cleanData.provider_id = raw.id;
-            }
-            cleanData.url = 'https://youtube.com/watch?v=' + cleanData.provider_id;
-            cleanData.id = 'YT-'+cleanData.provider_id;
-
-            //PT#M#S
-            if (raw.contentDetails && raw.contentDetails.duration) {
-              var dur_string = raw.contentDetails.duration;
-              var formattedTime = dur_string.replace("PT", "").replace("H", ":").replace("M", ":").replace("S", "");
-              var hms_arr = formattedTime.split(':');
-              var seconds = parseFloat(hms_arr.pop());
-              if (hms_arr.length > 0) {
-                seconds += parseFloat(hms_arr.pop()) * 60;  // minutes
-              }
-              if (hms_arr.length > 0) {
-                seconds += parseFloat(hms_arr.pop()) * 60 * 60; // hours
-              }
-              cleanData.length = seconds;
-            }
-            return cleanData;
-          }
-
-        },
-        BC: {
-          parseUrlForType: function (url) {
-            var parts = url.split('.bandcamp.com/');
-            parts = parts[1].split('/');
-            return parts[0];
-          }
-        }
-      },
-      iFrameUrl: function (item, playerStatus) {
-
-        var url;
-        if (item.provider === 'youtube') {
-          url = 'https://www.youtube.com/embed/'
-            + item.provider_id
-            + '?autoplay=';
-
-          if (playerStatus.autoplay) {
-            url += '1';
-          } else {
-            url += '0';
-          }
-          url += '&start=' + playerStatus.startFrom;
-
-        } else if (item.provider === 'soundcloud') {
-
-          url = 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'
-            + item.provider_id
-            + '&amp;auto_play='
-            + playerStatus.autoplay
-            + '&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true';
-
-        } else if (item.provider === 'bandcamp') {
-
-          url = 'http://bandcamp.com/EmbeddedPlayer/size=medium/bgcol=ffffff/linkcol=0687f5/tracklist=false/track='
-            + item.provider_id
-            + '/transparent=true/';
-        } else {
-          url = '/iframeUrlProblem';
-        }
-
-        return $sce.trustAsResourceUrl(url);
-      },
-
-      fixUrl: function (domainOrUrl) {
-        if (domainOrUrl.indexOf('://') > -1) {
-          return domainOrUrl;
-        } else {
-          return 'https://' + domainOrUrl;
-        }
-      },
-      cleanError: function (thing) {
-
-        var codes = {
-          'EMAIL_NOT_FOUND': "Couldn't find that email address."
+          return text;
         };
 
-        var apology = 'Sorry, ';
-        if (_.isNumber(_.get(thing, 'status')) && _.get(thing, 'status') === 404) {
-          // 404, 405, etc..
-          return 'sorry, an unknown error occured';
-        }
-        if (_.isString(thing)) {
-          return thing;
-        } else {
-          if (_.get(thing, 'message')) {
-            return apology + _.get(thing, 'message');
+      var Utility = {
+
+        // use .then(Utility.applyProviderName) to stick resolved data onto object keyed with providerName
+
+        applyProviderName: function (providerName) {
+          return function (input) {
+            var out = {
+              provider: providerName,
+              results: input
+            };
+            return out;
           }
+        },
+        clean: {
+          soundcloud: {
+            mediaItem: function (track) {
 
-          if (_.get(thing, 'error.message')) {
-            return apology + _.get(thing, 'error.message');
-          }
+              var cleaned =
+              {
+                provider: 'soundcloud',
+                id: 'SC-' + track.id + '~'+ random(4),
+                provider_id: track.id,
+                artist: track.user.username,
+                title: track.title,
+                description: track.description,
+                length: track.duration / 1000,
+                url: track.permalink_url,
+                stream: track.stream_url,
+                pic: track.artwork_url,
+                date_saved: new Date(),
+                kind: 'media',
+                original_data: track
 
+              };
+              if (!cleaned.pic && track.user && track.user.avatar_url) {
+                cleaned.pic = track.user && track.user.avatar_url;
+              }
 
-          if (_.get(thing, 'data.error.errmsg')) {
-            if (_.get(thing, 'data.error.errmsg').indexOf('duplicate key error') > -1) {
-              return apology + 'Already exists';
+              return cleaned;
+            },
+
+            user: function (user) {
+              return {
+                provider: 'soundcloud',
+                provider_id: user.id,
+                artist: user.username,
+                description: user.description,
+                url: user.permalink_url,
+                pic: user.avatar_url,
+                date_saved: new Date(),
+                kind: 'user',
+                original_data: user
+
+              }
+            },
+
+            playlist: function (playlist) {
+              return {
+                provider: 'soundcloud',
+                provider_id: playlist.id,
+                artist: playlist.user.username,
+                title: playlist.title,
+                length: playlist.duration / 1000,
+                description: playlist.description,
+                url: playlist.permalink_url,
+                pic: playlist.artwork_url,
+                date_saved: new Date(),
+                kind: 'playlist',
+                original_data: playlist
+
+              }
+            }
+          },
+          youtube: {
+            mediaItem: function (raw) {
+
+              var cleanData =
+              {
+                provider: 'youtube',
+                artist: raw.snippet.channelTitle,
+                title: raw.snippet.title,
+                description: raw.snippet.description,
+                pic: raw.snippet.thumbnails.high.url, //"http://img.youtube.com/vi/" + raw.id + "/0.jpg",
+                date_saved: new Date(),
+                kind: 'media',
+                original_data: raw
+
+              };
+
+              if (raw.id.videoId) {
+                cleanData.provider_id = raw.id.videoId;
+              } else {
+                cleanData.provider_id = raw.id;
+              }
+              cleanData.url = 'https://youtube.com/watch?v=' + cleanData.provider_id;
+              cleanData.id = 'YT-' + cleanData.provider_id + '~'+ random(4);
+
+              //PT#M#S
+              if (raw.contentDetails && raw.contentDetails.duration) {
+                var dur_string = raw.contentDetails.duration;
+                var formattedTime = dur_string.replace("PT", "").replace("H", ":").replace("M", ":").replace("S", "");
+                var hms_arr = formattedTime.split(':');
+                var seconds = parseFloat(hms_arr.pop());
+                if (hms_arr.length > 0) {
+                  seconds += parseFloat(hms_arr.pop()) * 60;  // minutes
+                }
+                if (hms_arr.length > 0) {
+                  seconds += parseFloat(hms_arr.pop()) * 60 * 60; // hours
+                }
+                cleanData.length = seconds;
+              }
+              return cleanData;
+            }
+
+          },
+          BC: {
+            parseUrlForType: function (url) {
+              var parts = url.split('.bandcamp.com/');
+              parts = parts[1].split('/');
+              return parts[0];
             }
           }
+        },
+        iFrameUrl: function (item, playerStatus) {
 
-          if (_.isObject(_.get(thing, 'data.error.details.messages'))) {
-            var out = '';
-            _.each(_.get(thing, 'data.error.details.messages'), function (problem, withThing) {
-              out += '  ' + withThing + ': ' + problem + '.';
+          var url;
+          if (item.provider === 'youtube') {
+            url = 'https://www.youtube.com/embed/'
+              + item.provider_id
+              + '?autoplay=';
 
-            });
-            return apology + out;
-          }
-
-
-          if (_.get(thing, 'error.code')) {
-            var code = _.get(thing, 'error.code');
-            var message = _.get(codes, code);
-            if (message) {
-              return apology + message;
+            if (playerStatus.autoplay) {
+              url += '1';
             } else {
-              return apology + ' error code "' + code + '"';
+              url += '0';
             }
+            url += '&start=' + playerStatus.startFrom;
+
+          } else if (item.provider === 'soundcloud') {
+
+            url = 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'
+              + item.provider_id
+              + '&amp;auto_play='
+              + playerStatus.autoplay
+              + '&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true';
+
+          } else if (item.provider === 'bandcamp') {
+
+            url = 'http://bandcamp.com/EmbeddedPlayer/size=medium/bgcol=ffffff/linkcol=0687f5/tracklist=false/track='
+              + item.provider_id
+              + '/transparent=true/';
+          } else {
+            url = '/iframeUrlProblem';
           }
 
-          $log.error('unknown error format: ', thing);
-          return angular.toJSON(thing, true);
-        }
-      },
-      showError: function (error) {
-        ngToast.create({
-          className: 'danger',
-          content: Utility.cleanError(error)
-        });
-      },
-      showMessage: function (message) {
-        ngToast.create({
-          content: message
-        });
-      },
-      absoluteRef: function (id) {
-        return 'url(' + $location.absUrl() + '#' + id + ')';
-      },
+          return $sce.trustAsResourceUrl(url);
+        },
 
-      setSiteWidePlayerEnabledTo: function (enabled) {
-        localStorageService.set('sitewide-player', enabled);
-      },
-      isSideWidePlayerEnabled: function () {
-        if (_.isNull(localStorageService.get('sitewide-player'))) {
-          return true;
-        } else {
-          return localStorageService.get('sitewide-player');
-        }
-      }
+        fixUrl: function (domainOrUrl) {
+          if (domainOrUrl.indexOf('://') > -1) {
+            return domainOrUrl;
+          } else {
+            return 'https://' + domainOrUrl;
+          }
+        },
+        cleanError: function (thing) {
 
-    };
-    return Utility;
-  })
+          var codes = {
+            'EMAIL_NOT_FOUND': "Couldn't find that email address."
+          };
+
+          var apology = 'Sorry, ';
+          if (_.isNumber(_.get(thing, 'status')) && _.get(thing, 'status') === 404) {
+            // 404, 405, etc..
+            return 'sorry, an unknown error occured';
+          }
+          if (_.isString(thing)) {
+            return thing;
+          } else {
+            if (_.get(thing, 'message')) {
+              return apology + _.get(thing, 'message');
+            }
+
+            if (_.get(thing, 'error.message')) {
+              return apology + _.get(thing, 'error.message');
+            }
+
+            if (_.get(thing, 'data.error.errmsg')) {
+              if (_.get(thing, 'data.error.errmsg').indexOf('duplicate key error') > -1) {
+                return apology + 'Already exists';
+              }
+            }
+
+            if (_.isObject(_.get(thing, 'data.error.details.messages'))) {
+              var out = '';
+              _.each(_.get(thing, 'data.error.details.messages'), function (problem, withThing) {
+                out += '  ' + withThing + ': ' + problem + '.';
+
+              });
+              return apology + out;
+            }
+
+            if (_.get(thing, 'error.code')) {
+              var code = _.get(thing, 'error.code');
+              var message = _.get(codes, code);
+              if (message) {
+                return apology + message;
+              } else {
+                return apology + ' error code "' + code + '"';
+              }
+            }
+
+            $log.error('unknown error format: ', thing);
+            return angular.toJSON(thing, true);
+          }
+        },
+        showError: function (error) {
+          ngToast.create({
+            className: 'danger',
+            content: Utility.cleanError(error)
+          });
+        },
+        showMessage: function (message) {
+          ngToast.create({
+            content: message
+          });
+        },
+        absoluteRef: function (id) {
+          return 'url(' + $location.absUrl() + '#' + id + ')';
+        },
+
+        setSiteWidePlayerEnabledTo: function (enabled) {
+          localStorageService.set('sitewide-player', enabled);
+        },
+        isSideWidePlayerEnabled: function () {
+          if (_.isNull(localStorageService.get('sitewide-player'))) {
+            return true;
+          } else {
+            return localStorageService.get('sitewide-player');
+          }
+        }
+
+      };
+      return Utility;
+    }
+  )
 ;
