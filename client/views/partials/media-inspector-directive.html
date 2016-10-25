@@ -1,21 +1,40 @@
 <div class="media-inspector" layout="row">
+
+
   <div layout="column" class="media-inspector-actions" layout-align="space-around center">
+
     <div>
-      <md-icon class="icon-btn" ng-if="!item.error && isMedia(item)" ng-click="putInSpace(item, $event)">
+      <md-icon class="icon-btn" ng-if="showAddButton(item)"
+               ng-click="putInSpace(item, $event)">
         add
       </md-icon>
     </div>
     <button class="icon-btn" ng-if="isSoundcloudArtist(item)" ng-click="MediaAPI.soundcloud.tracksByUser(item.provider_id)
-        .then(updateImportView)
-        .catch(invalidLink)">
+        .then(updateParentImportView)">
       tracks
     </button>
     <button class="add" ng-if="isSoundcloudArtist(item)" ng-click="MediaAPI.soundcloud.likesByUser(item.provider_id)
-        .then(updateImportView)
-        .catch(invalidLink)">
+        .then(updateParentImportView)">
       likes
     </button>
-    <div media-preview-toggle="item"></div>
+    <div ng-if="Library.isPlayable(item)" >
+      <md-icon class="icon-btn"
+               ng-click="Player.stop()" ng-show="Player.isPlaying(item.provider_id)">
+        eject
+        <md-tooltip md-delay="500">Close Preview</md-tooltip>
+      </md-icon>
+
+      <md-icon class="icon-btn"
+               ng-click="Player.play(item)" ng-hide="Player.isPlaying(item.provider_id)">
+        headset
+
+        <md-tooltip md-delay="500">Click to Preview</md-tooltip>
+      </md-icon>
+
+    </div>
+    <div ng-if="!Library.isPlayable(item)">
+      (media is not playable)
+    </div>
   </div>
 
 
@@ -51,6 +70,6 @@
   <div ng-hide="Player.playingItem().provider_id === item.provider_id">
     <img class='thumbnail' ng-src="{{item.pic}}" src="" width="200"/>
   </div>
+  <debug name="'item'" obj="item" max-height="150"></debug>
 
-  <pre class="debug" ng-if="false">{{item | json}}</pre>
 </div>

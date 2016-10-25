@@ -23,6 +23,9 @@ angular.module('xyzApp')
        ;*/
       },
       isPlayable: function (item) {
+        if(item.error){
+          return false;
+        }
         if (item && item.kind) {
           return item.kind === 'media';
         } else {

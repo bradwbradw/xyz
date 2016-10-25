@@ -61,11 +61,11 @@
 
   </div>
 
-  <div
-      ng-init="item = expandedItem()"
-      ng-include="'partials/media-inspector.html'">
+  <div media-inspector
+      item="expandedItem()">
 
   </div>
+
 
 </div>
 
@@ -88,6 +88,7 @@
 
 </div>
 
+    <debug name="'expanded item'" obj="expandedItem()" max-height="150"></debug>
 <pre class="debug right-panel" ng-if="debug">space: {{space | json}}</pre>
 <pre class="debug right-panel" ng-if="debug">space in map: {{Spaces.current() | json}}</pre>
 <pre class="debug right-panel" ng-if="debug">Playlister.List: {{Playlister.getList() | json}}</pre>

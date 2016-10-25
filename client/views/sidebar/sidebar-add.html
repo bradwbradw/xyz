@@ -11,6 +11,7 @@
         placeholder=""
         focus
     >
+    <button ng-click="searchInputChanged(newText)">Search</button>
     <div ng-if="fetchingSongData"><i>searching...</i></div>
     <div class="filters">
       <md-checkbox ng-repeat="(filterName, value) in filters" ng-model="filters[filterName]"
@@ -22,6 +23,9 @@
     </div>
   </div>
 
+  <pre class="debug" ng-if="debug" style="max-height:100px; overflow:scroll;">
+  local items: {{Library.getSearchResults() | json}}
+</pre>
 
   <div ng-if="FB.isConnected()">
     <h4>load neat songs from your facebook feed. click the button again to load more</h4><br/>
@@ -45,22 +49,22 @@
       view all likes by {{urlResult.artist}}
     </button>
   </div>
+
   <div class="selector-container"
        ng-if="thereAreSearchResults()">
 
 
     <div ng-repeat="item in Library.getSearchResults()"
          ng-if="!Library.getSearchResults().urlResult && filterAllows(item)"
-         ng-include="'partials/media-inspector.html'">
+         media-inspector item="item">
 
     </div>
   </div>
 
-
   <div class="selector-container"
        ng-if="Library.getSearchResults().urlResult"
-       ng-include="'partials/media-inspector.html'"
-       ng-init="item = Library.getSearchResults()">
+       media-inspector
+       item="Library.getSearchResults()">
     {{ Library.getSearchResults().provider }} media detected:
     {{ Library.getSearchResults().artist+' - '+Library.getSearchResults().title }}
     <hr/>
@@ -74,9 +78,6 @@
 
   </div>
 
-  <pre class="debug" ng-if="debug">
-  local items: {{Library.getSearchResults() | json}}
-</pre>
 
 
 </div>
