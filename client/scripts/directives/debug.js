@@ -10,7 +10,7 @@ xyzApp
         name:'=',
         maxHeight:'='
       },
-      template:'<pre ng-if="debugging" ng-style="{\'max-height\':maxHeight}">{{name}}: {{obj | json}}</pre>',
+      template:'<pre ng-if="debugging" class="debug" ng-style="{\'max-height\':maxHeight}">{{name}}: {{obj | json}}</pre>',
       link: function (scope) {
         scope.debugging = $rootScope.debug;
       }
