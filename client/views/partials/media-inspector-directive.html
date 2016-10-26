@@ -33,7 +33,7 @@
 
     </div>
     <div ng-if="!Library.isPlayable(item)">
-      (media is not playable)
+      <md-icon > {{item.kind === 'user'? 'person' : 'help'}}</md-icon>
     </div>
   </div>
 

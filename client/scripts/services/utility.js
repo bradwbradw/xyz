@@ -59,6 +59,9 @@ angular.module('xyzApp')
 
               return cleaned;
             },
+            track:function(raw){
+              return Utility.clean.soundcloud.mediaItem(raw);
+            },
 
             user: function (user) {
               return {
@@ -134,7 +137,7 @@ angular.module('xyzApp')
             }
 
           },
-          BC: {
+          bandcamp: {
             parseUrlForType: function (url) {
               var parts = url.split('.bandcamp.com/');
               parts = parts[1].split('/');

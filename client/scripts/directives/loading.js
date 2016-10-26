@@ -5,7 +5,7 @@ xyzApp
   .directive('loading', ['$http', function ($http) {
     return {
       restrict: 'A',
-      link: function (scope, element, attrs) {
+      link: function (scope, element) {
         scope.isLoading = function () {
           return $http.pendingRequests.length > 0;
         };

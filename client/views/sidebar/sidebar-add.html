@@ -1,9 +1,8 @@
 <div class="sidebar-container">
   <h2>add</h2>
 
-
   <div>
-    <h4>Enter a URL or search terms to find media</h4>
+    <h4>Enter search terms or a URL to find media</h4>
     <input
         ng-model="newText"
         ng-change="searchInputChanged(newText)"
@@ -23,9 +22,8 @@
     </div>
   </div>
 
-  <pre class="debug" ng-if="debug" style="max-height:100px; overflow:scroll;">
-  local items: {{Library.getSearchResults() | json}}
-</pre>
+  <debug class="debug" name="'search results'" obj="Library.getSearchResults()" max-height="150">
+</debug>
 
   <div ng-if="FB.isConnected()">
     <h4>load neat songs from your facebook feed. click the button again to load more</h4><br/>
@@ -33,8 +31,7 @@
   </div>
   <br/>
 
-  <div class="selector-container"
-       ng-if="urlResult.kind === 'user'">
+  <div ng-if="urlResultIsType('user')">
 
     <button
         ng-click="MediaAPI.soundcloud.tracksByUser(urlResult.provider_id)

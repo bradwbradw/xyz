@@ -280,7 +280,7 @@ angular.module('xyzApp')
 
         if (url.indexOf('/track/') < 0) {
           // url is not for a track (could be album, artist, merch...)
-          var kind = Utility.clean.BC.parseUrlForType(url);
+          var kind = Utility.clean.bandcamp.parseUrlForType(url);
           return $q.resolve({provider: 'bandcamp', url: url, kind: kind})
         }
         return Server.getBandcampId(url)
@@ -300,7 +300,7 @@ angular.module('xyzApp')
         return MediaAPI.soundcloud.resolve(url)
           .then(function (result) {
 
-            return Utility.clean.SC[result.kind](result);
+            return Utility.clean.soundcloud[result.kind](result);
 
           });
 

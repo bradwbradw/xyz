@@ -8,7 +8,7 @@
  * 'hub'-like controller used for importing and saving. Connected to many services
  */
 angular.module('xyzApp')
-  .controller('AddMediaCtrl', function ($timeout, $scope, $log, $q, Extract, Library, Social, MediaAPI, Player, localStorageService) {
+  .controller('AddMediaCtrl', function ($timeout, $scope, $log, $q, Extract, Library, Social, MediaAPI, Player) {
 
     var newItem = '';
 
@@ -40,7 +40,9 @@ angular.module('xyzApp')
     };
 
     var updateImportView = function (new_) {
-      $timeout(Library.addToSearchResults(new_));
+      $timeout(function () {
+        Library.addToSearchResults(new_);
+      });
       $scope.fetchingSongData = false;
     };
 
@@ -60,9 +62,6 @@ angular.module('xyzApp')
         })
         .then(updateImportView)
         .catch(invalidLink)
-        .finally(function () {
-          $scope.fetchingSongData = false;
-        });
 
     };
 
@@ -85,10 +84,15 @@ angular.module('xyzApp')
       "youtube": true
     };
 
+    var urlResultIsType = function(type){
+      return Library.getSearchResults().urlResult && Library.getSearchResults().kind === type;
+    };
+
     var filterAllows = function (item) {
       return filters[item.provider];
     };
 
+    $scope.urlResultIsType = urlResultIsType;
     $scope.searchInputChanged = searchInputChanged;
     $scope.filterAllows = filterAllows;
     $scope.thereAreSearchResults = thereAreSearchResults;

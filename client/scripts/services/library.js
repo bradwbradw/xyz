@@ -3,7 +3,7 @@
 //noinspection JSUnresolvedVariable
 angular.module('xyzApp')
 
-  .service('Library', function ($log, $q, Space) {
+  .service('Library', function () {
 
     var Library = {
 
