@@ -241,13 +241,13 @@ angular.module('xyzApp')
         showError: function (error) {
           ngToast.create({
             className: 'danger',
-            content: Utility.cleanError(error),/*
+            content: Utility.cleanError(error)/*,
             dismissOnTimeout: false,*/
           });
         },
         showMessage: function (message) {
           ngToast.create({
-            content: message,/*
+            content: message/*,
             dismissOnTimeout: false,*/
           });
         },
