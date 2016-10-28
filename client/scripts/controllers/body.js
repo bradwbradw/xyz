@@ -11,18 +11,15 @@ angular.module('xyzApp')
     $rootScope.debug = !_.isNull(localStorageService.get('d'));
 
     var playingSpace;
-    var playSpace = function (space) {
+    var playSpace = function (space, itemId) {
 
-      // hack (forces watch on spaceId in xyz-player-directive to trigger
-      // having been changed (line 260 in xyz-player-directive.js)
-      $timeout(function () {
-        playingSpace = '';
+      if (!itemId) {
+        itemId = _.get(space, 'firstSong');
+      }
+      $rootScope.$broadcast('play', {space: space, itemId: itemId});
 
-        $timeout(function () {
-          Playlister.recompute(space);
-          playingSpace = space;
-        })
-      });
+      Playlister.recompute(space, itemId);
+      playingSpace = space;
     };
 
     var getPlayingSpace = function () {

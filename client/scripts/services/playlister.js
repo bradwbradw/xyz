@@ -16,12 +16,12 @@ angular.module('xyzApp')
       getList: function () {
         return Playlister.list;
       },
-      recompute: function (space) {
-        if (!space){
+      recompute: function (space, playFromSongId) {
+        if (!space) {
           space = Spaces.current();
         }
 
-        $log.log('recomputing playlist for space ', space);
+        $log.log('recomputing playlist');
 
         var distanceBetweenItems = function (song1, song2) {
 
@@ -109,7 +109,11 @@ angular.module('xyzApp')
 
           var seedSong;
 
-          if (space.firstSong) {
+          if (playFromSongId) {
+            seedSong = _.find(songs, {id: playFromSongId});
+          } else if (Playlister.getNowPlaying()){
+            seedSong = Playlister.getNowPlaying();
+          } else if(space.firstSong) {
             seedSong = _.find(songs, {id: space.firstSong});
           }
 
@@ -124,7 +128,7 @@ angular.module('xyzApp')
             Playlister.list = songs;
           }
 
-          $log.debug('computed playlist: ', Playlister.list);
+          $log.debug('computed playlist, first song is : ', Playlister.list[0]);
           return Playlister.list;
         }
 

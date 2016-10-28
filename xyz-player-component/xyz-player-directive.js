@@ -191,13 +191,13 @@ angular.module('xyzPlayer', [])
               }
             });
           };
-/*
-          var Playlister.getNowPlaying = function () {
-            var now = _.find(_.clone(getPlaylist()), {id: nowPlaying.id});
-//          $log.debug('playlist is ', getPlaylist());
-//          $log.debug('so now is ',now);
-            return now;
-          };*/
+          /*
+           var Playlister.getNowPlaying = function () {
+           var now = _.find(_.clone(getPlaylist()), {id: nowPlaying.id});
+           //          $log.debug('playlist is ', getPlaylist());
+           //          $log.debug('so now is ',now);
+           return now;
+           };*/
 
           var nextSong = function (songObjThatJustFinished) {
             console.debug('nextSong called: playlist is ', getPlaylist());
@@ -214,11 +214,16 @@ angular.module('xyzPlayer', [])
 
           };
 
-          var go = function () {
+          var go = function (songIdToPlay) {
+            var songToPlay = _.find(scope.playlist, {id: songIdToPlay});
 
-            var songToPlay = nextSong(Playlister.getNowPlaying());
+            if (!songToPlay) {
+              songToPlay = nextSong(Playlister.getNowPlaying());
+              $log.debug('go called. no song specified.  deciding to play ', songToPlay);
+            } else {
+              $log.debug('go called. song to play is ', songToPlay);
+            }
 
-            $log.debug('go called. song to play is: ', songToPlay);
 
             mediaProviders[songToPlay.provider].cueAndPlay(songToPlay.provider_id)
               .then(function () {
@@ -231,7 +236,7 @@ angular.module('xyzPlayer', [])
           };
 
 
-          var loadAndPlay = function (spaceId) {
+          var loadAndPlay = function (spaceId, itemId) {
             $q.all([loadPlaylist(), serviceProvidersLoaded])
               .then(function (results) {
                 playlist = _.get(results[0], 'playlist', results[0]);
@@ -239,34 +244,24 @@ angular.module('xyzPlayer', [])
 
                 // assuming auto-play, otherwise, bind go() to a button click or something
                 if (_.size(playlist) > 0) {
-                  go();
+                  go(itemId);
                   message = '';
                 } else {
                   message = 'playlist has 0 songs';
                 }
 
-                $interval(function () {
-                  loadPlaylist()
-                    .then(function (result) {
-                      playlist = _.get(result, 'playlist', result);
-                      console.debug('refresh playlist done: first song is ' + playlist[0].title);
-//                    scope.space = _.get(results, 'space');
-                    })
-                }, 10 * 1000);
-
               });
           };
 
-          attrs.$observe('spaceId', function (spaceId) {
+          scope.$on('play', function(event, args){
 
             spaceOpen = true;
-            $log.debug('space changed: ' + spaceId);
-            // currently, playlist has already changed due to scope
-            // attribute playlist being mapped to 'Playlister.list'
+            var spaceId = _.get(args, 'space.id');
+            var itemId = _.get(args, 'itemId');
             stopAll();
             if (spaceId !== '') {
               scope.spaceId = spaceId;
-              loadAndPlay(spaceId);
+              loadAndPlay(spaceId, itemId);
             }
           });
 
