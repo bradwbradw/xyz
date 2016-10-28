@@ -10,7 +10,7 @@ angular.module("xyzPlayer")
     var apiReady = apiDeferred.promise;
 
     $window.onYouTubeIframeAPIReady = function () {
-      $log.log('youtube API is ready');
+//      $log.log('youtube API is ready');
       apiDeferred.resolve();
     };
 

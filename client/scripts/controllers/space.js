@@ -95,7 +95,7 @@ angular.module('xyzApp')
         if (!expanded || !_.get(Spaces.current(), 'songs')) {
           return false;
         } else {
-          $log.debug('expanded item is ', _.find(_.get(Spaces.current(), 'songs'), {id: expanded}).title);
+//          $log.debug('expanded item is ', _.find(_.get(Spaces.current(), 'songs'), {id: expanded}).title);
           return _.find(_.get(Spaces.current(), 'songs'), {id: expanded});
         }
       };

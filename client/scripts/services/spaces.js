@@ -3,7 +3,7 @@ angular.module('xyzApp')
 
   .service('Spaces', function ($log, $q, $stateParams, Space, User, Dj, Utility) {
 
-    $log.log('state params is ', $stateParams);
+//    $log.log('state params is ', $stateParams);
     var spaceIncludeFields = ["owner", "songs", "contributors"];
 
     var uid = function () {

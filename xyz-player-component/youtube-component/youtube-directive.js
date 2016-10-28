@@ -42,7 +42,6 @@ angular.module("xyzPlayer")
 
 
         var setupPlayer = function (scope, element) {
-          console.log('YT player element children 0 ', element.children()[0]);
 
           var deferred = $q.defer();
 
@@ -64,7 +63,7 @@ angular.module("xyzPlayer")
 
             events: {
               'onReady': function(event){
-                $log.debug('Player ready');
+//                $log.debug('Player ready');
                 deferred.resolve(Player);
 
               },

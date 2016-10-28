@@ -36,8 +36,8 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
 
       var dragStart = function (event) {
-        $log.log('dragStart event:%s,%s', event.screenX, event.screenY);
-        $log.log('dragStart event:', event);
+//        $log.log('dragStart event:%s,%s', event.screenX, event.screenY);
+//        $log.log('dragStart event:', event);
 
         // Prevent default dragging of selected content
         event.preventDefault();
@@ -61,7 +61,7 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
       element.on('mousedown', dragStart);
 
       function dragMove(event) {
-        $log.log('dragMove event:', event);
+//        $log.log('dragMove event:', event);
         x = event.pageX - dragPointOffsetX;
         y = event.pageY - dragPointOffsetY;
 
@@ -72,7 +72,7 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
           maxY: scope.layoutConstants.SPACE_DIMENSIONS.height - scope.layoutConstants.DOT_RADIUS
         };
 
-        $log.log(boundaries);
+//        $log.log(boundaries);
 
         Playlister.recompute();
 
@@ -101,15 +101,15 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
       function dragDone(event) {
         item.dragging = false;
 
-        $log.log('dragDone event:', event);
+//        $log.log('dragDone event:', event);
         /*
          $document.off('touchmove', dragMove);
          $document.off('touchend', dragDone);*/
         $document.off('mousemove', dragMove);
         $document.off('mouseup', dragDone);
 
-        $log.log('startX ' + startX + ' startY ' + startY);
-        $log.log('new X ' + item.x + ' new Y ' + item.y);
+//        $log.log('startX ' + startX + ' startY ' + startY);
+ //       $log.log('new X ' + item.x + ' new Y ' + item.y);
 
         if (item.x !== startX
           || item.y !== startY) {
@@ -117,7 +117,7 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
         } else {
           // assume there was no drag performed (long press)
-          $log.debug('set just dropped to false for item ', item);
+//          $log.debug('set just dropped to false for item ', item);
 
           item.justDropped = false;
         }
