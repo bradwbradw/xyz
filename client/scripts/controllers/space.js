@@ -48,7 +48,7 @@ angular.module('xyzApp')
           left: leftOffset
         };
 
-        $log.log('hovering is ', item);
+//        $log.log('hovering is ', item);
         return {
           item: item,
           css: css
