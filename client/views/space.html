@@ -40,7 +40,11 @@
 
   <div layout="row" class="expanded-meta-actions">
 
-    <md-icon class="icon-btn item-button-2"
+
+    <md-icon class="icon-btn" id="#play-from-here" ng-click="playSpace(Spaces.current(), expandedItem().id)">
+      fast_forward
+    </md-icon>
+    <md-icon class="icon-btn" id="#set-as-first"
              ng-if="canEdit()"
              ng-click="setFirstSongThenRecompute(expandedItem())">
       looks_one
@@ -49,7 +53,7 @@
         Set as First
       </md-tooltip>
     </md-icon>
-    <md-icon class="icon-btn item-button-3"
+    <md-icon class="icon-btn " id="#remove-item"
              ng-if="canEdit()"
              ng-click="removeSong(expandedItem())">
       delete_forever

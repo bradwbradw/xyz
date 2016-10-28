@@ -4,11 +4,11 @@
     loading...
   </div>
 
-  <pre class="debug" ng-if="debug">
+  <debug name="'playlist'" obj="playlist" style="position:fixed; left:0; bottom:0; z-index:30;">
     <span ng-repeat="item in playlist">
-      playlist: {{item.title}}
+      playlist item: {{item.title}}
     </span>
-  </pre>
+  </debug>
 
   <pre class="debug" ng-if="false">
     id:{{spaceId}}
