@@ -20,6 +20,10 @@ angular.module('xyzApp')
         hovering = null;
       };
 
+      var isHovering = function(){
+        return hovering;
+      };
+
       var getHovering = function () {
         if(!hovering){
           return false;
@@ -181,6 +185,7 @@ angular.module('xyzApp')
         return viewer === 'owner' || viewer === 'contributor';
       };
 
+      $scope.isHovering = isHovering;
       $scope.getHovering = getHovering;
       $scope.setHovering = setHovering;
       $scope.unsetHovering = unsetHovering;
