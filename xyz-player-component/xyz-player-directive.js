@@ -85,7 +85,7 @@ angular.module('xyzPlayer', [])
               });
 
             }, soundcloud: function () {
-              mediaProviders.soundcloud.pause = function (provider_id) {
+              mediaProviders.soundcloud.pause = function () {
                 $rootScope.$broadcast(SC_event.PAUSE);
                 return $q.resolve(true);
               };
@@ -160,7 +160,6 @@ angular.module('xyzPlayer', [])
           var status = 'initializing';
           var playlist = false;
           var space = false;
-          var nowPlaying = {};
 
           var getPlaylist = function () {
             if (scope.playlist) {
