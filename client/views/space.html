@@ -25,6 +25,8 @@
      viewer="guest"
      done-dragging="onDragDone(item)"
      layout-constants="layout_constants"
+     ng-mouseenter="setHovering(item)"
+     ng-mouseleave="unsetHovering()"
   >
 
   </g>
@@ -66,7 +68,7 @@
   </div>
 
   <div media-inspector
-      item="expandedItem()">
+       item="expandedItem()">
 
   </div>
 
@@ -92,7 +94,13 @@
 
 </div>
 
-    <debug name="'expanded item'" obj="expandedItem()" max-height="150"></debug>
+<div class="item-hover" ng-if="getHovering()"
+     style="position:absolute; background-color:white;"
+     ng-style="getHovering().css">
+  {{getHovering().item.title}}
+</div>
+
+<debug name="'expanded item'" obj="expandedItem()" max-height="150"></debug>
 <pre class="debug right-panel" ng-if="debug">space: {{space | json}}</pre>
 <pre class="debug right-panel" ng-if="debug">space in map: {{Spaces.current() | json}}</pre>
 <pre class="debug right-panel" ng-if="debug">Playlister.List: {{Playlister.getList() | json}}</pre>

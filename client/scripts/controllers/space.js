@@ -10,7 +10,47 @@
 angular.module('xyzApp')
   .controller('SpaceCtrl', function ($rootScope, $timeout, $scope, $log, $state, $window, $q, Server, Library, Player, Playlister, Spaces, owner, viewer, contributors, layout_constants) {
 
-      var expanded;
+      var expanded, hovering;
+
+      var setHovering = function (item) {
+        hovering = item.id;
+      };
+
+      var unsetHovering = function () {
+        hovering = null;
+      };
+
+      var getHovering = function () {
+        if(!hovering){
+          return false;
+        }
+        var item = _.find(_.get(Spaces.current(), 'songs'), {id: hovering});
+        if (!item || isExpanded(item)) {
+          return false;
+        }
+
+        var topOffset = item.y +
+          layout_constants.SPACE_MARGIN.TOP +
+//          layout_constants.DOT_RADIUS +
+          'px';
+
+        var leftOffset = item.x +
+          layout_constants.SPACE_MARGIN.LEFT +
+          layout_constants.DOT_RADIUS +
+          'px';
+
+        var css = {
+          top: topOffset,
+          left: leftOffset
+        };
+
+        $log.log('hovering is ', item);
+        return {
+          item: item,
+          css: css
+        };
+      };
+
 
       var computeViewBox = function () {
         return _.values(layout_constants.SPACE_DIMENSIONS).join(" ");
@@ -23,7 +63,6 @@ angular.module('xyzApp')
           expanded = song.id;
         });
       };
-
 
       var handleDotClick = function (item, event) {
 
@@ -142,6 +181,9 @@ angular.module('xyzApp')
         return viewer === 'owner' || viewer === 'contributor';
       };
 
+      $scope.getHovering = getHovering;
+      $scope.setHovering = setHovering;
+      $scope.unsetHovering = unsetHovering;
       $scope.canEdit = canEdit;
       $scope.onDragDone = onDragDone;
       $scope.handleDotClick = handleDotClick;
