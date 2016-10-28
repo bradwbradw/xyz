@@ -90,9 +90,15 @@
 
 .media-inspector-details {
 
-    border-left: 1px dotted black;
+  border-left: 1px dotted black;
+  background-color: white;
+  .error {
+    color: red;
+  }
+}
+
+.expanded-meta-actions {
+  .icon-btn {
     background-color: white;
-    .error {
-      color: red;
-    }
+  }
 }
