@@ -98,7 +98,7 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
       }
 
-      function dragDone(event) {
+      function dragDone() {
         item.dragging = false;
 
 //        $log.log('dragDone event:', event);

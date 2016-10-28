@@ -16,7 +16,7 @@ angular.module("xyzPlayer")
 
       template: '<div id="xyz-youtube-iframe"></div>',
 
-      link: function (scope, element, attrs, $rootScope) { //jshint ignore:line
+      link: function (scope, element) {
 
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
@@ -62,7 +62,7 @@ angular.module("xyzPlayer")
             videoId: scope.videoid,
 
             events: {
-              'onReady': function(event){
+              'onReady': function(){
 //                $log.debug('Player ready');
                 deferred.resolve(Player);
 
