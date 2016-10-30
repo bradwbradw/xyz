@@ -153,6 +153,17 @@ gulp.task('useref:stream', function () {
 });
 
 
+gulp.task('useref:admin', function () {
+  return gulp.src('admin/index.html')
+
+    .pipe(replace('%%%API_URL', apiUrl))
+    .pipe(useref())
+    //	.pipe(gulpIf('*.js',uglify()))
+    .pipe(gulpIf('*.css', cssnano()))
+    .pipe(gulp.dest('admin-dist'))
+});
+
+
 gulp.task('browserSync:client', function (done) {
   browserSync.init({
     server: {
@@ -255,6 +266,7 @@ gulp.task('watch', gulp.parallel('watch:sass', 'watch:views', 'watch:code'));
 gulp.task('build',
   gulp.series('clean', 'loopback', 'sass', 'bower', 'templates',
     gulp.parallel('useref:main', 'copyImages'),
+    gulp.parallel('useref:admin', 'copyCss:admin')
     gulp.parallel('useref:stream', 'copyCss:stream'))
 );
 
