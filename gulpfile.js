@@ -121,6 +121,12 @@ gulp.task('copyCss:stream', function () {
 });
 
 
+gulp.task('copyCss:admin', function () {
+  return gulp.src('admin/style.css')
+    .pipe(gulp.dest('admin-dist'))
+});
+
+
 gulp.task('copyImages', function () {
   return gulp.src('client/images/**/*')
     .pipe(gulp.dest('dist/images'))
@@ -175,7 +181,8 @@ gulp.task('browserSync:client', function (done) {
         "/client": "client",
         "/stream/xyz-player-component": "xyz-player-component",
         "/stream/xyz-player-component/css": "xyz-player-component/css",
-        "/stream": "stream"
+        "/stream": "stream", 
+        "/admin" : "admin" 
       }
 
     },
@@ -207,7 +214,7 @@ gulp.task('browserSync:dist', function (done) {
   done();
 });
 
-
+// is this needed? 
 gulp.task('browserSync:stream', function (done) {
   browserSync.init({
     server: {
