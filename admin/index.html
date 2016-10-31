@@ -1,0 +1,83 @@
+<html>
+
+<head>
+  <base href="/admin/index.html">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XYZ ADMIN </title>
+  <link rel="stylesheet" type="text/css" href="admin-style.css">
+
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc.5/angular-material.min.css">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+</head>
+
+<body>
+
+<div ng-app="xyzAdmin">
+
+  <div ui-view>  </div>
+
+</div>
+
+
+<!-- build:js scripts/admin-vendor.js -->
+<!-- bower:js -->
+<script src="/vendor/angular/angular.js"></script>
+<script src="/vendor/lodash/lodash.js"></script>
+<script src="/vendor/angular-sanitize/angular-sanitize.js"></script>
+<script src="/vendor/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="/vendor/angular-easyfb/build/angular-easyfb.js"></script>
+<script src="/vendor/angular-local-storage/dist/angular-local-storage.js"></script>
+<script src="/vendor/angular-resource/angular-resource.js"></script>
+<script src="/vendor/angular-animate/angular-animate.js"></script>
+<script src="/vendor/angular-aria/angular-aria.js"></script>
+<script src="/vendor/angular-ellipsis/src/angular-ellipsis.js"></script>
+<script src="/vendor/ngToast/dist/ngToast.js"></script>
+<script src="/vendor/angular-live-set/dist/live-set.js"></script>
+<!-- endbower -->
+
+<!-- endbuild -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc.5/angular-material.min.js"></script>
+
+<!-- build:js scripts/scripts.js -->
+<script src="/admin/scripts/admin-app.js"></script>
+<script src="/admin/components/users-controller.js"></script>
+<script src="/client/scripts/services/user.js"></script>
+<script src="/client/scripts/services/lb-services.js"></script>
+<script src="/client/scripts/services/server.js"></script>
+<script src="/admin/scripts/admin-router.js"></script>
+<script src="/admin/scripts/admin-controller.js"></script>
+
+<!-- endbuild -->
+
+
+<!-- build:remove -->
+<script>
+
+  angular.module('xyzAdmin')
+      .constant('serverConfig', {
+        apiBaseUrl: 'http://0.0.0.0:5005/api/',// '/',
+        developing: true
+      });
+
+</script>
+<!-- /build -->
+
+
+<!-- build:template -->
+<script>
+  angular.module('xyzAdmin')
+      .constant('serverConfig', {
+        apiBaseUrl: '%%%API_URL'
+      });
+</script>
+<!-- /build -->
+
+</body>
+
+</html>
+
+

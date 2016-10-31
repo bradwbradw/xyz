@@ -1,0 +1,10 @@
+<h1 ui-sref="base">XYZ Admin</h1>
+
+<span> logged in as: {{ user | json}}</span> <span > <a ng-click="Dj.logout()" href="#">log out</a></span>
+<ul>
+  <li><a ui-sref=".users">Users</a> </li>
+</ul>
+
+<div ui-view="main">
+
+</div>
