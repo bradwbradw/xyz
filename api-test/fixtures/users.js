@@ -15,8 +15,14 @@ module.exports = {
   },
   random:{
     credentials:{
-      email:"random@guy.com",
+      email:"test+random@xyz.gs",
       password:'random'
+    }
+  },
+  admin:{
+    credentials:{
+      email:"bradmin@xyz.gs",
+      password:"admin"
     }
   }
 
