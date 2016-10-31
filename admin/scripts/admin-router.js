@@ -23,11 +23,7 @@ angular.module('xyzAdmin')
             // determined by presence of email in DJ.find() result
             return Dj.find().$promise
               .then(function (djs) {
-                if(_.first(djs).email){
-                  return true
-                } else {
-                  return false;
-                }
+                return !!_.first(djs).email;
               }).catch(function (err) {
                 $log.error(err);
                 return $q.reject(err);
