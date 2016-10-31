@@ -1,4 +1,3 @@
-var _ = require('lodash');
 
 var adminEmail = process.env.CREATE_ADMIN_EMAIL;
 
@@ -11,9 +10,7 @@ module.exports = function (app) {
     var Role = app.models.Role;
     var RoleMapping = app.models.RoleMapping;
 
-    Dj.create([
-      {name: 'bradmin', email: adminEmail, password: 'admin'}
-    ], function (err, djs) {
+    Dj.create({name: 'bradmin', email: adminEmail, password: 'admin'}, function (err, result) {
       if (err) {
         if(JSON.stringify(err).indexOf('Email already exists') > -1){
           console.log('admin user has already been created');
@@ -22,7 +19,7 @@ module.exports = function (app) {
         }
         return;
       }
-      console.log('created djs', djs);
+      console.log('created admin account: ', result);
       Role.create({
         name: 'admin'
       }, function (err, role) {
@@ -35,7 +32,7 @@ module.exports = function (app) {
         // Make Bob an admin
         role.principals.create({
           principalType: RoleMapping.USER,
-          principalId: _.last(djs).id
+          principalId: result.id
         }, function (err, principal) {
           if (err) {
             console.error(err);
