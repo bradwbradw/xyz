@@ -11,14 +11,14 @@ var userIdIsAdmin = function (id) {
 
   return when.promise(function (resolve, reject) {
 
-    console.log('is user with id '+id+ ' an admin?');
-    RoleMapping.find({where:{principalId: id}}, function (err, roleMappings) {
+    //console.log('is user with id ' + id + ' an admin?');
+    RoleMapping.find({where: {principalId: id}}, function (err, roleMappings) {
 
-        console.log('got roleMappings ',roleMappings);
+      //console.log('got roleMappings ', roleMappings);
       if (err) {
         reject(err);
       }
-      if(_.size(roleMappings) === 0){
+      if (_.size(roleMappings) === 0) {
         resolve(false);
       }
 
@@ -89,7 +89,6 @@ module.exports = function (Dj) {
             // to not be considered (this is what I want, because I am trying to get
             // the user's email address for admin user requests
             djs[i] = _.omit(val.toObject(), 'password');
-            console.log('now dj is ', djs[i]);
           });
           next();
         } else {
@@ -102,18 +101,6 @@ module.exports = function (Dj) {
       });
   });
 
-  Dj.isAdmin = function (cb) {
-    // the ACL for isAdmin causes this to resolve to "unauthorized" for non-admin users
-    cb(null, {isAdmin: true});
-  };
-
-  Dj.remoteMethod(
-    'isAdmin',
-    {
-      http: {path: '/is-admin', verb: 'get'},
-      returns: {arg: 'isAdmin', type: 'boolean'}
-    }
-  );
 
   Dj.on('resetPasswordRequest', function (info) {
     console.log('reset pass info:', info);
