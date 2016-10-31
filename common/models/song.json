@@ -51,6 +51,9 @@
       "type": "boolean"
     }
   },
+  "mixins": {
+    "TimeStamp": true
+  },
   "validations": [],
   "hidden":[
     "original_data"

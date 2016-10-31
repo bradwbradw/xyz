@@ -52,6 +52,7 @@
     "loopback-component-explorer": "^2.5.0",
     "loopback-connector-mongodb": "^1.15.2",
     "loopback-datasource-juggler": "^2.46.1",
+    "loopback-ds-timestamp-mixin": "^3.4.0",
     "loopback-sdk-angular": "^1.7.0",
     "mailgun-js": "^0.7.12",
     "method-override": "2.3.3",

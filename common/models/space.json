@@ -9,6 +9,9 @@
   "properties": {
     "firstSong":"string"
   },
+  "mixins": {
+    "TimeStamp": true
+  },
   "validations": [],
   "relations": {
     "songs": {
