@@ -20,6 +20,9 @@
       "required": true
     }
   },
+  "mixins": {
+    "TimeStamp": true
+  },
   "hidden": [
     "email"
   ],
@@ -45,6 +48,12 @@
       "principalId": "$everyone",
       "accessType": "READ",
       "property": "findById"
+    },
+    {
+      "permission": "ALLOW",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "property": "deleteById"
     },
     {
       "permission": "ALLOW",
