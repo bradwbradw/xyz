@@ -5,7 +5,7 @@ var Role = loopback.getModel('Role');
 var RoleMapping = loopback.getModel('RoleMapping');
 var _ = require('lodash'), when = require('when');
 
-var passwordResetUrl = 'http://' + constants.domain + '/account';
+var passwordResetUrl = 'https://' + constants.domain + '/account';
 
 var userIdIsAdmin = function (id) {
 
