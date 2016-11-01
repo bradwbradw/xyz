@@ -29,7 +29,7 @@ var loginAs = function (credentials) {
 
 var apiUrl = 'http://' + (constants.api.host || 'localhost') + ':' + constants.api.port + constants.api.path;
 
-ddescribe(' admin access ', function () {
+describe(' admin access ', function () {
 
   it('should see emails on user / dj find() endpoint', function (done) {
 
@@ -48,7 +48,8 @@ ddescribe(' admin access ', function () {
           })
           .catch(done)
       });
-  })
+  });
+
   it('(non-admin) should not see emails on user / dj find() endpoint', function (done) {
 
     loginAs(fixtures.users.random.credentials)
@@ -66,5 +67,5 @@ ddescribe(' admin access ', function () {
           })
           .catch(done)
       });
-  })
+  });
 });

@@ -12,7 +12,6 @@ angular.module('xyzAdmin')
           '': {
             templateUrl: 'base.html',
             controller: 'AdminController'
-
           }
         },
         resolve: {
@@ -26,7 +25,7 @@ angular.module('xyzAdmin')
                 return !!_.first(djs).email;
               }).catch(function (err) {
                 $log.error(err);
-                return $q.reject(err);
+                return false;
             });
           },
           user: function (Dj, isAdmin) {
@@ -35,9 +34,8 @@ angular.module('xyzAdmin')
             }
           }
         },
-        onEnter: function ($window, $http, isAdmin, user, serverConfig) {
+        onEnter: function ($window, isAdmin) {
           if (isAdmin) {
-            $http.get(serverConfig.apiBaseUrl + 'admin/auth');
           } else {
             $window.alert('Welcome to XYZ! Redirecting to the app');
             $window.location.assign('/');
