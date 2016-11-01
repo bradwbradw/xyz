@@ -5,7 +5,7 @@ angular.module('xyzApp')
   .service('Playlister', function ($log, $q, Spaces) {
 
     var Playlister = {
-      list: [],
+      listMap: {}, // key is spaceid, value is playlist []
       nowPlaying: false,
       setNowPlaying: function (songObj) {
         return Playlister.nowPlaying = songObj;
@@ -13,13 +13,22 @@ angular.module('xyzApp')
       getNowPlaying: function () {
         return Playlister.nowPlaying;
       },
-      getList: function () {
-        return Playlister.list;
+      getList: function (spaceId) {
+        if (!spaceId) {
+          return Playlister.listMap[Spaces.current().id];
+        } else {
+          return Playlister.listMap[spaceId];
+        }
+      },
+      setList: function (spaceId, list) {
+        Playlister.listMap[spaceId] = list;
       },
       recompute: function (space, playFromSongId) {
+
         if (!space) {
           space = Spaces.current();
         }
+        var deferred = $q.defer();
 
         $log.log('recomputing playlist');
 
@@ -104,16 +113,16 @@ angular.module('xyzApp')
 
         if (_.size(songs) <= 0) {
           $log.debug('space has no songs: ', space);
-          return [];
+          deferred.reject('space has no songs: ', space);
         } else {
 
           var seedSong;
 
           if (playFromSongId) {
             seedSong = _.find(songs, {id: playFromSongId});
-          } else if (Playlister.getNowPlaying()){
+          } else if (Playlister.getNowPlaying()) {
             seedSong = Playlister.getNowPlaying();
-          } else if(space.firstSong) {
+          } else if (space.firstSong) {
             seedSong = _.find(songs, {id: space.firstSong});
           }
 
@@ -122,15 +131,16 @@ angular.module('xyzApp')
           }
 
           if (_.size(songs) > 1) {
-            Playlister.list = sortByNearest(songs, seedSong);
-
+            Playlister.setList(space.id, sortByNearest(songs, seedSong));
           } else {
-            Playlister.list = songs;
+            Playlister.setList(space.id, songs);
           }
 
-          $log.debug('computed playlist, first song is : ', Playlister.list[0]);
-          return Playlister.list;
+          $log.debug('computed playlist, first song is : ', _.first(Playlister.getList(space.id)));
+          deferred.resolve(Playlister.getList(space.id));
         }
+
+        return deferred.promise;
 
       }
     };

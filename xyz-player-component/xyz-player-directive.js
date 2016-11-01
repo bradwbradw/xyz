@@ -162,11 +162,7 @@ angular.module('xyzPlayer', [])
           var space = false;
 
           var getPlaylist = function () {
-            if (scope.playlist) {
-              return scope.playlist;
-            } else {
-              return playlist;
-            }
+            return Playlister.getList(scope.spaceId);
           };
 
           var play = function () {
@@ -190,13 +186,6 @@ angular.module('xyzPlayer', [])
               }
             });
           };
-          /*
-           var Playlister.getNowPlaying = function () {
-           var now = _.find(_.clone(getPlaylist()), {id: nowPlaying.id});
-           //          $log.debug('playlist is ', getPlaylist());
-           //          $log.debug('so now is ',now);
-           return now;
-           };*/
 
           var nextSong = function (songObjThatJustFinished) {
             console.debug('nextSong called: playlist is ', getPlaylist());
@@ -214,7 +203,7 @@ angular.module('xyzPlayer', [])
           };
 
           var go = function (songIdToPlay) {
-            var songToPlay = _.find(scope.playlist, {id: songIdToPlay});
+            var songToPlay = _.find(getPlaylist(), {id: songIdToPlay});
 
             if (!songToPlay) {
               songToPlay = nextSong(Playlister.getNowPlaying());
@@ -288,7 +277,6 @@ angular.module('xyzPlayer', [])
 
           scope.Playlister = Playlister;
           scope.status = status;
-          scope.playlist = playlist;
           scope.message = message;
 
           scope.play = play;

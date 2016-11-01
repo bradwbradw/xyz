@@ -2,7 +2,6 @@
 
   <h1 id="bar-logo" ui-sref="base.landing" class="logo">XYZ</h1>
 
-
   <h1 id="bar-title" ng-if="title()"> {{title()}}
     <a ng-if="Spaces.current()">
       <md-icon class="icon-btn light" ng-click="playSpace(Spaces.current())">
@@ -16,7 +15,6 @@
   </h1>
 
   <div class="bar-icons" layout-align="end center">
-
 
     <md-icon
         id="add-to-space"
@@ -85,10 +83,6 @@
     </span>
 
   </div>
-
-
-
-
 
   <div class="user-settings-popup"
        ng-if="settingsOpen() && User.get()"

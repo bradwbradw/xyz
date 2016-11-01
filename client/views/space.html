@@ -11,7 +11,7 @@
 
 
   <path class="playlist-line"
-        ng-attr-d="{{linePath(Playlister.list || [])}}"
+        ng-attr-d="{{linePath(Playlister.getList() || [])}}"
         d=""
         fill="none" stroke="lightgrey" ng-if="Spaces.current().songs[0]"></path>
 

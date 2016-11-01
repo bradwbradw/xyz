@@ -16,10 +16,12 @@ angular.module('xyzApp')
       if (!itemId) {
         itemId = _.get(space, 'firstSong');
       }
-      $rootScope.$broadcast('play', {space: space, itemId: itemId});
+      Playlister.recompute(space, itemId)
+        .then(function () {
+          $rootScope.$broadcast('play', {space: space, itemId: itemId});
+          playingSpace = space;
+        });
 
-      Playlister.recompute(space, itemId);
-      playingSpace = space;
     };
 
     var getPlayingSpace = function () {
