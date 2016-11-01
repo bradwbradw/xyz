@@ -61,7 +61,6 @@ angular.module('xyzApp')
 
     var resetPassword = function (email) {
       clearMessage();
-      clearError();
       Server.resetPassword(email)
         .then(function () {
           return 'We received your request.  Please check your email in a few minutes for further instructions.'

@@ -1,6 +1,7 @@
 var Mail = require('../controllers/mail');
 var express = require('express'),
-  when = require('when');
+  when = require('when'),
+  _ = require('lodash');
 var router = express.Router();
 
 // middleware that is specific to this router
