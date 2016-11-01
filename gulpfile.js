@@ -296,6 +296,12 @@ gulp.task('watch:views', function (done) {
   done();
 });
 
+gulp.task('watch:admin', function(done){
+
+  gulp.watch(paths.src.adminViews, gulp.series('templates:admin'));
+  done();
+});
+
 gulp.task('watch:code', function (done) {
 
   gulp.watch([
@@ -319,7 +325,7 @@ gulp.task('build',
 
 
 gulp.task('serve', gulp.parallel('loopback', 'bower', 'sass', 'browserSync:client', 'watch'));
-gulp.task('serve:admin', gulp.parallel('loopback', 'bower', 'browserSync:admin'));
+gulp.task('serve:admin', gulp.parallel('loopback', 'bower', 'browserSync:admin', 'watch:admin'));
 
 gulp.task('default', gulp.parallel('build', 'serve'));
 
