@@ -1,4 +1,3 @@
-
 var adminEmail = process.env.CREATE_ADMIN_EMAIL;
 
 
@@ -12,34 +11,40 @@ module.exports = function (app) {
 
     Dj.create({name: 'bradmin', email: adminEmail, password: 'admin'}, function (err, result) {
       if (err) {
-        if(JSON.stringify(err).indexOf('Email already exists') > -1){
-          console.log('admin user has already been created');
+        if (JSON.stringify(err).indexOf('Email already exists') > -1) {
+          console.log('admin user has already been created:');
         } else {
           console.error(err);
         }
-        return;
       }
-      console.log('created admin account: ', result);
+      console.log('the admin account: ', result);
       Role.create({
-        name: 'admin'
-      }, function (err, role) {
-        if (err) {
-          console.error(err);
-          console.error('role is: ', role);
-          return;
-        }
-
-        // Make Bob an admin
-        role.principals.create({
-          principalType: RoleMapping.USER,
-          principalId: result.id
-        }, function (err, principal) {
+          name: 'admin'
+        }, function (err, role) {
           if (err) {
-            console.error(err);
-            console.error('principal is: ', principal);
+
+            if (JSON.stringify(err).indexOf('already exists') > -1) {
+              console.log('admin role has already been created: ');
+            } else {
+              console.error(err);
+            }
           }
-        });
-      });
+          console.log('the admin role: ', role);
+
+          // Make bradmin an admin
+          role.principals.create({
+            principalType: RoleMapping.USER,
+            principalId: result.id
+          }, function (err, principal) {
+            if (err) {
+              console.error(err);
+              console.error('principal is: ', principal);
+            } else {
+              console.log('assigned user to admin role: ', result);
+            }
+          });
+        }
+      );
     });
   }
 
