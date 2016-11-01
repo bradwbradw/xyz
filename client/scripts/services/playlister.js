@@ -2,7 +2,7 @@
 
 angular.module('xyzApp')
 
-  .service('Playlister', function ($log, $q, Spaces) {
+  .service('Playlister', function ($log, $q, $rootScope, Spaces) {
 
     var Playlister = {
       listMap: {}, // key is spaceid, value is playlist []
@@ -30,7 +30,7 @@ angular.module('xyzApp')
         }
         var deferred = $q.defer();
 
-        $log.log('recomputing playlist');
+        $log.log('recomputing playlist for space: '+ _.get(space,'name'), space);
 
         var distanceBetweenItems = function (song1, song2) {
 
@@ -118,9 +118,17 @@ angular.module('xyzApp')
 
           var seedSong;
 
+          var nowPlayingIsInCurrentSpace = function(){
+            if($rootScope.getPlayingSpace() && Spaces.current()){
+              return _.get($rootScope.getPlayingSpace(),'id') === _.get(Spaces.current(),'id');
+            } else {
+              return false;
+            }
+          };
+
           if (playFromSongId) {
             seedSong = _.find(songs, {id: playFromSongId});
-          } else if (Playlister.getNowPlaying()) {
+          } else if (Playlister.getNowPlaying() && nowPlayingIsInCurrentSpace()) {
             seedSong = Playlister.getNowPlaying();
           } else if (space.firstSong) {
             seedSong = _.find(songs, {id: space.firstSong});

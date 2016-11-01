@@ -30,12 +30,14 @@ angular.module('xyzApp')
 
     $scope.playSpace = playSpace;
     $scope.getPlayingSpace = getPlayingSpace;
+    $rootScope.getPlayingSpace = getPlayingSpace;
     $scope.Playlister = Playlister;
     $scope.Utility = Utility;
 
     $rootScope.showError = function (thing) {
       $rootScope.error = Utility.cleanError(thing);
-    }
+    };
+
   });
 
 //askConfirm
