@@ -15,3 +15,5 @@ xyzDbDump/
 /xyz-player-component/css/
 /client/scripts/templates.js
 /test/e2e-tests/screenshots/
+/admin-dist/
+/admin/scripts/templates.js
