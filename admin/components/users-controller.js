@@ -10,6 +10,6 @@ angular.module('xyzAdmin')
     };
 
     $scope.deleteUser = deleteUser;
-
+    $scope.count = _.size(users);
     $scope.users = users;
   });

@@ -1,5 +1,7 @@
+<h3>{{count}} users registered</h3>
 
 <div ng-repeat="user in users">
   {{user | json}}
   <a href="#" ng-click="deleteUser(user)">remove</a>
+
 </div>
