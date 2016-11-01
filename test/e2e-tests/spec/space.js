@@ -7,13 +7,13 @@ var userSearch = 'bob';
 // TODO test data details:
 /*
 
-first (left-most in landing page) space that belongs to test user should:
+ first (left-most in landing page) space that belongs to test user should:
  - have a name
  - have 0 contributors
 
-only one user must have substring 'bob'
+ only one user must have substring 'bob'
 
-at least 2 public spaces
+ at least 2 public spaces
  */
 
 var contributorsRepeater = 'contributor in Spaces.current().contributors';
@@ -80,10 +80,10 @@ describe('space page tests', function () {
       nameInput.clear().sendKeys(title, protractor.Key.ENTER);
 
       var contributorsList = element.all(by.repeater(contributorsRepeater));
-      contributorsList.each(function(element, index){
+      contributorsList.each(function (element, index) {
         var minusButton = element.element(by.css('.icon-btn'));
         minusButton.click();
-        console.log('takedown: unsetting contributor at index '+index);
+        console.log('takedown: unsetting contributor at index ' + index);
       })
     });
 
@@ -127,5 +127,57 @@ describe('space page tests', function () {
 
   });
 
+
+  describe('adding items sidebar view', function () {
+
+    beforeAll(function () {
+      var addButton = element(by.css('#add-to-space'));
+      addButton.click();
+    });
+
+    describe('searching for asdf', function () {
+
+      beforeAll(function () {
+
+        var searchInput = element(by.model('newText'));
+        searchInput.sendKeys('asdf');
+
+        browser.waitForAngular();
+
+      });
+
+
+      it('should show asdf in search input', function () {
+
+        var searchInput = element(by.model('newText'));
+        expect(searchInput.getAttribute('value')).toEqual('asdf');
+      });
+
+      it('should show a list of results', function () {
+
+        var results = element.all(by.repeater('item in Library.getSearchResults()'));
+
+        expect(results.count()).toBeGreaterThan(2);
+
+      });
+
+      it('should show less if filtering on first filter', function () {
+
+        element.all(by.repeater('item in Library.getSearchResults()'))
+          .count()
+          .then(function (num) {
+            console.log('number of results is ', num);
+
+            var filters = element.all(by.repeater('(filterName, value) in filters'));
+            filters.last().click();
+
+            expect(element.all(by.repeater('item in Library.getSearchResults()')).count()).toBeLessThan(num);
+          })
+
+      })
+
+    });
+
+  });
 
 });
