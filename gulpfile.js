@@ -41,30 +41,36 @@ var paths = {
       'client/views/**/*.html',
       'xyz-player-component/*.html',
       'client/views/**/*.svg',
-      'xyz-player-component/*.svg'],
+      'xyz-player-component/*.svg'
+    ],
+    adminViews: [
+      'admin/**/*.html'
+    ],
     scripts: 'client/scripts',
+    adminScripts: 'admin/scripts',
     index: 'client/index.html'
   },
 
   e2eTests: 'test/e2e-tests',
-  unitTests: 'test/unit-tests',
+  unitTests: 'test/unit-tests'
 };
 
-var appName = 'xyzApp';
+function templateHeader(appName) {
 
-var TEMPLATE_HEADER = '\'use strict\';' +
-  'var app = window.angular.module(\'' + appName + '\');'
-  + 'app.run([\'$templateCache\', function($templateCache) {';
+  return '\'use strict\';' +
+    'var app = window.angular.module(\'' + appName + '\');'
+    + 'app.run([\'$templateCache\', function($templateCache) {';
+}
 
 function reloadB(done) {
   browserSync.reload();
   done();
 }
-
+var apiUrl;
 if (process.env.NODE_ENV === 'production') {
-  var apiUrl = constants.api.path;//'http://'+ constants.api.host+ ':'+ constants.api.port + constants.api.path + '/';
+  apiUrl = constants.api.path;//'http://'+ constants.api.host+ ':'+ constants.api.port + constants.api.path + '/';
 } else {
-  var apiUrl = 'http://' + constants.domain + constants.api.path;
+  apiUrl = 'http://' + constants.domain + constants.api.path;
 }
 console.log('api Url is ', apiUrl);
 console.log('domain is ', constants.domain);
@@ -94,13 +100,13 @@ gulp.task('sass:app', function () {
     'xyz-player-component/**/*.scss'
   ])
     .pipe(sass()) // Using gulp-sass
-    .pipe(gulp.dest('client/css'))
+    .pipe(gulp.dest('client/css'));
 //    .pipe(browserSync.reload({stream: true}));
 });
 gulp.task('sass:player', function () {
   return gulp.src('xyz-player-component/**/*.scss')
     .pipe(sass())
-    .pipe(gulp.dest('xyz-player-component/css'))
+    .pipe(gulp.dest('xyz-player-component/css'));
 //    .pipe(browserSync.reload({stream: true}));
 });
 
@@ -122,7 +128,7 @@ gulp.task('copyCss:stream', function () {
 
 
 gulp.task('copyCss:admin', function () {
-  return gulp.src('admin/style.css')
+  return gulp.src('admin/admin-style.css')
     .pipe(gulp.dest('admin-dist'))
 });
 
@@ -181,8 +187,35 @@ gulp.task('browserSync:client', function (done) {
         "/client": "client",
         "/stream/xyz-player-component": "xyz-player-component",
         "/stream/xyz-player-component/css": "xyz-player-component/css",
-        "/stream": "stream", 
-        "/admin" : "admin" 
+        "/stream": "stream",
+        "/admin": "admin"
+      }
+
+    },
+    injectChanges: true,
+    logConnections: true,
+    ghostMode: false,
+    notify: false,
+    browser: 'chrome',
+    ui: {
+      port: 9006
+    },
+    port: 9005
+  });
+  done();
+});
+
+
+gulp.task('browserSync:admin', function (done) {
+  browserSync.init({
+    server: {
+      baseDir: 'admin',
+      index: 'index.html',
+      middleware: [historyApiFallback()],
+      routes: {
+        "/client": "client",
+        "/admin/vendor": "client/vendor",
+        "/admin": "admin"
       }
 
     },
@@ -240,10 +273,17 @@ gulp.task('templates', function () {
   var templateCache = require('gulp-angular-templatecache');
 
   return gulp.src(paths.src.views)
-    .pipe(templateCache({templateHeader: TEMPLATE_HEADER}))
+    .pipe(templateCache({templateHeader: templateHeader('xyzApp')}))
     .pipe(gulp.dest(paths.src.scripts));
 });
+gulp.task('templates:admin', function () {
 
+  var templateCache = require('gulp-angular-templatecache');
+
+  return gulp.src(paths.src.adminViews)
+    .pipe(templateCache({templateHeader: templateHeader('xyzAdmin')}))
+    .pipe(gulp.dest(paths.src.adminScripts));
+});
 
 gulp.task('watch:sass', function (done) {
   gulp.watch(paths.src.sass)
@@ -271,14 +311,15 @@ gulp.task('watch:code', function (done) {
 gulp.task('watch', gulp.parallel('watch:sass', 'watch:views', 'watch:code'));
 
 gulp.task('build',
-  gulp.series('clean', 'loopback', 'sass', 'bower', 'templates',
+  gulp.series('clean', 'loopback', 'sass', 'bower', gulp.parallel('templates', 'templates:admin'),
     gulp.parallel('useref:main', 'copyImages'),
-    gulp.parallel('useref:admin', 'copyCss:admin')
+    gulp.parallel('useref:admin', 'copyCss:admin'),
     gulp.parallel('useref:stream', 'copyCss:stream'))
 );
 
 
 gulp.task('serve', gulp.parallel('loopback', 'bower', 'sass', 'browserSync:client', 'watch'));
+gulp.task('serve:admin', gulp.parallel('loopback', 'bower', 'browserSync:admin'));
 
 gulp.task('default', gulp.parallel('build', 'serve'));
 
@@ -374,7 +415,7 @@ gulp.task('webdriver', function (done) {
   var updateCmd = './node_modules/protractor/bin/webdriver-manager update';
   var startCmd = './node_modules/protractor/bin/webdriver-manager start';
 
-  var proc = childProcess.exec(updateCmd + ' && '+startCmd);
+  var proc = childProcess.exec(updateCmd + ' && ' + startCmd);
   proc.stdout.on('data', function (data) {
     console.log(data);
   });

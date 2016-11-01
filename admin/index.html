@@ -1,4 +1,4 @@
-<html>
+<html ng-app="xyzAdmin">
 
 <head>
   <base href="/admin/index.html">
@@ -15,7 +15,7 @@
 
 <body>
 
-<div ng-app="xyzAdmin">
+<div >
 
   <div ui-view>  </div>
 
@@ -24,32 +24,33 @@
 
 <!-- build:js scripts/admin-vendor.js -->
 <!-- bower:js -->
-<script src="/vendor/angular/angular.js"></script>
-<script src="/vendor/lodash/lodash.js"></script>
-<script src="/vendor/angular-sanitize/angular-sanitize.js"></script>
-<script src="/vendor/angular-ui-router/release/angular-ui-router.js"></script>
-<script src="/vendor/angular-easyfb/build/angular-easyfb.js"></script>
-<script src="/vendor/angular-local-storage/dist/angular-local-storage.js"></script>
-<script src="/vendor/angular-resource/angular-resource.js"></script>
-<script src="/vendor/angular-animate/angular-animate.js"></script>
-<script src="/vendor/angular-aria/angular-aria.js"></script>
-<script src="/vendor/angular-ellipsis/src/angular-ellipsis.js"></script>
-<script src="/vendor/ngToast/dist/ngToast.js"></script>
-<script src="/vendor/angular-live-set/dist/live-set.js"></script>
+<script src="../client/vendor/angular/angular.js"></script>
+<script src="../client/vendor/lodash/lodash.js"></script>
+<script src="../client/vendor/angular-sanitize/angular-sanitize.js"></script>
+<script src="../client/vendor/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="../client/vendor/angular-easyfb/build/angular-easyfb.js"></script>
+<script src="../client/vendor/angular-local-storage/dist/angular-local-storage.js"></script>
+<script src="../client/vendor/angular-resource/angular-resource.js"></script>
+<script src="../client/vendor/angular-animate/angular-animate.js"></script>
+<script src="../client/vendor/angular-aria/angular-aria.js"></script>
+<script src="../client/vendor/angular-ellipsis/src/angular-ellipsis.js"></script>
+<script src="../client/vendor/ngToast/dist/ngToast.js"></script>
+<script src="../client/vendor/angular-live-set/dist/live-set.js"></script>
 <!-- endbower -->
 
 <!-- endbuild -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc.5/angular-material.min.js"></script>
 
-<!-- build:js scripts/scripts.js -->
-<script src="/admin/scripts/admin-app.js"></script>
-<script src="/admin/components/users-controller.js"></script>
-<script src="/client/scripts/services/user.js"></script>
-<script src="/client/scripts/services/lb-services.js"></script>
-<script src="/client/scripts/services/server.js"></script>
-<script src="/admin/scripts/admin-router.js"></script>
-<script src="/admin/scripts/admin-controller.js"></script>
+<!-- build:js scripts/admin-scripts.js -->
+<script src="scripts/admin-app.js"></script>
+<script src="components/users-controller.js"></script>
+<script src="../client/scripts/services/user.js"></script>
+<script src="../client/scripts/services/lb-services.js"></script>
+<script src="../client/scripts/services/server.js"></script>
+<script src="scripts/admin-router.js"></script>
+<script src="scripts/admin-controller.js"></script>
+<script src="scripts/templates.js"></script>
 
 <!-- endbuild -->
 
