@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('SpaceCtrl', function ($rootScope, $timeout, $scope, $log, $state, $window, $q, Server, Library, Player, Playlister, Spaces, owner, viewer, contributors, layout_constants) {
+  .controller('SpaceCtrl', function ($rootScope, $timeout, $scope, $log, $state, $window, $q, Server, Library, Player, Playlister, Spaces, Utility, owner, viewer, contributors, layout_constants) {
 
       var expanded, hovering;
 
@@ -59,6 +59,11 @@ angular.module('xyzApp')
       var computeViewBox = function () {
         return _.values(layout_constants.SPACE_DIMENSIONS).join(" ");
       };
+
+      _.each(_.get(Spaces.current(),'songs'), function(song){
+        var index = _.findIndex(Spaces.current().songs, {id: song.id});
+        _.set(Spaces.current().songs, index, Utility.fixItemPosition(song));
+      });
 
       Playlister.recompute();
 
@@ -171,6 +176,7 @@ angular.module('xyzApp')
         if (canEdit()) {
           var updatedItems = _.get(Spaces.current(), 'songs');
           updatedItems[_.findIndex(updatedItems, {id: item.id})] = item;
+
           Spaces.saveAndUpdateMap('updateItem', [item], {
             songs: updatedItems
           }).then(function () {

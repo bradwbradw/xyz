@@ -8,16 +8,16 @@
  * Service in the xyzApp.
  */
 angular.module('xyzApp')
-  .service('Utility', function ($sce, $rootScope, $log, $location, ngToast, localStorageService) {
+  .service('Utility', function ($sce, $rootScope, $log, $location, ngToast, localStorageService, layout_constants) {
 
       var random = function (n) {
-          var text = "";
-          var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-          for (var i = 0; i < n; i++){
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-          }
-          return text;
-        };
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (var i = 0; i < n; i++) {
+          text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        return text;
+      };
 
       var Utility = {
 
@@ -39,7 +39,7 @@ angular.module('xyzApp')
               var cleaned =
               {
                 provider: 'soundcloud',
-                id: 'SC-' + track.id + '~'+ random(4),
+                id: 'SC-' + track.id + '~' + random(4),
                 provider_id: track.id,
                 artist: track.user.username,
                 title: track.title,
@@ -59,7 +59,7 @@ angular.module('xyzApp')
 
               return cleaned;
             },
-            track:function(raw){
+            track: function (raw) {
               return Utility.clean.soundcloud.mediaItem(raw);
             },
 
@@ -117,7 +117,7 @@ angular.module('xyzApp')
                 cleanData.provider_id = raw.id;
               }
               cleanData.url = 'https://youtube.com/watch?v=' + cleanData.provider_id;
-              cleanData.id = 'YT-' + cleanData.provider_id + '~'+ random(4);
+              cleanData.id = 'YT-' + cleanData.provider_id + '~' + random(4);
 
               //PT#M#S
               if (raw.contentDetails && raw.contentDetails.duration) {
@@ -187,6 +187,21 @@ angular.module('xyzApp')
             return 'https://' + domainOrUrl;
           }
         },
+        fixItemPosition: function (item) {
+          if (item.x < layout_constants.SPACE_DIMENSIONS.minX) {
+            item.x = layout_constants.SPACE_DIMENSIONS.minX;
+          }
+          if (item.x > layout_constants.SPACE_DIMENSIONS.width) {
+            item.x = layout_constants.SPACE_DIMENSIONS.width;
+          }
+          if (item.y < layout_constants.SPACE_DIMENSIONS.minY) {
+            item.y = layout_constants.SPACE_DIMENSIONS.minY;
+          }
+          if (item.y > layout_constants.SPACE_DIMENSIONS.height) {
+            item.y = layout_constants.SPACE_DIMENSIONS.height;
+          }
+          return item;
+        },
         cleanError: function (thing) {
 
           var codes = {
@@ -242,13 +257,13 @@ angular.module('xyzApp')
           ngToast.create({
             className: 'danger',
             content: Utility.cleanError(error)/*,
-            dismissOnTimeout: false,*/
+             dismissOnTimeout: false,*/
           });
         },
         showMessage: function (message) {
           ngToast.create({
             content: message/*,
-            dismissOnTimeout: false,*/
+             dismissOnTimeout: false,*/
           });
         },
         absoluteRef: function (id) {
