@@ -8,7 +8,7 @@
  * Service in the xyzApp.
  */
 angular.module('xyzApp')
-  .service('User', function ($q, $state, $log, Server, Dj) {
+  .service('User', function ($q, $state, $log, Server, Dj, Utility) {
 
     var User = {
       data: {},
@@ -44,9 +44,13 @@ angular.module('xyzApp')
           });
       },
       update: function (data) {
-        return Dj.prototype$updateAttributes({id: User.get().id}, data, _.noop)
+        return Dj.prototype$updateAttributes({id: User.get().id}, data)
           .$promise
-          .then(User.set);
+          .then(User.set)
+          .then(function(){
+            Utility.showMessage("update successful");
+          })
+          .catch(Utility.showError);
       },
 
       spaces: {

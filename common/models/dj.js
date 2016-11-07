@@ -102,6 +102,12 @@ module.exports = function (Dj) {
   });
 
 
+  Dj.validatesUniquenessOf('name', {message: 'Already exists'});
+
+
+  // length validation does not work due to: https://github.com/strongloop/loopback/issues/251
+  // Dj.validatesLengthOf('password', {min: 5, message: {min: 'Minimum password length is 5 characters'}});
+
   Dj.on('resetPasswordRequest', function (info) {
     console.log('reset pass info:', info);
     var passwordResetHref = passwordResetUrl + '?access_token=' + info.accessToken.id;

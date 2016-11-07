@@ -3,14 +3,24 @@
 
     <h4>Sign up</h4>
     <form id='signup-form' layout="column" layout-align="center center"
-          ng-submit="register(registerData)">
+          name="SignupForm"
+          ng-submit="SignupForm.$valid && register(registerData)">
 
-      <input id="register-name-field" ng-model="registerData.name" placeholder="create username"><br/>
-      <input id="register-email-field" ng-model="registerData.email" placeholder="your email" type="email" required><br/>
-      <input id="register-password-field" ng-model="registerData.password" placeholder="set a password" type="password"
+      <input id="register-name-field" name="username" ng-model="registerData.name" placeholder="create username" required><br/>
+      <input id="register-email-field" name="email" ng-model="registerData.email" placeholder="your email" type="email" required><br/>
+      <input id="register-password-field" name="password" ng-model="registerData.password" placeholder="set a password" type="password"
+             ng-minlength="6"
              required><br/>
 
       <input type="submit" value="submit"/>
+
+      <div ng-messages="SignupForm.password.$error" ng-if="SignupForm.password.$touched" role="alert">
+        <div ng-message="minlength">Password must be at least 6 characters</div>
+      </div>
+      <div ng-messages="SignupForm.email.$error" ng-if="SignupForm.email.$touched" role="alert">
+        <div ng-message="email">Please enter a valid email</div>
+      </div>
+      <debug obj="SignupForm" name="SignupForm"></debug>
     </form>
 
     <h2>or login:</h2>
