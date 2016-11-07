@@ -1,4 +1,4 @@
-var Mail = require('../controllers/mail');
+
 var express = require('express'),
   when = require('when'),
   _ = require('lodash');
@@ -44,17 +44,20 @@ var resetPassword = function (req, password) {
 
     Dj.findById(req.accessToken.userId, function (err, dj) {
       if (err) {
+        console.error(err);
         reject(err);
-      }
-      dj.updateAttribute('password', password, function (err, dj) {
-        if (err) {
-          console.error('setting password failed for '+dj.email+': ', err);
-          reject(err);
-        } else {
-          resolve();
-        }
+      } else {
 
-      });
+        dj.updateAttribute('password', password, function (err, dj) {
+          if (err) {
+            console.error('setting password failed for ' + dj.email + ': ', err);
+            reject(err);
+          } else {
+            resolve();
+          }
+
+        });
+      }
     });
   })
 };
@@ -69,7 +72,7 @@ router.post('/send-request', function (req, res) {
   } else {
 
     sendPasswordEmail(req, email)
-      .then(function (result) {
+      .then(function () {
         res.json({success: true, email: email});
       })
       .catch(function (err) {
@@ -90,9 +93,9 @@ router.post('/update', function (req, res) {
       .then(function () {
         res.json({});
       })
-      .catch(function(err){
+      .catch(function (err) {
         console.error('resetting password failed', JSON.stringify(err, null, 2));
-        res.status(505).json({error:'resetting password failed'});
+        res.status(505).json({error: 'resetting password failed'});
       })
   }
 });
