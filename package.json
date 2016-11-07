@@ -82,7 +82,7 @@
     "time-grunt": "^1.0.0"
   },
   "engines": {
-    "node": "4.2.6"
+    "node": "6.9.1"
   },
   "optionalDependencies": {}
 }
