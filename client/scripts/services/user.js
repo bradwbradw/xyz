@@ -172,7 +172,7 @@ angular.module('xyzApp')
             window.localStorage.removeItem('$LoopBack$currentUserId');
             $state.go('base.landing', {}, {reload: true});
           });
-      },
+      }
 
     };
 
