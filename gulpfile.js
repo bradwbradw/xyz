@@ -7,9 +7,17 @@ var useref = require('gulp-useref');
 var gulpIf = require('gulp-if');
 var sass = require('gulp-sass');
 var cssnano = require('gulp-cssnano');
-var uglify = require('gulp-uglify'),
-  concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
 var replace = require('gulp-replace');
+var buster = require('gulp-buster');
+var rev = require('gulp-rev');
+var revReplace = require('gulp-rev-replace');
+
+
+var ngAnnotate = require('gulp-ng-annotate');
+var annotateOptions = {
+  single_quotes: true
+};
 
 var docs = require('gulp-ngdocs');
 var exec = require('gulp-exec');
@@ -146,8 +154,11 @@ gulp.task('useref:main', function () {
     .pipe(replace('%%%ytKey', keys.public.yt))
     .pipe(replace('%%%API_URL', apiUrl))
     .pipe(useref())
-    //	.pipe(gulpIf('*.js',uglify()))
+    .pipe(gulpIf('*.js', ngAnnotate(annotateOptions)))
+    .pipe(gulpIf('*.js', rev()))
     .pipe(gulpIf('*.css', cssnano()))
+    .pipe(gulpIf('*.css', rev()))
+    .pipe(revReplace())
     .pipe(gulp.dest('dist'))
 });
 
@@ -159,8 +170,11 @@ gulp.task('useref:stream', function () {
     .pipe(replace('%%%ytKey', keys.public.yt))
     .pipe(replace('%%%API_URL', apiUrl))
     .pipe(useref())
-    //	.pipe(gulpIf('*.js',uglify()))
+    .pipe(gulpIf('*.js', ngAnnotate(annotateOptions)))
+    .pipe(gulpIf('*.js', rev()))
     .pipe(gulpIf('*.css', cssnano()))
+    .pipe(gulpIf('*.css', rev()))
+    .pipe(revReplace())
     .pipe(gulp.dest('stream-dist'))
 });
 
@@ -170,8 +184,11 @@ gulp.task('useref:admin', function () {
 
     .pipe(replace('%%%API_URL', apiUrl))
     .pipe(useref())
-    //	.pipe(gulpIf('*.js',uglify()))
+    .pipe(gulpIf('*.js', ngAnnotate(annotateOptions)))
+    .pipe(gulpIf('*.js', rev()))
     .pipe(gulpIf('*.css', cssnano()))
+    .pipe(gulpIf('*.css', rev()))
+    .pipe(revReplace())
     .pipe(gulp.dest('admin-dist'))
 });
 
@@ -296,7 +313,7 @@ gulp.task('watch:views', function (done) {
   done();
 });
 
-gulp.task('watch:admin', function(done){
+gulp.task('watch:admin', function (done) {
 
   gulp.watch(paths.src.adminViews, gulp.series('templates:admin'));
   done();
