@@ -78,7 +78,7 @@ describe('landing page tests (logged in)', function () {
     expect(element(by.css('#user-settings')).isPresent()).toBe(true);
   });
 
-  xdescribe('create and delete a space', function () {
+  describe('create a space (and delete in takedown) ', function () {
     afterAll(function () {
 
       browser.get('space/'+spaceId);
@@ -91,6 +91,13 @@ describe('landing page tests (logged in)', function () {
       deleteButton.click();
       // FIXME alert causes failure, probably because of chromedriver version
       // see https://github.com/mllrsohn/gulp-protractor/issues/120
+      var EC = protractor.ExpectedConditions;
+      browser.wait(EC.alertIsPresent(), 5000, "the space delete confirmation alert did not appear")
+        .then(function(){
+          browser.switchTo().alert().accept();
+        });
+
+
     });
 
     it('should be able to create a space', function () {
@@ -101,10 +108,10 @@ describe('landing page tests (logged in)', function () {
       browser.getLocationAbsUrl()
         .then(function(url){
 
-          console.log('0000 url is ', url);
+          console.log('the new space\'s url is ', url);
           var parts = url.split('space/');
           spaceId = _.last(parts);
-          console.log('1111 id is ', spaceId);
+          console.log('the id is ', spaceId);
 
           expect(url)
             .toContain('space');
