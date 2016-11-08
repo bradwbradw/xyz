@@ -1,6 +1,5 @@
 var helpers = require('../helpers'),
-  _ = require('lodash'),
-  fs = require('fs');
+  _ = require('lodash');
 
 var userSearch = 'bob';
 
