@@ -1,24 +1,34 @@
-<div class="xyz-player" ng-show="spaceIsOpen()">
+<div class="xyz-player"
+     ng-show="spaceIsOpen()"
+     ng-class="{'full-screen':isFullScreen()}">
 
   <div ng-if="!Playlister.getNowPlaying().title">
     loading...
   </div>
 
   <pre class="debug" ng-if="false">
+    full screen: {{isFullScreen}}
     id:{{spaceId}}
     space: {{space}}
-    playlist: {{playlist}}
   </pre>
 
   <h4>{{message}}</h4>
 
-  <div ng-show="Playlister.getNowPlaying()">
+  <div ng-show="Playlister.getNowPlaying()" >
 
-  <span class="media-controls">
+    <span class="full-screen-controls">
+      <md-icon
+          class="icon-btn light"
+          ng-click="toggleFullScreen()"
+          >
+        {{isFullScreen()?'expand_more': 'expand_less' }}
+      </md-icon>
+    </span>
+    <span class="media-controls">
       <md-icon class="icon-btn light" ng-click="play()">play_arrow</md-icon>
       <md-icon class="icon-btn light" ng-click="pause()">pause</md-icon>
       <md-icon class="icon-btn light" ng-click="next()">skip_next</md-icon>
-  </span>
+    </span>
 
     <span class="media-title">
       <a ui-sref="base.space({id:spaceId})"> {{spaceName}} </a>

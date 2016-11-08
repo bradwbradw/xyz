@@ -12,6 +12,10 @@
   position: fixed;
   bottom:0;
 
+  &.full-screen{
+    height:100vh;
+  }
+
   h1 {
     font-size: 1.5em;
   }
@@ -20,7 +24,7 @@
     margin: 0;
   }
   .media-box {
-    height: 250px;
+    height: calc(100% - 3em);
     position: absolute;
     top: 3em;
     width:100%;
@@ -43,6 +47,14 @@
       margin: 0;
       padding:0
     }
+  }
+
+  .full-screen-controls{
+    position:absolute;
+    top:0;
+    left:0;
+    height:100px;
+    width:100px;
   }
 
   .media-title {

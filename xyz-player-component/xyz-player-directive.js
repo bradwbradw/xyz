@@ -275,6 +275,22 @@ angular.module('xyzPlayer', [])
             return spaceOpen;
           };
 
+          var fullScreen = false;
+
+          var isFullScreen = function(){
+            return fullScreen;
+          };
+
+          var toggleFullScreen = function(){
+            fullScreen = !fullScreen;
+            if(fullScreen){
+              document.documentElement.webkitRequestFullScreen()
+            }
+          };
+
+
+          scope.toggleFullScreen = toggleFullScreen;
+          scope.isFullScreen = isFullScreen;
           scope.Playlister = Playlister;
           scope.status = status;
           scope.message = message;
