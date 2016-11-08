@@ -154,7 +154,8 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     .state('base.space.info', {
       views: {
         'sidebar@base': {
-          templateUrl: 'sidebar/sidebar-info.html'
+          templateUrl: 'sidebar/sidebar-info.html',
+          controller: 'EditSpaceCtrl'
         }
       }
     })
