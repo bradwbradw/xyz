@@ -4,8 +4,8 @@ exports.config = {
 //  specs: ['spec/**/*.js'],
   params: {
     login: {
-      email: 'brad@brad.brad',
-      password: 'brad'
+      email: 'tester@xyz.gs',
+      password: 'testtest'
     }
   }
 };

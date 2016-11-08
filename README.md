@@ -72,7 +72,7 @@ use '#?playlist=129994120' to set the id of the space you want
 
 ### end-to-end tests
 
-- 1) please edit `test/e2e-tests/protractor-config.js` to set your test email and password (don't commit that change)
+- 1) please ensure the local test data matches up with what is in the wiki (https://github.com/bradwbradw/xyz/wiki/Test-data-rules)
 
 - 2) start server by doing command: `./dev.sh` (or ensure server is already running)
   
