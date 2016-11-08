@@ -5,8 +5,12 @@ describe('landing page tests', function () {
 
   beforeAll(function () {
     browser.get('/');
+  });
+
+  beforeEach(function () {
     browser.waitForAngular();
   });
+
 
   it('should see some public spaces', function () {
 
@@ -62,6 +66,12 @@ describe('landing page tests (logged in)', function () {
     helpers.login(browser);
     browser.get('/');
   });
+
+    beforeEach(function () {
+    browser.waitForAngular();
+  });
+
+
 
   it('should see user settings icon in corner', function () {
 

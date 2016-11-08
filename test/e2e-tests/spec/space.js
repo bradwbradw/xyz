@@ -23,15 +23,17 @@ describe('space page tests', function () {
   beforeAll(function () {
     helpers.turnOffPlayer(browser);
     helpers.login(browser);
-
     browser.get('/');
     var firstEditableSpace = element.all(
       by.repeater("space in Spaces.getOwn()")
     ).first();
-
     firstEditableSpace.element(by.css('a')).click();
+  });
+
+  beforeEach(function () {
     browser.waitForAngular();
   });
+
 
   it('should have an svg element', function () {
     var svg = element(by.css('svg'));
@@ -83,7 +85,7 @@ describe('space page tests', function () {
       contributorsList.each(function (element, index) {
         var minusButton = element.element(by.css('.icon-btn'));
         minusButton.click();
-        console.log('takedown: unsetting contributor at index ' + index);
+        console.log('takedown: unsetting contributor #' + index+1);
       })
     });
 
@@ -141,11 +143,9 @@ describe('space page tests', function () {
 
         var searchInput = element(by.model('newText'));
         searchInput.sendKeys('asdf');
-
-        browser.waitForAngular();
+        browser.sleep(1000); // let debounce finish
 
       });
-
 
       it('should show asdf in search input', function () {
 
