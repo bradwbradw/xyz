@@ -11,8 +11,10 @@ angular.module("xyzPlayer")
         soundid: "@",
         startSeconds: "@"
       },
-      template: '<div> <iframe id="xyz-soundcloud-iframe" src=\'https://w.soundcloud.com/player/?url=https://soundcloud.com/smilebandsmile/holiday\'></iframe></div>',
-
+      template: '<div> ' +
+      '<iframe id="xyz-soundcloud-iframe" ' +
+      'src=\'https://w.soundcloud.com/player/?url=https://soundcloud.com/smilebandsmile/holiday\'>' +
+      '</iframe></div>',
 
       link: function (scope, element, attrs, $rootScope) { //jshint ignore:line
 
@@ -71,13 +73,16 @@ angular.module("xyzPlayer")
 
 //        console.log('SC widget is ', widget);
 
+        var soundCloudUrl = function(id){
+          return 'https://api.soundcloud.com/tracks/' + id + '?visual=true';
+        };
         scope.$watch('soundid', function (newValue, oldValue) {
           if (!newValue || (newValue === oldValue)) {
             return;
           }
-//          console.log('soundId watch hit, value is ', newValue);
 
-          var newUrl = 'https://api.soundcloud.com/tracks/' + scope.soundid; // NOTE - can also do an artist for the url, might want to load actual url from xyz item
+          var newUrl = soundCloudUrl(scope.soundid);
+          // NOTE - can also do an artist for the url, might want to load actual url from xyz item
 //          console.log('soundcloud new url is ', newUrl);
           var options = {
             callback: function (thing) {
