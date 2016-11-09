@@ -26,6 +26,10 @@
   cursor: pointer;
 }
 
+.icon-btn:hover {
+  color: $link-hover-color;
+}
+
 .a {
   outline: none;
 }
@@ -73,7 +77,12 @@
 }
 
 .active-icon {
-  color: lime;
+  background-color: $sidebar-background-color;
+  color: black;
+}
+
+.active-icon:hover {
+  color: black;
 }
 
 .filters {
@@ -101,4 +110,10 @@
   .icon-btn {
     background-color: white;
   }
+}
+
+
+.sidebar-container{
+
+  background: $sidebar-background-color;
 }

@@ -37,6 +37,7 @@
 
 #bar-logo {
   position: absolute;
+  font-size: 1rem;
   left: 0;
 }
 
@@ -82,7 +83,7 @@
   position: fixed;
   overflow: scroll;
   height: 100vh;
-  width:100%;
+  width: 100%;
   margin-top: $bar-height;
   margin-bottom: 300px;
 
@@ -120,7 +121,38 @@
   z-index: 3
 }
 
-
-.ng-toast{
+.ng-toast {
   z-index: 5;
+}
+
+.space-owner-label {
+  .material-icons {
+    margin-right: -5px;
+  }
+}
+
+
+button{
+
+  min-width:2em;
+  margin:0.3em 0;
+  height: 2em;
+  padding: 2px;
+}
+
+input{
+  margin:0.3em 0;
+  min-height:2em;
+}
+
+.link-button{
+  cursor:pointer;
+}
+
+.checkbox, .checkbox *{
+  display:inline;
+  max-width:2em;
+}
+
+button {
 }

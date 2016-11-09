@@ -1,4 +1,8 @@
 
+
+#bar-title {
+  font-size: 1rem;
+}
 .media-inspector-details {
 
   .provider {
@@ -23,3 +27,14 @@
 .item-hover {
   font-size: 0.70rem;
 }
+
+
+.item-count, .space-owner-label{
+  font-size: 0.65rem;
+}
+
+//http://google.github.io/material-design-icons/#sizing
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }

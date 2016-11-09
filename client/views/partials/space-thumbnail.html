@@ -1,45 +1,58 @@
 <div class="space-thumbnail" layout="column" layout-align="space-between center">
 
-  <div id='space-owner-label'
-        ng-if="space.owner && space.owner.name">
-    {{space.owner.name}}
-  </div>
-
   <a ui-sref="base.space({id:space.id})">
     {{space.name? space.name : '(untitled)' }}
   </a>
 
-
   <div>
-    <img ng-if="space && space.pic" ng-src="{{space.pic}}">
-    <div ng-if="!space.pic" class="no-img"> </div>
+    <img
+        ng-if="space && space.pic"
+        ng-src="{{space.pic}}"
+        ui-sref="base.space({id:space.id})"
+        style="cursor: pointer;">
+    <div ng-if="!space.pic" class="no-img"></div>
 
+    <div layout="column">
+      <div class="thumbnail-icons" layout="row" layout-align="space-between center">
+        <div class="item-count" ng-bind="countItems(space)"></div>
 
-    <div class="thumbnail-icons" layout="row" layout-align="space-between center" >
-      <div layout="row">
-        <md-icon class="icon" ng-if="userIsCollaborator(space)">
-          group
-          <md-tooltip md-delay="500">
-            You Can Contribute to this Space
-          </md-tooltip>
-        </md-icon>
-        <md-icon class="icon" ng-if="!space.public ">
-          lock
-          <md-tooltip md-delay="500">
-            This is a Private Space
-          </md-tooltip>
-        </md-icon>
+        <div class='space-owner-label'
+             ng-if="space.owner && space.owner.name">
+          <md-icon class="md-18">person</md-icon>
+          {{space.owner.name}}
+        </div>
+
       </div>
-      <div>
-        <md-icon class="icon-btn" ng-click="playSpace(space)">
-          play_arrow
-          <md-tooltip md-delay="500">
-            Play this Space
-          </md-tooltip>
-        </md-icon>
+      <div class="thumbnail-icons" layout="row" layout-align="space-between center">
+
+
+        <div layout="row">
+          <md-icon class="icon" ng-if="userIsCollaborator(space)">
+            group
+            <md-tooltip md-delay="500">
+              You Can Contribute to this Space
+            </md-tooltip>
+          </md-icon>
+          <md-icon class="icon" ng-if="!space.public ">
+            lock
+            <md-tooltip md-delay="500">
+              This is a Private Space
+            </md-tooltip>
+          </md-icon>
+        </div>
+        <div>
+          <md-icon class="icon-btn" ng-click="playSpace(space)">
+            play_arrow
+            <md-tooltip md-delay="500">
+              Play this Space
+            </md-tooltip>
+          </md-icon>
+        </div>
+
       </div>
 
     </div>
+
   </div>
 
   <pre class="debug" ng-if="false">

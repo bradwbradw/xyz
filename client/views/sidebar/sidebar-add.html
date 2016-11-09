@@ -1,8 +1,6 @@
 <div class="sidebar-container">
-  <h2>add</h2>
-
   <div>
-    <h4>Enter search terms or a URL to find media</h4>
+    <h4>Enter search terms or paste a URL</h4>
     <input
         ng-model="newText"
         ng-change="searchInputChanged(newText)"
@@ -22,7 +20,7 @@
     </div>
   </div>
 
-  <debug class="debug" name="'search results'" obj="Library.getSearchResults()" max-height="150">
+  <debug name="'search results'" obj="Library.getSearchResults()" max-height="150">
 </debug>
 
   <div ng-if="FB.isConnected()">

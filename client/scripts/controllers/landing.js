@@ -40,12 +40,23 @@ angular.module('xyzApp')
 
 
     var createNewSpace = function () {
-      User.addSpace({public:false}).then(function (space) {
+      User.addSpace({public: false}).then(function (space) {
         $log.log('space is ', space);
-        $state.go('base.space.edit', {id:space.id});
+        $state.go('base.space.edit', {id: space.id});
       });
     };
 
+    var countItems = function (space) {
+
+      var num = _.size(space.songs);
+      if (num > 1) {
+        return num + ' items';
+      } else {
+        return num + ' item'
+      }
+    };
+
+    $scope.countItems = countItems;
     $scope.createNewSpace = createNewSpace;
     $scope.userIsCollaborator = userIsCollaborator;
     $scope.isAdding = isAdding;
