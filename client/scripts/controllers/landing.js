@@ -49,10 +49,10 @@ angular.module('xyzApp')
     var countItems = function (space) {
 
       var num = _.size(space.songs);
-      if (num > 1) {
-        return num + ' items';
+      if (num === 1) {
+        return num + ' item';
       } else {
-        return num + ' item'
+        return num + ' items'
       }
     };
 
