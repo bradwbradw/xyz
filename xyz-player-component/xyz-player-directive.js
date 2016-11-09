@@ -241,7 +241,7 @@ angular.module('xyzPlayer', [])
               });
           };
 
-          scope.$on('play', function(event, args){
+          scope.$on('play', function (event, args) {
 
             spaceOpen = true;
             var spaceId = _.get(args, 'space.id');
@@ -277,17 +277,37 @@ angular.module('xyzPlayer', [])
 
           var fullScreen = false;
 
-          var isFullScreen = function(){
+          var isFullScreen = function () {
             return fullScreen;
           };
 
-          var toggleFullScreen = function(){
+          var toggleFullScreen = function () {
             fullScreen = !fullScreen;
-            if(fullScreen){
-              document.documentElement.webkitRequestFullScreen()
+            var doContinue = true;
+            if (fullScreen) {
+              var fullScreenFunctions = [
+                'webkitRequestFullScreen',
+                'mozRequestFullScreen',
+                'msRequestFullscreen'];
+              _.each(fullScreenFunctions, function (name) {
+                if (doContinue && _.isFunction(document.documentElement[name])) {
+                  document.documentElement[name]();
+                  doContinue = false;
+                }
+              });
+            } else {
+              var exitFullScreenFunctions = [
+                'webkitExitFullscreen',
+                'mozCancelFullScreen',
+                'msExitFullscreen'];
+              _.each(exitFullScreenFunctions, function (name) {
+                if (doContinue && _.isFunction(document[name])) {
+                  document[name]();
+                  doContinue = false;
+                }
+              });
             }
           };
-
 
           scope.toggleFullScreen = toggleFullScreen;
           scope.isFullScreen = isFullScreen;
