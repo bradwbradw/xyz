@@ -176,8 +176,14 @@ angular.module('xyzApp')
         // and verifies that edits were correct
       },
       downloadAll: function () {
-        return Space.find({filter: {include: spaceIncludeFields, where: {public: true}}})
-          .$promise;
+        var request = function () {
+          return Space.find({ filter: { include: spaceIncludeFields, where: {public: true}}}).$promise;
+        };
+        return request
+          .catch(function(){
+            $log.warn('a request to spaces failed, trying again...');
+            return request();
+          });// <-- because sometimes first time it gets back 500
       },
       downloadOne: function (id) {
         return Space.findOne({filter: {include: spaceIncludeFields, where: {id: id}}})
