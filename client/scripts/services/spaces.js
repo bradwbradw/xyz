@@ -183,7 +183,9 @@ angular.module('xyzApp')
           .catch(function(){
             $log.warn('a request to spaces failed, trying again...');
             return request();
-          });// <-- because sometimes first time it gets back 500
+          });
+        // ^ try again because sometimes the request fails with 500
+        // https://github.com/bradwbradw/xyz/issues/165
       },
       downloadOne: function (id) {
         return Space.findOne({filter: {include: spaceIncludeFields, where: {id: id}}})
