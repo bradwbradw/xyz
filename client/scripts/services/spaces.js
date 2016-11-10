@@ -179,7 +179,7 @@ angular.module('xyzApp')
         var request = function () {
           return Space.find({ filter: { include: spaceIncludeFields, where: {public: true}}}).$promise;
         };
-        return request
+        return request()
           .catch(function(){
             $log.warn('a request to spaces failed, trying again...');
             return request();
