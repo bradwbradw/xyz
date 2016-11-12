@@ -134,7 +134,7 @@ angular.module("xyzPlayer")
         });
 
         scope.$on(YT_event.PLAY, function () {
-          $log.debug("playin video");
+          $log.log("YT got PLAY. Playing queued video ", player);
           player.playVideo();
         });
 

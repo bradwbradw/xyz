@@ -27,8 +27,11 @@ angular.module('xyzPlayer', [])
             youtube: {
               loading: $q.defer(),
               cueAndPlay: function (provider_id) {
-                scope.youtubeId = provider_id;
-                return $q.resolve(true);
+                scope.youtubeId = '';
+                return $timeout(function(){
+                  scope.youtubeId = provider_id;
+                  return true;
+                });
               }
             }, soundcloud: {
               loading: $q.defer()
@@ -100,8 +103,11 @@ angular.module('xyzPlayer', [])
                 $rootScope.$broadcast(SC_event.STOP);
               };
               mediaProviders.soundcloud.cueAndPlay = function (provider_id) {
-                scope.soundId = provider_id;
-                return $q.resolve(true);
+                scope.soundId = '';
+                return $timeout(function(){
+                  scope.soundId = provider_id;
+                  return true;
+                });
               };
 
 

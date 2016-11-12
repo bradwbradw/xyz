@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("xyzPlayer")
-  .directive('soundcloud', function ($sce, $log, $window, $timeout, SC_event /*, soundCloudApiService*/) {
+  .directive('soundcloud', function ($sce, $log, $window, $timeout, SC_event, Playlister /*, soundCloudApiService*/) {
 
     return {
 
@@ -41,17 +41,17 @@ angular.module("xyzPlayer")
         var widget = $window.SC.Widget('xyz-soundcloud-iframe');
 
         widget.bind(SC.Widget.Events.READY, function () {
-//          console.log('SC widget is now Ready');
+//          $log.log('SC widget is now Ready');
 
           scope.$emit('soundcloud_is_ready');
 
           widget.bind(SC.Widget.Events.PLAY, function () {
             widget.getCurrentSound(function (sound) {
-              console.log('SC Widget is playing: ', sound.title);
+              $log.log('SC Widget got PLAY. is playing: ', sound.title);
             });
           });
           widget.bind(SC.Widget.Events.FINISH, function () {
-            console.log('SC Widget is Finished');
+            $log.log('SC Widget is Finished');
             scope.$emit('soundcloud_has_ended');
           });
 
@@ -71,11 +71,19 @@ angular.module("xyzPlayer")
 
         });
 
-//        console.log('SC widget is ', widget);
+//        $log.log('SC widget is ', widget);
 
-        var soundCloudUrl = function(id){
+        var soundCloudUrl = function (id) {
           return 'https://api.soundcloud.com/tracks/' + id + '?visual=true';
         };
+
+        // double to make sure current song still matches scope id
+        // because maybe user is clicking 'next' rapidly
+        var stillShouldPlay = function () {
+          var nowPlayingProviderId = _.get(Playlister.getNowPlaying(), 'provider_id');
+          return nowPlayingProviderId === scope.soundid
+        };
+
         scope.$watch('soundid', function (newValue, oldValue) {
           if (!newValue || (newValue === oldValue)) {
             return;
@@ -83,14 +91,20 @@ angular.module("xyzPlayer")
 
           var newUrl = soundCloudUrl(scope.soundid);
           // NOTE - can also do an artist for the url, might want to load actual url from xyz item
-//          console.log('soundcloud new url is ', newUrl);
+          $log.debug('soundcloud watch hit: (' + scope.soundid + ') new url is ', newUrl);
           var options = {
             callback: function (thing) {
-//              console.log('ok the song is ready to play ', thing);
-              widget.play();
+              $log.log('ok the sound id is ', scope.soundid);
+
+              if (stillShouldPlay()) {
+                widget.play();
+              }
             }
           };
-          widget.load(newUrl, options);
+
+          if (stillShouldPlay()) {
+            widget.load(newUrl, options);
+          }
 
         });
 

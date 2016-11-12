@@ -30,7 +30,7 @@ angular.module('xyzApp')
         }
         var deferred = $q.defer();
 
-        $log.log('recomputing playlist for space: '+ _.get(space,'name'), space);
+//        $log.log('recomputing playlist for space: '+ _.get(space,'name'), space);
 
         var distanceBetweenItems = function (song1, song2) {
 
