@@ -16,7 +16,7 @@ angular.module("xyzPlayer")
       'src=\'https://w.soundcloud.com/player/?url=https://soundcloud.com/smilebandsmile/holiday\'>' +
       '</iframe></div>',
 
-      link: function (scope, element, attrs, $rootScope) { //jshint ignore:line
+      link: function (scope) { //jshint ignore:line
 
         /*
          var iframeSrc = 'https://w.soundcloud.com/player/?url=' +
@@ -93,8 +93,8 @@ angular.module("xyzPlayer")
           // NOTE - can also do an artist for the url, might want to load actual url from xyz item
           $log.debug('soundcloud watch hit: (' + scope.soundid + ') new url is ', newUrl);
           var options = {
-            callback: function (thing) {
-              $log.log('ok the sound id is ', scope.soundid);
+            callback: function () {
+              $log.debug('ok the sound id is ', scope.soundid);
 
               if (stillShouldPlay()) {
                 widget.play();
