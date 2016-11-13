@@ -69,6 +69,15 @@ angular.module('xyzApp')
       _.unset(Spaces.map, space.id);
     };
 
+    var tryAgainIfFailed = function (origFn) {
+      return origFn()
+        .catch(function () {
+            $log.warn('a request to spaces failed, trying again...');
+            return origFn();
+          }
+        )
+    };
+
     var Spaces = {
       map: {},
       getMap: function () {
@@ -177,27 +186,36 @@ angular.module('xyzApp')
       },
       downloadAll: function () {
         var request = function () {
-          return Space.find({ filter: { include: spaceIncludeFields, where: {public: true}}}).$promise;
+          return Space.find({filter: {include: spaceIncludeFields, where: {public: true}}}).$promise;
         };
-        return request()
-          .catch(function(){
-            $log.warn('a request to spaces failed, trying again...');
-            return request();
-          });
+        return tryAgainIfFailed(request);
         // ^ try again because sometimes the request fails with 500
         // https://github.com/bradwbradw/xyz/issues/165
       },
       downloadOne: function (id) {
-        return Space.findOne({filter: {include: spaceIncludeFields, where: {id: id}}})
-          .$promise;
+        var request = function () {
+          return Space.findOne({filter: {include: spaceIncludeFields, where: {id: id}}})
+            .$promise;
+        };
+
+        return tryAgainIfFailed(request)
       },
       downloadUserSpaces: function () {
         if (!uid()) {
           return $q.reject('user is not logged in');
         } else {
+
+          var r1 = function () {
+            return Dj.spaces({id: uid(), filter: {include: spaceIncludeFields}}).$promise;
+          };
+
+          var r2 = function(){
+            return Dj.editableSpaces({id: uid(), filter: {include: spaceIncludeFields}}).$promise;
+          };
+
           return $q.all([
-            Dj.spaces({id: uid(), filter: {include: spaceIncludeFields}}).$promise,
-            Dj.editableSpaces({id: uid(), filter: {include: spaceIncludeFields}}).$promise
+            tryAgainIfFailed(r1),
+            tryAgainIfFailed(r2)
           ])
             .then(_.flatten);
         }
