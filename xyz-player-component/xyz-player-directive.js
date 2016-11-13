@@ -181,7 +181,8 @@ angular.module('xyzPlayer', [])
           };
 
           var next = function () {
-            mediaProviders[Playlister.getNowPlaying().provider].stop();
+//            mediaProviders[Playlister.getNowPlaying().provider].stop();
+            stopAll();
             go();
           };
 
