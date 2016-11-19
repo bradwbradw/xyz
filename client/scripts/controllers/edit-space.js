@@ -65,7 +65,10 @@ angular.module('xyzApp')
     };
 
     var saveEdits = function (edits) {
-      Spaces.saveAndUpdateMap('update', [edits], edits);
+      Spaces.saveAndUpdateMap('update', [edits], edits)
+        .then(function(){
+          $scope.spaceEditForm.$setPristine();
+        });
     };
 
     $scope.addToContributors = addToContributors;

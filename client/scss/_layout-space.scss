@@ -1,8 +1,19 @@
 
+.bar-icons {
+  position: absolute;
+  right: $top-padding;
+  top: $top-padding;
+
+  .icon-btn {
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+  }
+}
+
 .sidebar-container {
   position: fixed;
-  top: $bar-height;
-  right: 0;
+  top: $top-padding + $bar-height;
+  right: $top-padding;
   max-width: $sidebar-width;
   z-index: 4;
   text-align: left;
@@ -22,6 +33,16 @@
   label {
     display: block;
     font-size: 0.8em;
+  }
+
+  #delete-space {
+    float: right;
+    color: red;
+    font-size: 10px;
+  }
+
+  #add-contributor-label {
+    margin-top: 0.25em;
   }
 }
 
@@ -46,11 +67,13 @@
   }
   .title {
     font-size: 0.9rem;
+
+    min-width: 180px;
   }
 }
 
 .space-svg-view {
-  border: 3px dotted pink;
+  border: 4px solid white;
   margin-left: $space-margin-left;
   margin-top: $space-margin-top;
   margin-bottom: 650px;
@@ -63,17 +86,17 @@
   overflow: visible;
   /* position absolute, left, top is defined inline */
 
-  .expanded-meta-actions{
+  .expanded-meta-actions {
     min-height: 1.8em;
   }
 
-  .media-inspector{
+  .media-inspector {
     min-width: 1.8em;
   }
 
 }
 
-.item-hover{
-  position:absolute;
-  background-color:white;
+.item-hover {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.1);
 }

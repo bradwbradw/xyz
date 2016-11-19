@@ -1,6 +1,7 @@
 <div class="top-bar">
 
-  <h1 id="bar-logo" ui-sref="base.landing" class="logo">XYZ</h1>
+  <h1 id="bar-logo" ui-sref="base.landing" class="logo">
+    <img src="/images/bb.png"></h1>
 
   <h1 id="bar-title" ng-if="title()"> {{title()}}
     <a ng-if="Spaces.current()">
@@ -63,10 +64,6 @@
         ng-class="{'active-icon':settingsOpen()}"
         ng-click="toggleSettings()">
       settings
-
-        <md-tooltip md-delay="750">
-          Edit User Settings
-        </md-tooltip>
     </md-icon>
 
     <span id="signup-login-link"
@@ -89,11 +86,5 @@
        ng-include="'partials/user-settings-popup.html'">
   </div>
 </div>
-
-<md-progress-linear loading
-                    class="loading-indicator"
-                    md-mode="indeterminate">
-</md-progress-linear>
-
 
 

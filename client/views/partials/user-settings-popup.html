@@ -1,11 +1,11 @@
 
 
-    <div ng-if="User.get().website"><!-- todo: fix website links (add http if not there) -->
-      Logged in as<br/> <a ng-href="{{Utility.fixUrl(User.get().website)}}">{{User.get().name}}</a>
-    </div>
-    <div ng-if="!User.get().website"><!-- todo: fix website links (add http if not there) -->
-      Logged in as<br/> {{User.get().name}}
-    </div>
+    <h2 ng-if="User.get().website" id="username-label">
+      <a ng-href="{{Utility.fixUrl(User.get().website)}}" target="_blank">{{User.get().name}}</a>
+    </h2>
+    <h2 ng-if="!User.get().website" id="username-label">
+      <br/> {{User.get().name}}
+    </h2>
 
     <button ng-click="toggleEditing()">edit info</button>
 

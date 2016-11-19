@@ -24,6 +24,9 @@
 
 
   <label>Contributors</label>
+  <label ng-if="!Spaces.current().contributors[0]">
+    ( no contributors )
+  </label>
   <div ng-repeat="contributor in Spaces.current().contributors">
     {{contributor.name}}
     <md-icon class="icon-btn"
@@ -31,7 +34,7 @@
     </md-icon>
   </div>
 
-  <label for="search-users">Add a contributor:</label>
+  <label id="add-contributor-label" for="search-users">Add a contributor:</label>
   <input ng-model="userSearchQ" id="search-users"
          ng-change="searchUsers(userSearchQ)"
          ng-model-options="{debounce: 500, updateOn:'default'}"
@@ -45,6 +48,6 @@
 
   <br/>
 
-  <button ng-click="deleteViaConfirm()">delete space</button>
+  <button id="delete-space" ng-click="deleteViaConfirm()">delete space</button>
 
 </div>

@@ -23,6 +23,8 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
       }
       var circleElement = element.find('circle');
 
+      var halo = element.find('.now-playing-halo');
+
       var startX;
       var startY;
       var x = parseFloat(item.x) || 0;
@@ -30,6 +32,8 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
       circleElement.attr('cx', x);
       circleElement.attr('cy', y);
+      halo.attr('cx', x);
+      halo.attr('cy', y);
 
       var dragPointOffsetX;
       var dragPointOffsetY;

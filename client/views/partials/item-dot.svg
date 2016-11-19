@@ -19,6 +19,11 @@
 
         </pattern>
     </defs>
+
+    <circle class="now-playing-halo" fill="url(#now-playing-radial-effect)"
+            ng-attr-r="{{layoutConstants.DOT_RADIUS * 2.3}}"
+            r="" ng-show="isNowPlaying(item)">
+    </circle>
     <circle
             ng-attr-r="{{layoutConstants.DOT_RADIUS}}"
             r=""
@@ -26,8 +31,9 @@
             fill="{{Utility.absoluteRef('image'+item.id)}}"
             ng-class="{
             unavailable: (item.public === false),
-            'first-song':isFirstSong(item),
-            'now-playing':isNowPlaying(item)}"
+            'first-song':isFirstSong(item)}"
     >
     </circle>
+
+
 </svg>

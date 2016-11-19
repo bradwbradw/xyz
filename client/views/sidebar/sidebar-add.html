@@ -8,7 +8,7 @@
         placeholder=""
         focus
     >
-    <button ng-click="searchInputChanged(newText)">Search</button>
+    <md-icon class="icon-btn" ng-click="searchInputChanged(newText)">search</md-icon>
     <div ng-if="fetchingSongData"><i>searching...</i></div>
     <div class="filters">
       <md-checkbox ng-repeat="(filterName, value) in filters" ng-model="filters[filterName]"

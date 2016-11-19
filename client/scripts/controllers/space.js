@@ -35,7 +35,9 @@ angular.module('xyzApp')
 
         var topOffset = item.y +
           layout_constants.SPACE_MARGIN.TOP +
-//          layout_constants.DOT_RADIUS +
+            1.25*16 +
+          // FROM _variables.scc: $top-padding:1.25em;
+            + 0.5*layout_constants.DOT_RADIUS +
           'px';
 
         var leftOffset = item.x +

@@ -1,6 +1,13 @@
+
+<div ui-view="bar"></div>
 <div class="base-container">
 
-  <div ui-view="bar"></div>
+  <md-progress-linear loading
+                      class="loading-indicator"
+                      md-mode="indeterminate">
+  </md-progress-linear>
+
+
   <toast> </toast>
   <div ui-view="main" class="main-container"></div>
 
