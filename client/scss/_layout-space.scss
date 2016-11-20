@@ -62,13 +62,35 @@
   padding: 0.5em;
   min-height: 150px;
 
-  .artist {
-    margin-bottom: 0.5em;
+  .service-logo {
+    height: 1em;
+    text-align: left;
+    vertical-align: middle;
+    display: inline-block;
+
+    img {
+      height: 100%;
+    }
   }
+
+  .artist-youtube {
+    font-size: 0.6rem;
+  }
+
+  .artist-soundcloud {
+    margin-bottom: 0.5em;
+    line-height:0.5;
+    font-size: 0.8rem;
+  }
+
   .title {
     font-size: 0.9rem;
 
     min-width: 180px;
+  }
+
+  .provider-and-time {
+    margin-top: 1.5em;
   }
 }
 

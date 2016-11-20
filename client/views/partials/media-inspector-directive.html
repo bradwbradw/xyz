@@ -17,7 +17,7 @@
         .then(updateParentImportView)">
       likes
     </button>
-    <div ng-if="Library.isPlayable(item)" >
+    <div ng-if="Library.isPlayable(item)">
       <md-icon class="icon-btn"
                ng-click="Player.stop()" ng-show="Player.isPlaying(item.provider_id)">
         eject
@@ -33,7 +33,7 @@
 
     </div>
     <div ng-if="!Library.isPlayable(item)">
-      <md-icon > {{item.kind === 'user'? 'person' : 'help'}}</md-icon>
+      <md-icon> {{item.kind === 'user'? 'person' : 'help'}}</md-icon>
     </div>
   </div>
 
@@ -43,22 +43,29 @@
        flex="grow"
        ng-hide="Player.playingItem().provider_id === item.provider_id">
 
-    <div class="provider">
-      <a ng-href="{{item.url}}" target="_blank" ng-if="!item.error">
-        {{item.provider}}
-      </a>
-
-    </div>
-
-    <div class="artist">
+    <div class="artist-soundcloud" ng-if="item.provider === 'soundcloud'">
+      <md-icon class="md-18">person</md-icon>
       {{item.artist}}
     </div>
     <div class="title">
       {{item.title}}
-      <span ng-if="item.length ">
+    </div>
+
+    <div class="artist-youtube" ng-if="item.provider === 'youtube'">
+      <md-icon class="md-18">person</md-icon>
+      {{item.artist}}
+    </div>
+
+    <a class="provider-and-time"
+       ng-href="{{item.url}}"
+      target="_blank"
+      ng-if="!item.error" >
+      <span icon-of-provider="{{item.provider}}"></span>
+
+      <span class="item-length" ng-if="item.length ">
         ({{item.length | secondsToDateTime | date:'H:mm:ss'}})
       </span>
-    </div>
+    </a>
 
     <div class="error" ng-if="item.error">
       {{item.error}}
