@@ -1,7 +1,7 @@
 /**
  * Created by brad on 7/4/16.
  */
-xyzApp
+angular.module('xyzApp')
   .directive('debug', ['$rootScope', function ($rootScope) {
     return {
       restrict: 'E',

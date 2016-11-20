@@ -1,4 +1,4 @@
-xyzApp.directive('focus', function($rootScope, $log, $timeout) {
+angular.module('xyzApp').directive('focus', function($rootScope, $log, $timeout) {
   return {
     restrict: 'AC',
     link: function(_scope, _element) {
