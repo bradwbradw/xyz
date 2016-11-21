@@ -64,9 +64,18 @@ angular.module('xyzAdmin')
       url:'spaces',
       views:{
         main:{
-          templateUrl: 'components/spaces.html'
+          templateUrl: 'components/spaces.html', 
+          controller:'SpacesController'
         }
-      }
+      }, 
+      resolve: {
+          users: function (Dj) {
+            return Dj.find().$promise;
+          }, 
+          spaces: function (Space) {
+            return Space.find().$promise;
+          }
+        }
     });
 
 ;
