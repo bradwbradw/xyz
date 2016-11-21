@@ -12,6 +12,6 @@ angular.module('xyzAdmin')
     };
 
     $scope.setOwner = setOwner;
-    $scope.spaces = spaces
+    $scope.spaces = spaces;
     $scope.users = users;
   });
