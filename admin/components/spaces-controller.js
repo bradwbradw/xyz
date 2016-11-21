@@ -1,5 +1,5 @@
 angular.module('xyzAdmin')
-  .controller('SpacesController', function ($scope, $window, users, Dj) {
+  .controller('SpacesController', function ($scope, $window, spaces, users, Dj) {
 
     var setOwner = function (space, user) {
 
