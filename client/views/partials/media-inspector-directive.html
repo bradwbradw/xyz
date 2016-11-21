@@ -7,6 +7,7 @@
       <md-icon class="icon-btn" ng-if="showAddButton(item)"
                ng-click="putInSpace(item, $event)">
         add
+        <md-tooltip md-delay="500">Add to space</md-tooltip>
       </md-icon>
     </div>
     <button class="icon-btn" ng-if="isSoundcloudArtist(item)" ng-click="MediaAPI.soundcloud.tracksByUser(item.provider_id)
@@ -65,6 +66,7 @@
       <span class="item-length" ng-if="item.length ">
         ({{item.length | secondsToDateTime | date:'H:mm:ss'}})
       </span>
+      <md-tooltip md-delay="500">Visit on {{item.provider}}</md-tooltip>
     </a>
 
     <div class="error" ng-if="item.error">

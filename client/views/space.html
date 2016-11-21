@@ -49,11 +49,14 @@
      ng-if="expandedItem()"
      layout="column">
 
-  <div layout="row" class="expanded-meta-actions">
+  <div layout="row" class="expanded-meta-actions" layout-align="start center">
 
 
     <md-icon class="icon-btn" id="play-from-here" ng-click="playSpace(Spaces.current(), expandedItem().id)">
       fast_forward
+      <md-tooltip md-delay="500">
+        Play from Here
+      </md-tooltip>
     </md-icon>
     <md-icon class="icon-btn" id="set-as-first"
              ng-if="canEdit()"

@@ -46,6 +46,22 @@
   }
 }
 
+
+
+.expanded-popup {
+  width: $sidebar-width;
+  overflow: visible;
+  /* position absolute, left, top is defined inline */
+
+  .expanded-meta-actions {
+    min-height: 1.8em;
+  }
+
+  .media-inspector {
+    min-width: 1.8em;
+  }
+
+}
 .media-inspector {
 
   max-height: 200px;
@@ -102,21 +118,6 @@
   margin-right: $sidebar-width;
 }
 
-.expanded-popup {
-  height: 1px;
-  width: 1px;
-  overflow: visible;
-  /* position absolute, left, top is defined inline */
-
-  .expanded-meta-actions {
-    min-height: 1.8em;
-  }
-
-  .media-inspector {
-    min-width: 1.8em;
-  }
-
-}
 
 .item-hover {
   position: absolute;
