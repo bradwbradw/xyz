@@ -1,10 +1,12 @@
 angular.module('xyzAdmin')
-  .controller('SpacesController', function ($scope, $window, spaces, users, Dj) {
+  .controller('SpacesController', function ($scope, $window, spaces, users, Space) {
 
     var setOwner = function (space, user) {
 
-      if ($window.confirm('overwrite space '+space.name+' owner with user ' + user.name + ' (' + user.email + ') ? ')) {
-      
+      if ($window.confirm('overwrite space "'+space.name+'"\'s owner with user "' + user.name + '" (' + user.email + ') ? ')) {
+        space.owner = null;
+        space.ownerId = user.id;
+        space.$save();
       }
 
     };

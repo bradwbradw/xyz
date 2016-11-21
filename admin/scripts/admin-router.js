@@ -73,7 +73,7 @@ angular.module('xyzAdmin')
             return Dj.find().$promise;
           }, 
           spaces: function (Space) {
-            return Space.find().$promise;
+            return Space.find({filter:{include:['owner','contributors']}}).$promise;
           }
         }
     });

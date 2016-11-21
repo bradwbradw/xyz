@@ -2,6 +2,19 @@
 
 
 <div ng-repeat="space in spaces">
-  {{space | json}}
+  <h4>{{space.name}}</h4>
+  <pre>{{space | json}}
+  </pre>
+  <h5>Owner: {{space.owner.name}} ({{space.owner.email}})</h5>
+  <select ng-options="user as user.name+'  ('+user.email+')' for user in users"
+          placeholder="change owner"
+          ng-model="newOwner">
+
+  </select>
+
+  <span ng-if="newOwner">
+    new owner: {{newOwner.name}} <button ng-click="setOwner(space, newOwner)">Save</button>
+  </span>
 <hr>
+
 </div>
