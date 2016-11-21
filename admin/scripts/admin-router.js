@@ -56,6 +56,19 @@ angular.module('xyzAdmin')
             return Dj.find().$promise
           }
         }
-      });
+      })
+
+
+
+    .state('base.spaces',{
+      url:'spaces',
+      views:{
+        main:{
+          templateUrl: 'components/spaces.html'
+        }
+      }
+    });
+
+;
     $urlRouterProvider.otherwise('/');
   });
