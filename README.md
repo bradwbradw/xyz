@@ -5,18 +5,59 @@ version 0.12.1.
 
 ## Build & development
 
+##0) INITIAL ( you should do this to set up your environment once, then you never have to repeat )
 
-##STEP 0
+- get set up with node using nvm (if you currently use `sudo` to run npm commands, please reinstall node using `nvm` so that you don't run node as root user).  Follow instructions at https://github.com/creationix/nvm
 
-get set up with npm, gulp ( optional, but encouraged: mongo )
+- install mongoDb locally (recommended but not necessary, see note in "OPTIONS" section below )
+ (https://www.mongodb.com/download-center#community)
+ 
+ - clone this repository. the action of cloning creates a new directory and installs into that.  This directory is now the Root directory of local version of the repository. Execute all terminal commands from inside this new folder
+`git clone https://github.com/bradwbradw/xyz`
+ 
+- after installing `nvm` and cloning the repo, you have to install some node modules globally, so run these commands from inside this project's root directory:
 
-##STEP 1
+`nvm use`
 
-in terminal, run: `./dev.sh`
+`npm install gulp-cli -g` <-- may actually have to repeat if the node version changes
 
-##STEP 2
+`npm install nodemon -g` <-- may actually have to repeat if the node version changes
 
-in another terminal window, run: `gulp`
+##1) BUILD (repeat these steps if you have closed your terminal windows)
+This step will: A) compile the app's views and javascript to make the distribution version of the app, and B) set up the backend server so that the distribution AND the development versions can make requests to the api
+
+`nvm use`
+
+`npm install` <-- only necessary if the file `package.json` has changed since you last ran this command
+
+`./dev.sh`
+
+At this point the app is built and ready to browse and run tests, but the development flow is not set up (you have to build every time you make a code change). To view the app, go to `http://localhost:5005`.  you can also explore the api at `http://localhost:5005/explorer`
+
+
+##2) DEVELOP (repeat these steps if you have closed your terminal windows and want to work on any code)
+
+(open a new terminal window)
+
+`nvm use`
+
+`gulp`
+
+At this point the development version of the app can be loaded at `http://localhost:9005`, and any time you edit a file, any browsers that have the page loaded should refresh automatically
+
+
+## ERRORS! 
+
+- the first thing to try when an error occurs in the terminal (or possibly in the browser console) is to reinstall node modules then try whatever you were doing one more time.   To do this, first, ensure that the terminal window is using the right version of node by running `nvm use`.  The output should say this (or something similar):
+
+```
+Found '/path/to/xyz/.nvmrc' with version <lts/boron>
+Now using node v6.9.1 (npm v3.10.8)
+```
+
+To nuke the modules and re-install (this is safe) do `rm -rf node_modules/` (or just delete the folder "node_modules" using Finder), then do `npm install`.  
+
+TODO Add more possible errors + workarounds here
 
 ## OPTIONS
 
@@ -36,7 +77,7 @@ mongodb://heroku_cc7gbkr1:rusl214k9b95o5d7evobgufue6@ds059135.mongolab.com:59135
 
 BrowserSync will allow you to load the site using an external ip. It shows what this ip address is when starting `gulp serve`.  The problem is that some of the api calls would still go to `localhost`.  Unless you have port forwarding set up, this will prevent api calls from executing.
 
-You can solve this by setting the IP variable to whatever browserSync is using:
+You can solve this by setting the `IP` environment variable to whatever browserSync is using:
 
 ```
 IP=192.168.0.11 gulp serve
