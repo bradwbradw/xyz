@@ -112,13 +112,9 @@
       width: 100%;
     }
   }
-  margin-bottom: 3em;
+  margin-bottom: $xyz-player-height;
   margin-top: 3em;
 
-}
-
-.public-spaces-container {
-  margin-bottom: $xyz-player-height;
 }
 
 .xyz-player-container {
@@ -161,3 +157,7 @@ input {
 button {
 }
 
+.change-password-form {
+  padding-top: 4em;
+  padding-bottom:4em;
+}
