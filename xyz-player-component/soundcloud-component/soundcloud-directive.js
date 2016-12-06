@@ -13,8 +13,9 @@ angular.module("xyzPlayer")
       },
       template:
       '<iframe ng-show="showWidget()" id="xyz-soundcloud-iframe" ' +
-      'src=\'https://w.soundcloud.com/player/?url=\'>' +
+      'src=\'https://w.soundcloud.com/player/?url=https://soundcloud.com/smilebandsmile/holiday\'>' +
       '</iframe>',
+
 
       link: function (scope) { //jshint ignore:line
 
