@@ -119,7 +119,7 @@ angular.module('xyzApp')
       var setFirstSongThenRecompute = function (item) {
         Spaces.setFirstSong(item)
           .then(function () {
-            Playlister.recompute();
+            Playlister.recompute(Spaces.current(),item.id);
           })
       };
 
