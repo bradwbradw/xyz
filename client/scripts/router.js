@@ -42,7 +42,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '/account',
       views: {
         'main': {
-          templateUrl: 'account.html',
+          templateUrl: 'account-change-password.html',
           controller: 'AccountCtrl'
         },
         'bar': {
