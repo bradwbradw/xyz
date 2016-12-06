@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var _ = require('lodash');
 var loopbackAngular = require('gulp-loopback-sdk-angular');
 
 var bower = require('gulp-bower');
@@ -12,7 +13,8 @@ var replace = require('gulp-replace');
 var buster = require('gulp-buster');
 var rev = require('gulp-rev');
 var revReplace = require('gulp-rev-replace');
-
+var notify = require('gulp-notify');
+var plumber = require('gulp-plumber');
 
 var ngAnnotate = require('gulp-ng-annotate');
 var annotateOptions = {
@@ -70,10 +72,21 @@ function templateHeader(appName) {
     + 'app.run([\'$templateCache\', function($templateCache) {';
 }
 
-function reloadB(done) {
+function reloadBrowsers(done) {
   browserSync.reload();
   done();
 }
+
+
+var reportError = function(error){
+  var message = _.get(error, 'message');
+  if (!message){
+    return 'unknown error ';
+  } else {
+    return message;
+  }
+};
+
 var apiUrl;
 if (process.env.NODE_ENV === 'production') {
   apiUrl = constants.api.path;//'http://'+ constants.api.host+ ':'+ constants.api.port + constants.api.path + '/';
@@ -91,6 +104,7 @@ gulp.task('loopback', function () {
       }
     ))
     .pipe(rename('lb-services.js'))
+    .on("error", notify.onError(reportError))
     .pipe(gulp.dest('./client/scripts/services'));
 });
 //lb-ng server/server.js client/scripts/services/lb-services.js -u http://0.0.0.0:3000/api && node docs.js
@@ -99,7 +113,7 @@ gulp.task('clean', function () {
   return del('dist');
 });
 
-gulp.task('reload', reloadB);
+gulp.task('reload', reloadBrowsers);
 
 gulp.task('sass:app', function () {
 
@@ -107,22 +121,25 @@ gulp.task('sass:app', function () {
     'client/scss/**/*.scss',
     'xyz-player-component/**/*.scss'
   ])
-    .pipe(sass()) // Using gulp-sass
+    .pipe(sass())
+    .on("error", notify.onError(reportError))
     .pipe(gulp.dest('client/css'));
-//    .pipe(browserSync.reload({stream: true}));
+
 });
+
 gulp.task('sass:player', function () {
   return gulp.src('xyz-player-component/**/*.scss')
     .pipe(sass())
+    .on("error", notify.onError(reportError))
     .pipe(gulp.dest('xyz-player-component/css'));
-//    .pipe(browserSync.reload({stream: true}));
-});
 
+});
 
 gulp.task('sass', gulp.parallel('sass:app', 'sass:player'));
 
 gulp.task('bower', function () {
   return bower()
+    .on("error", notify.onError(reportError))
     .pipe(gulp.dest('client/vendor'))
 });
 
@@ -131,18 +148,21 @@ gulp.task('bower', function () {
 
 gulp.task('copyCss:stream', function () {
   return gulp.src('stream/style.css')
+    .on("error", notify.onError(reportError))
     .pipe(gulp.dest('stream-dist'))
 });
 
 
 gulp.task('copyCss:admin', function () {
   return gulp.src('admin/admin-style.css')
+    .on("error", notify.onError(reportError))
     .pipe(gulp.dest('admin-dist'))
 });
 
 
 gulp.task('copyImages', function () {
   return gulp.src('client/images/**/*')
+    .on("error", notify.onError(reportError))
     .pipe(gulp.dest('dist/images'))
 });
 
@@ -159,6 +179,7 @@ gulp.task('useref:main', function () {
     .pipe(gulpIf('*.css', cssnano()))
     .pipe(gulpIf('*.css', rev()))
     .pipe(revReplace())
+    .on("error", notify.onError(reportError))
     .pipe(gulp.dest('dist'))
 });
 
@@ -175,6 +196,7 @@ gulp.task('useref:stream', function () {
     .pipe(gulpIf('*.css', cssnano()))
     .pipe(gulpIf('*.css', rev()))
     .pipe(revReplace())
+    .on("error", notify.onError(reportError))
     .pipe(gulp.dest('stream-dist'))
 });
 
@@ -189,6 +211,7 @@ gulp.task('useref:admin', function () {
     .pipe(gulpIf('*.css', cssnano()))
     .pipe(gulpIf('*.css', rev()))
     .pipe(revReplace())
+    .on("error", notify.onError(reportError))
     .pipe(gulp.dest('admin-dist'))
 });
 
@@ -291,6 +314,7 @@ gulp.task('templates', function () {
 
   return gulp.src(paths.src.views)
     .pipe(templateCache({templateHeader: templateHeader('xyzApp')}))
+    .on("error", notify.onError(reportError))
     .pipe(gulp.dest(paths.src.scripts));
 });
 gulp.task('templates:admin', function () {
@@ -299,12 +323,13 @@ gulp.task('templates:admin', function () {
 
   return gulp.src(paths.src.adminViews)
     .pipe(templateCache({templateHeader: templateHeader('xyzAdmin')}))
+    .on("error", notify.onError(reportError))
     .pipe(gulp.dest(paths.src.adminScripts));
 });
 
 gulp.task('watch:sass', function (done) {
   gulp.watch(paths.src.sass)
-    .on('change', gulp.series('sass', reloadB));
+    .on('change', gulp.series('sass', reloadBrowsers));
   done()
 });
 
@@ -327,14 +352,15 @@ gulp.task('watch:code', function (done) {
     'xyz-player-component/**/*.js',
     'xyz-player-component/**/*.html'
   ])
-    .on('change', gulp.series('useref:main', 'copyImages', reloadB));
+    .on('change', gulp.series('useref:main', 'copyImages', reloadBrowsers));
   done();
 });
 
 gulp.task('watch', gulp.parallel('watch:sass', 'watch:views', 'watch:code'));
 
 gulp.task('build',
-  gulp.series('clean', 'loopback', 'sass', 'bower', gulp.parallel('templates', 'templates:admin'),
+  gulp.series('clean', 'loopback', 'sass', 'bower',
+    gulp.parallel('templates', 'templates:admin'),
     gulp.parallel('useref:main', 'copyImages'),
     gulp.parallel('useref:admin', 'copyCss:admin'),
     gulp.parallel('useref:stream', 'copyCss:stream'))
