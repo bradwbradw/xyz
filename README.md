@@ -57,6 +57,9 @@ Now using node v6.9.1 (npm v3.10.8)
 
 To nuke the modules and re-install (this is safe) do `rm -rf node_modules/` (or just delete the folder "node_modules" using Finder), then do `npm install`.  
 
+- For the error: `Failed to read /Users/brad/Sites/xyz/client/vendor/angular-sanitize/.bower.json (or similar)` the solution
+is to simply delete the contents of "vendor" folder and then run `gulp bower` to re-download the clientside dependencies into there
+
 TODO Add more possible errors + workarounds here
 
 ## OPTIONS
