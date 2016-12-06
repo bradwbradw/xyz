@@ -162,10 +162,18 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
         }
       };
 
+      var rotationTransformValues = function(){
+        var origin = item.x+' '+item.y;
+        return '0 '+origin+'; '+'360 '+origin+';'
+      };
+
+      scope.rotationTransformValues = rotationTransformValues;
       scope.dotImageXOffset = dotImageXOffset;
       scope.dotImageYOffset = dotImageYOffset;
       scope.dotImageHeight = dotImageHeight;
       scope.dotImageWidth = dotImageWidth;
+
+      scope.dotRadius = dotRadius;
 
       scope.Utility = Utility;
     }
