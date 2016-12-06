@@ -12,8 +12,8 @@ angular.module("xyzPlayer")
         startSeconds: "@"
       },
       template:
-      '<iframe id="xyz-soundcloud-iframe" ' +
-      'src=\'https://w.soundcloud.com/player/?url=https://soundcloud.com/smilebandsmile/holiday\'>' +
+      '<iframe ng-show="showWidget()" id="xyz-soundcloud-iframe" ' +
+      'src=\'https://w.soundcloud.com/player/?url=\'>' +
       '</iframe>',
 
       link: function (scope) { //jshint ignore:line
@@ -82,6 +82,10 @@ angular.module("xyzPlayer")
         var stillShouldPlay = function () {
           var nowPlayingProviderId = _.get(Playlister.getNowPlaying(), 'provider_id');
           return nowPlayingProviderId === scope.soundid
+        };
+
+        scope.showWidget = function(){
+          return stillShouldPlay();
         };
 
         scope.$watch('soundid', function (newValue, oldValue) {
