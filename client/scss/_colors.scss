@@ -59,7 +59,7 @@
 }
 
 .user-settings-popup {
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0, 0, 0, 0.1);
   button, input {
     color: black;
   }
@@ -84,11 +84,12 @@
   font-size: 0.8em;
 }
 
-.media-inspector, .expanded-meta-actions{
+.media-inspector, .expanded-meta-actions {
 
   background-color: rgba(0, 0, 0, 0.21);
 
 }
+
 .media-inspector-actions {
 
   button {
@@ -97,7 +98,6 @@
 }
 
 .media-inspector-details {
-
 
   .error {
     color: red;
