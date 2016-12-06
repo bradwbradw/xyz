@@ -94,7 +94,7 @@
 
 }
 
-.landing-section {
+section {
   width: 100%;
   text-align: center;
   .space-thumbnail {
@@ -115,10 +115,9 @@
   margin-bottom: 3em;
   margin-top: 3em;
 
-}
-
-.public-spaces-container {
-  margin-bottom: $xyz-player-height;
+  &:last-child {
+    margin-bottom: $xyz-player-height;
+  }
 }
 
 .xyz-player-container {

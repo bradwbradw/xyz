@@ -1,7 +1,7 @@
 
 
 
-<div ng-if="User.loggedIn()" class="landing-section">
+<section ng-if="User.loggedIn()" >
   <h2>My Spaces</h2>
 
   <a id="create-new-space" ng-click="createNewSpace()"> + create new space</a>
@@ -21,10 +21,10 @@
 
   <br/>
 
-</div>
+</section>
 
-<div>
-  <div class="landing-section public-spaces-container">
+<section>
+  <div class="public-spaces-container">
   <h2>Public Spaces</h2>
 
     <ul layout-wrap layout-align="space-around left" layout="row">
@@ -34,7 +34,7 @@
 
   </div>
 
-</div>
+</section>
 
 <pre class="debug" ng-if="false">
   map:
