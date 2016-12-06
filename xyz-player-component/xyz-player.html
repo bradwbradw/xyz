@@ -46,14 +46,15 @@
 
       <div youtube
            ng-show="Playlister.getNowPlaying().provider === 'youtube'"
-           videoid="{{youtubeId}}">
+           videoid="{{youtubeId}}"
+            class="xyz-component-iframe-container">
 
         YT player provider view (i should get replaced)
 
       </div>
 
       <div soundcloud ng-show="Playlister.getNowPlaying().provider === 'soundcloud'"
-           soundid={{soundId}}>
+           soundid={{soundId}} class="xyz-component-iframe-container">
         SC player provider view
       </div>
 

@@ -11,10 +11,10 @@ angular.module("xyzPlayer")
         soundid: "@",
         startSeconds: "@"
       },
-      template: '<div> ' +
+      template:
       '<iframe id="xyz-soundcloud-iframe" ' +
       'src=\'https://w.soundcloud.com/player/?url=https://soundcloud.com/smilebandsmile/holiday\'>' +
-      '</iframe></div>',
+      '</iframe>',
 
       link: function (scope) { //jshint ignore:line
 
