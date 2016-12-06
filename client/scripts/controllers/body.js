@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('xyzApp')
-  .controller('BodyCtrl', function ($rootScope, $window, $scope, $log, $timeout, $stateParams, localStorageService, Utility, Playlister) {
+  .controller('BodyCtrl', function ($rootScope, $window, $scope, $log, $timeout, $stateParams, localStorageService, Utility, UserSettings, Playlister) {
 
     $rootScope.askConfirm = function (callback, thing, error) {
       if ($window.confirm) {
@@ -33,6 +33,7 @@ angular.module('xyzApp')
     $rootScope.getPlayingSpace = getPlayingSpace;
     $scope.Playlister = Playlister;
     $scope.Utility = Utility;
+    $scope.UserSettings = UserSettings;
 
     $rootScope.showError = function (thing) {
       $rootScope.error = Utility.cleanError(thing);

@@ -16,7 +16,7 @@
 
   <div class="xyz-player-container"
        ng-controller="SiteWidePlayerCtrl"
-       ng-if="Utility.isSideWidePlayerEnabled()">
+       ng-if="UserSettings.get('sitewide-player-enabled')">
     <div xyz-player
          data-space-name="getPlayingSpace().name"
          ng-show="getPlayingSpace()">

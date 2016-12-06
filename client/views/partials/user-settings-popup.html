@@ -17,16 +17,24 @@
 
     </form>
 
-
     <md-checkbox ng-model="swpEnabled"
-                 ng-init = "swpEnabled = Utility.isSideWidePlayerEnabled()"
-                 ng-change = "Utility.setSiteWidePlayerEnabledTo(swpEnabled)"
+                 ng-init = "swpEnabled = UserSettings.get('sitewide-player-enabled')"
+                 ng-change = "UserSettings.set('sitewide-player-enabled', swpEnabled)"
                  aria-label="Sitewide Player Enabled"
-                 class="enable-sitewide-player">
+                 class="settings-toggle">
       Sitewide Player Enabled
       <md-tooltip> disabling can improve site responsiveness </md-tooltip>
     </md-checkbox>
 
+    <md-checkbox ng-model="blfEnabled"
+                 ng-disabled = "!swpEnabled"
+                 ng-init = "blfEnabled = UserSettings.get('browser-level-fullscreen-enabled')"
+                 ng-change = "UserSettings.set('browser-level-fullscreen-enabled', blfEnabled)"
+                 aria-label="Browser Level Fullscreen"
+                 class="settings-toggle">
+      Browser Level Fullscreen
+      <md-tooltip> enabling this causes fullscreen mode to cover your whole screen, not just the browser view </md-tooltip>
+    </md-checkbox>
 
     <div ng-if="Social.FB.enabled">
 

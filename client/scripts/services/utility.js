@@ -19,6 +19,7 @@ angular.module('xyzApp')
         return text;
       };
 
+
       var Utility = {
 
         // use .then(Utility.applyProviderName) to stick resolved data onto object keyed with providerName
@@ -268,18 +269,8 @@ angular.module('xyzApp')
         },
         absoluteRef: function (id) {
           return 'url(' + $location.absUrl() + '#' + id + ')';
-        },
-
-        setSiteWidePlayerEnabledTo: function (enabled) {
-          localStorageService.set('sitewide-player', enabled);
-        },
-        isSideWidePlayerEnabled: function () {
-          if (_.isNull(localStorageService.get('sitewide-player'))) {
-            return true;
-          } else {
-            return localStorageService.get('sitewide-player');
-          }
         }
+
 
       };
       return Utility;

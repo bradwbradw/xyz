@@ -10,6 +10,7 @@ angular.module('xyzPlayer', [])
               Api,
               MockMediaProvider,
               Playlister,
+              UserSettings,
               youTubeApiService,
               YT_event,
               SC_event) {
@@ -28,7 +29,7 @@ angular.module('xyzPlayer', [])
               loading: $q.defer(),
               cueAndPlay: function (provider_id) {
                 scope.youtubeId = '';
-                return $timeout(function(){
+                return $timeout(function () {
                   scope.youtubeId = provider_id;
                   return true;
                 });
@@ -104,7 +105,7 @@ angular.module('xyzPlayer', [])
               };
               mediaProviders.soundcloud.cueAndPlay = function (provider_id) {
                 scope.soundId = '';
-                return $timeout(function(){
+                return $timeout(function () {
                   scope.soundId = provider_id;
                   return true;
                 });
@@ -288,31 +289,44 @@ angular.module('xyzPlayer', [])
             return fullScreen;
           };
 
+          var doBrowserLevelFullscreen = function () {
+
+            var doContinue = true;
+            var fullScreenFunctions = [
+              'webkitRequestFullScreen',
+              'mozRequestFullScreen',
+              'msRequestFullscreen'];
+            _.each(fullScreenFunctions, function (name) {
+              if (doContinue && _.isFunction(document.documentElement[name])) {
+                document.documentElement[name]();
+                doContinue = false;
+              }
+            });
+          };
+
+          var undoBrowserLevelFullscreen = function () {
+
+            var doContinue = true;
+            var exitFullScreenFunctions = [
+              'webkitExitFullscreen',
+              'mozCancelFullScreen',
+              'msExitFullscreen'];
+            _.each(exitFullScreenFunctions, function (name) {
+              if (doContinue && _.isFunction(document[name])) {
+                document[name]();
+                doContinue = false;
+              }
+            });
+          };
+
           var toggleFullScreen = function () {
             fullScreen = !fullScreen;
-            var doContinue = true;
-            if (fullScreen) {
-              var fullScreenFunctions = [
-                'webkitRequestFullScreen',
-                'mozRequestFullScreen',
-                'msRequestFullscreen'];
-              _.each(fullScreenFunctions, function (name) {
-                if (doContinue && _.isFunction(document.documentElement[name])) {
-                  document.documentElement[name]();
-                  doContinue = false;
-                }
-              });
-            } else {
-              var exitFullScreenFunctions = [
-                'webkitExitFullscreen',
-                'mozCancelFullScreen',
-                'msExitFullscreen'];
-              _.each(exitFullScreenFunctions, function (name) {
-                if (doContinue && _.isFunction(document[name])) {
-                  document[name]();
-                  doContinue = false;
-                }
-              });
+            if (UserSettings.get('browser-level-fullscreen-enabled')) {
+              if (fullScreen) {
+                doBrowserLevelFullscreen();
+              } else {
+                undoBrowserLevelFullscreen();
+              }
             }
           };
 

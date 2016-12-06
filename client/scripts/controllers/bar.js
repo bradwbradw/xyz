@@ -8,7 +8,7 @@
  * 'hub'-like controller used for importing and saving. Connected to many services
  */
 angular.module('xyzApp')
-  .controller('BarCtrl', function ($scope, $timeout, $state, User, Spaces, Social, viewer, Utility, Playlister) {
+  .controller('BarCtrl', function ($scope, $timeout, $state, User, Spaces, Social, viewer, Utility, UserSettings, Playlister) {
 
     var settingsIsOpen;
 
@@ -101,6 +101,7 @@ angular.module('xyzApp')
     $scope.Spaces = Spaces;
 
     $scope.settingsOpen = settingsOpen;
+    $scope.UserSettings = UserSettings;
     $scope.userIsEditing = userIsEditing;
 
     $scope.toggleSettings = toggleSettings;
