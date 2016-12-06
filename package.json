@@ -60,6 +60,7 @@
     "loopback-ds-timestamp-mixin": "^3.4.0",
     "loopback-sdk-angular": "^1.7.0",
     "mailgun-js": "^0.7.12",
+    "marked": "^0.3.6",
     "method-override": "2.3.3",
     "mongodb-uri": "^0.9.7",
     "morgan": "^1.7.0",
