@@ -20,9 +20,11 @@
         </pattern>
     </defs>
 
-    <circle class="now-playing-halo" fill="url(#now-playing-radial-effect)"
+    <circle class="now-playing-halo"
+            fill="{{Utility.absoluteRef('now-playing-radial-effect')}}"
             ng-attr-r="{{layoutConstants.DOT_RADIUS * 2.3}}"
             r="" ng-show="isNowPlaying(item)">
+
     </circle>
     <circle
             ng-attr-r="{{layoutConstants.DOT_RADIUS}}"
