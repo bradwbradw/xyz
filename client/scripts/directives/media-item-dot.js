@@ -129,7 +129,6 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
       }
 
-
       var dotImageXOffset = function(){
 //        $log.log('dot radius is ',scope.layoutConstants.DOT_RADIUS);
         if (item.provider === 'youtube'){
