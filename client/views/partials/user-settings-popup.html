@@ -1,55 +1,96 @@
+<h2 ng-if="User.get().website" id="username-label">
+
+<md-icon class="icon-btn" ng-click="toggleEditing()">
+  edit
+  <md-tooltip md-delay="500">
+    update username or website
+  </md-tooltip>
+</md-icon>
+  <a ng-href="{{Utility.fixUrl(User.get().website)}}" target="_blank">{{User.get().name}}</a>
+</h2>
+<h2 ng-if="!User.get().website" id="username-label">
+
+<md-icon class="icon-btn" ng-click="toggleEditing()">
+  edit
+  <md-tooltip md-delay="500">
+    update username or website
+  </md-tooltip>
+</md-icon>
+  {{User.get().name}}
+</h2>
 
 
-    <h2 ng-if="User.get().website" id="username-label">
-      <a ng-href="{{Utility.fixUrl(User.get().website)}}" target="_blank">{{User.get().name}}</a>
-    </h2>
-    <h2 ng-if="!User.get().website" id="username-label">
-      <br/> {{User.get().name}}
-    </h2>
+<form id="user-edits-form" name="UserEditsForm" ng-show="userIsEditing()">
 
-    <button ng-click="toggleEditing()">edit info</button>
+  <input ng-model="new.name"
+         placeholder="update name"
+         name="name"
+         id="user-name-input"/>
+  <input ng-model="new.website"
+         placeholder="update your website"
+         name="website"
+         id="user-website-input"/>
+  <md-icon
+      type="submit"
+      class="icon-btn"
+      ng-click="saveUserInfo(new).then(UserEditsForm.$setPristine)"
+      ng-show="UserEditsForm.$dirty">
+    save
 
-    <form ng-submit="User.update(new).catch(showError)" ng-show="userIsEditing()">
+  <md-tooltip md-delay="500" >
+    click to save
+  </md-tooltip>
+  </md-icon>
+</form>
 
-      <input ng-model="new.name" placeholder="update name">
-      <input ng-model="new.website" placeholder="update website">
-      <input type="submit" value="save">
+<md-checkbox ng-model="swpEnabled"
+             ng-init="swpEnabled = UserSettings.get('sitewide-player-enabled')"
+             ng-change="UserSettings.set('sitewide-player-enabled', swpEnabled)"
+             aria-label="Sitewide Player Enabled"
+             class="settings-toggle">
+  Sitewide Player Enabled
+  <md-tooltip md-delay="500">
+    Disabling can improve site responsiveness. Useful if you are editing spaces but not using the sitewide player.
+  </md-tooltip>
+</md-checkbox>
 
-    </form>
-
-    <md-checkbox ng-model="swpEnabled"
-                 ng-init = "swpEnabled = UserSettings.get('sitewide-player-enabled')"
-                 ng-change = "UserSettings.set('sitewide-player-enabled', swpEnabled)"
-                 aria-label="Sitewide Player Enabled"
-                 class="settings-toggle">
-      Sitewide Player Enabled
-      <md-tooltip> disabling can improve site responsiveness </md-tooltip>
-    </md-checkbox>
-
-    <md-checkbox ng-model="blfEnabled"
-                 ng-disabled = "!swpEnabled"
-                 ng-init = "blfEnabled = UserSettings.get('browser-level-fullscreen-enabled')"
-                 ng-change = "UserSettings.set('browser-level-fullscreen-enabled', blfEnabled)"
-                 aria-label="Browser Level Fullscreen"
-                 class="settings-toggle">
-      Browser Level Fullscreen
-      <md-tooltip> enabling this causes fullscreen mode to cover your whole screen, not just the browser view </md-tooltip>
-    </md-checkbox>
-
-    <div ng-if="Social.FB.enabled">
-
-    <h4>Social Media</h4>
-
-      <div ng-if="!Social.FB.isConnected() && !Social.FB.isConnecting() ">
-        Facebook: not connected
-        <a class="link-button" ng-click="Social.FB.setConnecting().then(Social.FB.login).then(Social.FB.refreshFB)">(connect)</a>
-      </div>
-      <div ng-if="Social.FB.isConnecting()">Facebook: connecting...</div>
-      <div ng-if="Social.FB.isConnected()">
-        Facebook: &#10003;
-      </div>
-
-    </div>
+<md-checkbox ng-model="blfEnabled"
+             ng-disabled="!swpEnabled"
+             ng-init="blfEnabled = UserSettings.get('browser-level-fullscreen-enabled')"
+             ng-change="UserSettings.set('browser-level-fullscreen-enabled', blfEnabled)"
+             aria-label="Browser Level Fullscreen"
+             class="settings-toggle">
+  Browser Level Fullscreen
+  <md-tooltip md-delay="500">
+    Enabling this causes fullscreen mode to cover your whole screen, not just the browser view.
+  </md-tooltip>
+</md-checkbox>
 
 
-    <button ng-click="User.logout().catch(showError)">Log out</button>
+<md-input-container>
+  <md-select ng-model="selected"
+             placeholder="Pick a Gradient"
+             ng-init="selected = UserSettings.get('gradient')"
+             ng-change="UserSettings.updateGradient(selected)">
+    <md-option ng-value="gradient" ng-repeat="gradient in UserSettings.map.gradient.options">{{ gradient.name }}
+    </md-option>
+  </md-select>
+</md-input-container>
+
+<div ng-if="Social.FB.enabled">
+
+  <h4>Social Media</h4>
+
+  <div ng-if="!Social.FB.isConnected() && !Social.FB.isConnecting() ">
+    Facebook: not connected
+    <a class="link-button" ng-click="Social.FB.setConnecting().then(Social.FB.login).then(Social.FB.refreshFB)">(connect)</a>
+  </div>
+  <div ng-if="Social.FB.isConnecting()">Facebook: connecting...</div>
+  <div ng-if="Social.FB.isConnected()">
+    Facebook: &#10003;
+  </div>
+
+</div>
+
+<br/>
+<a ng-click="User.logout().catch(showError)" href='#'>Log out</a>

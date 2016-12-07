@@ -8,7 +8,7 @@
  * 'hub'-like controller used for importing and saving. Connected to many services
  */
 angular.module('xyzApp')
-  .controller('BarCtrl', function ($scope, $timeout, $state, User, Spaces, Social, viewer, Utility, UserSettings, Playlister) {
+  .controller('BarCtrl', function ($rootScope, $scope, $timeout, $state, User, Spaces, Social, viewer, Utility, UserSettings, Playlister) {
 
     var settingsIsOpen;
 
@@ -57,7 +57,7 @@ angular.module('xyzApp')
 
     var title = function () {
       if (Spaces.current()) {
-        return _.get(Spaces.current(),'name' , '(untitled)');
+        return _.get(Spaces.current(), 'name', '(untitled)');
       }
       if ($state.is('base.space')) {
         return $state.params;
@@ -73,7 +73,7 @@ angular.module('xyzApp')
       return User.get() && (viewer === 'owner' || viewer === 'contributor');
     };
 
-    var showInfoButton = function(){
+    var showInfoButton = function () {
       return (viewer === 'stranger') || (viewer === 'guest');
     };
 
@@ -89,7 +89,14 @@ angular.module('xyzApp')
 
     };
 
+    var saveUserInfo = function (edits) {
+      return User.update(edits)
+        .catch(Utility.showError);
+      // do not call UserEditsForm.$setPristine in here
+      // the form controller is not in scope.
+    };
 
+    $scope.saveUserInfo = saveUserInfo;
     $scope.showInfoButton = showInfoButton;
     $scope.parentStateIfActiveElseGoTo = parentStateIfActiveElseGoTo;
     $scope.showSpaceEditorIcons = showSpaceEditorIcons;

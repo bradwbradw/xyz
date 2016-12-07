@@ -1,25 +1,31 @@
-
 <div class="sidebar-container">
 
   <form id="space-edit-form" name="spaceEditForm">
 
-    <label for="space-name-input" flex="15" >Name</label>
+    <label for="space-name-input" flex="15">Name</label>
     <input id="space-name-input"
            ng-model="spaceEdits.name"
            placeholder="(untitled)"
            name="name"
-           >
-
+    >
 
     <md-checkbox id="public-checkbox"
-           name="public" type="checkbox" ng-model="spaceEdits.public" aria-label="Public">
+                 name="public" type="checkbox" ng-model="spaceEdits.public" aria-label="Public">
       Public
     </md-checkbox>
 
 
-    <input type="submit" value="save" ng-click="saveEdits(spaceEdits)" ng-show="spaceEditForm.$dirty">
+    <md-icon
+        type="submit"
+        class="icon-btn"
+        ng-click="saveEdits(spaceEdits)"
+        ng-show="spaceEditForm.$dirty"
+        style="display:block;">
+      save
+      <md-tooltip md-delay="500"> click to save </md-tooltip>
+    </md-icon>
 
-    <pre class="debug" ng-if="false">{{spaceEditForm || json}}</pre>
+    <pre class="debug" ng-if="false">{{spaceEditForm | json}}</pre>
   </form>
 
 
