@@ -6,23 +6,25 @@
   <base href="/">
   <title ng-bind="title()">XYZ</title>
 
-  <!-- build:css css/main.min.css -->
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/xyz-component-style-app-only.css">
-  <link rel="stylesheet" href="vendor/ngToast/dist/ngToast-animations.css">
-  <!-- endbuild -->
-
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
 
   <link rel="stylesheet"
         href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc.5/angular-material.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
         rel="stylesheet">
+
+  <!-- build:css css/main.min.css -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/xyz-component-style-app-only.css">
+  <link rel="stylesheet" href="vendor/ngToast/dist/ngToast-animations.css">
+  <!-- endbuild -->
+
+
   <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"/>
 
 </head>
 
-<body ng-controller="BodyCtrl">
+<body ng-controller="BodyCtrl" ng-class="gradientClass">
 
 
 <div ui-view>

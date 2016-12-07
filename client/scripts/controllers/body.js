@@ -28,6 +28,12 @@ angular.module('xyzApp')
       return playingSpace;
     };
 
+    $rootScope.updateBackground = function(){
+      $scope.gradientClass = _.get(UserSettings.get('gradient'), 'class');
+    };
+
+    $rootScope.updateBackground();
+
     $scope.playSpace = playSpace;
     $scope.getPlayingSpace = getPlayingSpace;
     $rootScope.getPlayingSpace = getPlayingSpace;
