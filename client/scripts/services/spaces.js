@@ -51,6 +51,18 @@ angular.module('xyzApp')
           })
       },
       updateItem: function (item) {
+        var unsetTheseProperties = [
+          'justDropped',
+          'dragging',
+          'didPlay'
+        ];
+        var unsetProperty = function(name){
+          _.unset(item, name);
+        };
+        $log.debug('before unsetting: ', item);
+        _.each(unsetTheseProperties, unsetProperty);
+        $log.debug('after unsetting: ', item);
+
         return Space.songs.updateById({id: id(), fk: _.get(item, 'id')}, item)
           .$promise
       },
