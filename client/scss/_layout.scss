@@ -41,9 +41,10 @@
   left: 0;
   img {
     height: 25px;
-    margin-left: $space-margin-left;
+    margin-left: $right-padding +0.2em; // same as gear spacing on right
 
     @include MQ(M) {
+      margin-left: $space-margin-left;
       height: 37px;
     }
   }
