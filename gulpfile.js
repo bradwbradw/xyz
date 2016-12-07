@@ -175,6 +175,7 @@ gulp.task('useref:main', function () {
     .pipe(replace('%%%API_URL', apiUrl))
     .pipe(useref())
     .pipe(gulpIf('*.js', ngAnnotate(annotateOptions)))
+    .on("error", notify.onError(reportError))
     .pipe(gulpIf('*.js', rev()))
     .pipe(gulpIf('*.css', cssnano()))
     .pipe(gulpIf('*.css', rev()))
