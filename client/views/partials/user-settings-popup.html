@@ -47,7 +47,9 @@
              ng-init="swpEnabled = UserSettings.get('sitewide-player-enabled')"
              ng-change="UserSettings.set('sitewide-player-enabled', swpEnabled)"
              aria-label="Sitewide Player Enabled"
-             class="settings-toggle">
+             class="settings-toggle"
+ng-if="false">
+  <!-- probably not a good idea for users - was just a dev aid -->
   Sitewide Player Enabled
   <md-tooltip md-delay="500">
     Disabling can improve site responsiveness. Useful if you are editing spaces but not using the sitewide player.
@@ -55,12 +57,12 @@
 </md-checkbox>
 
 <md-checkbox ng-model="blfEnabled"
-             ng-disabled="!swpEnabled"
              ng-init="blfEnabled = UserSettings.get('browser-level-fullscreen-enabled')"
              ng-change="UserSettings.set('browser-level-fullscreen-enabled', blfEnabled)"
              aria-label="Browser Level Fullscreen"
-             class="settings-toggle">
-  Browser Level Fullscreen
+             class="settings-toggle"
+ng-if="false">
+  Fullscreen Takes Over
   <md-tooltip md-delay="500">
     Enabling this causes fullscreen mode to cover your whole screen, not just the browser view.
   </md-tooltip>
