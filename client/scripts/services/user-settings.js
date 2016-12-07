@@ -21,8 +21,8 @@ angular.module('xyzApp')
         },
         'gradient': {
           default: {
-            name: 'coral',
-            class: 'grad-coral'
+            name: 'shoreline',
+            class: 'grad-shoreline'
           },
 
           options: [
@@ -69,7 +69,7 @@ angular.module('xyzApp')
           return localStorageService.get(settingName);
         }
       },
-      updateGradient: function(newGradient){
+      updateGradient: function (newGradient) {
         UserSettings.set('gradient', newGradient);
         $rootScope.updateBackground();
       }
