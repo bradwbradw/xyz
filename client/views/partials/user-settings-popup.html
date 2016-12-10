@@ -20,7 +20,10 @@
 </h2>
 
 
-<form id="user-edits-form" name="UserEditsForm" ng-show="userIsEditing()">
+<form id="user-edits-form"
+      name="UserEditsForm"
+      ng-show="userIsEditing()"
+      ng-submit="saveUserInfo(new).then(UserEditsForm.$setPristine)">
 
   <input ng-model="new.name"
          placeholder="update name"
