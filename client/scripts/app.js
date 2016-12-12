@@ -11,10 +11,7 @@ var xyzApp = angular.module("xyzApp",
     'ngMessages',
     'ngMaterial',
     'lbServices',
-    'ls.LiveSet',
-    'ls.ChangeStream',
     'xyzPlayer',
-    'dibari.angular-ellipsis',
     'ngToast'
   ]);
 

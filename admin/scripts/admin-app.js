@@ -11,8 +11,6 @@ angular.module('xyzAdmin',
     'ngAnimate',
     'ngMaterial',
     'lbServices',
-    'ls.LiveSet',
-    'ls.ChangeStream',
     'ngToast'
   ]);
 
