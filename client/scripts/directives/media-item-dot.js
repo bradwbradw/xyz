@@ -1,4 +1,4 @@
-angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $sce, $timeout, Library, Utility, Spaces, Playlister) {
+angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $sce, $timeout, Library, Utility) {
 
   return {
     restrict: 'A',
@@ -79,6 +79,7 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 //        $log.log(boundaries);
 
 //        Playlister.recompute();
+        // ^ if uncommenting add Playlister back to dependencies!
 
         if (x < boundaries.minX) {
           x = boundaries.minX;
