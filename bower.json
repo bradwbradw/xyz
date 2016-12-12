@@ -2,23 +2,26 @@
   "name": "xyz",
   "version": "0.0.0",
   "dependencies": {
-    "angular": "~1.5.6",
-    "angular-sanitize": "1.4.1",
-    "angular-ui-router": "0.2.15",
-    "lodash": "4.15.0",
-    "angular-easyfb": "~1.4.1",
-    "angular-local-storage": "~0.2.3",
-    "angular-resource": "~1.4.8",
-    "angular-live-set": "*",
-    "angular-animate": "~1.5.6",
-    "angular-aria": "~1.5.6",
+    "angular": "1.6.0",
+    "angular-sanitize": "~1.6.0",
+    "angular-ui-router": "0.3.2",
+    "lodash": "~4.17.2",
+    "angular-easyfb": "~1.5.1",
+    "angular-local-storage": "~0.5.2",
+    "angular-resource": "1.6.0",
+    "angular-animate": "1.6.0",
+    "angular-aria": "1.6.0",
     "ngToast": "ngtoast#^2.0.0",
     "soundcloud": "^3.1.2",
-    "angular-messages": "1.5.8"
+    "angular-messages": "1.6.0"
   },
   "devDependencies": {
     "angular-mocks": "1.4.1"
   },
   "appPath": "client",
-  "moduleName": "xyzApp"
+  "moduleName": "xyzApp",
+  "resolutions": {
+    "angular-sanitize": "~1.6.0",
+    "angular": "^1.6.0"
+  }
 }
