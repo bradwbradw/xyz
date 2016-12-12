@@ -4,7 +4,7 @@ angular.module('xyzApp').directive('iconOfProvider', function () {
     scope: {
       iconOfProvider: '@'
     },
-    templateUrl: 'partials/icon-of-provider.html',
+    templateUrl: 'xyzApp/icon-of-provider.html',
     link: function (scope) {
 
       var imageSource = '/images/';

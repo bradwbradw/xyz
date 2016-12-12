@@ -49,6 +49,8 @@ var paths = {
     sass: ['client/scss/**/*.scss', 'xyz-player-component/**/*.scss'],
     views: [
       'client/views/**/*.html',
+      'client/components/**/*.html',
+      'client/components/**/*.svg',
       'xyz-player-component/*.html',
       'client/views/**/*.svg',
       'xyz-player-component/*.svg'

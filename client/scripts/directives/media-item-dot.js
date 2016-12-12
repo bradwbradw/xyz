@@ -2,7 +2,7 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
   return {
     restrict: 'A',
-    templateUrl: 'partials/item-dot.svg',
+    templateUrl: 'xyzApp/media-item-dot.svg',
     templateNamespace: 'svg',
     scope: {
       item: '=',

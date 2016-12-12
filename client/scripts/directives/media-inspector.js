@@ -5,7 +5,7 @@ angular.module('xyzApp').directive('mediaInspector', function ($window, $log, $t
     scope: {
       item: '='
     },
-    templateUrl: 'partials/media-inspector-directive.html',
+    templateUrl: 'xyzApp/media-inspector.html',
     link: function (scope) {
 
       var isSoundcloudArtist = function (searchResultItem) {
@@ -36,7 +36,7 @@ angular.module('xyzApp').directive('mediaInspector', function ($window, $log, $t
 
       var showAddButton = function (item) {
         return !item.error && isMedia(item) && !isInCurrentSpace(item)
-      }
+      };
 
       var updateParentImportView = function (new_) {
         $timeout(Library.addToSearchResults(new_));
