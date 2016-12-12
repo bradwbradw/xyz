@@ -20,5 +20,5 @@
     "angular-mocks": "1.4.1"
   },
   "appPath": "client",
-  "moduleName": "xyzApp",
+  "moduleName": "xyzApp"
 }
