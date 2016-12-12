@@ -19,17 +19,18 @@
     <stop offset="50%" stop-color="white" stop-opacity="0"></stop>
   </radialGradient>
 
-  <path class="playlist-line"
-        ng-attr-d="{{linePath(Playlister.getList() || [])}}"
+  <path ng-attr-d="{{linePath(Playlister.getList() || [])}}"
         d=""
-        fill="none" stroke="white" ng-if="Spaces.current().songs[0]"></path>
+        fill="none" stroke="white"
+        ng-if="currentSpaceIsPlaying()" >
+  </path>
 
   <g ng-repeat="item in Spaces.current().songs"
      media-item-dot
      item="item"
      ng-click="handleDotClick(item, $event)"
      is-now-playing="isNowPlaying(item)"
-     is-first-song="isFirstSong(item)"
+     show-first-song-style="isFirstSong(item) && !currentSpaceIsPlaying()"
      data-space="currentSpace"
      viewer="guest"
      done-dragging="onDragDone(item)"

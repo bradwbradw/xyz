@@ -33,7 +33,7 @@
             fill="{{Utility.absoluteRef('image'+item.id)}}"
             ng-class="{
             unavailable: (item.public === false),
-            'first-song':isFirstSong(item)}"
+            'first-song':showFirstSongStyle(item)}"
     >
     </circle>
 

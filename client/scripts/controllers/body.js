@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('xyzApp')
-  .controller('BodyCtrl', function ($rootScope, $window, $scope, $log, $timeout, $stateParams, localStorageService, Utility, UserSettings, Playlister) {
+  .controller('BodyCtrl', function ($rootScope, $window, $scope, $log, $timeout, $stateParams, localStorageService, Utility, UserSettings, Playlister, Spaces) {
 
     $rootScope.askConfirm = function (callback, thing, error) {
       if ($window.confirm) {
@@ -28,7 +28,11 @@ angular.module('xyzApp')
       return playingSpace;
     };
 
-    $rootScope.updateBackground = function(){
+    var currentSpaceIsPlaying = function () {
+      return _.get(getPlayingSpace(), 'id') === _.get(Spaces.current(), 'id');
+    };
+
+    $rootScope.updateBackground = function () {
       $scope.gradientClass = _.get(UserSettings.get('gradient'), 'class');
     };
 
@@ -36,6 +40,7 @@ angular.module('xyzApp')
 
     $scope.playSpace = playSpace;
     $scope.getPlayingSpace = getPlayingSpace;
+    $scope.currentSpaceIsPlaying = currentSpaceIsPlaying;
     $rootScope.getPlayingSpace = getPlayingSpace;
     $scope.Playlister = Playlister;
     $scope.Utility = Utility;

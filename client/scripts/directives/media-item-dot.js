@@ -10,7 +10,7 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
       space: '=',
       layoutConstants: '=',
       isNowPlaying: '&',
-      isFirstSong: '&',
+      showFirstSongStyle: '&',
       doneDragging: '&',
       draggingFirst: '&'
     },
