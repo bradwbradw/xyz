@@ -97,6 +97,8 @@ describe('space page tests', function () {
       var nameInput = element(by.model('spaceEdits.name'));
       nameInput.clear().sendKeys('cool new name', protractor.Key.ENTER);
 
+      element(by.css('#space-edit-form md-icon')).click();
+
       var topBarTitle = element(by.css('#bar-title'));
       expect(topBarTitle.getText()).toContain('cool new name');
 
