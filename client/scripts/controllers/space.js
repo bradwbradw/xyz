@@ -223,21 +223,6 @@ angular.module('xyzApp')
 
       $scope.layout_constants = layout_constants;
 
-      $scope.linePath = function (dirtypoints) {
-
-        var points = _.filter(dirtypoints, function (p) {
-          return p.x && p.y;
-        });
-        var pathParts = [], currentPoint, i;
-
-        for (i = 0; i < points.length; i++) {
-          currentPoint = points[i];
-          pathParts.push(currentPoint.x + "," + currentPoint.y);
-        }
-
-
-        return "M" + pathParts.join(" L");
-      };
 
       $scope.songExpandedPopupCss = songExpandedPopupCss;
 

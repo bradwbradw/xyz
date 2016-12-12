@@ -1,0 +1,7 @@
+<path
+        ng-attr-d="{{pathDescription}}"
+        d=""
+        class="playlist-path"
+        fill="none" stroke="white">
+
+</path>

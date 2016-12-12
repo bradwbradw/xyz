@@ -148,7 +148,8 @@ angular.module('xyzApp')
           deferred.resolve(Playlister.getList(space.id));
         }
 
-        return deferred.promise;
+        $rootScope.$broadcast('did_recompute_playlist');
+        return deferred.promise
 
       }
     };

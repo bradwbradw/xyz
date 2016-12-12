@@ -19,11 +19,9 @@
     <stop offset="50%" stop-color="white" stop-opacity="0"></stop>
   </radialGradient>
 
-  <path ng-attr-d="{{linePath(Playlister.getList() || [])}}"
-        d=""
-        fill="none" stroke="white"
-        ng-if="currentSpaceIsPlaying()" >
-  </path>
+  <g playlist-path
+        ng-if="currentSpaceIsPlaying()">
+  </g>
 
   <g ng-repeat="item in Spaces.current().songs"
      media-item-dot

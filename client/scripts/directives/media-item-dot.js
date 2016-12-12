@@ -78,7 +78,7 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
 //        $log.log(boundaries);
 
-        Playlister.recompute();
+//        Playlister.recompute();
 
         if (x < boundaries.minX) {
           x = boundaries.minX;
