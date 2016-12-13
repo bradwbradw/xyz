@@ -108,9 +108,13 @@ angular.module('xyzApp')
           return sorted;
         };
 
-        var songs = _.filter(space.songs, function (song) {
-          return song.provider_id && (_.isUndefined(song.public) || song.public == true);
-        });
+        var shouldTryToPlay = function(item){
+          return item.provider_id &&
+            (_.isUndefined(item.public) || item.public == true) &&
+            !item.didPlay;
+        };
+
+        var songs = _.filter(space.songs, shouldTryToPlay);
 
         songs = _.uniqBy(songs, 'id');
 

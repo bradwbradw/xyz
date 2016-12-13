@@ -84,8 +84,9 @@ angular.module('xyzPlayer', [])
               mediaProviders.youtube.loading.resolve('youtube!');
 
               $rootScope.$on('youtube_has_ended', function () {
-                $log.debug('youtube has ended, calling go() again');
-                go();
+                $log.debug('youtube has ended, calling next()');
+                next();
+//                go();
               });
 
             }, soundcloud: function () {
@@ -113,8 +114,9 @@ angular.module('xyzPlayer', [])
 
 
               $rootScope.$on('soundcloud_has_ended', function () {
-                $log.debug('soundcloud has ended, calling go() again');
-                go();
+                $log.debug('soundcloud has ended, calling next()');
+                next();
+//                go();
               });
 
 
