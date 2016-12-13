@@ -124,19 +124,27 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
 
       }
+      var youtubeThumbH = 360;
+      var youtubeThumbW = 480;
 
+      var soundcloudThumb = 100; //sc thumbs are square
+     
 
       var dotImageXOffset = function(){
 //        $log.log('dot radius is ',scope.layoutConstants.DOT_RADIUS);
         if (item.provider === 'youtube'){
-          return -50;
+          return youtubeThumbW / 2;
+        } else if (item.provider === 'soundcloud') {
+            return soundcloudThumb / 2;
         } else {
           return -20;
         }
       };
       var dotImageYOffset = function(){
         if (item.provider === 'youtube'){
-          return -40;
+          return youtubeThumbH / 2;
+        } else if (item.provider === 'soundcloud') {
+            return soundcloudThumb / 2;
         } else {
           return -20;
         }
@@ -144,7 +152,9 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
       var dotImageHeight = function(){
         if (item.provider === 'youtube'){
-          return '150px';
+          return scope.layoutConstants.DOT_RADIUS * 4;
+        } else if (item.provider === 'soundcloud') {
+            return scope.layoutConstants.DOT_RADIUS * 4;
         } else {
           return '100px';
         }
@@ -152,11 +162,20 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
       var dotImageWidth = function(){
         if (item.provider === 'youtube'){
-          return '150px';
+          return dotImageHeight * (4/3); // 4/3 maintains aspect ratio
+        } else if (item.provider === 'soundcloud') {
+            return dotImageHeight;
         } else {
           return '100px';
         }
       };
+
+      // trying to see if I can get visible changes...
+      // dotImageXOffset = 0;
+      // dotImageYOffset = 0;
+      // dotImageHeight = 155;
+      // dotImageWidth = 240;
+      //
 
       scope.dotImageXOffset = dotImageXOffset;
       scope.dotImageYOffset = dotImageYOffset;
