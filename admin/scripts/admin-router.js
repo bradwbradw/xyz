@@ -44,7 +44,7 @@ angular.module('xyzAdmin')
 
       })
       .state('base.users', {
-        url: 'users',
+        url: 'users/',
         views: {
           'main': {
             templateUrl: 'components/users.html',
@@ -61,7 +61,7 @@ angular.module('xyzAdmin')
 
 
     .state('base.spaces',{
-      url:'spaces',
+      url:'spaces/',
       views:{
         main:{
           templateUrl: 'components/spaces.html', 
@@ -69,8 +69,15 @@ angular.module('xyzAdmin')
         }
       }, 
       resolve: {
-          users: function (Dj) {
-            return Dj.find().$promise;
+          userMap: function (Dj) {
+            return Dj.find().$promise
+              .then(function(result){
+                var map = {};
+                _.each(result, function(user){
+                  map[user.id] = user;
+                });
+                return map;
+              });
           }, 
           spaces: function (Space) {
             return Space.find({filter:{include:['owner','contributors']}}).$promise;

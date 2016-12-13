@@ -1,5 +1,5 @@
 angular.module('xyzAdmin')
-  .controller('SpacesController', function ($scope, $window, spaces, users, Space) {
+  .controller('SpacesController', function ($scope, $window, spaces, userMap, Space) {
 
     var setOwner = function (space, user) {
 
@@ -13,5 +13,5 @@ angular.module('xyzAdmin')
 
     $scope.setOwner = setOwner;
     $scope.spaces = spaces;
-    $scope.users = users;
+    $scope.userMap = userMap;
   });

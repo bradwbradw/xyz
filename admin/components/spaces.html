@@ -5,16 +5,21 @@
   <h4>{{space.name}}</h4>
   <pre>{{space | json}}
   </pre>
-  <h5>Owner: {{space.owner.name}} ({{space.owner.email}})</h5>
-  <select ng-options="user as user.name+'  ('+user.email+')' for user in users"
-          placeholder="change owner"
-          ng-model="newOwner">
+  <h5>Owner: {{space.owner.name}} ({{userMap[space.ownerId].email}})</h5>
+  <h2 ng-if="!space.owner">!! orphan space !!</h2>
+  <form>
 
-  </select>
+    <label>change owner:</label>
+    <select ng-options="user as user.name+'  ('+user.email+')' for user in userMap"
+
+            ng-model="newOwner">
+
+    </select>
+  </form>
 
   <span ng-if="newOwner">
     new owner: {{newOwner.name}} <button ng-click="setOwner(space, newOwner)">Save</button>
   </span>
-<hr>
+  <hr>
 
 </div>

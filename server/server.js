@@ -19,6 +19,8 @@ app.use(bodyParser.json());
 
 app.use('/stream', loopback.static(path.resolve(__dirname, '../stream-dist')));
 app.use('/admin', loopback.static(path.resolve(__dirname, '../admin-dist')));
+app.use('/admin/spaces', loopback.static(path.resolve(__dirname, '../admin-dist')));
+app.use('/admin/users', loopback.static(path.resolve(__dirname, '../admin-dist')));
 app.use('/space*', loopback.static(path.resolve(__dirname, '../dist')));
 app.use('/xyz-player-component', loopback.static(path.resolve(__dirname, '../xyz-player-component')));
 app.use('/stream/xyz-player-component', loopback.static(path.resolve(__dirname, '../xyz-player-component')));
