@@ -24,7 +24,6 @@
             fill="{{Utility.absoluteRef('now-playing-radial-effect')}}"
             ng-attr-r="{{layoutConstants.DOT_RADIUS * 2.3}}"
             r="" ng-show="isNowPlaying(item)">
-
     </circle>
     <circle
             ng-attr-r="{{layoutConstants.DOT_RADIUS}}"
@@ -33,7 +32,8 @@
             fill="{{Utility.absoluteRef('image'+item.id)}}"
             ng-class="{
             unavailable: (item.public === false),
-            'first-song':showFirstSongStyle(item)}"
+            'first-song':showFirstSongStyle(item),
+            'did-play':item.didPlay}"
     >
     </circle>
 

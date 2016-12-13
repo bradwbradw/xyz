@@ -13,6 +13,9 @@ angular.module('xyzApp')
       getNowPlaying: function () {
         return Playlister.nowPlaying;
       },
+      markPlayed: function() {
+        _.set(_.find(Spaces.current().songs, {id: Playlister.nowPlaying.id}), 'didPlay', true);
+      },
       getList: function (spaceId) {
         if (!spaceId) {
           return Playlister.listMap[Spaces.current().id];

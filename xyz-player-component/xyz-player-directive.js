@@ -183,6 +183,7 @@ angular.module('xyzPlayer', [])
 
           var next = function () {
 //            mediaProviders[Playlister.getNowPlaying().provider].stop();
+            Playlister.markPlayed();
             stopAll();
             go();
           };

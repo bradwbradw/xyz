@@ -56,6 +56,10 @@
   &.unavailable {
     opacity: 0.3;
   }
+
+  &.did-play {
+    opacity: 0.3;
+  }
 }
 
 .user-settings-popup {
