@@ -181,12 +181,13 @@ angular.module('xyzApp')
 
           Spaces.saveAndUpdateMap('updateItem', [item], {
             songs: updatedItems
-          }).then(function () {
-            Playlister.recompute();
           });
-        } else {
+        }
+
+        if (!_.get(item, 'didPlay')){
           Playlister.recompute();
         }
+
       };
 
       var canEdit = function () {
