@@ -16,6 +16,8 @@ angular.module('xyzApp')
       if (!itemId) {
         itemId = _.get(space, 'firstSong');
       }
+
+      Playlister.checkAndResetToUnplayed(space, itemId);
       Playlister.recompute(space, itemId)
         .then(function () {
           $rootScope.$broadcast('play', {space: space, itemId: itemId});
