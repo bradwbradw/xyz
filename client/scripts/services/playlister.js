@@ -26,6 +26,14 @@ angular.module('xyzApp')
       setList: function (spaceId, list) {
         Playlister.listMap[spaceId] = list;
       },
+      // if song.didPlay, reset all didPlay to false
+      checkAndResetToUnplayed: function(space, songId){
+        if (_.get(_.find(space.songs, {id: songId})), 'didPlay'){
+          _.each(space.songs, function(item){
+            _.set(item, 'didPlay', false);
+          }) ;
+        }
+      },
       recompute: function (space, playFromSongId) {
 
         if (!space) {
@@ -111,7 +119,7 @@ angular.module('xyzApp')
         var shouldTryToPlay = function(item){
           return item.provider_id &&
             (_.isUndefined(item.public) || item.public == true) &&
-            !item.didPlay;
+            !_.get(item,'didPlay');
         };
 
         var songs = _.filter(space.songs, shouldTryToPlay);
@@ -135,6 +143,9 @@ angular.module('xyzApp')
 
           if (playFromSongId) {
             seedSong = _.find(songs, {id: playFromSongId});
+            if(_.get(seedSong,'didPlay')){
+              resetAllToUnplayed(space);
+            }
           } else if (Playlister.getNowPlaying() && nowPlayingIsInCurrentSpace()) {
             seedSong = Playlister.getNowPlaying();
           } else if (space.firstSong) {
