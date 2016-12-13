@@ -4,6 +4,15 @@ angular.module('xyzApp')
 
   .service('Playlister', function ($log, $q, $rootScope, Spaces) {
 
+
+    var wasNotPlayed = function (item) {
+      return !_.get(item, 'didPlay');
+    };
+
+    var wasPlayed = function (item) {
+      return _.get(item, 'didPlay');
+    };
+
     var Playlister = {
       listMap: {}, // key is spaceid, value is playlist []
       nowPlaying: false,
@@ -13,8 +22,8 @@ angular.module('xyzApp')
       getNowPlaying: function () {
         return Playlister.nowPlaying;
       },
-      markPlayed: function() {
-        _.set(_.find(Spaces.current().songs, {id: Playlister.nowPlaying.id}), 'didPlay', true);
+      markNowPlayingAsPlayed: function (space) {
+        _.set(_.find(_.get(space, 'songs'), {id: Playlister.nowPlaying.id}), 'didPlay', true);
       },
       getList: function (spaceId) {
         if (!spaceId) {
@@ -26,12 +35,26 @@ angular.module('xyzApp')
       setList: function (spaceId, list) {
         Playlister.listMap[spaceId] = list;
       },
-      // if song.didPlay, reset all didPlay to false
-      checkAndResetToUnplayed: function(space, songId){
-        if (_.get(_.find(space.songs, {id: songId})), 'didPlay'){
-          _.each(space.songs, function(item){
-            _.set(item, 'didPlay', false);
-          }) ;
+      resetAllToUnplayed: function (space) {
+        _.each(_.get(space, 'songs'), function (item) {
+          _.set(item, 'didPlay', false);
+        });
+      },
+      resetAllIfOneDidPlay: function (space, songId) {
+        var item = _.find(_.get(space, 'songs'), {id: songId});
+        if (wasPlayed(item)) {
+          Playlister.resetAllToUnplayed(space);
+        }
+      },
+      resetAllIfAllDidPlay: function (space) {
+
+        var unplayedItem = _.find(_.get(space, 'songs'), wasNotPlayed);
+        if (!unplayedItem) {
+          Playlister.setNowPlaying(false);
+          Playlister.resetAllToUnplayed(space);
+          return Playlister.recompute(space);
+        } else {
+          return $q.resolve();
         }
       },
       recompute: function (space, playFromSongId) {
@@ -116,10 +139,9 @@ angular.module('xyzApp')
           return sorted;
         };
 
-        var shouldTryToPlay = function(item){
+        var shouldTryToPlay = function (item) {
           return item.provider_id &&
-            (_.isUndefined(item.public) || item.public == true) &&
-            !_.get(item,'didPlay');
+            (_.isUndefined(item.public) || item.public == true) && !_.get(item, 'didPlay');
         };
 
         var songs = _.filter(space.songs, shouldTryToPlay);
@@ -133,22 +155,23 @@ angular.module('xyzApp')
 
           var seedSong;
 
-          var nowPlayingIsInCurrentSpace = function(){
-            if($rootScope.getPlayingSpace() && Spaces.current()){
-              return _.get($rootScope.getPlayingSpace(),'id') === _.get(Spaces.current(),'id');
+          var nowPlayingIsInCurrentSpace = function () {
+            if ($rootScope.getPlayingSpace() && Spaces.current()) {
+              return _.get($rootScope.getPlayingSpace(), 'id') === _.get(Spaces.current(), 'id');
             } else {
               return false;
             }
           };
 
           if (playFromSongId) {
+            // example: user clicks on "play from here" on an item
             seedSong = _.find(songs, {id: playFromSongId});
-            if(_.get(seedSong,'didPlay')){
-              resetAllToUnplayed(space);
-            }
           } else if (Playlister.getNowPlaying() && nowPlayingIsInCurrentSpace()) {
+            // example: if user drags an item while a song is playing
+            // (song could be paused and count as playing, though)
             seedSong = Playlister.getNowPlaying();
           } else if (space.firstSong) {
+            // example: if user drags an item while a song is not playing
             seedSong = _.find(songs, {id: space.firstSong});
           }
 

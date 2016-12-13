@@ -171,7 +171,7 @@ angular.module('xyzApp')
       };
 
       var onDragDone = function (item) {
-        $log.debug('done draggging!', item);
+        $log.debug('done dragging!', item);
 
         item.justDropped = true;
 

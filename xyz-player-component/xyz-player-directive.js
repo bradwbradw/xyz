@@ -10,6 +10,7 @@ angular.module('xyzPlayer', [])
               Api,
               MockMediaProvider,
               Playlister,
+              Spaces,
               UserSettings,
               youTubeApiService,
               YT_event,
@@ -168,7 +169,6 @@ angular.module('xyzPlayer', [])
 
           var status = 'initializing';
           var playlist = false;
-          var space = false;
 
           var getPlaylist = function () {
             return Playlister.getList(scope.spaceId);
@@ -185,9 +185,12 @@ angular.module('xyzPlayer', [])
 
           var next = function () {
 //            mediaProviders[Playlister.getNowPlaying().provider].stop();
-            Playlister.markPlayed();
-            stopAll();
-            go();
+            Playlister.markNowPlayingAsPlayed(Spaces.getMap()[scope.spaceId]);
+            Playlister.resetAllIfAllDidPlay(Spaces.getMap()[scope.spaceId])
+              .then(stopAll)
+              .then(go);
+//            stopAll();
+//            go();
           };
 
           var stopAll = function () {
