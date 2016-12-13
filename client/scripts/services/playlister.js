@@ -5,13 +5,18 @@ angular.module('xyzApp')
   .service('Playlister', function ($log, $q, $rootScope, Spaces) {
 
 
+    var isPlayable = function(item){
+      return _.isUndefined(item.public) || item.public == true;
+    };
+
     var wasNotPlayed = function (item) {
-      return !_.get(item, 'didPlay');
+      return isPlayable(item) && !_.get(item, 'didPlay');
     };
 
     var wasPlayed = function (item) {
       return _.get(item, 'didPlay');
     };
+
 
     var Playlister = {
       listMap: {}, // key is spaceid, value is playlist []
@@ -140,8 +145,7 @@ angular.module('xyzApp')
         };
 
         var shouldTryToPlay = function (item) {
-          return item.provider_id &&
-            (_.isUndefined(item.public) || item.public == true) && !_.get(item, 'didPlay');
+          return item.provider_id && isPlayable(item) && wasNotPlayed(item);
         };
 
         var songs = _.filter(space.songs, shouldTryToPlay);
