@@ -7,7 +7,7 @@ angular.module('xyzApp').directive('playlistPath', function ($interval, $log, Pl
     scope: {},
     link: function (scope) {
 
-      var animationInterval = 300;
+      var animationInterval = 200;
 
       var pointsInPlaylist = function () {
         return _.filter(Playlister.getList(), function (p) {
