@@ -58,6 +58,7 @@ var paths = {
     adminViews: [
       'admin/**/*.html'
     ],
+    adminCss:'admin/**/*.css',
     scripts: 'client/scripts',
     adminScripts: 'admin/scripts',
     index: 'client/index.html'
@@ -80,9 +81,9 @@ function reloadBrowsers(done) {
 }
 
 
-var reportError = function(error){
+var reportError = function (error) {
   var message = _.get(error, 'message');
-  if (!message){
+  if (!message) {
     return 'unknown error ';
   } else {
     return message;
@@ -330,20 +331,29 @@ gulp.task('templates:admin', function () {
     .pipe(gulp.dest(paths.src.adminScripts));
 });
 
-gulp.task('watch:sass', function (done) {
+gulp.task('watch:styles', function (done) {
   gulp.watch(paths.src.sass)
     .on('change', gulp.series('sass', reloadBrowsers));
-  done()
-});
-
-gulp.task('watch:views', function (done) {
-  gulp.watch(paths.src.views, gulp.series('templates'));
   done();
 });
 
-gulp.task('watch:admin', function (done) {
+gulp.task('watch:adminCss', function(done){
+  gulp.watch(paths.src.adminCss)
+    .on('change', gulp.series('build:admin'));
+  done();
+});
 
-  gulp.watch(paths.src.adminViews, gulp.series('templates:admin'));
+gulp.task('watch:views', function (done) {
+  gulp.watch([
+    paths.src.adminViews, paths.src.views], gulp.parallel('templates', 'templates:admin'));
+  done();
+});
+
+gulp.task('watch:adminCode', function (done) {
+
+  gulp.watch([
+    paths.src.adminScripts
+  ]).on('change', gulp.parallel('useref:admin'));
   done();
 });
 
@@ -359,19 +369,22 @@ gulp.task('watch:code', function (done) {
   done();
 });
 
-gulp.task('watch', gulp.parallel('watch:sass', 'watch:views', 'watch:code'));
+gulp.task('watch',
+  gulp.parallel('watch:styles', 'watch:views', 'watch:code', 'watch:adminCode', 'watch:adminCss'));
+
+gulp.task('build:admin', gulp.series(
+  'templates:admin',
+  gulp.parallel('useref:admin', 'copyCss:admin'))
+);
 
 gulp.task('build',
-  gulp.series('clean', 'loopback', 'sass', 'bower',
-    gulp.parallel('templates', 'templates:admin'),
-    gulp.parallel('useref:main', 'copyImages'),
-    gulp.parallel('useref:admin', 'copyCss:admin'),
+  gulp.series('clean', 'loopback', 'sass', 'bower', 'templates',
+    gulp.parallel('useref:main', 'copyImages', 'build:admin'),
     gulp.parallel('useref:stream', 'copyCss:stream'))
 );
 
 
 gulp.task('serve', gulp.parallel('loopback', 'bower', 'sass', 'browserSync:client', 'watch'));
-gulp.task('serve:admin', gulp.parallel('loopback', 'bower', 'browserSync:admin', 'watch:admin'));
 
 gulp.task('default', gulp.parallel('build', 'serve'));
 
