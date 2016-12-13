@@ -119,6 +119,9 @@
   color: white;
 }
 
+.material-icons::-moz-selection { background:transparent; }
+.material-icons::selection { background:transparent; }
+
 .sidebar-container {
 
   background: $sidebar-background-color;
