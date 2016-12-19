@@ -20,12 +20,12 @@ angular.module('xyzApp')
         hovering = null;
       };
 
-      var isHovering = function(){
+      var isHovering = function () {
         return hovering;
       };
 
       var getHovering = function () {
-        if(!hovering){
+        if (!hovering) {
           return false;
         }
         var item = _.find(_.get(Spaces.current(), 'songs'), {id: hovering});
@@ -35,9 +35,9 @@ angular.module('xyzApp')
 
         var topOffset = item.y +
           layout_constants.SPACE_MARGIN.TOP +
-            1.25*16 +
+          1.25 * 16 +
           // FROM _variables.scc: $top-padding:1.25em;
-            + 0.5*layout_constants.DOT_RADIUS +
+          +0.5 * layout_constants.DOT_RADIUS +
           'px';
 
         var leftOffset = item.x +
@@ -57,15 +57,20 @@ angular.module('xyzApp')
         };
       };
 
-
       var computeViewBox = function () {
         return _.values(layout_constants.SPACE_DIMENSIONS).join(" ");
       };
 
-      _.each(_.get(Spaces.current(),'songs'), function(song){
-        var index = _.findIndex(Spaces.current().songs, {id: song.id});
-        _.set(Spaces.current().songs, index, Utility.fixItemPosition(song));
-      });
+      var ensureWithinBoundaries = function (item) {
+        var fixedCoords = Utility.keepCoordsInBoundaries({x:item.x, y:item.y});
+        item.x = fixedCoords.x;
+        item.y = fixedCoords.y;
+
+        var index = _.findIndex(Spaces.current().songs, {id: item.id});
+        _.set(Spaces.current().songs, index, item);
+      };
+
+      _.each(_.get(Spaces.current(), 'songs'), ensureWithinBoundaries);
 
       Playlister.recompute();
 
@@ -119,7 +124,7 @@ angular.module('xyzApp')
       var setFirstSongThenRecompute = function (item) {
         Spaces.setFirstSong(item)
           .then(function () {
-            Playlister.recompute(Spaces.current(),item.id);
+            Playlister.recompute(Spaces.current(), item.id);
           })
       };
 
@@ -184,7 +189,7 @@ angular.module('xyzApp')
           });
         }
 
-        if (!_.get(item, 'didPlay')){
+        if (!_.get(item, 'didPlay')) {
           Playlister.recompute();
         }
 
@@ -228,4 +233,5 @@ angular.module('xyzApp')
       $scope.songExpandedPopupCss = songExpandedPopupCss;
 
     }
-  );
+  )
+;

@@ -188,20 +188,35 @@ angular.module('xyzApp')
             return 'https://' + domainOrUrl;
           }
         },
-        fixItemPosition: function (item) {
-          if (item.x < layout_constants.SPACE_DIMENSIONS.minX) {
-            item.x = layout_constants.SPACE_DIMENSIONS.minX;
+        keepCoordsInBoundaries: function (coords) {
+          var x = coords.x;
+          var y = coords.y;
+
+          var boundaries = {
+            minX: layout_constants.SPACE_DIMENSIONS.minX + layout_constants.DOT_RADIUS,
+            minY: layout_constants.SPACE_DIMENSIONS.minY + layout_constants.DOT_RADIUS,
+            maxX: layout_constants.SPACE_DIMENSIONS.width - layout_constants.DOT_RADIUS,
+            maxY: layout_constants.SPACE_DIMENSIONS.height - layout_constants.DOT_RADIUS
+          };
+
+          if (x < boundaries.minX) {
+            x = boundaries.minX;
           }
-          if (item.x > layout_constants.SPACE_DIMENSIONS.width) {
-            item.x = layout_constants.SPACE_DIMENSIONS.width;
+          if (y < boundaries.minY) {
+            y = boundaries.minY;
           }
-          if (item.y < layout_constants.SPACE_DIMENSIONS.minY) {
-            item.y = layout_constants.SPACE_DIMENSIONS.minY;
+
+          if (x > boundaries.maxX) {
+            x = boundaries.maxX;
           }
-          if (item.y > layout_constants.SPACE_DIMENSIONS.height) {
-            item.y = layout_constants.SPACE_DIMENSIONS.height;
+          if (y > boundaries.maxY) {
+            y = boundaries.maxY;
           }
-          return item;
+
+          return {
+            x:x,
+            y:y
+          };
         },
         cleanError: function (thing) {
 
@@ -254,6 +269,7 @@ angular.module('xyzApp')
             return angular.toJSON(thing, true);
           }
         },
+
         showError: function (error) {
           ngToast.create({
             className: 'danger',

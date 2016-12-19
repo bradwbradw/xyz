@@ -52,6 +52,7 @@ angular.module('xyzApp').directive('mediaInspector', function ($window, $log, $t
         } else {
           item.y = layout_constants.SPACE_DIMENSIONS.height
         }
+
         var currentItems = _.get(Spaces.current(), 'songs');
 
         var checkForIsFirstSong = function () {

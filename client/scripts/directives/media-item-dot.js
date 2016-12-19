@@ -26,30 +26,28 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
       var startX;
       var startY;
-      var x = parseFloat(item.x) || 0;
-      var y = parseFloat(item.y) || 0;
+      item.x = parseFloat(item.x) || 0;
+      item.y = parseFloat(item.y) || 0;
 
-      circleElement.attr('cx', x);
-      circleElement.attr('cy', y);
-      halo.attr('cx', x);
-      halo.attr('cy', y);
+      circleElement.attr('cx', item.x);
+      circleElement.attr('cy', item.y);
+      halo.attr('cx', item.x);
+      halo.attr('cy', item.y);
 
       var dragPointOffsetX;
       var dragPointOffsetY;
 
 
       var dragStart = function (event) {
-//        $log.log('dragStart event:%s,%s', event.screenX, event.screenY);
-//        $log.log('dragStart event:', event);
 
         // Prevent default dragging of selected content
         event.preventDefault();
 
-        dragPointOffsetX = event.pageX - x;
-        dragPointOffsetY = event.pageY - y;
+        dragPointOffsetX = event.pageX - item.x;
+        dragPointOffsetY = event.pageY - item.y;
 
-        startX = x;
-        startY = y;
+        startX = item.x;
+        startY = item.y;
         /*
 
          $document.on('touchmove', dragMove);
@@ -65,40 +63,25 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
       function dragMove(event) {
 //        $log.log('dragMove event:', event);
-        x = event.pageX - dragPointOffsetX;
-        y = event.pageY - dragPointOffsetY;
 
-        var boundaries = {
-          minX: layout_constants.SPACE_DIMENSIONS.minX + layout_constants.DOT_RADIUS,
-          minY: layout_constants.SPACE_DIMENSIONS.minY + layout_constants.DOT_RADIUS,
-          maxX: layout_constants.SPACE_DIMENSIONS.width - layout_constants.DOT_RADIUS,
-          maxY: layout_constants.SPACE_DIMENSIONS.height - layout_constants.DOT_RADIUS
+        var newCoords = {
+          x: event.pageX - dragPointOffsetX,
+          y: event.pageY - dragPointOffsetY
         };
+        $log.debug('new coords', newCoords);
 
-//        $log.log(boundaries);
+        var goodCoords = Utility.keepCoordsInBoundaries(newCoords);
+
+        $log.debug('good coords', goodCoords);
+
+        circleElement.attr('cx', goodCoords.x);
+        circleElement.attr('cy', goodCoords.y);
+
+        item.x = goodCoords.x;
+        item.y = goodCoords.y;
 
 //        Playlister.recompute();
-        // ^ if uncommenting add Playlister back to dependencies!
-
-        if (x < boundaries.minX) {
-          x = boundaries.minX;
-        }
-        if (y < boundaries.minY) {
-          y = boundaries.minY;
-        }
-
-        if (x > boundaries.maxX) {
-          x = boundaries.maxX;
-        }
-        if (y > boundaries.maxY) {
-          y = boundaries.maxY;
-        }
-
-        circleElement.attr('cx', x);
-        circleElement.attr('cy', y);
-
-        item.x = x;
-        item.y = y;
+          // ^ if uncommenting add Playlister back to dependencies!
 
       }
 
@@ -111,9 +94,6 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
          $document.off('touchend', dragDone);*/
         $document.off('mousemove', dragMove);
         $document.off('mouseup', dragDone);
-
-//        $log.log('startX ' + startX + ' startY ' + startY);
-        //       $log.log('new X ' + item.x + ' new Y ' + item.y);
 
         if (item.x !== startX
           || item.y !== startY) {
