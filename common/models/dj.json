@@ -15,6 +15,10 @@
       "type": "string",
       "required": true
     },
+    "emailOptIn":{
+      "type": "boolean",
+      "required": false
+    },
     "password": {
       "type": "string",
       "required": true

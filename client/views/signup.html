@@ -11,6 +11,9 @@
       <input id="register-password-field" name="password" ng-model="registerData.password" placeholder="set a password" type="password"
              ng-minlength="6"
              required><br/>
+      <md-checkbox id="register-email-opt-in" name="email-opt-in" ng-model="registerData.emailOptIn" >
+        Send me email about the platform
+      </md-checkbox>
 
       <input type="submit" value="submit"/>
 
