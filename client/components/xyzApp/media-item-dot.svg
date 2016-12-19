@@ -9,8 +9,8 @@
             <image
                     ng-attr-x="{{dotImageXOffset()}}"
                     ng-attr-y="{{dotImageYOffset()}}"
-                    ng-attr-height="{{dotImageHeight()}}"
-                    ng-attr-width="{{dotImageWidth()}}"
+                    ng-attr-height="{{dotImageHeight()}}px"
+                    ng-attr-width="{{dotImageWidth()}}px"
                     height=""
                     width=""
                     ng-href="{{item.pic}}"
@@ -22,11 +22,11 @@
 
     <circle class="now-playing-halo"
             fill="{{Utility.absoluteRef('now-playing-radial-effect')}}"
-            ng-attr-r="{{layoutConstants.DOT_RADIUS * 2.3}}"
+            ng-attr-r="{{dotRadius() * 2.3}}"
             r="" ng-show="isNowPlaying(item)">
     </circle>
     <circle
-            ng-attr-r="{{layoutConstants.DOT_RADIUS}}"
+            ng-attr-r="{{dotRadius()}}"
             r=""
             class="xyz-item"
             fill="{{Utility.absoluteRef('image'+item.id)}}"

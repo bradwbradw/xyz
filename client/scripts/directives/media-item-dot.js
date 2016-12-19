@@ -1,4 +1,4 @@
-angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $sce, $timeout, Library, Utility) {
+angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $sce, $timeout, Library, Utility, layout_constants) {
 
   return {
     restrict: 'A',
@@ -8,7 +8,6 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
       item: '=',
       viewer: '=',
       space: '=',
-      layoutConstants: '=',
       isNowPlaying: '&',
       showFirstSongStyle: '&',
       doneDragging: '&',
@@ -70,10 +69,10 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
         y = event.pageY - dragPointOffsetY;
 
         var boundaries = {
-          minX: scope.layoutConstants.SPACE_DIMENSIONS.minX + scope.layoutConstants.DOT_RADIUS,
-          minY: scope.layoutConstants.SPACE_DIMENSIONS.minY +  scope.layoutConstants.DOT_RADIUS,
-          maxX: scope.layoutConstants.SPACE_DIMENSIONS.width - scope.layoutConstants.DOT_RADIUS,
-          maxY: scope.layoutConstants.SPACE_DIMENSIONS.height - scope.layoutConstants.DOT_RADIUS
+          minX: layout_constants.SPACE_DIMENSIONS.minX + layout_constants.DOT_RADIUS,
+          minY: layout_constants.SPACE_DIMENSIONS.minY + layout_constants.DOT_RADIUS,
+          maxX: layout_constants.SPACE_DIMENSIONS.width - layout_constants.DOT_RADIUS,
+          maxY: layout_constants.SPACE_DIMENSIONS.height - layout_constants.DOT_RADIUS
         };
 
 //        $log.log(boundaries);
@@ -114,7 +113,7 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
         $document.off('mouseup', dragDone);
 
 //        $log.log('startX ' + startX + ' startY ' + startY);
- //       $log.log('new X ' + item.x + ' new Y ' + item.y);
+        //       $log.log('new X ' + item.x + ' new Y ' + item.y);
 
         if (item.x !== startX
           || item.y !== startY) {
@@ -129,56 +128,38 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
 
       }
-      var youtubeThumbH = 360;
-      var youtubeThumbW = 480;
 
-      var soundcloudThumb = 100; //sc thumbs are square
-
-
-      var dotImageXOffset = function(){
-//        $log.log('dot radius is ',scope.layoutConstants.DOT_RADIUS);
-        if (item.provider === 'youtube'){
-          return youtubeThumbW / 2;
-        } else if (item.provider === 'soundcloud') {
-            return soundcloudThumb / 2;
-        } else {
-          return -20;
-        }
-      };
-      var dotImageYOffset = function(){
-        if (item.provider === 'youtube'){
-          return youtubeThumbH / 2;
-        } else if (item.provider === 'soundcloud') {
-            return soundcloudThumb / 2;
-        } else {
-          return -20;
-        }
+      var dotRadius = function(){
+        return layout_constants.DOT_RADIUS;
       };
 
-      var dotImageHeight = function(){
-        if (item.provider === 'youtube'){
-          return scope.layoutConstants.DOT_RADIUS * 4;
-        } else if (item.provider === 'soundcloud') {
-            return scope.layoutConstants.DOT_RADIUS * 4;
-        } else {
-          return '100px';
-        }
+      var getDimensions = function(item){
+        return _.get(layout_constants, 'PROVIDER_THUMBNAIL_DIMENSIONS.' + item.provider);
       };
 
-      var dotImageWidth = function(){
-        if (item.provider === 'youtube'){
-          return dotImageHeight * (4/3); // 4/3 maintains aspect ratio
-        } else if (item.provider === 'soundcloud') {
-            return dotImageHeight;
-        } else {
-          return '100px';
-        }
+      var dotImageXOffset = function () {
+        return dotImageWidth() / -3;
+      };
+      var dotImageYOffset = function () {
+        return layout_constants.DOT_RADIUS * -1;
+      };
+
+      var dotImageHeight = function () {
+        return layout_constants.DOT_RADIUS * 4;
+      };
+
+      var dotImageWidth = function () {
+        var dimensions = getDimensions(item);
+        var aspectRatio = dimensions.w / dimensions.h;
+        return dotImageHeight() * aspectRatio;
       };
 
       scope.dotImageXOffset = dotImageXOffset;
       scope.dotImageYOffset = dotImageYOffset;
       scope.dotImageHeight = dotImageHeight;
       scope.dotImageWidth = dotImageWidth;
+
+      scope.dotRadius = dotRadius;
 
       scope.Utility = Utility;
     }
