@@ -24,12 +24,12 @@ module.exports = function (app) {
     context.model.findById(context.modelId, {include: 'contributors'}, function (err, space) {
 
       if (err || !space) {
-        reject(err);
+        return reject(err);
       }
 
       var spaceContributors = space.contributors();
 
-      console.log('checking if user '+userId+' is in \n '+ JSON.stringify(spaceContributors,null,2));
+      console.log('checking if user ' + userId + ' is in \n ' + JSON.stringify(spaceContributors, null, 2));
       var contributor = _.find(space.contributors(), {id: userId});
 
       if (contributor) {
