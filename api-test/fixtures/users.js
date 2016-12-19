@@ -10,7 +10,7 @@ module.exports = {
       name: 'contributor test dj',
     credentials: {
       email:"contributor-test-dj@xyz.gs",
-      password:"cont-pass"
+      password:"contributor"
     }
   },
   random:{
