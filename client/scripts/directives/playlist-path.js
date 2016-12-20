@@ -34,7 +34,7 @@ angular.module('xyzApp').directive('playlistPath', function ($interval, $log, Pl
       var moveLinePath = function () {
         numPathPointsThatWereTraversed++;
         scope.pathDescription = generatePathDescription(numPathPointsThatWereTraversed);
-        $log.log(numPathPointsThatWereTraversed, scope.pathDescription);
+        $log.debug(numPathPointsThatWereTraversed, scope.pathDescription);
       };
 
       var start = function () {
