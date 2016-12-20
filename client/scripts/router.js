@@ -137,7 +137,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     })
     .state('base.space.add', {
       views: {
-        'sidebar@base': {
+        'sidebar': {
           templateUrl: 'sidebar/sidebar-add.html',
           controller: 'AddMediaCtrl'
         }
@@ -145,7 +145,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     })
     .state('base.space.edit', {
       views: {
-        'sidebar@base': {
+        'sidebar': {
           templateUrl: 'sidebar/sidebar-edit.html',
           controller: 'EditSpaceCtrl'
         }
@@ -153,7 +153,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     })
     .state('base.space.info', {
       views: {
-        'sidebar@base': {
+        'sidebar': {
           templateUrl: 'sidebar/sidebar-info.html',
           controller: 'EditSpaceCtrl'
         }

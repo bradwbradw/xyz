@@ -104,10 +104,15 @@
 
 </div>
 
-<div ng-if="isHovering()">
-  <div class="item-hover" ng-style="getHovering().css" style="position:absolute;">
+<div ng-if="isHovering()"
+class="item-hover" ng-style="getHovering().css">
+  <div >
     {{getHovering().item.title}}
   </div>
+</div>
+
+
+<div ui-view="sidebar">
 </div>
 
 <debug name="'expanded item'" obj="expandedItem()" max-height="150"></debug>

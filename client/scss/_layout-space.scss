@@ -52,6 +52,7 @@
   width: $sidebar-width;
   overflow: visible;
   /* position absolute, left, top is defined inline */
+  z-index: 5;
 
   .expanded-meta-actions {
     min-height: 1.8em;
@@ -122,4 +123,5 @@
 .item-hover {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.1);
+  z-index:6;
 }
