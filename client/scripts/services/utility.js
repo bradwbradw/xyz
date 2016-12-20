@@ -285,6 +285,14 @@ angular.module('xyzApp')
         },
         absoluteRef: function (id) {
           return 'url(' + $location.absUrl() + '#' + id + ')';
+        },
+        // must use this method instead of pageY
+        // because viewport is fixed, and contents of main-container are set to overflow: scroll
+        // http://stackoverflow.com/questions/6073505/what-is-the-difference-between-screenx-y-clientx-y-and-pagex-y#answer-21452887
+        absoluteCursorCoords: function(event){
+          var svgElement = angular.element('.main-container svg');
+          // TODO finish me
+          return event;
         }
 
 

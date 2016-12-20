@@ -1,4 +1,4 @@
-angular.module('xyzApp').directive('mediaInspector', function ($window, $log, $timeout, $q, Player, MediaAPI, Library, Spaces, layout_constants, Playlister) {
+angular.module('xyzApp').directive('mediaInspector', function ($window, $log, $timeout, $q, Player, MediaAPI, Utility, Library, Spaces, layout_constants, Playlister) {
 
   return {
     restrict: 'A',
@@ -45,13 +45,13 @@ angular.module('xyzApp').directive('mediaInspector', function ($window, $log, $t
 
       var putInSpace = function (item, event) {
 
-        item.x = _.round($window.outerWidth / 4); //should be 25% from left side of screen / window
+        var coords = Utility.keepCoordsInBoundaries({
+          x: event.x - layout_constants.SPACE_MARGIN.LEFT - 2*layout_constants.DOT_RADIUS,
+          y: event.y - layout_constants.SPACE_MARGIN.TOP - 2*layout_constants.DOT_RADIUS
+        });
 
-        if (event.y < layout_constants.SPACE_DIMENSIONS.height) {
-          item.y = event.y;
-        } else {
-          item.y = layout_constants.SPACE_DIMENSIONS.height
-        }
+        item.x = coords.x;
+        item.y = coords.y;
 
         var currentItems = _.get(Spaces.current(), 'songs');
 
