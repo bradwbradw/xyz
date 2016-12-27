@@ -148,7 +148,7 @@ angular.module('xyzApp')
           return item.provider_id && isPlayable(item) && wasNotPlayed(item);
         };
 
-        var songs = _.filter(space.songs, shouldTryToPlay);
+        var songs = _.filter(_.get(space, 'songs'), shouldTryToPlay);
 
         songs = _.uniqBy(songs, 'id');
 
