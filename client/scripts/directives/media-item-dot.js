@@ -1,4 +1,4 @@
-angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $sce, $timeout, Library, Utility, layout_constants) {
+angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $sce, $timeout, Animations, Library, Utility, layout_constants) {
 
   return {
     restrict: 'A',
@@ -20,6 +20,23 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
       if (_.isUndefined(item)) {
         return;
       }
+      var clearAnimation = function(name){
+        return function(){
+          _.remove(item.animations, function(n){
+            return n === name;
+          });
+        }
+      };
+
+      _.each(item.animations, function (name) {
+        var animationFn = _.get(Animations, name);
+        if (_.isFunction(animationFn)) {
+          var Animation = animationFn(element[0]);
+          Animation
+            .onfinish = clearAnimation(name);
+        }
+      });
+
       var circleElement = element.find('circle');
 
       var halo = element.find('.now-playing-halo');
@@ -81,7 +98,7 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
         item.y = goodCoords.y;
 
 //        Playlister.recompute();
-          // ^ if uncommenting add Playlister back to dependencies!
+        // ^ if uncommenting add Playlister back to dependencies!
 
       }
 
@@ -109,11 +126,11 @@ angular.module('xyzApp').directive('mediaItemDot', function ($document, $log, $s
 
       }
 
-      var dotRadius = function(){
+      var dotRadius = function () {
         return layout_constants.DOT_RADIUS;
       };
 
-      var getDimensions = function(item){
+      var getDimensions = function (item) {
         return _.get(layout_constants, 'PROVIDER_THUMBNAIL_DIMENSIONS.' + item.provider);
       };
 

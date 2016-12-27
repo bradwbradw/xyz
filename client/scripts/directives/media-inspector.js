@@ -42,7 +42,6 @@ angular.module('xyzApp').directive('mediaInspector', function ($window, $log, $t
         $timeout(Library.addToSearchResults(new_));
       };
 
-
       var putInSpace = function (item, event) {
 
         var coords = Utility.keepCoordsInBoundaries({
@@ -52,6 +51,7 @@ angular.module('xyzApp').directive('mediaInspector', function ($window, $log, $t
 
         item.x = coords.x;
         item.y = coords.y;
+        item.animations = ['enterGrow'];
 
         var currentItems = _.get(Spaces.current(), 'songs');
 

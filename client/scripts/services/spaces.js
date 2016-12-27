@@ -54,7 +54,8 @@ angular.module('xyzApp')
         var unsetTheseProperties = [
           'justDropped',
           'dragging',
-          'didPlay'
+          'didPlay',
+          'animations'
         ];
 
         var cleanItem = _.omit(item, unsetTheseProperties);
