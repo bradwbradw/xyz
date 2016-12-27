@@ -10,15 +10,16 @@
 angular.module('xyzApp')
   .service('Animations', function () {
 
+
     return {
       enterGrow: function (element) {
 
-        return element.animate({
-          opacity: [0.5, 1],
-          transform: ['scale(0.5)', 'scale(1)']
-        }, {
-//          direction: 'alternate',
-          duration: 1000,
+        return element.animate([
+          {opacity: 0.1},
+          {opacity: 1}
+        ], {
+          duration: 800,
+          easing:'cubic-bezier(.08,.52,.85,.34)',
           iterations: 1
         });
 
