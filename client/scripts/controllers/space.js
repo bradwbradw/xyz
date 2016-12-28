@@ -102,10 +102,14 @@ angular.module('xyzApp')
 
       var closeExpanded = function (source) {
 
-        $log.log('closing expanded ', source);
+        $log.debug('closing expanded from source:', source);
         expanded = null;
         Player.stop();
       };
+
+      $scope.$on('close popups', function(){
+        closeExpanded('main click broadcast');
+      });
 
       var isExpanded = function (song) {
         return expanded === song.id;

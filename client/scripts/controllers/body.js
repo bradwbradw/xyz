@@ -34,12 +34,18 @@ angular.module('xyzApp')
       return _.get(getPlayingSpace(), 'id') === _.get(Spaces.current(), 'id');
     };
 
+    var onMainClick = function(event){
+      $log.debug('main click', event);
+      $rootScope.$broadcast('close popups');
+    };
+
     $rootScope.updateBackground = function () {
       $scope.gradientClass = _.get(UserSettings.get('gradient'), 'class');
     };
 
     $rootScope.updateBackground();
 
+    $scope.onMainClick = onMainClick;
     $scope.playSpace = playSpace;
     $scope.getPlayingSpace = getPlayingSpace;
     $scope.currentSpaceIsPlaying = currentSpaceIsPlaying;

@@ -1,5 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg"
-     ng-click="closeExpanded('screen')"
      class="space-svg-view"
      ng-attr-viewbox="{{computeViewBox()}}"
      ng-attr-height="{{layout_constants.SPACE_DIMENSIONS.height}}"
@@ -45,7 +44,8 @@
 <div class="expanded-popup"
      ng-style="songExpandedPopupCss()"
      ng-if="expandedItem()"
-     layout="column">
+     layout="column"
+    ng-click="$event.stopPropagation()">
 
   <div layout="row" class="expanded-meta-actions" layout-align="start center">
 
@@ -115,7 +115,12 @@ class="item-hover" ng-style="getHovering().css">
 <div ui-view="sidebar">
 </div>
 
-<debug name="'expanded item'" obj="expandedItem()" max-height="150"></debug>
+<debug
+    name="'expanded item'"
+    obj="expandedItem()"
+    max-height="150">
+
+</debug>
 <pre class="debug right-panel" ng-if="debug">space: {{space | json}}</pre>
 <pre class="debug right-panel" ng-if="debug">space in map: {{Spaces.current() | json}}</pre>
 <pre class="debug right-panel" ng-if="debug">Playlister.List: {{Playlister.getList() | json}}</pre>
