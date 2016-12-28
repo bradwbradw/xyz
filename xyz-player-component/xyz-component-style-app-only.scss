@@ -1,15 +1,16 @@
 @import '../client/scss/variables';
+@import '../client/scss/base/mixins';
 
 .xyz-player {
   color: white;
-  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.3);
+  text-align: center;
 
   height: $xyz-player-height;
   width: 100vw;
-  background-color: rgba(0, 0, 0, 0.3);
-  text-align: center;
   position: fixed;
   bottom: 0;
+  z-index: 1;
 
   &.full-screen {
     height: 100vh;
@@ -65,6 +66,13 @@
     right: 0;
   }
 
+}
+
+.room-for-sidebar .xyz-player {
+
+  @include MQ(M) {
+    width: calc(100vw - 320px);
+  }
 }
 
 .player-title {

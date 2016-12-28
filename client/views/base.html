@@ -11,7 +11,8 @@
    <div ui-view="main" class="main-container" ng-click="onMainClick($event)"></div>
 
 
-  <div class="xyz-player-container room-for-sidebar"
+  <div class="xyz-player-container"
+       ng-class="{'room-for-sidebar':shouldMakeRoomForSidebar()}"
        ng-controller="SiteWidePlayerCtrl"
        ng-if="UserSettings.get('sitewide-player-enabled')"
   >

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('xyzApp')
-  .controller('BodyCtrl', function ($rootScope, $window, $scope, $log, $timeout, $stateParams, localStorageService, Utility, UserSettings, Playlister, Spaces) {
+  .controller('BodyCtrl', function ($rootScope, $window, $scope, $log, $timeout, $stateParams, $state, localStorageService, Utility, UserSettings, Playlister, Spaces) {
 
     $rootScope.askConfirm = function (callback, thing, error) {
       if ($window.confirm) {
@@ -23,7 +23,6 @@ angular.module('xyzApp')
           $rootScope.$broadcast('play', {space: space, itemId: itemId});
           playingSpace = space;
         });
-
     };
 
     var getPlayingSpace = function () {
@@ -43,8 +42,13 @@ angular.module('xyzApp')
       $scope.gradientClass = _.get(UserSettings.get('gradient'), 'class');
     };
 
+    var shouldMakeRoomForSidebar = function(){
+      return $state.is('base.space.add');
+    };
+
     $rootScope.updateBackground();
 
+    $scope.shouldMakeRoomForSidebar = shouldMakeRoomForSidebar;
     $scope.onMainClick = onMainClick;
     $scope.playSpace = playSpace;
     $scope.getPlayingSpace = getPlayingSpace;
