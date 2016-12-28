@@ -62,7 +62,7 @@ angular.module('xyzApp')
       };
 
       var ensureWithinBoundaries = function (item) {
-        var fixedCoords = Utility.keepCoordsInBoundaries({x:item.x, y:item.y});
+        var fixedCoords = Utility.keepCoordsInBoundaries({x: item.x, y: item.y});
         item.x = fixedCoords.x;
         item.y = fixedCoords.y;
 
@@ -101,14 +101,26 @@ angular.module('xyzApp')
       };
 
       var closeExpanded = function (source) {
-
         $log.debug('closing expanded from source:', source);
         expanded = null;
         Player.stop();
       };
 
-      $scope.$on('close popups', function(){
+      var sideBarIsOpen = function () {
+        return !$state.is('base.space')
+          && $state.includes('base.space');
+      };
+
+      $scope.$on('close popups', function () {
         closeExpanded('main click broadcast');
+
+        if (sideBarIsOpen()) {
+          $state.go('^'); // closes sidebar
+        }
+
+        if ($rootScope.settingsOpen()) {
+          $rootScope.toggleSettings();
+        }
       });
 
       var isExpanded = function (song) {

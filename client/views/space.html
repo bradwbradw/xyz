@@ -112,7 +112,7 @@ class="item-hover" ng-style="getHovering().css">
 </div>
 
 
-<div ui-view="sidebar">
+<div ui-view="sidebar" ng-click="$event.stopPropagation()">
 </div>
 
 <debug

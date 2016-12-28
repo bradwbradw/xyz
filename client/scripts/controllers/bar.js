@@ -107,11 +107,11 @@ angular.module('xyzApp')
     $scope.title = title;
     $scope.Spaces = Spaces;
 
-    $scope.settingsOpen = settingsOpen;
+    $rootScope.settingsOpen = settingsOpen;
     $scope.UserSettings = UserSettings;
     $scope.userIsEditing = userIsEditing;
 
-    $scope.toggleSettings = toggleSettings;
+    $rootScope.toggleSettings = toggleSettings;
     $scope.toggleEditing = toggleEditing;
 
     $scope.viewer = viewer;
