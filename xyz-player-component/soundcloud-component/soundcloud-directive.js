@@ -12,8 +12,8 @@ angular.module("xyzPlayer")
         startSeconds: "@"
       },
       template:
-      '<iframe ng-show="showWidget()" id="xyz-soundcloud-iframe" ' +
-      'src=\'https://w.soundcloud.com/player/?url=https://soundcloud.com/smilebandsmile/holiday\'>' +
+      '<iframe class="ng-hide" ng-show="showWidget()" id="xyz-soundcloud-iframe" ' +
+      'src=\'https://w.soundcloud.com/player/?url=\'>' +
       '</iframe>',
 
 
