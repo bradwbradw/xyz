@@ -82,7 +82,7 @@ angular.module("xyzPlayer")
         // because maybe user is clicking 'next' rapidly
         var stillShouldPlay = function () {
           var nowPlayingProviderId = _.get(Playlister.getNowPlaying(), 'provider_id');
-          return nowPlayingProviderId === scope.soundid
+          return nowPlayingProviderId+'' === scope.soundid+''
         };
 
         scope.showWidget = function(){
