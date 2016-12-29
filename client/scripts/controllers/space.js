@@ -101,9 +101,11 @@ angular.module('xyzApp')
       };
 
       var closeExpanded = function (source) {
+        var oldExpanded = expanded;
         $log.debug('closing expanded from source:', source);
         expanded = null;
         Player.stop();
+        return oldExpanded;
       };
 
       var sideBarIsOpen = function () {
@@ -112,15 +114,21 @@ angular.module('xyzApp')
       };
 
       $scope.$on('close popups', function () {
-        closeExpanded('main click broadcast');
+        var wasExpanded = closeExpanded('main click broadcast');
 
-        if (sideBarIsOpen()) {
-          $state.go('^'); // closes sidebar
+        if(wasExpanded){
+          // don't hide sidebar since we already hid the expanded popup
+        } else {
+
+          if (sideBarIsOpen()) {
+            $state.go('^'); // closes sidebar
+          }
+
+          if ($rootScope.settingsOpen()) {
+            $rootScope.toggleSettings();
+          }
         }
 
-        if ($rootScope.settingsOpen()) {
-          $rootScope.toggleSettings();
-        }
       });
 
       var isExpanded = function (song) {
