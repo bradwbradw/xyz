@@ -2,7 +2,7 @@
 
 
 <section ng-if="User.loggedIn()" >
-  <h2>My Spaces</h2>
+  <h2>My XYZ Spaces</h2>
 
   <a id="create-new-space" ng-click="createNewSpace()"> + create new space</a>
 
@@ -25,7 +25,7 @@
 
 <section>
   <div class="public-spaces-container">
-  <h2>Public Spaces</h2>
+  <h2>Public XYZ Spaces</h2>
 
     <ul layout-wrap layout-align="space-around left" layout="row">
       <li ng-repeat="space in Spaces.getPublic()"
