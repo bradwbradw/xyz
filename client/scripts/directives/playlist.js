@@ -11,4 +11,4 @@ angular.module('xyzApp').directive('playlist', function (Playlister) {
     
 		}
 	}
-}
+});
