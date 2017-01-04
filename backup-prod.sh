@@ -1,3 +1,5 @@
+mkdir xyzDbDump;
+mkdir xyzDbDump/production;
 ssh -t dokku@ssh.xyz.gs mongodb:export xyz xyzdb Space > xyzDbDump/production/Space.json &&
 ssh -t dokku@ssh.xyz.gs mongodb:export xyz xyzdb Song > xyzDbDump/production/Song.json &&
 ssh -t dokku@ssh.xyz.gs mongodb:export xyz xyzdb SpaceSong > xyzDbDump/production/SpaceSong.json &&
