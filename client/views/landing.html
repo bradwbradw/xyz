@@ -25,7 +25,8 @@
 
 <section>
   <div class="public-spaces-container">
-  <h2>Public Spaces</h2>
+  <h2 ng-if="User.loggedIn()">Public Spaces</h2>
+  <h2 ng-if="!User.loggedIn()">these are <i>XYZ Spaces</i>...</h2>
 
     <ul layout-wrap layout-align="space-around left" layout="row">
       <li ng-repeat="space in Spaces.getPublic()"
@@ -34,6 +35,11 @@
 
   </div>
 
+</section>
+
+
+<section ng-if="!User.loggedIn()">
+  <h2><a ui-sref="base.signup-login" id="sign-up-link"> ~ sign up here ~ </a> <br/>to create your own! </h2>
 </section>
 
 <pre class="debug" ng-if="false">
