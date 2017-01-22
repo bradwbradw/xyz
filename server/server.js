@@ -7,7 +7,7 @@ var loopback = require('loopback'),
 
 var config = require('../constants');
 
-var logRequests = require('../log-requests')
+var logRequests = require('./log-requests')
 
 var PasswordReset = require('./routes/password-reset.js');
 
