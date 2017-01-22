@@ -1,7 +1,7 @@
 'use strict';
 var mongoDbUriTool = require('mongodb-uri');
 
-var mongoUrl = process.env.MONGODB_URL || 'mongodb://heroku_cc7gbkr1:rusl214k9b95o5d7evobgufue6@ds059135.mongolab.com:59135/heroku_cc7gbkr1';
+var mongoUrl = process.env.MONGODB_URL || process.env.MONGO_URL || 'mongodb://heroku_cc7gbkr1:rusl214k9b95o5d7evobgufue6@ds059135.mongolab.com:59135/heroku_cc7gbkr1';
 
 var mongoCreds = mongoDbUriTool.parse(mongoUrl);
 /* example creds object:
