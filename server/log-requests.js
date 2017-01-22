@@ -16,11 +16,10 @@
 
   logger.info('this is my message');
   
-  var logRequests = function(req, res){
-  
+  var logRequests = function(req, res, next){ 
       logger.info("ding");
-  
+      next();
   }
  
-  
+ 
   module.exports = logRequests;
