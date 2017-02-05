@@ -34,8 +34,15 @@
 
 </div>
 
+
 <!-- build:js scripts/vendor.js -->
 <!-- bower:js -->
+
+<script src="scripts/tour-dependencies/jquery.min.js"></script>
+<script src="scripts/tour-dependencies/jazz.min.js"></script>
+<script src="scripts/tour-dependencies/pagedown.min.js"></script>
+<script src="scripts/tour-dependencies/tour.js"></script>
+
 <script src="vendor/angular/angular.js"></script>
 <script src="vendor/angular-sanitize/angular-sanitize.js"></script>
 <script src="vendor/angular-messages/angular-messages.js"></script>
@@ -105,7 +112,6 @@
 <script src="scripts/controllers/edit-space.js"></script>
 <script src="scripts/controllers/account.js"></script>
 <script src="scripts/controllers/SiteWidePlayerCtrl.js"></script>
-
 
 <script src="../xyz-player-component/xyz-player-directive.js"></script>
 <script src="../xyz-player-component/api.service.js"></script>
@@ -191,20 +197,11 @@
               ]
             });
 
+
         Sideshow.start({listAll: true});
       })
 </script>
 <!-- /build -->
-
-<script src="tour-dependencies/jquery.min.js"></script>
-<script src="tour-dependencies/jazz.min.js"></script>
-<script src="tour-dependencies/pagedown.min.js"></script>
-
-<script src="tour.js"></script>
-
-<script type="text/javascript">
-
-</script>
 
 </body>
 </html>
