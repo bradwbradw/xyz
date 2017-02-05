@@ -22,6 +22,9 @@
 
   <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"/>
 
+  <link rel="stylesheet" href="http://fortesinformatica.github.io/Sideshow/distr/fonts/sideshow-fontface.min.css">
+  <link rel="stylesheet" href="http://fortesinformatica.github.io/Sideshow/distr/stylesheets/sideshow.min.css">
+
 </head>
 
 <body ng-controller="BodyCtrl" ng-class="gradientClass">
@@ -143,10 +146,54 @@
       .constant('apiKeys', {
         // to re-enable facebook, make the id '%%%facebookAppId'
         sc: '%%%scKey', yt: '%%%ytKey', fb_app_id: '0'
+      })
+      .run(function($location){
+        $location.hash('tour')
       });
 </script>
 <!-- /build -->
 
+<script src="tour-dependencies/jquery.min.js"></script>
+<script src="tour-dependencies/jazz.min.js"></script>
+<script src="tour-dependencies/pagedown.min.js"></script>
+
+<script src="tour.js"></script>
+
+<script type="text/javascript">
+  Sideshow.config.language = "en";
+  Sideshow.init();
+  Sideshow.registerWizard({
+    name: "introducing_sideshow",
+    title: "Introducing Sideshow",
+    description: "Introducing the main features and concepts of Sideshow. ",
+    estimatedTime: "10 Minutes",
+    affects: [
+      {hash: "#tour"}, //This tutorial would be eligible for URLs like this "http://www.foo.com/bar#messages"
+      {route: "/", caseSensitive: true},  //This tutorial would be eligible for URLs like this "http://www.foo.com/adm/orders"
+      function () {
+        //Here we could do any checking to infer if this tutorial is eligible the current screen/context.
+        //After this checking, just return a boolean indicating if this tutorial will be available.
+        return true;//$(".grid").length > 0;
+      }
+    ]
+  })
+      .storyLine({
+        showStepPosition: true,
+        steps: [
+          {
+            title: "Hello Sideshow.",
+            text: "This is an oversimplified example."
+          },
+          {
+            title: "The end",
+            text: "What a pity =(."
+          }
+        ]
+      });
+
+			Sideshow.start({ listAll: true });
+
+</script>
 
 </body>
 </html>
