@@ -1,3 +1,14 @@
+@font-face {
+    font-family: sideshow-icons;
+    src: url(../../../fonts/tour-icons/sideshow-icons.eot);
+    src: url(../../../fonts/tour-icons/sideshow-icons.eot?#iefix) format('embedded-opentype'),
+    url(../../../fonts/tour-icons/sideshow-icons.woff) format('woff'),
+    url(../../../fonts/tour-icons/sideshow-icons.ttf) format('truetype'),
+    url(../../../fonts/tour-icons/sideshow-icons.svg#sideshow-icons) format('svg');
+    font-weight: 400;
+    font-style: normal
+}
+
 only-icon-button:before {
     margin-right: 0 !important
 }
