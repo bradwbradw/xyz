@@ -77,14 +77,12 @@ describe('space page tests', function () {
     });
 
     afterAll(function () {
-      var nameInput = element(by.model('spaceEdits.name'));
-      nameInput.clear().sendKeys(title, protractor.Key.ENTER);
 
       var contributorsList = element.all(by.repeater(contributorsRepeater));
       contributorsList.each(function (element, index) {
         var minusButton = element.element(by.css('.icon-btn'));
         minusButton.click();
-        console.log('takedown: unsetting contributor #' + index+1);
+        console.log('takedown: unsetting contributor #' + index + 1);
       })
     });
 
@@ -94,13 +92,17 @@ describe('space page tests', function () {
     });
 
     it('should change name of space', function () {
+
+      var newName = 'new name ' + new Date().toISOString();
+
+      var topBarTitle = element(by.css('#bar-title'));
+
       var nameInput = element(by.model('spaceEdits.name'));
-      nameInput.clear().sendKeys('cool new name', protractor.Key.ENTER);
+      nameInput.clear().sendKeys(newName, protractor.Key.ENTER);
 
       element(by.css('#space-edit-form md-icon')).click();
 
-      var topBarTitle = element(by.css('#bar-title'));
-      expect(topBarTitle.getText()).toContain('cool new name');
+      expect(topBarTitle.getText()).toContain(newName);
 
     });
 
@@ -138,7 +140,7 @@ describe('space page tests', function () {
       addButton.click();
     });
 
-    describe('searching for asdf', function () {
+    fdescribe('searching for asdf', function () {
 
       beforeAll(function () {
 
@@ -156,8 +158,8 @@ describe('space page tests', function () {
 
       it('should show a list of results', function () {
 
+        browser.waitForAngular();
         var results = element.all(by.repeater('item in Library.getSearchResults()'));
-
         expect(results.count()).toBeGreaterThan(2);
 
       });
@@ -172,6 +174,7 @@ describe('space page tests', function () {
             var filters = element.all(by.repeater('(filterName, value) in filters'));
             filters.last().click();
 
+            browser.waitForAngular();
             expect(element.all(by.repeater('item in Library.getSearchResults()')).count()).toBeLessThan(num);
           })
 

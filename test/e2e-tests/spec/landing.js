@@ -12,6 +12,11 @@ describe('landing page tests', function () {
   });
 
 
+  it('should not show the tour title', function(){
+    var title = element(by.css('.sideshow-wizard-menu-title'));
+    expect(title.isPresent()).toBeFalsy();
+  });
+
   it('should see some public spaces', function () {
 
     var publicSpaces = element.all(by.repeater('space in Spaces.getPublic()'));
@@ -59,6 +64,20 @@ describe('landing page tests', function () {
 
 });
 
+
+
+describe('landing page tests (tour)', function () {
+
+  beforeAll(function() {
+    browser.get('/#tour');
+  });
+
+  it('should show the tour title', function(){
+    var title = element(by.css('.sideshow-wizard-menu-title'));
+    expect(title.isPresent()).toBeTruthy();
+    expect(title.getText()).toContain('AVAILABLE TUTORIALS');
+  });
+});
 
 describe('landing page tests (logged in)', function () {
 
