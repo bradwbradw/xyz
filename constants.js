@@ -1,5 +1,6 @@
 'use strict';
 var mongoDbUriTool = require('mongodb-uri');
+var _ = require('lodash');
 
 var mongoUrl = process.env.MONGODB_URL || process.env.MONGO_URL || 'mongodb://heroku_cc7gbkr1:rusl214k9b95o5d7evobgufue6@ds059135.mongolab.com:59135/heroku_cc7gbkr1';
 
@@ -15,9 +16,12 @@ var mongoCreds = mongoDbUriTool.parse(mongoUrl);
 
 var port = process.env.PORT || 5005;
 var ip = process.env.IP || 'localhost';
-console.log('ip is ', ip);
-console.log('api / built app port is ', port);
+console.log('app ip will be ', ip);
+console.log('the api and the minified version of the app will be available on port ', port);
 
+var loggingUrl = process.env.loggingUrl || 'logs5.papertrailapp.com:29706';
+var loggingHost = _.first(loggingUrl.split(':'));
+var loggingPort = _.last(loggingUrl.split(':'))*1;
 
 module.exports = {
   api: {
@@ -39,6 +43,11 @@ module.exports = {
   mail: {
     key: process.env.MAILGUN_KEY || 'key-57050be36fbfd2a9d17776fd5d771eb5',
     domain: process.env.MAILGUN_DOMAIN || 'staging-mg.xyz.gs'
+  },
+  logging:{
+    host: loggingHost,
+    port: loggingPort
+
   },
   mongoUrl: mongoUrl,
   mongoCreds: mongoCreds,

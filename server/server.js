@@ -7,13 +7,13 @@ var loopback = require('loopback'),
 
 var config = require('../constants');
 
-var logRequests = require('./log-requests')
+var logRequests = require('./log-requests');
 
 var PasswordReset = require('./routes/password-reset.js');
 
 var app = module.exports = loopback();
 
-app.use(morgan('combined'));
+//app.use(morgan('combined'));
 app.use(logRequests);
 
 // configure body parser
