@@ -22,21 +22,24 @@ var logger = new winston.Logger({
 var messageTemplate = '{{ip}} {{protocol}} {{method}}: {{originalUrl}} {{params}} {{query}}';
 var messageFn = _.template(messageTemplate);
 
-var logRequests = function (req, res, next) {
+var request = function (req, res, next) {
 
   var dataToLog = _.pick(req, 'ip protocol method originalUrl params query'.split(' '));
   dataToLog.params = JSON.stringify(dataToLog.params);//'donkey'//_(dataToLog.params).value();
   dataToLog.query = JSON.stringify(dataToLog.query);//'donkey'//_(dataToLog.params).value();
 
   logger.info(messageFn(dataToLog));
-  console.log('logging', messageFn(dataToLog));
 
-  if(req.method === 'POST' || req.method === 'PUT'){
-    logger.info('body: ',req.body);
-    console.log('logging', messageFn(dataToLog));
-  }
   next();
 };
 
+var error = function(err, req, res, next){
 
-module.exports = logRequests;
+  logger.error('REST error:', err);
+  next();
+};
+
+module.exports = {
+  request:request,
+  error:error
+};

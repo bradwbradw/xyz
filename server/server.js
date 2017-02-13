@@ -7,14 +7,14 @@ var loopback = require('loopback'),
 
 var config = require('../constants');
 
-var logRequests = require('./log-requests');
+var remoteLog = require('./remote-log');
 
 var PasswordReset = require('./routes/password-reset.js');
 
 var app = module.exports = loopback();
 
 //app.use(morgan('combined'));
-app.use(logRequests);
+app.use(remoteLog.request);
 
 // configure body parser
 app.use(bodyParser.urlencoded({extended: true}));
