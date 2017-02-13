@@ -19,7 +19,7 @@ var ip = process.env.IP || 'localhost';
 console.log('app ip will be ', ip);
 console.log('the api and the minified version of the app will be available on port ', port);
 
-var loggingUrl = process.env.loggingUrl || 'logs5.papertrailapp.com:29706';
+var loggingUrl = process.env.LOGGING_URL || 'logs5.papertrailapp.com:29706';
 var loggingHost = _.first(loggingUrl.split(':'));
 var loggingPort = _.last(loggingUrl.split(':'))*1;
 
