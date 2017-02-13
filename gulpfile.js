@@ -229,6 +229,7 @@ gulp.task('browserSync:client', function (done) {
       routes: {
         "/xyz-player-component": "xyz-player-component",
         "/client": "client",
+        "/fonts": "fonts",
         "/stream/xyz-player-component": "xyz-player-component",
         "/stream/xyz-player-component/css": "xyz-player-component/css",
         "/stream": "stream",
@@ -258,6 +259,7 @@ gulp.task('browserSync:admin', function (done) {
       middleware: [historyApiFallback()],
       routes: {
         "/client": "client",
+        "/fonts": "fonts",
         "/admin/vendor": "client/vendor",
         "/admin": "admin"
       }
@@ -276,21 +278,6 @@ gulp.task('browserSync:admin', function (done) {
   done();
 });
 
-gulp.task('browserSync:dist', function (done) {
-  browserSync.init({
-    server: {
-      baseDir: 'dist',
-      index: 'index.html',
-      middleware: [historyApiFallback()]
-    },
-    ghostMode: false,
-    notify: false,
-    reloadDelay: 500,
-    port: 9000
-  });
-  done();
-});
-
 // is this needed? 
 gulp.task('browserSync:stream', function (done) {
   browserSync.init({
@@ -300,6 +287,7 @@ gulp.task('browserSync:stream', function (done) {
       middleware: [historyApiFallback()],
       routes: {
         "/xyz-player-component": "xyz-player-component",
+        "/fonts": "fonts",
         "/stream": "stream"
       }
     },

@@ -6,7 +6,7 @@
   <base href="/">
   <title ng-bind="title()">XYZ</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans:300,400,600" rel="stylesheet">
 
   <link rel="stylesheet"
         href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc.5/angular-material.min.css">
@@ -17,15 +17,15 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/xyz-component-style-app-only.css">
   <link rel="stylesheet" href="vendor/ngToast/dist/ngToast-animations.css">
+  <link rel="stylesheet" href="scripts/tour-dependencies/stylesheets/sideshow.css">
   <!-- endbuild -->
 
-
   <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"/>
+
 
 </head>
 
 <body ng-controller="BodyCtrl" ng-class="gradientClass">
-
 
 <div ui-view>
 
@@ -33,6 +33,12 @@
 
 <!-- build:js scripts/vendor.js -->
 <!-- bower:js -->
+
+<script src="scripts/tour-dependencies/jquery.min.js"></script>
+<script src="scripts/tour-dependencies/jazz.min.js"></script>
+<script src="scripts/tour-dependencies/pagedown.min.js"></script>
+<script src="scripts/tour-dependencies/sideshow.js"></script>
+
 <script src="vendor/angular/angular.js"></script>
 <script src="vendor/angular-sanitize/angular-sanitize.js"></script>
 <script src="vendor/angular-messages/angular-messages.js"></script>
@@ -63,6 +69,7 @@
 <script src="scripts/run.js"></script>
 <script src="scripts/router.js"></script>
 <script src="scripts/templates.js"></script>
+<script src="scripts/tour.js"></script>
 
 <script src="scripts/services/library.js"></script>
 <script src="scripts/services/animations.js"></script>
@@ -103,7 +110,6 @@
 <script src="scripts/controllers/account.js"></script>
 <script src="scripts/controllers/SiteWidePlayerCtrl.js"></script>
 
-
 <script src="../xyz-player-component/xyz-player-directive.js"></script>
 <script src="../xyz-player-component/api.service.js"></script>
 <script src="../xyz-player-component/mock-media-provider/mock-media-provider-service.js"></script>
@@ -143,10 +149,9 @@
       .constant('apiKeys', {
         // to re-enable facebook, make the id '%%%facebookAppId'
         sc: '%%%scKey', yt: '%%%ytKey', fb_app_id: '0'
-      });
+      })
 </script>
 <!-- /build -->
-
 
 </body>
 </html>
