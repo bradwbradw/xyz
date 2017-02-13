@@ -92,7 +92,7 @@ angular.module('xyzApp')
 //          console.log('refreshing fb');
 
           if (apiKeys.fb_app_id == 0){
-            return;
+            return $q.resolve(false);
           }
           $timeout(function () {
             Social.FB.connecting = false;
