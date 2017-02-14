@@ -24,6 +24,32 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       }
 
     })
+    .state('base.about', {
+      url: '/about',
+      views: {
+        'main': {
+          templateUrl: 'about.html',
+          controller: function ($scope, content) {
+            $scope.content = content;
+          }
+        },
+        'bar': {
+          templateUrl: 'bar.html'
+        }
+      },
+      resolve: {
+        content: function ($log, Content) {
+          return Content.fetch()
+            .then(function (content) {
+              return content;
+            })
+            .catch(function (err) {
+              $log.error(err);
+              return {};
+            });
+        }
+      }
+    })
     .state('base.signup-login', {
       url: '/signup-login',
       views: {
@@ -92,7 +118,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         owner: function (space, Dj) {
           return Dj.findById(
             {
-              id: _.get(space, 'owner.id') ,
+              id: _.get(space, 'owner.id'),
               filter: {
                 fields: {
                   id: true,
@@ -131,7 +157,7 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
         },
         contributors: function (space) {
-          return _.get(space,'contributors', []);
+          return _.get(space, 'contributors', []);
         }
       }
     })
