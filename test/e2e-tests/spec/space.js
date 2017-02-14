@@ -142,11 +142,15 @@ describe('space page tests', function () {
 
     fdescribe('searching for asdf', function () {
 
-      beforeAll(function () {
+      beforeAll(function (done) {
+        var EC = protractor.ExpectedConditions;
+        // Waits for the element with id 'abc' to be present on the dom.
 
         var searchInput = element(by.model('newText'));
         searchInput.sendKeys('asdf');
-        browser.sleep(1000); // let debounce finish
+
+        browser.wait(EC.presenceOf($('.media-inspector')), 10 * 1000)
+          .then(done);
 
       });
 

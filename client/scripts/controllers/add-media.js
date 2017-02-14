@@ -67,8 +67,10 @@ angular.module('xyzApp')
 
 
     Social.FB.refreshFB()
-      .then(function () {
-        Social.FB.loadMe();
+      .then(function (result) {
+        if (result) {
+          Social.FB.loadMe();
+        }
       });
 
 
@@ -84,7 +86,7 @@ angular.module('xyzApp')
       "youtube": true
     };
 
-    var urlResultIsType = function(type){
+    var urlResultIsType = function (type) {
       return Library.getSearchResults().urlResult && Library.getSearchResults().kind === type;
     };
 
