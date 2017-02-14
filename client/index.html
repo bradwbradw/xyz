@@ -78,6 +78,7 @@
 <script src="scripts/services/playlister.js"></script>
 <script src="scripts/services/extract.js"></script>
 <script src="scripts/services/social.js"></script>
+<script src="scripts/services/content.js"></script>
 <script src="scripts/services/mediaapi.js"></script>
 <script src="scripts/services/utility.js"></script>
 <script src="scripts/services/player.js"></script>
@@ -144,7 +145,8 @@
 <script>
   angular.module('xyzApp')
       .constant('serverConfig', {
-        apiBaseUrl: '%%%API_URL'
+        apiBaseUrl: '%%%API_URL',
+        cmsUrl: 'https://cms.xyz.gs/'
       })
       .constant('apiKeys', {
         // to re-enable facebook, make the id '%%%facebookAppId'
