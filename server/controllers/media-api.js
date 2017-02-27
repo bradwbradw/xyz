@@ -10,11 +10,14 @@ var YT = new YouTube();
 var constants = require('../../constants.js');
 
 SC.init({
-  id: constants.keys.public.sc
+  id: constants.keys.public.sc,
+  secret: constants.keys.private.sc,
+  // when application goes through, change to
+  //  /oauth/soundcloud/redirect
+  uri: constants.domain + '/sc_callback'
 });
 
 YT.setKey(constants.keys.public.yt);
-
 
 var checkAvailability = {
 
@@ -38,20 +41,20 @@ var checkAvailability = {
 
     return when.promise(function (resolve, reject) {
 
-        YT.getById(id, function (error, result) {
-          if (error) {
-            reject(error);
-          }
-          else {
+      YT.getById(id, function (error, result) {
+        if (error) {
+          reject(error);
+        }
+        else {
 //            console.log(JSON.stringify(result, null, 2));
-            if (_.size(_.get(result, 'items')) >= 1) {
-              resolve(true);
-            } else {
-              resolve(false);
-            }
+          if (_.size(_.get(result, 'items')) >= 1) {
+            resolve(true);
+          } else {
+            resolve(false);
           }
-        });
-      })
+        }
+      });
+    })
       .catch(function (err) {
         console.error(err);
         return when.resolve(false);
@@ -72,7 +75,29 @@ module.exports = {
       console.error('item provider was not found for: ', item);
       return when.reject('item provider was not found for: ', item);
     }
+  },
+
+  oauth: {
+    soundcloud: {
+      init: function (req, res) {
+
+        var url = SC.getConnectUrl();
+        console.log('soundcloud connect url: ', url);
+        res.writeHead(301, {location: url});
+        res.end();
+      },
+      handleRedirect: function (req, res) {
+        var code = req.query.code;
+
+        SC.authorize(code, function (err, accessToken) {
+          if (err) {
+            throw err;
+          } else {
+            // Client is now authorized and able to make API calls
+            console.log('access token:', accessToken);
+          }
+        });
+      }
+    }
   }
-
-
-}
+};

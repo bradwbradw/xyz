@@ -10,6 +10,7 @@ var config = require('../constants');
 var remoteLog = require('./remote-log');
 
 var PasswordReset = require('./routes/password-reset.js');
+var OAuth = require('./routes/oauth.js');
 
 var app = module.exports = loopback();
 
@@ -34,6 +35,8 @@ app.use('/sc', loopback.static(path.resolve(__dirname, '../stream/scWidget.html'
 app.use(loopback.token());
 
 app.use('/password-reset', PasswordReset);
+// change to /oauth when app gets approved in soundcloud
+app.use('/sc_callback', OAuth);
 
 
 app.start = function () {
