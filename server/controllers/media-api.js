@@ -14,7 +14,7 @@ SC.init({
   secret: constants.keys.private.sc,
   // when application goes through, change to
   //  /oauth/soundcloud/redirect
-  uri: constants.domain + '/sc_callback'
+  uri: 'https://'+ constants.domain + '/sc_callback'
 });
 
 YT.setKey(constants.keys.public.yt);
@@ -91,10 +91,12 @@ module.exports = {
 
         SC.authorize(code, function (err, accessToken) {
           if (err) {
-            throw err;
+            console.error(err);
+            res.status(500, "sorry, there was an error authorizing with soundcloud, please try again later");
           } else {
             // Client is now authorized and able to make API calls
             console.log('access token:', accessToken);
+            res.send("thank you for connecting xyz to soundcloud!");
           }
         });
       }
