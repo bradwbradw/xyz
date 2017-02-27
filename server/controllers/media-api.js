@@ -108,7 +108,6 @@ module.exports = {
       },
       handleRedirect: function (req, res) {
         var code = req.query.code;
-
         SC.authorize(code, function (err, accessToken) {
           if (err) {
             console.error(err);
@@ -135,7 +134,6 @@ module.exports = {
       },
       handleRedirect: function (req, res) {
         var code = req.query.code;
-        console.log('got code for youtube: ', code);
         YTAuth.getToken(code, function (err, accessTokens) {
           if (err) {
             console.error(err);
