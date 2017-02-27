@@ -18,4 +18,6 @@ router.get('/init-oauth', mediaApi.oauth.soundcloud.init);
 router.get('/soundcloud/init', mediaApi.oauth.soundcloud.init);
 router.get('/soundcloud/redirect', mediaApi.oauth.soundcloud.handleRedirect);
 
+router.get('/youtube/init', mediaApi.oauth.youtube.init);
+router.get('/youtube/redirect', mediaApi.oauth.youtube.handleRedirect);
 module.exports = router;

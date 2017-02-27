@@ -33,11 +33,14 @@ module.exports = {
     public: {
       fb: process.env.FB_APP_ID || 0,//'1507355422928214',
       sc: process.env.SC_CLIENT_ID || 'cb16ad8471c6da3d93dc120fb8160b89',
-      yt: process.env.YT_KEY || 'AIzaSyBxKs-kfPHtRL1boRrsOtSvoauIFJJLC4A'
+      yt: process.env.YT_KEY || 'AIzaSyBxKs-kfPHtRL1boRrsOtSvoauIFJJLC4A',
+      clientId:{
+        yt: process.env.YT_CLIENT_ID || '34645154535-lpalelvl2mh7oif5pdah2ihqp1m707mm.apps.googleusercontent.com'
+      }
     },
     private: {
-      sc: process.env.SC_CLIENT_SECRET || 'f0c019c1b13ede7f5458d955e6c92f2a'
-
+      sc: process.env.SC_CLIENT_SECRET || 'f0c019c1b13ede7f5458d955e6c92f2a',
+      yt: process.env.YT_CLIENT_SECRET || 'IOIuqvoEDKXiAAik6_vzI-sF'
     }
   },
   mail: {

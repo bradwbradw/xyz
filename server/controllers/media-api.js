@@ -5,16 +5,25 @@ var SC = require('node-soundcloud'),
   when = require('when');
 
 var YouTube = require('youtube-node');
+var YouTubeApi = require('youtube-api');
+var constants = require('../../constants.js');
+
 var YT = new YouTube();
 
-var constants = require('../../constants.js');
+var YTAuth = YouTubeApi.authenticate({
+  type: "oauth",
+  client_id: constants.keys.public.clientId.yt,
+  client_secret: constants.keys.private.yt,
+  redirect_url: 'http://' + constants.domain + '/oauth/youtube/redirect'
+});
+
 
 SC.init({
   id: constants.keys.public.sc,
   secret: constants.keys.private.sc,
   // when application goes through, change to
   //  /oauth/soundcloud/redirect
-  uri: 'https://'+ constants.domain + '/sc_callback'
+  uri: 'https://' + constants.domain + '/sc_callback'
 });
 
 YT.setKey(constants.keys.public.yt);
@@ -62,6 +71,8 @@ var checkAvailability = {
 
   }
 };
+
+
 module.exports = {
 
   checkForAvailability: function (item) {
@@ -99,6 +110,32 @@ module.exports = {
             res.send("thank you for connecting xyz to soundcloud!");
           }
         });
+      }
+    },
+    youtube: {
+      init: function (req, res) {
+        var url = YTAuth.generateAuthUrl({
+          access_type: "offline",
+          scope: ["https://www.googleapis.com/auth/youtube.upload"]
+        });
+        console.log('youtube consent page url: ', url);
+
+        res.writeHead(301, {location: url});
+        res.end();
+      },
+      handleRedirect: function (req, res) {
+        var code = req.query.code;
+        console.log('got code for youtube: ', code);
+        console.log('getToken fn: ', YTAuth.getToken);
+        YTAuth.getToken(code, function (err, accessTokens) {
+          if (err) {
+            console.error(err);
+            res.status(500, "sorry, there was an error authorizing with youtube, please try again later");
+          } else {
+            console.log('youtube access tokens:', accessTokens);
+            res.send("thank you for connecting xyz to youtube!");
+          }
+        })
       }
     }
   }
