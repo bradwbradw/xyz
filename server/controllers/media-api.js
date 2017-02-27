@@ -10,11 +10,20 @@ var constants = require('../../constants.js');
 
 var YT = new YouTube();
 
+var ytRedirect;
+
+if (constants.domain.indexOf('localhost')>=0){
+  // local dev version, only http supported
+  ytRedirect = 'http://' + constants.domain + '/oauth/youtube/redirect';
+} else {
+  ytRedirect = 'https://' + constants.domain + '/oauth/youtube/redirect';
+}
+
 var YTAuth = YouTubeApi.authenticate({
   type: "oauth",
   client_id: constants.keys.public.clientId.yt,
   client_secret: constants.keys.private.yt,
-  redirect_url: 'http://' + constants.domain + '/oauth/youtube/redirect'
+  redirect_url: ytRedirect
 });
 
 
