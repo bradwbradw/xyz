@@ -2,17 +2,15 @@
 
 var SC = require('node-soundcloud'),
   _ = require('lodash'),
-  when = require('when');
+  when = require('when'),
+  request = require('request');
 
-var YouTube = require('youtube-node');
 var YouTubeApi = require('youtube-api');
 var constants = require('../../constants.js');
 
-var YT = new YouTube();
-
 var ytRedirect;
 
-if (constants.domain.indexOf('localhost')>=0){
+if (constants.domain.indexOf('localhost') >= 0) {
   // local dev version, only http supported
   ytRedirect = 'http://' + constants.domain + '/oauth/youtube/redirect';
 } else {
@@ -26,7 +24,6 @@ var YTAuth = YouTubeApi.authenticate({
   redirect_url: ytRedirect
 });
 
-
 SC.init({
   id: constants.keys.public.sc,
   secret: constants.keys.private.sc,
@@ -35,7 +32,6 @@ SC.init({
   uri: 'https://' + constants.domain + '/sc_callback'
 });
 
-YT.setKey(constants.keys.public.yt);
 
 var checkAvailability = {
 
@@ -59,13 +55,20 @@ var checkAvailability = {
 
     return when.promise(function (resolve, reject) {
 
-      YT.getById(id, function (error, result) {
+      request({
+        url: 'https://www.googleapis.com/youtube/v3/videos',
+        qs: {
+          part: 'id',
+          id: id,
+          key: constants.keys.public.yt
+        },
+        json: true
+      }, function (error, response, body) {
         if (error) {
           reject(error);
         }
         else {
-//            console.log(JSON.stringify(result, null, 2));
-          if (_.size(_.get(result, 'items')) >= 1) {
+          if (_.size(_.get(body, 'items')) >= 1) {
             resolve(true);
           } else {
             resolve(false);
