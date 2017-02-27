@@ -10,11 +10,12 @@ router.use(function (req, res, next) {
   next();
 });
 
-// should be /oauth/soundcloud/redirect
+// legacy routes ( wait until new app is active and keys are set )
 router.get('/', mediaApi.oauth.soundcloud.handleRedirect);
-
-// should be /oauth/soundcloud/init
 router.get('/init-oauth', mediaApi.oauth.soundcloud.init);
 
+// new routes
+router.get('/soundcloud/init', mediaApi.oauth.soundcloud.init);
+router.get('/soundcloud/redirect', mediaApi.oauth.soundcloud.handleRedirect);
 
 module.exports = router;

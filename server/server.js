@@ -35,8 +35,12 @@ app.use('/sc', loopback.static(path.resolve(__dirname, '../stream/scWidget.html'
 app.use(loopback.token());
 
 app.use('/password-reset', PasswordReset);
-// change to /oauth when app gets approved in soundcloud
+
+// legacy - change to /oauth when app gets approved in soundcloud
 app.use('/sc_callback', OAuth);
+
+// new (remove /sc_callback when added new soundcloud keys)
+app.use('/oauth', OAuth);
 
 
 app.start = function () {
