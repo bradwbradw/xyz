@@ -116,6 +116,7 @@ module.exports = {
           } else {
             // Client is now authorized and able to make API calls
             console.log('access token:', accessToken);
+            // TODO save to user identities array
             res.send("thank you for connecting xyz to soundcloud!");
           }
         });
@@ -125,7 +126,7 @@ module.exports = {
       init: function (req, res) {
         var url = YTAuth.generateAuthUrl({
           access_type: "offline",
-          scope: ["https://www.googleapis.com/auth/youtube.upload"]
+          scope: ["https://www.googleapis.com/auth/youtube.readonly"]
         });
         console.log('youtube consent page url: ', url);
 
@@ -135,13 +136,13 @@ module.exports = {
       handleRedirect: function (req, res) {
         var code = req.query.code;
         console.log('got code for youtube: ', code);
-        console.log('getToken fn: ', YTAuth.getToken);
         YTAuth.getToken(code, function (err, accessTokens) {
           if (err) {
             console.error(err);
             res.status(500, "sorry, there was an error authorizing with youtube, please try again later");
           } else {
             console.log('youtube access tokens:', accessTokens);
+            // TODO save to user identities array
             res.send("thank you for connecting xyz to youtube!");
           }
         })
