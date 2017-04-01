@@ -74,7 +74,15 @@ module.exports = function (Dj) {
    });
    });
    });*/
-
+Dj.afterRemote('create' , function (ctx, djs, next) {
+               
+               
+               
+               
+               }  )
+                 
+                 
+                 
   Dj.afterRemote('find', function (context, djs, next) {
 //    console.log(context);
     var userId = _.get(context, 'req.accessToken.userId');
