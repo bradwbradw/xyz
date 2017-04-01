@@ -74,10 +74,10 @@ module.exports = function (Dj) {
    });
    });
    });*/
-Dj.afterRemote('create' , function (ctx, djs, next) {
+Dj.afterRemote('create' , function (ctx, user) {
                
                
-               
+        console.log('new user', user) ;     
                
                }  )
                  
