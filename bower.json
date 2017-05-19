@@ -2,18 +2,18 @@
   "name": "xyz",
   "version": "0.0.0",
   "dependencies": {
-    "angular": "1.6.0",
-    "angular-sanitize": "~1.6.0",
+    "angular": "1.6.4",
+    "angular-sanitize": "1.6.4",
     "angular-ui-router": "0.3.2",
     "lodash": "~4.17.2",
     "angular-easyfb": "~1.5.1",
     "angular-local-storage": "~0.5.2",
-    "angular-resource": "1.6.0",
-    "angular-animate": "1.6.0",
-    "angular-aria": "1.6.0",
+    "angular-resource": "1.6.4",
+    "angular-animate": "1.6.4",
+    "angular-aria": "1.6.4",
     "ngToast": "ngtoast#^2.0.0",
     "soundcloud": "^3.1.2",
-    "angular-messages": "1.6.0",
+    "angular-messages": "1.6.4",
     "web-animations-js": "^2.2.2"
   },
   "devDependencies": {
@@ -22,7 +22,7 @@
   "appPath": "client",
   "moduleName": "xyzApp",
   "resolutions": {
-    "angular-sanitize": "~1.6.0",
-    "angular": "^1.6.0"
+    "angular-sanitize": "1.6.4",
+    "angular": "1.6.4"
   }
 }
