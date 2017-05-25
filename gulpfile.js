@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var _ = require('lodash');
+var when = require('when');
 var loopbackAngular = require('gulp-loopback-sdk-angular');
 
 var bower = require('gulp-bower');
@@ -58,7 +59,7 @@ var paths = {
     adminViews: [
       'admin/**/*.html'
     ],
-    adminCss:'admin/**/*.css',
+    adminCss: 'admin/**/*.css',
     scripts: 'client/scripts',
     adminScripts: 'admin/scripts',
     index: 'client/index.html'
@@ -337,7 +338,7 @@ gulp.task('watch:styles', function (done) {
   done();
 });
 
-gulp.task('watch:adminCss', function(done){
+gulp.task('watch:adminCss', function (done) {
   gulp.watch(paths.src.adminCss)
     .on('change', gulp.series('build:admin'));
   done();
@@ -446,34 +447,61 @@ gulp.task('serve-docs', function (done) {
 
 gulp.task('docs', gulp.series('loopback', 'generate-docs', 'serve-docs'));
 
-gulp.task('copy-staging-db', function (done) {
-  gulp.series('save-db', 'overwrite-db-local', done);
-});
 
 gulp.task('save-db', function (done) {
-  var hostColonPort = [mongoCreds.hosts[0].host, mongoCreds.hosts[0].port].join(':');
-  var command = 'mongodump -h ' + hostColonPort + ' -d ' + mongoCreds.database + ' -u ' + mongoCreds.username + ' -p ' + mongoCreds.password + ' -o xyzDbDump';
-  return gulp.src('')
-    .pipe(exec(command), function cb(err, stdout, stderr) {
-      console.log(stdout); // outputs the normal messages
-      console.log(stderr); // outputs the error messages
-      done();
-//        return 0; // makes gulp continue even if the command failed
-    })
-    .pipe(exec.reporter())
-});
+    var hostColonPort = [mongoCreds.hosts[0].host, mongoCreds.hosts[0].port].join(':');
+    var command = 'mongodump -h ' + hostColonPort + ' -d ' + mongoCreds.database + ' -u ' + mongoCreds.username + ' -p ' + mongoCreds.password + ' -o xyzDbDump';
+
+    require('child_process')
+      .exec(command, function cb(err, stdout, stderr) {
+        console.log(stdout); // outputs the normal messages
+        console.log(stderr); // outputs the error messages
+        done(err);
+      })
+  }
+);
 
 gulp.task('overwrite-db-local', function (done) {
   var command = 'mongorestore --drop --host=127.0.0.1:27017 -d xyz xyzDbDump/' + mongoCreds.database;
-  return gulp.src('')
-    .pipe(exec(command), function cb(err, stdout, stderr) {
-      console.log(stdout); // outputs the normal messages
-      console.log(stderr); // outputs the error messages
-      done();
-//        return 0; // makes gulp continue even if the command failed
-    })
-    .pipe(exec.reporter())
+
+  require('child_process')
+    .exec(command, function cb(err, stdout, stderr) {
+        console.log(stdout); // outputs the normal messages
+        console.log(stderr); // outputs the error messages
+        done(err);
+      }
+    )
 });
+
+var collections = 'AccessToken dj Role RoleMapping Song Space Spacedj SpaceSong'.split(' ');
+
+gulp.task('overwrite-db-local-json', function (done) {
+  var all = _.map(collections, function (name) {
+    return when.promise(function (resolve, reject) {
+      var command = `mongoimport --drop --host 127.0.0.1 --port 27017 --db xyz-restore-test -c ${name} backups/clean-sample/${name}.json`;
+      console.log(`restoring ${name}...`)
+      require('child_process')
+        .exec(command, function (err, stdout, stderr) {
+          console.log(stdout); // outputs the normal messages
+          console.log(stderr); // outputs the error messages
+          if (err) {
+            console.error(err);
+            reject(err);
+          } else {
+            console.log('done restoring ', name);
+            resolve(err);
+          }
+        })
+    })
+  });
+
+  when.all(all)
+    .then(function(results){
+      done();
+    })
+});
+
+gulp.task('copy-staging-db', gulp.series('save-db', 'overwrite-db-local'));
 
 gulp.task('webdriver', function (done) {
   var updateCmd = './node_modules/protractor/bin/webdriver-manager update';
@@ -521,5 +549,12 @@ gulp.task('unit-test', function (done) {
 
 });
 
-
 gulp.task('test', gulp.series(['build', 'e2e-test']));
+
+gulp.task('restore-mongo', function (done) {
+  var MongoClient = require('mongodb').MongoClient;
+  console.log(mongoCreds);
+  done()
+//  collectionPromise = MongoClient.connect(mongoUrl)
+
+});
