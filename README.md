@@ -60,6 +60,9 @@ To nuke the modules and re-install (this is safe) do `rm -rf node_modules/` (or 
 - For the error: `Failed to read /Users/brad/Sites/xyz/client/vendor/angular-sanitize/.bower.json (or similar)` the solution
 is to simply delete the contents of "vendor" folder and then run `gulp bower` to re-download the clientside dependencies into there
 
+- If when running gulp commands you get `TypeError: Cannot read property 'apply' of undefined`, then reinstall gulp-cli:
+`npm install -g gulp-cli`
+
 TODO Add more possible errors + workarounds here
 
 ## OPTIONS
