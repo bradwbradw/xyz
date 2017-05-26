@@ -2,7 +2,7 @@
 var mongoDbUriTool = require('mongodb-uri');
 var _ = require('lodash');
 
-var mongoUrl = process.env.MONGODB_URL || process.env.MONGO_URL || 'mongodb://heroku_cc7gbkr1:rusl214k9b95o5d7evobgufue6@ds059135.mongolab.com:59135/heroku_cc7gbkr1';
+var mongoUrl = process.env.MONGODB_URL || process.env.MONGO_URL || 'mongodb://localhost:27017/xyz';
 
 var mongoCreds = mongoDbUriTool.parse(mongoUrl);
 /* example creds object:
@@ -13,6 +13,8 @@ var mongoCreds = mongoDbUriTool.parse(mongoUrl);
  hosts: [ { host: 'ds059135.mongolab.com', port: 59135 } ]
  }
  */
+mongoCreds.host = mongoCreds.hosts[0].host;
+mongoCreds.port = mongoCreds.hosts[0].port;
 
 var port = process.env.PORT || 5005;
 var ip = process.env.IP || 'localhost';

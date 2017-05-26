@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var _ = require('lodash');
 var when = require('when');
 var loopbackAngular = require('gulp-loopback-sdk-angular');
+var mongoDbUriTool = require('mongodb-uri');
 
 var bower = require('gulp-bower');
 var rename = require("gulp-rename");
@@ -17,10 +18,15 @@ var revReplace = require('gulp-rev-replace');
 var notify = require('gulp-notify');
 var plumber = require('gulp-plumber');
 
+
 var ngAnnotate = require('gulp-ng-annotate');
 var annotateOptions = {
   single_quotes: true
 };
+
+var stagingDbCreds = mongoDbUriTool.parse('mongodb://heroku_cc7gbkr1:rusl214k9b95o5d7evobgufue6@ds059135.mongolab.com:59135/heroku_cc7gbkr1');
+stagingDbCreds.host = stagingDbCreds.hosts[0].host;
+stagingDbCreds.port = stagingDbCreds.hosts[0].port;
 
 var docs = require('gulp-ngdocs');
 var exec = require('gulp-exec');
@@ -448,9 +454,35 @@ gulp.task('serve-docs', function (done) {
 gulp.task('docs', gulp.series('loopback', 'generate-docs', 'serve-docs'));
 
 
-gulp.task('save-db', function (done) {
-    var hostColonPort = [mongoCreds.hosts[0].host, mongoCreds.hosts[0].port].join(':');
-    var command = 'mongodump -h ' + hostColonPort + ' -d ' + mongoCreds.database + ' -u ' + mongoCreds.username + ' -p ' + mongoCreds.password + ' -o xyzDbDump';
+
+
+
+
+////// BACKUPS
+
+
+var bsonBackupPath = 'backups/bson/latest';
+// json backup path must mirror server root home directory and script "do-backup.sh"
+var jsonBackupPath = 'backups/json/latest';
+var collections = 'AccessToken dj Role RoleMapping Song Space Spacedj SpaceSong'.split(' ');
+
+
+
+
+gulp.task('backup-env-db-bson', function (done) {
+    var command = `mongodump -h ${mongoCreds.host}:${mongoCreds.port} -d ${mongoCreds.database} -u ${mongoCreds.username} -p ${mongoCreds.password} -o ${bsonBackupPath}`;
+    require('child_process')
+      .exec(command, function cb(err, stdout, stderr) {
+        console.log(stdout); // outputs the normal messages
+        console.log(stderr); // outputs the error messages
+        done(err);
+      })
+  }
+);
+
+gulp.task('backup-staging-db-bson', function (done) {
+
+    var command = `mongodump -h ${stagingDbCreds.host}:${stagingDbCreds.port} -d ${stagingDbCreds.database} -u ${stagingDbCreds.username} -p ${stagingDbCreds.password} -o ${bsonBackupPath}`;
 
     require('child_process')
       .exec(command, function cb(err, stdout, stderr) {
@@ -461,8 +493,9 @@ gulp.task('save-db', function (done) {
   }
 );
 
-gulp.task('overwrite-db-local', function (done) {
-  var command = 'mongorestore --drop --host=127.0.0.1:27017 -d xyz xyzDbDump/' + mongoCreds.database;
+gulp.task('overwrite-env-db-bson', function (done) {
+
+  var command = `mongorestore --drop --host=${mongoCreds.host} -d ${mongoCreds.database} ${bsonBackupPath}/${stagingDbCreds.database}`;
 
   require('child_process')
     .exec(command, function cb(err, stdout, stderr) {
@@ -473,13 +506,56 @@ gulp.task('overwrite-db-local', function (done) {
     )
 });
 
-var collections = 'AccessToken dj Role RoleMapping Song Space Spacedj SpaceSong'.split(' ');
+gulp.task('overwrite-local-db-bson', function (done) {
 
-gulp.task('overwrite-db-local-json', function (done) {
+  var command = `mongorestore --drop --host=127.0.0.1 -d xyz ${bsonBackupPath}/${stagingDbCreds.database}`;
+
+  require('child_process')
+    .exec(command, function cb(err, stdout, stderr) {
+        console.log(stdout); // outputs the normal messages
+        console.log(stderr); // outputs the error messages
+        done(err);
+      }
+    )
+});
+
+gulp.task('copy-staging-db-to-local', gulp.series('backup-staging-db-bson', 'overwrite-local-db-bson'));
+
+// WIP TODO FIXME this command just hangs
+gulp.task('backup-production-json', function(done){
+  var command = './backup-production-json.sh';
+
+  require('child_process')
+    .exec(command, function cb(err, stdout, stderr){
+      console.log(stdout);
+      console.log(stderr);
+      if(err){
+        console.log(err);
+      }
+      done(err);
+    })
+});
+
+gulp.task('download-production-json', function(done){
+  var command = `rsync root@ssh.xyz.gs:~/${jsonBackupPath}/* ${jsonBackupPath}/`;
+
+  require('child_process')
+    .exec(command, function cb(err, stdout, stderr){
+      console.log(stdout);
+      console.error(stderr);
+      done(err);
+    })
+});
+
+//TODO verify, then add overwrite-env-db-json to this series
+gulp.task('production-backup', gulp.series('backup-production-json', 'download-production-json'));
+
+// defaults to
+gulp.task('overwrite-env-db-json', function (done) {
   var all = _.map(collections, function (name) {
     return when.promise(function (resolve, reject) {
-      var command = `mongoimport --drop --host 127.0.0.1 --port 27017 --db xyz-restore-test -c ${name} backups/clean-sample/${name}.json`;
-      console.log(`restoring ${name}...`)
+      var command = `mongoimport --drop --host ${mongoCreds.host} --port ${mongoCreds.port} --db ${mongoCreds.database} -c ${name} ${jsonBackupPath}/${name}.json`;
+      console.log(`restoring ${name}...`);
       require('child_process')
         .exec(command, function (err, stdout, stderr) {
           console.log(stdout); // outputs the normal messages
@@ -501,7 +577,6 @@ gulp.task('overwrite-db-local-json', function (done) {
     })
 });
 
-gulp.task('copy-staging-db', gulp.series('save-db', 'overwrite-db-local'));
 
 gulp.task('webdriver', function (done) {
   var updateCmd = './node_modules/protractor/bin/webdriver-manager update';
@@ -550,11 +625,3 @@ gulp.task('unit-test', function (done) {
 });
 
 gulp.task('test', gulp.series(['build', 'e2e-test']));
-
-gulp.task('restore-mongo', function (done) {
-  var MongoClient = require('mongodb').MongoClient;
-  console.log(mongoCreds);
-  done()
-//  collectionPromise = MongoClient.connect(mongoUrl)
-
-});
