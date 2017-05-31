@@ -554,7 +554,7 @@ gulp.task('production-backup', gulp.series('backup-production-json', 'download-p
 gulp.task('overwrite-env-db-json', function (done) {
   var all = _.map(collections, function (name) {
     return when.promise(function (resolve, reject) {
-      var command = `mongoimport --drop --host ${mongoCreds.host} --port ${mongoCreds.port} --db ${mongoCreds.database} -c ${name} ${jsonBackupPath}/${name}.json`;
+      var command = `mongoimport --drop --host ${mongoCreds.host} --username ${mongoCreds.username} --password ${mongoCreds.password} --port ${mongoCreds.port} --db ${mongoCreds.database} -c ${name} ${jsonBackupPath}/${name}.json`;
       console.log(`restoring ${name}...`);
       require('child_process')
         .exec(command, function (err, stdout, stderr) {
