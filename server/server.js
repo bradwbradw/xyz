@@ -7,14 +7,14 @@ var loopback = require('loopback'),
 
 var config = require('../constants');
 
-var remoteLog = require('./remote-log');
+var logger = require('./remote-log');
 
 var PasswordReset = require('./routes/password-reset.js');
 
 var app = module.exports = loopback();
 
 //app.use(morgan('combined'));
-app.use(remoteLog.request);
+app.use(logger.request);
 
 // configure body parser
 app.use(bodyParser.urlencoded({extended: true}));
@@ -40,10 +40,9 @@ app.start = function () {
   return app.listen(function () {
     console.log('--- xyz app on port ' + config.api.port + '-----');
     app.emit('started');
-    var baseUrl = '';
     if (app.get('loopback-component-explorer')) {
       var explorerPath = app.get('loopback-component-explorer').mountPath;
-      console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
+     logger.log('Browse your REST API at '+ explorerPath)
     }
   });
 };
