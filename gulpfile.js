@@ -114,8 +114,7 @@ gulp.task('loopback', function () {
       }
     ))
     .pipe(rename('lb-services.js'))
-    .on("error", notify.onError(reportError))
-    .pipe(gulp.dest('./client/scripts/services'));
+    .pipe(gulp.dest('./client/scripts/services'))
 });
 //lb-ng server/server.js client/scripts/services/lb-services.js -u http://0.0.0.0:3000/api && node docs.js
 
@@ -385,12 +384,12 @@ gulp.task('build:admin', gulp.series(
 );
 
 gulp.task('build',
-  gulp.series('clean', 'loopback', 'sass', 'bower', 'templates', 'build:admin',
+  gulp.series('clean',/* 'loopback',*/ 'sass', 'bower', 'templates', 'build:admin',
     gulp.parallel('useref:main', 'copyImages'),
     gulp.parallel('useref:stream', 'copyCss:stream'))
 );
 
-gulp.task('serve', gulp.parallel('loopback', 'bower', 'sass', 'browserSync:client', 'watch'));
+gulp.task('serve', gulp.parallel(/*'loopback',*/ 'bower', 'sass', 'browserSync:client', 'watch'));
 
 gulp.task('default', gulp.parallel('build', 'serve'));
 
@@ -451,7 +450,7 @@ gulp.task('serve-docs', function (done) {
   done();
 });
 
-gulp.task('docs', gulp.series('loopback', 'generate-docs', 'serve-docs'));
+gulp.task('docs', gulp.series(/*'loopback',*/ 'generate-docs', 'serve-docs'));
 
 
 
