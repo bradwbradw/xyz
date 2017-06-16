@@ -9,7 +9,6 @@ docs/
 /stream/vendor/soundcloud/vendor/
 
 xyzDbDump/
-/client/scripts/services/lb-services.js
 /client/css/
 
 /xyz-player-component/css/
