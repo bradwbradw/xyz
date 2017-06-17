@@ -13,7 +13,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 (function(window, angular, undefined) {
   'use strict';
 
-  var urlBase = "http://localhost:5005/api";
+  // todo fix this url.. when deployed, built version tries to request localhost. need to read env var
+  // or try just hardcoding /api
+  var urlBase = window.API_URL_BASE;
   var authHeader = 'authorization';
 
   function getHost(url) {

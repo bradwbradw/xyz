@@ -113,8 +113,24 @@
 <script src="../xyz-player-component/youtube-component/youtube-directive.js"></script>
 <script src="../xyz-player-component/soundcloud-component/soundcloud-directive.js"></script>
 
-
 <!-- endbuild -->
+
+
+
+<!-- build:template -->
+<script type="text/javascript">
+  var API_URL_BASE = "%%%API_URL";
+</script>
+<!-- /build -->
+
+<!-- build:remove -->
+<script type="text/javascript">
+  API_URL_BASE = "http://localhost:5005/api";
+</script>
+<!-- /build -->
+
+
+
 
 
 <!-- build:remove -->
@@ -131,7 +147,6 @@
         yt: 'AIzaSyBxKs-kfPHtRL1boRrsOtSvoauIFJJLC4A',
         fb_app_id: '0'
       });
-
 </script>
 <!-- /build -->
 
@@ -140,7 +155,7 @@
 <script>
   angular.module('xyzApp')
       .constant('serverConfig', {
-        apiBaseUrl: '%%%API_URL',
+        apiBaseUrl: API_URL_BASE,
         cmsUrl: 'https://cms.xyz.gs/'
       })
       .constant('apiKeys', {
