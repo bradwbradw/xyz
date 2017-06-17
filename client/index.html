@@ -31,6 +31,23 @@
 
 </div>
 
+
+
+
+<!-- build:template -->
+<script type="text/javascript">
+  var API_URL_BASE = "%%%API_URL";
+</script>
+<!-- /build -->
+
+<!-- build:remove -->
+<script type="text/javascript">
+  API_URL_BASE = "http://localhost:5005/api";
+</script>
+<!-- /build -->
+
+
+
 <!-- build:js scripts/vendor.js -->
 <!-- bower:js -->
 <script src="vendor/angular/angular.js"></script>
@@ -51,9 +68,7 @@
 
 <!-- endbuild -->
 <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc.5/angular-material.min.js"></script>
-
 <script src="https://connect.soundcloud.com/sdk/sdk-3.1.2.js"></script>
-
 <script src="https://w.soundcloud.com/player/api.js"></script>
 
 
@@ -114,20 +129,6 @@
 <script src="../xyz-player-component/soundcloud-component/soundcloud-directive.js"></script>
 
 <!-- endbuild -->
-
-
-
-<!-- build:template -->
-<script type="text/javascript">
-  var API_URL_BASE = "%%%API_URL";
-</script>
-<!-- /build -->
-
-<!-- build:remove -->
-<script type="text/javascript">
-  API_URL_BASE = "http://localhost:5005/api";
-</script>
-<!-- /build -->
 
 
 
