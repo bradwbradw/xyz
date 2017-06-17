@@ -105,6 +105,15 @@ and then run the `serve` command
 
 ##notes
 
+
+###recipe for committing updates to models since 'gulp loopback' task broke:
+- run gulp loopback, when done, hit ctrl-c
+- modify scripts/lb-services.js so that the immediately invoked function
+- takes window.API_BASE_URL as third parameter (second pair of brackets)
+- and in the first pair of brackets, replace undefined with urlBase
+- comment out "var urlBase = ... " on line 16
+- commit changes to lb-services.js
+
 ###api call to get playlist from a space:
 
 `/api/spaces/playlist?spaceId=1234`

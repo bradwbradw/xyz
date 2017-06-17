@@ -10,12 +10,10 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
   module.exports = "lbServices";
 }
 
-(function(window, angular, undefined) {
+(function(window, angular, urlBase) {
   'use strict';
 
-  // todo fix this url.. when deployed, built version tries to request localhost. need to read env var
-  // or try just hardcoding /api
-  var urlBase = window.API_URL_BASE;
+//  var urlBase = "http://localhost:5005/api";
   var authHeader = 'authorization';
 
   function getHost(url) {
@@ -7293,4 +7291,4 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
       return LoopBackResource;
     }];
   });
-})(window, window.angular);
+})(window, window.angular, window.API_URL_BASE);
