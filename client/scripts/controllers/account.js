@@ -8,7 +8,7 @@
  * Controller of the xyzApp
  */
 angular.module('xyzApp')
-  .controller('AccountCtrl', function ($rootScope, $scope, $q, $log, $location, $state, Dj, user, Server, User, Utility) {
+  .controller('AccountCtrl', function ($rootScope, $scope, $q, $log, $location, $state, Dj, user, Server, User, Spaces, Utility) {
 
     var passwordSuccess = false;
 
@@ -53,6 +53,7 @@ angular.module('xyzApp')
     };
     var login = function (loginData) {
       User.login(loginData)
+        .then(Spaces.get)
         .then(function () {
           $state.go('base.landing');
         })
