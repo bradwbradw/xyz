@@ -1,7 +1,6 @@
 var gulp = require('gulp');
 var _ = require('lodash');
 var when = require('when');
-var loopbackAngular = require('gulp-loopback-sdk-angular');
 var mongoDbUriTool = require('mongodb-uri');
 
 var bower = require('gulp-bower');
@@ -16,21 +15,37 @@ var buster = require('gulp-buster');
 var rev = require('gulp-rev');
 var revReplace = require('gulp-rev-replace');
 var notify = require('gulp-notify');
-var plumber = require('gulp-plumber');
-var jasmine = require('gulp-jasmine');
-
 
 var ngAnnotate = require('gulp-ng-annotate');
 var annotateOptions = {
   single_quotes: true
 };
 
+
+if (process.env.NODE_ENV === 'development') {
+var loopbackAngular = require('gulp-loopback-sdk-angular');
+  var jasmine = require('gulp-jasmine');
+
+  var docs = require('gulp-ngdocs');
+  var exec = require('gulp-exec');
+
+var jshint = require('gulp-jshint');
+var connect = require('gulp-connect');
+var nodemon = require('gulp-nodemon');
+var historyApiFallback = require('connect-history-api-fallback');
+var browserSync = require('browser-sync').create();
+
+var protractor = require('gulp-angular-protractor');
+var karmaServer = require('karma').Server;
+
+var childProcess = require('child_process');
+
+}
 var stagingDbCreds = mongoDbUriTool.parse('mongodb://heroku_cc7gbkr1:rusl214k9b95o5d7evobgufue6@ds059135.mongolab.com:59135/heroku_cc7gbkr1');
 stagingDbCreds.host = stagingDbCreds.hosts[0].host;
 stagingDbCreds.port = stagingDbCreds.hosts[0].port;
 
-var docs = require('gulp-ngdocs');
-var exec = require('gulp-exec');
+
 
 var del = require('del');
 
@@ -40,17 +55,6 @@ var mongoCreds = constants.mongoCreds;
 
 var keys = constants.keys;
 
-var jshint = require('gulp-jshint');
-var connect = require('gulp-connect');
-var nodemon = require('gulp-nodemon');
-var historyApiFallback = require('connect-history-api-fallback');
-var browserSync = require('browser-sync').create();
-var open = require('gulp-open');
-
-var protractor = require('gulp-angular-protractor');
-var karmaServer = require('karma').Server;
-
-var childProcess = require('child_process');
 
 var paths = {
   src: {
@@ -385,7 +389,7 @@ gulp.task('build:admin', gulp.series(
 );
 
 gulp.task('build',
-  gulp.series('clean',/* 'loopback',*/ 'sass', 'bower', 'templates', 'build:admin',
+  gulp.series('clean', /* 'loopback',*/ 'sass', 'bower', 'templates', 'build:admin',
     gulp.parallel('useref:main', 'copyImages'),
     gulp.parallel('useref:stream', 'copyCss:stream'))
 );
@@ -454,10 +458,6 @@ gulp.task('serve-docs', function (done) {
 gulp.task('docs', gulp.series(/*'loopback',*/ 'generate-docs', 'serve-docs'));
 
 
-
-
-
-
 ////// BACKUPS
 
 
@@ -465,8 +465,6 @@ var bsonBackupPath = 'backups/bson/latest';
 // json backup path must mirror server root home directory and script "do-backup.sh"
 var jsonBackupPath = 'backups/json/latest';
 var collections = 'AccessToken dj Role RoleMapping Song Space Spacedj SpaceSong'.split(' ');
-
-
 
 
 gulp.task('backup-env-db-bson', function (done) {
@@ -522,25 +520,25 @@ gulp.task('overwrite-local-db-bson', function (done) {
 gulp.task('copy-staging-db-to-local', gulp.series('backup-staging-db-bson', 'overwrite-local-db-bson'));
 
 // WIP TODO FIXME this command just hangs
-gulp.task('backup-production-json', function(done){
+gulp.task('backup-production-json', function (done) {
   var command = './backup-production-json.sh';
 
   require('child_process')
-    .exec(command, function cb(err, stdout, stderr){
+    .exec(command, function cb(err, stdout, stderr) {
       console.log(stdout);
       console.log(stderr);
-      if(err){
+      if (err) {
         console.log(err);
       }
       done(err);
     })
 });
 
-gulp.task('download-production-json', function(done){
+gulp.task('download-production-json', function (done) {
   var command = `rsync root@ssh.xyz.gs:~/${jsonBackupPath}/* ${jsonBackupPath}/`;
 
   require('child_process')
-    .exec(command, function cb(err, stdout, stderr){
+    .exec(command, function cb(err, stdout, stderr) {
       console.log(stdout);
       console.error(stderr);
       done(err);
@@ -572,7 +570,7 @@ gulp.task('overwrite-env-db-json', function (done) {
   });
 
   when.all(all)
-    .then(function(){
+    .then(function () {
       done();
     })
 });
@@ -624,7 +622,7 @@ gulp.task('unit-test', function (done) {
 
 });
 
-gulp.task('api-test', function(){
+gulp.task('api-test', function () {
   gulp.src('test/api-test/**/*_spec.js')
     .pipe(jasmine());
 });
