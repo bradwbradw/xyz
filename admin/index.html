@@ -25,6 +25,21 @@
 </div>
 
 
+
+<!-- build:template -->
+<script type="text/javascript">
+  var API_URL_BASE = "%%%API_URL";
+</script>
+<!-- /build -->
+
+<!-- build:remove -->
+<script type="text/javascript">
+  API_URL_BASE = "http://localhost:5005/api";
+</script>
+<!-- /build -->
+
+
+
 <!-- build:js scripts/admin-vendor.js -->
 <!-- bower:js -->
 <script src="../client/vendor/angular/angular.js"></script>
