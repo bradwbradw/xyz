@@ -145,15 +145,4 @@ module.exports = function (Space) {
     }
   );
 
-  /*
-   Space.observe('after save', function(ctx, next) {
-   if (ctx.instance) {
-   console.log('Saved %s#%s', ctx.Model.Space, ctx.instance.id);
-   } else {
-   console.log('Updated %s matching %j',
-   ctx.Model.Spaces,
-   ctx.where);
-   }
-   next();
-   });*/
 };

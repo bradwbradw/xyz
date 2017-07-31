@@ -35,6 +35,12 @@ angular.module('xyzApp')
           .$promise
           .then(User.set)
           .catch(function(err){
+            if(err.statusCode){
+              console.warn('err.statusCode', err.statusCode)
+            }
+            if(err.status){
+              console.warn('err.status', err.status)
+            }
             if(err.status == 401){
               var noUser = {};
               return $q.resolve(User.set(noUser));

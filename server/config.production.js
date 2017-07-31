@@ -8,7 +8,6 @@ module.exports = {
 
   "remoting": {
     "errorHandler": {
-      "disableStackTrace": true,
       handler: require('./remote-log').error
     }
   }

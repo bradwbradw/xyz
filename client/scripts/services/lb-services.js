@@ -20,8 +20,10 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
     var m = url.match(/^(?:https?:)?\/\/([^\/]+)/);
     return m ? m[1] : null;
   }
-
-  var urlBaseHost = getHost(urlBase) || location.host;
+  // need to use the urlBase as the base to handle multiple
+  // loopback servers behind a proxy/gateway where the host
+  // would be the same.
+  var urlBaseHost = getHost(urlBase) ? urlBase : location.host;
 
 /**
  * @ngdoc overview
@@ -75,7 +77,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - User id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for accessTokens
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -113,7 +119,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - User id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for accessTokens
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -152,7 +162,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -190,7 +204,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - User id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `filter` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -228,7 +246,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -263,7 +285,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - User id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `where` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -295,7 +321,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - User id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `where` – `{object=}` - Criteria to match model instances
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -332,7 +362,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - Model instance data
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -370,7 +402,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - Model instance data
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -395,7 +429,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
-             * @name lbServices.User#upsert
+             * @name lbServices.User#patchOrCreate
              * @methodOf lbServices.User
              *
              * @description
@@ -404,12 +438,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object=} parameters Request parameters.
              *
-             *   This method does not accept any parameters.
-             *   Supply an empty object or omit this argument altogether.
+             *  - `data` – `{object=}` - Model instance data
              *
-             * @param {Object} postData Request data.
-             *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -426,9 +457,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `User` object.)
              * </em>
              */
-            "upsert": {
+            "patchOrCreate": {
               url: urlBase + "/Users",
-              method: "PUT",
+              method: "PATCH",
             },
 
             /**
@@ -447,7 +478,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - Model instance data
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -484,7 +517,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -519,6 +554,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Model id
              *
+             *  - `options` – `{object=}` -
+             *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
              *
@@ -552,6 +589,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *  - `id` – `{*}` - Model id
              *
              *  - `filter` – `{object=}` - Filter defining fields and include - must be a JSON-encoded string ({"something":"value"})
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -588,7 +627,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - Model instance data
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -623,6 +664,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({"something":"value"})
              *
+             *  - `options` – `{object=}` -
+             *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
              *
@@ -656,6 +699,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * @param {Object=} parameters Request parameters.
              *
              *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({"something":"value"})
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -692,7 +737,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -723,6 +770,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * @param {Object=} parameters Request parameters.
              *
              *  - `id` – `{*}` - Model id
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -757,6 +806,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `where` – `{object=}` - Criteria to match model instances
              *
+             *  - `options` – `{object=}` -
+             *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
              *
@@ -778,7 +829,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
-             * @name lbServices.User#prototype$updateAttributes
+             * @name lbServices.User#prototype$patchAttributes
              * @methodOf lbServices.User
              *
              * @description
@@ -789,9 +840,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - User id
              *
-             * @param {Object} postData Request data.
+             *  - `options` – `{object=}` -
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -808,9 +861,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `User` object.)
              * </em>
              */
-            "prototype$updateAttributes": {
+            "prototype$patchAttributes": {
               url: urlBase + "/Users/:id",
-              method: "PUT",
+              method: "PATCH",
             },
 
             /**
@@ -955,12 +1008,50 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
+             * @name lbServices.User#prototype$verify
+             * @methodOf lbServices.User
+             *
+             * @description
+             *
+             * Trigger user's identity verification with configured verifyOptions
+             *
+             * @param {Object=} parameters Request parameters.
+             *
+             *  - `id` – `{*}` - User id
+             *
+             * @param {Object} postData Request data.
+             *
+             *  - `options` – `{object=}` -
+             *
+             *  - `verifyOptions` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
+             *
+             * @param {function(Object,Object)=} successCb
+             *   Success callback with two arguments: `value`, `responseHeaders`.
+             *
+             * @param {function(Object)=} errorCb Error callback with one argument:
+             *   `httpResponse`.
+             *
+             * @returns {Object} An empty reference that will be
+             *   populated with the actual data once the response is returned
+             *   from the server.
+             *
+             * This method returns no data.
+             */
+            "prototype$verify": {
+              url: urlBase + "/Users/:id/verify",
+              method: "POST",
+            },
+
+            /**
+             * @ngdoc method
              * @name lbServices.User#confirm
              * @methodOf lbServices.User
              *
              * @description
              *
-             * Confirm a user registration with email verification token.
+             * Confirm a user registration with identity verification token.
              *
              * @param {Object=} parameters Request parameters.
              *
@@ -1024,6 +1115,86 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
+             * @name lbServices.User#changePassword
+             * @methodOf lbServices.User
+             *
+             * @description
+             *
+             * Change a user's password.
+             *
+             * @param {Object=} parameters Request parameters.
+             *
+             *   This method does not accept any parameters.
+             *   Supply an empty object or omit this argument altogether.
+             *
+             * @param {Object} postData Request data.
+             *
+             *  - `id` – `{*=}` -
+             *
+             *  - `oldPassword` – `{string}` -
+             *
+             *  - `newPassword` – `{string}` -
+             *
+             *  - `options` – `{object=}` -
+             *
+             * @param {function(Object,Object)=} successCb
+             *   Success callback with two arguments: `value`, `responseHeaders`.
+             *
+             * @param {function(Object)=} errorCb Error callback with one argument:
+             *   `httpResponse`.
+             *
+             * @returns {Object} An empty reference that will be
+             *   populated with the actual data once the response is returned
+             *   from the server.
+             *
+             * This method returns no data.
+             */
+            "changePassword": {
+              url: urlBase + "/Users/change-password",
+              method: "POST",
+            },
+
+            /**
+             * @ngdoc method
+             * @name lbServices.User#setPassword
+             * @methodOf lbServices.User
+             *
+             * @description
+             *
+             * Reset user's password via a password-reset token.
+             *
+             * @param {Object=} parameters Request parameters.
+             *
+             *   This method does not accept any parameters.
+             *   Supply an empty object or omit this argument altogether.
+             *
+             * @param {Object} postData Request data.
+             *
+             *  - `id` – `{*=}` -
+             *
+             *  - `newPassword` – `{string}` -
+             *
+             *  - `options` – `{object=}` -
+             *
+             * @param {function(Object,Object)=} successCb
+             *   Success callback with two arguments: `value`, `responseHeaders`.
+             *
+             * @param {function(Object)=} errorCb Error callback with one argument:
+             *   `httpResponse`.
+             *
+             * @returns {Object} An empty reference that will be
+             *   populated with the actual data once the response is returned
+             *   from the server.
+             *
+             * This method returns no data.
+             */
+            "setPassword": {
+              url: urlBase + "/Users/reset-password",
+              method: "POST",
+            },
+
+            /**
+             * @ngdoc method
              * @name lbServices.User#getCurrent
              * @methodOf lbServices.User
              *
@@ -1072,7 +1243,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
-             * @name lbServices.User#patchOrCreate
+             * @name lbServices.User#upsert
              * @methodOf lbServices.User
              *
              * @description
@@ -1081,12 +1252,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object=} parameters Request parameters.
              *
-             *   This method does not accept any parameters.
-             *   Supply an empty object or omit this argument altogether.
+             *  - `data` – `{object=}` - Model instance data
              *
-             * @param {Object} postData Request data.
-             *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1103,7 +1271,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `User` object.)
              * </em>
              */
-        R["patchOrCreate"] = R["upsert"];
+        R["upsert"] = R["patchOrCreate"];
 
             /**
              * @ngdoc method
@@ -1116,12 +1284,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object=} parameters Request parameters.
              *
-             *   This method does not accept any parameters.
-             *   Supply an empty object or omit this argument altogether.
+             *  - `data` – `{object=}` - Model instance data
              *
-             * @param {Object} postData Request data.
-             *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1138,7 +1303,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `User` object.)
              * </em>
              */
-        R["updateOrCreate"] = R["upsert"];
+        R["updateOrCreate"] = R["patchOrCreate"];
 
             /**
              * @ngdoc method
@@ -1155,7 +1320,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1189,7 +1356,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1217,6 +1386,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * @param {Object=} parameters Request parameters.
              *
              *  - `id` – `{*}` - Model id
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1248,6 +1419,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Model id
              *
+             *  - `options` – `{object=}` -
+             *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
              *
@@ -1267,7 +1440,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
-             * @name lbServices.User#patchAttributes
+             * @name lbServices.User#prototype$updateAttributes
              * @methodOf lbServices.User
              *
              * @description
@@ -1278,9 +1451,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - User id
              *
-             * @param {Object} postData Request data.
+             *  - `options` – `{object=}` -
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1297,7 +1472,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `User` object.)
              * </em>
              */
-        R["patchAttributes"] = R["prototype$updateAttributes"];
+        R["prototype$updateAttributes"] = R["prototype$patchAttributes"];
 
         /**
          * @ngdoc method
@@ -1396,7 +1571,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for accessTokens
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1434,7 +1613,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for accessTokens
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1473,7 +1656,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1592,7 +1779,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `filter` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1630,7 +1821,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1665,7 +1860,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `where` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1697,7 +1896,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `where` – `{object=}` - Criteria to match model instances
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1784,7 +1987,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - Model instance data
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1822,7 +2027,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - Model instance data
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1847,7 +2054,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
-             * @name lbServices.Dj#upsert
+             * @name lbServices.Dj#patchOrCreate
              * @methodOf lbServices.Dj
              *
              * @description
@@ -1856,12 +2063,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object=} parameters Request parameters.
              *
-             *   This method does not accept any parameters.
-             *   Supply an empty object or omit this argument altogether.
+             *  - `data` – `{object=}` - Model instance data
              *
-             * @param {Object} postData Request data.
-             *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1878,9 +2082,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `Dj` object.)
              * </em>
              */
-            "upsert": {
+            "patchOrCreate": {
               url: urlBase + "/djs",
-              method: "PUT",
+              method: "PATCH",
             },
 
             /**
@@ -1899,7 +2103,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - Model instance data
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1936,7 +2142,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1971,6 +2179,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Model id
              *
+             *  - `options` – `{object=}` -
+             *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
              *
@@ -2004,6 +2214,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *  - `id` – `{*}` - Model id
              *
              *  - `filter` – `{object=}` - Filter defining fields and include - must be a JSON-encoded string ({"something":"value"})
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -2040,7 +2252,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - Model instance data
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -2075,6 +2289,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({"something":"value"})
              *
+             *  - `options` – `{object=}` -
+             *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
              *
@@ -2108,6 +2324,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * @param {Object=} parameters Request parameters.
              *
              *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({"something":"value"})
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -2144,7 +2362,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -2175,6 +2395,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * @param {Object=} parameters Request parameters.
              *
              *  - `id` – `{*}` - Model id
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -2209,6 +2431,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `where` – `{object=}` - Criteria to match model instances
              *
+             *  - `options` – `{object=}` -
+             *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
              *
@@ -2230,7 +2454,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
-             * @name lbServices.Dj#prototype$updateAttributes
+             * @name lbServices.Dj#prototype$patchAttributes
              * @methodOf lbServices.Dj
              *
              * @description
@@ -2241,9 +2465,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
-             * @param {Object} postData Request data.
+             *  - `options` – `{object=}` -
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -2260,9 +2486,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `Dj` object.)
              * </em>
              */
-            "prototype$updateAttributes": {
+            "prototype$patchAttributes": {
               url: urlBase + "/djs/:id",
-              method: "PUT",
+              method: "PATCH",
             },
 
             /**
@@ -2407,12 +2633,50 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
+             * @name lbServices.Dj#prototype$verify
+             * @methodOf lbServices.Dj
+             *
+             * @description
+             *
+             * Trigger user's identity verification with configured verifyOptions
+             *
+             * @param {Object=} parameters Request parameters.
+             *
+             *  - `id` – `{*}` - dj id
+             *
+             * @param {Object} postData Request data.
+             *
+             *  - `options` – `{object=}` -
+             *
+             *  - `verifyOptions` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
+             *
+             * @param {function(Object,Object)=} successCb
+             *   Success callback with two arguments: `value`, `responseHeaders`.
+             *
+             * @param {function(Object)=} errorCb Error callback with one argument:
+             *   `httpResponse`.
+             *
+             * @returns {Object} An empty reference that will be
+             *   populated with the actual data once the response is returned
+             *   from the server.
+             *
+             * This method returns no data.
+             */
+            "prototype$verify": {
+              url: urlBase + "/djs/:id/verify",
+              method: "POST",
+            },
+
+            /**
+             * @ngdoc method
              * @name lbServices.Dj#confirm
              * @methodOf lbServices.Dj
              *
              * @description
              *
-             * Confirm a user registration with email verification token.
+             * Confirm a user registration with identity verification token.
              *
              * @param {Object=} parameters Request parameters.
              *
@@ -2471,6 +2735,86 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              */
             "resetPassword": {
               url: urlBase + "/djs/reset",
+              method: "POST",
+            },
+
+            /**
+             * @ngdoc method
+             * @name lbServices.Dj#changePassword
+             * @methodOf lbServices.Dj
+             *
+             * @description
+             *
+             * Change a user's password.
+             *
+             * @param {Object=} parameters Request parameters.
+             *
+             *   This method does not accept any parameters.
+             *   Supply an empty object or omit this argument altogether.
+             *
+             * @param {Object} postData Request data.
+             *
+             *  - `id` – `{*=}` -
+             *
+             *  - `oldPassword` – `{string}` -
+             *
+             *  - `newPassword` – `{string}` -
+             *
+             *  - `options` – `{object=}` -
+             *
+             * @param {function(Object,Object)=} successCb
+             *   Success callback with two arguments: `value`, `responseHeaders`.
+             *
+             * @param {function(Object)=} errorCb Error callback with one argument:
+             *   `httpResponse`.
+             *
+             * @returns {Object} An empty reference that will be
+             *   populated with the actual data once the response is returned
+             *   from the server.
+             *
+             * This method returns no data.
+             */
+            "changePassword": {
+              url: urlBase + "/djs/change-password",
+              method: "POST",
+            },
+
+            /**
+             * @ngdoc method
+             * @name lbServices.Dj#setPassword
+             * @methodOf lbServices.Dj
+             *
+             * @description
+             *
+             * Reset user's password via a password-reset token.
+             *
+             * @param {Object=} parameters Request parameters.
+             *
+             *   This method does not accept any parameters.
+             *   Supply an empty object or omit this argument altogether.
+             *
+             * @param {Object} postData Request data.
+             *
+             *  - `id` – `{*=}` -
+             *
+             *  - `newPassword` – `{string}` -
+             *
+             *  - `options` – `{object=}` -
+             *
+             * @param {function(Object,Object)=} successCb
+             *   Success callback with two arguments: `value`, `responseHeaders`.
+             *
+             * @param {function(Object)=} errorCb Error callback with one argument:
+             *   `httpResponse`.
+             *
+             * @returns {Object} An empty reference that will be
+             *   populated with the actual data once the response is returned
+             *   from the server.
+             *
+             * This method returns no data.
+             */
+            "setPassword": {
+              url: urlBase + "/djs/reset-password",
               method: "POST",
             },
 
@@ -2616,7 +2960,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
-             * @name lbServices.Dj#patchOrCreate
+             * @name lbServices.Dj#upsert
              * @methodOf lbServices.Dj
              *
              * @description
@@ -2625,12 +2969,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object=} parameters Request parameters.
              *
-             *   This method does not accept any parameters.
-             *   Supply an empty object or omit this argument altogether.
+             *  - `data` – `{object=}` - Model instance data
              *
-             * @param {Object} postData Request data.
-             *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -2647,7 +2988,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `Dj` object.)
              * </em>
              */
-        R["patchOrCreate"] = R["upsert"];
+        R["upsert"] = R["patchOrCreate"];
 
             /**
              * @ngdoc method
@@ -2660,12 +3001,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object=} parameters Request parameters.
              *
-             *   This method does not accept any parameters.
-             *   Supply an empty object or omit this argument altogether.
+             *  - `data` – `{object=}` - Model instance data
              *
-             * @param {Object} postData Request data.
-             *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -2682,7 +3020,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `Dj` object.)
              * </em>
              */
-        R["updateOrCreate"] = R["upsert"];
+        R["updateOrCreate"] = R["patchOrCreate"];
 
             /**
              * @ngdoc method
@@ -2699,7 +3037,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -2733,7 +3073,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -2761,6 +3103,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * @param {Object=} parameters Request parameters.
              *
              *  - `id` – `{*}` - Model id
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -2792,6 +3136,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Model id
              *
+             *  - `options` – `{object=}` -
+             *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
              *
@@ -2811,7 +3157,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
-             * @name lbServices.Dj#patchAttributes
+             * @name lbServices.Dj#prototype$updateAttributes
              * @methodOf lbServices.Dj
              *
              * @description
@@ -2822,9 +3168,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
-             * @param {Object} postData Request data.
+             *  - `options` – `{object=}` -
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -2841,7 +3189,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `Dj` object.)
              * </em>
              */
-        R["patchAttributes"] = R["prototype$updateAttributes"];
+        R["prototype$updateAttributes"] = R["prototype$patchAttributes"];
 
         /**
          * @ngdoc method
@@ -2923,7 +3271,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `filter` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -2959,7 +3311,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `where` – `{object=}` - Criteria to match model instances
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -2996,7 +3352,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3034,7 +3394,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3070,7 +3434,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `where` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3103,7 +3471,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for spaces
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3136,7 +3508,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for spaces
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3176,7 +3552,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3226,7 +3606,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `filter` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3262,7 +3646,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `where` – `{object=}` - Criteria to match model instances
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3299,7 +3687,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3337,7 +3729,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3373,7 +3769,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `where` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3406,7 +3806,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for editableSpaces
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3439,7 +3843,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for editableSpaces
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3475,7 +3883,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for editableSpaces
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3515,7 +3927,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3551,7 +3967,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - dj id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for editableSpaces
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3588,7 +4008,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3737,7 +4161,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - Model instance data
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3775,7 +4201,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - Model instance data
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3800,7 +4228,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
-             * @name lbServices.Song#upsert
+             * @name lbServices.Song#patchOrCreate
              * @methodOf lbServices.Song
              *
              * @description
@@ -3809,12 +4237,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object=} parameters Request parameters.
              *
-             *   This method does not accept any parameters.
-             *   Supply an empty object or omit this argument altogether.
+             *  - `data` – `{object=}` - Model instance data
              *
-             * @param {Object} postData Request data.
-             *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3831,9 +4256,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `Song` object.)
              * </em>
              */
-            "upsert": {
+            "patchOrCreate": {
               url: urlBase + "/Songs",
-              method: "PUT",
+              method: "PATCH",
             },
 
             /**
@@ -3852,7 +4277,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - Model instance data
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3889,7 +4316,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3924,6 +4353,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Model id
              *
+             *  - `options` – `{object=}` -
+             *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
              *
@@ -3957,6 +4388,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *  - `id` – `{*}` - Model id
              *
              *  - `filter` – `{object=}` - Filter defining fields and include - must be a JSON-encoded string ({"something":"value"})
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3993,7 +4426,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - Model instance data
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4028,6 +4463,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({"something":"value"})
              *
+             *  - `options` – `{object=}` -
+             *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
              *
@@ -4061,6 +4498,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * @param {Object=} parameters Request parameters.
              *
              *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({"something":"value"})
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4097,7 +4536,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4128,6 +4569,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * @param {Object=} parameters Request parameters.
              *
              *  - `id` – `{*}` - Model id
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4162,6 +4605,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `where` – `{object=}` - Criteria to match model instances
              *
+             *  - `options` – `{object=}` -
+             *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
              *
@@ -4183,7 +4628,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
-             * @name lbServices.Song#prototype$updateAttributes
+             * @name lbServices.Song#prototype$patchAttributes
              * @methodOf lbServices.Song
              *
              * @description
@@ -4194,9 +4639,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Song id
              *
-             * @param {Object} postData Request data.
+             *  - `options` – `{object=}` -
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4213,9 +4660,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `Song` object.)
              * </em>
              */
-            "prototype$updateAttributes": {
+            "prototype$patchAttributes": {
               url: urlBase + "/Songs/:id",
-              method: "PUT",
+              method: "PATCH",
             },
 
             /**
@@ -4347,7 +4794,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
-             * @name lbServices.Song#patchOrCreate
+             * @name lbServices.Song#upsert
              * @methodOf lbServices.Song
              *
              * @description
@@ -4356,12 +4803,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object=} parameters Request parameters.
              *
-             *   This method does not accept any parameters.
-             *   Supply an empty object or omit this argument altogether.
+             *  - `data` – `{object=}` - Model instance data
              *
-             * @param {Object} postData Request data.
-             *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4378,7 +4822,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `Song` object.)
              * </em>
              */
-        R["patchOrCreate"] = R["upsert"];
+        R["upsert"] = R["patchOrCreate"];
 
             /**
              * @ngdoc method
@@ -4391,12 +4835,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object=} parameters Request parameters.
              *
-             *   This method does not accept any parameters.
-             *   Supply an empty object or omit this argument altogether.
+             *  - `data` – `{object=}` - Model instance data
              *
-             * @param {Object} postData Request data.
-             *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4413,7 +4854,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `Song` object.)
              * </em>
              */
-        R["updateOrCreate"] = R["upsert"];
+        R["updateOrCreate"] = R["patchOrCreate"];
 
             /**
              * @ngdoc method
@@ -4430,7 +4871,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4464,7 +4907,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4492,6 +4937,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * @param {Object=} parameters Request parameters.
              *
              *  - `id` – `{*}` - Model id
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4523,6 +4970,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Model id
              *
+             *  - `options` – `{object=}` -
+             *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
              *
@@ -4542,7 +4991,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
-             * @name lbServices.Song#patchAttributes
+             * @name lbServices.Song#prototype$updateAttributes
              * @methodOf lbServices.Song
              *
              * @description
@@ -4553,9 +5002,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Song id
              *
-             * @param {Object} postData Request data.
+             *  - `options` – `{object=}` -
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4572,7 +5023,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `Song` object.)
              * </em>
              */
-        R["patchAttributes"] = R["prototype$updateAttributes"];
+        R["prototype$updateAttributes"] = R["prototype$patchAttributes"];
 
 
         /**
@@ -4613,7 +5064,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Song id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `filter` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4649,7 +5104,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Song id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `where` – `{object=}` - Criteria to match model instances
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4686,7 +5145,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4724,7 +5187,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4760,7 +5227,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Song id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `where` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4793,7 +5264,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Song id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for Spaces
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4826,7 +5301,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Song id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for Spaces
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4862,7 +5341,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Song id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for Spaces
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4902,7 +5385,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4938,7 +5425,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Song id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for Spaces
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4975,7 +5466,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -5209,7 +5704,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - Model instance data
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -5247,7 +5744,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - Model instance data
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -5272,7 +5771,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
-             * @name lbServices.Space#upsert
+             * @name lbServices.Space#patchOrCreate
              * @methodOf lbServices.Space
              *
              * @description
@@ -5281,12 +5780,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object=} parameters Request parameters.
              *
-             *   This method does not accept any parameters.
-             *   Supply an empty object or omit this argument altogether.
+             *  - `data` – `{object=}` - Model instance data
              *
-             * @param {Object} postData Request data.
-             *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -5303,9 +5799,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `Space` object.)
              * </em>
              */
-            "upsert": {
+            "patchOrCreate": {
               url: urlBase + "/Spaces",
-              method: "PUT",
+              method: "PATCH",
             },
 
             /**
@@ -5324,7 +5820,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - Model instance data
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -5361,7 +5859,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -5396,6 +5896,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Model id
              *
+             *  - `options` – `{object=}` -
+             *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
              *
@@ -5429,6 +5931,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *  - `id` – `{*}` - Model id
              *
              *  - `filter` – `{object=}` - Filter defining fields and include - must be a JSON-encoded string ({"something":"value"})
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -5465,7 +5969,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - Model instance data
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -5500,6 +6006,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({"something":"value"})
              *
+             *  - `options` – `{object=}` -
+             *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
              *
@@ -5533,6 +6041,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * @param {Object=} parameters Request parameters.
              *
              *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({"something":"value"})
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -5569,7 +6079,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -5600,6 +6112,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * @param {Object=} parameters Request parameters.
              *
              *  - `id` – `{*}` - Model id
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -5634,6 +6148,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `where` – `{object=}` - Criteria to match model instances
              *
+             *  - `options` – `{object=}` -
+             *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
              *
@@ -5655,7 +6171,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
-             * @name lbServices.Space#prototype$updateAttributes
+             * @name lbServices.Space#prototype$patchAttributes
              * @methodOf lbServices.Space
              *
              * @description
@@ -5666,9 +6182,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Space id
              *
-             * @param {Object} postData Request data.
+             *  - `options` – `{object=}` -
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -5685,9 +6203,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `Space` object.)
              * </em>
              */
-            "prototype$updateAttributes": {
+            "prototype$patchAttributes": {
               url: urlBase + "/Spaces/:id",
-              method: "PUT",
+              method: "PATCH",
             },
 
             /**
@@ -5998,7 +6516,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
-             * @name lbServices.Space#patchOrCreate
+             * @name lbServices.Space#upsert
              * @methodOf lbServices.Space
              *
              * @description
@@ -6007,12 +6525,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object=} parameters Request parameters.
              *
-             *   This method does not accept any parameters.
-             *   Supply an empty object or omit this argument altogether.
+             *  - `data` – `{object=}` - Model instance data
              *
-             * @param {Object} postData Request data.
-             *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6029,7 +6544,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `Space` object.)
              * </em>
              */
-        R["patchOrCreate"] = R["upsert"];
+        R["upsert"] = R["patchOrCreate"];
 
             /**
              * @ngdoc method
@@ -6042,12 +6557,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object=} parameters Request parameters.
              *
-             *   This method does not accept any parameters.
-             *   Supply an empty object or omit this argument altogether.
+             *  - `data` – `{object=}` - Model instance data
              *
-             * @param {Object} postData Request data.
-             *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6064,7 +6576,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `Space` object.)
              * </em>
              */
-        R["updateOrCreate"] = R["upsert"];
+        R["updateOrCreate"] = R["patchOrCreate"];
 
             /**
              * @ngdoc method
@@ -6081,7 +6593,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6115,7 +6629,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6143,6 +6659,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * @param {Object=} parameters Request parameters.
              *
              *  - `id` – `{*}` - Model id
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6174,6 +6692,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Model id
              *
+             *  - `options` – `{object=}` -
+             *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
              *
@@ -6193,7 +6713,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
-             * @name lbServices.Space#patchAttributes
+             * @name lbServices.Space#prototype$updateAttributes
              * @methodOf lbServices.Space
              *
              * @description
@@ -6204,9 +6724,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Space id
              *
-             * @param {Object} postData Request data.
+             *  - `options` – `{object=}` -
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `data` – `{object=}` - An object of model property name/value pairs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6223,7 +6745,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              * This usually means the response is a `Space` object.)
              * </em>
              */
-        R["patchAttributes"] = R["prototype$updateAttributes"];
+        R["prototype$updateAttributes"] = R["prototype$patchAttributes"];
 
 
         /**
@@ -6264,7 +6786,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Space id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `filter` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6300,7 +6826,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Space id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `where` – `{object=}` - Criteria to match model instances
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6337,7 +6867,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6375,7 +6909,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6411,7 +6949,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Space id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `where` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6444,7 +6986,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Space id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for songs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6477,7 +7023,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Space id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for songs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6513,7 +7063,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Space id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for songs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6553,7 +7107,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6589,7 +7147,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Space id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for songs
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6626,7 +7188,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6676,7 +7242,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Space id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `filter` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6712,7 +7282,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Space id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `where` – `{object=}` - Criteria to match model instances
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6749,7 +7323,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6787,7 +7365,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Array.<Object>,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6823,7 +7405,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Space id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `where` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6856,7 +7442,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Space id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for contributors
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6889,7 +7479,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Space id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for contributors
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6925,7 +7519,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Space id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for contributors
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6965,7 +7563,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -7001,7 +7603,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Space id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `fk` – `{*}` - Foreign key for contributors
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -7038,7 +7644,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              * @param {Object} postData Request data.
              *
-             * This method expects a subset of model properties as request parameters.
+             *  - `options` – `{object=}` -
+             *
+             *  - `data` – `{object=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -7074,7 +7684,11 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *
              *  - `id` – `{*}` - Space id
              *
+             *  - `options` – `{object=}` -
+             *
              *  - `refresh` – `{boolean=}` -
+             *
+             *  - `options` – `{object=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -7170,7 +7784,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
         'request': function(config) {
           // filter out external requests
           var host = getHost(config.url);
-          if (host && host !== urlBaseHost) {
+          if (host && config.url.indexOf(urlBaseHost) === -1) {
             return config;
           }
 
@@ -7291,4 +7905,4 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
       return LoopBackResource;
     }];
   });
-})(window, window.angular, window.API_URL_BASE);
+})(window, window.angular);

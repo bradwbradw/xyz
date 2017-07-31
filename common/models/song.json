@@ -2,6 +2,7 @@
   "name": "Song",
   "plural": "Songs",
   "base": "PersistedModel",
+  "forceId": false,
   "idInjection": true,
   "options": {
     "validateUpsert": true
