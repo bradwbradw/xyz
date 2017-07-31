@@ -29,7 +29,7 @@ var loginAs = function (credentials) {
 
 var apiUrl = 'http://' + (constants.api.host || 'localhost') + ':' + constants.api.port + constants.api.path;
 
-fdescribe(' admin access ', function () {
+describe(' admin access ', function () {
 
   it('should see emails on user / dj find() endpoint', function (done) {
 
