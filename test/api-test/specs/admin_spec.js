@@ -5,7 +5,7 @@ var request = require("supertest-as-promised"),
   _ = require('lodash'),
   when = require('when');
 
-var constants = require('../../constants');
+var constants = require('../../../constants');
 var loginEndpoint = 'djs/login?include=user';
 
 var fixtures = {
@@ -29,7 +29,7 @@ var loginAs = function (credentials) {
 
 var apiUrl = 'http://' + (constants.api.host || 'localhost') + ':' + constants.api.port + constants.api.path;
 
-describe(' admin access ', function () {
+fdescribe(' admin access ', function () {
 
   it('should see emails on user / dj find() endpoint', function (done) {
 

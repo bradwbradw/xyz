@@ -17,6 +17,7 @@ var rev = require('gulp-rev');
 var revReplace = require('gulp-rev-replace');
 var notify = require('gulp-notify');
 var plumber = require('gulp-plumber');
+var jasmine = require('gulp-jasmine');
 
 
 var ngAnnotate = require('gulp-ng-annotate');
@@ -571,7 +572,7 @@ gulp.task('overwrite-env-db-json', function (done) {
   });
 
   when.all(all)
-    .then(function(results){
+    .then(function(){
       done();
     })
 });
@@ -623,4 +624,11 @@ gulp.task('unit-test', function (done) {
 
 });
 
+gulp.task('api-test', function(){
+  gulp.src('test/api-test/**/*_spec.js')
+    .pipe(jasmine());
+});
+
+
 gulp.task('test', gulp.series(['build', 'e2e-test']));
+

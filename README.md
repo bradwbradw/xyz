@@ -63,6 +63,9 @@ is to simply delete the contents of "vendor" folder and then run `gulp bower` to
 - If when running gulp commands you get `TypeError: Cannot read property 'apply' of undefined`, then reinstall gulp-cli:
 `npm install -g gulp-cli`
 
+- `Uncaught SyntaxError: Unexpected token <` means the url of the loaded scripts-123.js (or vendor) file is out of date, and the index.html file is downloading as a fallback.
+To fix, delete 'dist' and run `gulp build` again to make the source code contain the correct url of the javascript assets
+
 TODO Add more possible errors + workarounds here
 
 ## OPTIONS

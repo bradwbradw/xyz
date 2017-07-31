@@ -3,7 +3,7 @@ var request = require("supertest-as-promised"),
   _ = require('lodash'),
   when = require('when');
 
-var constants = require('../../constants');
+var constants = require('../../../constants');
 
 
 var fixtures = {

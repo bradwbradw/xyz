@@ -5,7 +5,7 @@ var request = require("supertest-as-promised"),
   _ = require('lodash'),
   when = require('when');
 
-var constants = require('../../constants');
+var constants = require('../../../constants');
 
 var fixtures = {
   users: require('../fixtures/users.js'),
@@ -25,7 +25,6 @@ var spaceSongs;
 
 var djs;
 var contributorDj;
-var nonContributorDj;
 
 var authorization;
 var randomAuth; // logged in but not owner or contributor
@@ -188,7 +187,7 @@ describe(' space access (permissions) tests ', function () {
       .put(endpoint1)
       .set('Authorization', authorization.id)
       .expect(200)
-      .then(function (response) {
+      .then(function () {
 
         var endpoint2 = 'spaces/' + firstSpace.id + '/contributors';
 
