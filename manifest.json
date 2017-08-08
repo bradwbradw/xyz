@@ -1,0 +1,30 @@
+{
+  "short_name": "XYZ",
+  "name": "XYZ: organize your music",
+  "icons": [
+    {
+      "src": "images/Icon-App-40x40@1x.png",
+      "type": "image/png",
+      "sizes": "40x40"
+    },
+    {
+      "src": "images/Icon-App-40x40@2x.png",
+      "type": "image/png",
+      "sizes": "80x80"
+    },
+    {
+      "src": "images/Icon-App-40x40@3x.png",
+      "type": "image/png",
+      "sizes": "160x160"
+    },
+    {
+      "src": "images/XYZ-fullbleed.png",
+      "type": "image/png",
+      "sizes": "1380x1380"
+    }
+  ],
+  "start_url": "/?utm_source=homescreen",
+  "background_color":"#6EA5DD",
+  "theme_color":"#537281",
+  "display": "standalone"
+}

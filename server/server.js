@@ -1,20 +1,17 @@
-
-var loopback = require('loopback'),
+const loopback = require('loopback'),
   boot = require('loopback-boot'),
   path = require('path'),
   bodyParser = require('body-parser'),
+  fs = require('fs'),
   morgan = require('morgan');
 
-var config = require('../constants');
+const config = require('../constants');
 
-var logger = require('./remote-log');
+const logger = require('./remote-log');
 
-var PasswordReset = require('./routes/password-reset.js');
+const PasswordReset = require('./routes/password-reset.js');
 
-var app = module.exports = loopback();
-
-//app.use(morgan('combined'));
-app.use(logger.request);
+const app = module.exports = loopback();
 
 // configure body parser
 app.use(bodyParser.urlencoded({extended: true}));
@@ -22,6 +19,7 @@ app.use(bodyParser.json());
 
 
 app.use('/stream', loopback.static(path.resolve(__dirname, '../stream-dist')));
+app.use('/images', loopback.static(path.resolve(__dirname, '../images')));
 app.use('/admin', loopback.static(path.resolve(__dirname, '../admin-dist')));
 app.use('/admin/spaces', loopback.static(path.resolve(__dirname, '../admin-dist')));
 app.use('/admin/users', loopback.static(path.resolve(__dirname, '../admin-dist')));
@@ -34,6 +32,16 @@ app.use(loopback.token());
 
 app.use('/password-reset', PasswordReset);
 
+const manifest = fs.readFileSync(path.resolve(__dirname, '../manifest.json'), 'utf8');
+
+app.get('/manifest.json', function (req, res) {
+  res.send(manifest);
+});
+
+
+//app.use(morgan('combined'));
+app.use(logger.request);
+
 
 app.start = function () {
   // start the web server
@@ -42,7 +50,7 @@ app.start = function () {
     app.emit('started');
     if (app.get('loopback-component-explorer')) {
       var explorerPath = app.get('loopback-component-explorer').mountPath;
-     logger.log('Browse your REST API at '+ explorerPath)
+      logger.log('Browse your REST API at ' + explorerPath)
     }
   });
 };
