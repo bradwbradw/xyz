@@ -16,20 +16,23 @@ var levels = [
 ];
 
 function initializeLogger() {
+  if (constants.logging.host && constants.logging.port) {
 
-  var winstonPapertrail = new winston.transports.Papertrail({
-    host: constants.logging.host,
-    port: constants.logging.port,
-    hostname: constants.domain
-  });
-  logger = new winston.Logger({
-    transports: [winstonPapertrail]
-  });
+    var winstonPapertrail = new winston.transports.Papertrail({
+      host: constants.logging.host,
+      port: constants.logging.port,
+      hostname: constants.domain
+    });
+    logger = new winston.Logger({
+      transports: [winstonPapertrail]
+    });
+    winstonPapertrail.on('error', function (err) {
+      console.error('error in winston: ', err);
+    });
+  } else {
+    logger = console;
+  }
 
-
-  winstonPapertrail.on('error', function (err) {
-    console.error('error in winston: ', err);
-  });
 
 }
 
@@ -51,7 +54,7 @@ var request = function (req, res, next) {
   next();
 };
 
-var log = function(message){
+var log = function (message) {
   logger.info(message, _.drop(arguments));
   console.log(message, _.drop(arguments));
 };
@@ -68,15 +71,15 @@ module.exports = {
   error: error
 };
 /*
-_.each(levels, level => {
-  module.exports[level] = function () {
+ _.each(levels, level => {
+ module.exports[level] = function () {
 
-    if (_.isFunction(console[level]) && console[level].apply) {
-      console[level].apply(null, arguments);
-    }
-    if (_.isFunction(logger[level]) && logger[level].apply) {
-      logger[level].apply(null, arguments);
-    }
-  }
-})*/
+ if (_.isFunction(console[level]) && console[level].apply) {
+ console[level].apply(null, arguments);
+ }
+ if (_.isFunction(logger[level]) && logger[level].apply) {
+ logger[level].apply(null, arguments);
+ }
+ }
+ })*/
 
