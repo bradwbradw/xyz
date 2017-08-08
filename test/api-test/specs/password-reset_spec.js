@@ -1,5 +1,5 @@
 
-var request = require("supertest-as-promised"),
+var request = require("supertest"),
   _ = require('lodash'),
   when = require('when');
 
