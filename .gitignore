@@ -16,3 +16,4 @@ xyzDbDump/
 /test/e2e-tests/screenshots/
 /admin-dist/
 /admin/scripts/templates.js
+.env
