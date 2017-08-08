@@ -46,20 +46,6 @@
 
 </script>
 
-<!-- build:template -->
-<script type="text/javascript">
-  var API_URL_BASE = "%%%API_URL";
-</script>
-<!-- /build -->
-
-<!-- build:remove -->
-<script type="text/javascript">
-  API_URL_BASE = "http://localhost:5005/api";
-</script>
-<!-- /build -->
-
-
-
 <!-- build:js scripts/vendor.js -->
 <!-- bower:js -->
 <script src="vendor/angular/angular.js"></script>
@@ -168,7 +154,7 @@
 <script>
   angular.module('xyzApp')
       .constant('serverConfig', {
-        apiBaseUrl: API_URL_BASE,
+        apiBaseUrl: '%%%API_URL',
         cmsUrl: 'https://cms.xyz.gs/'
       })
       .constant('apiKeys', {

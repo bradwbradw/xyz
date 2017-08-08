@@ -19,30 +19,31 @@ var annotateOptions = {
   single_quotes: true
 };
 
+require('dotenv').config('.env');
 
 if (process.env.NODE_ENV === 'development') {
-var loopbackAngular = require('gulp-loopback-sdk-angular');
   var jasmine = require('gulp-jasmine');
 
   var docs = require('gulp-ngdocs');
   var exec = require('gulp-exec');
 
-var jshint = require('gulp-jshint');
-var connect = require('gulp-connect');
-var nodemon = require('gulp-nodemon');
-var historyApiFallback = require('connect-history-api-fallback');
-var browserSync = require('browser-sync').create();
+  var jshint = require('gulp-jshint');
+  var connect = require('gulp-connect');
+  var nodemon = require('gulp-nodemon');
+  var historyApiFallback = require('connect-history-api-fallback');
+  var browserSync = require('browser-sync').create();
 
-var protractor = require('gulp-angular-protractor');
-var karmaServer = require('karma').Server;
+  var protractor = require('gulp-angular-protractor');
+  var karmaServer = require('karma').Server;
 
-var childProcess = require('child_process');
+  var childProcess = require('child_process');
 
+} else {
+  console.warn('NODE_ENV is not development. not a lot of gulp tasks will work. (OK if running in prod)')
 }
 var stagingDbCreds = mongoDbUriTool.parse('mongodb://heroku_cc7gbkr1:rusl214k9b95o5d7evobgufue6@ds059135.mongolab.com:59135/heroku_cc7gbkr1');
 stagingDbCreds.host = stagingDbCreds.hosts[0].host;
 stagingDbCreds.port = stagingDbCreds.hosts[0].port;
-
 
 
 var del = require('del');
@@ -109,15 +110,15 @@ if (process.env.NODE_ENV === 'production') {
 console.log('api Url is ', apiUrl);
 console.log('domain is ', constants.domain);
 
-gulp.task('loopback', function () {
-  return gulp.src('./server/server.js')
-    .pipe(loopbackAngular(
-      {
-        apiUrl: apiUrl
-      }
-    ))
-    .pipe(rename('lb-services.js'))
-    .pipe(gulp.dest('./client/scripts/services'))
+gulp.task('loopback', function (done) {
+
+  let command = `lb-ng -u ${process.env.API_URL_BASE || '/api/3'} ./server/server.js ./client/scripts/services/lb-services.js`;
+  require('child_process')
+    .exec(command, function (err, stdout, stderr) {
+      console.log(stdout);
+      console.log(stderr);
+      done(err);
+    });
 });
 //lb-ng server/server.js client/scripts/services/lb-services.js -u http://0.0.0.0:3000/api && node docs.js
 
@@ -387,12 +388,12 @@ gulp.task('build:admin', gulp.series(
 );
 
 gulp.task('build',
-  gulp.series('clean', /* 'loopback',*/ 'sass', 'bower', 'templates', 'build:admin',
+  gulp.series('clean', 'loopback', 'sass', 'bower', 'templates', 'build:admin',
     gulp.parallel('useref:main', 'copyImages'),
     gulp.parallel('useref:stream', 'copyCss:stream'))
 );
 
-gulp.task('serve', gulp.parallel(/*'loopback',*/ 'bower', 'sass', 'browserSync:client', 'watch'));
+gulp.task('serve', gulp.parallel('loopback', 'bower', 'sass', 'browserSync:client', 'watch'));
 
 gulp.task('default', gulp.parallel('build', 'serve'));
 
@@ -453,7 +454,7 @@ gulp.task('serve-docs', function (done) {
   done();
 });
 
-gulp.task('docs', gulp.series(/*'loopback',*/ 'generate-docs', 'serve-docs'));
+gulp.task('docs', gulp.series('loopback', 'generate-docs', 'serve-docs'));
 
 
 ////// BACKUPS
@@ -599,12 +600,13 @@ gulp.task('webdriver', function (done) {
 
 gulp.task('e2e-test', function () {
 
+//  console.log('make sure you also ran "" in another terminal tab');
   return gulp.src(paths.e2eTests + '/spec/**/*.js')
     .pipe(protractor({
-      'configFile': paths.e2eTests + '/protractor-config.js',
-      'args': ['--baseUrl', 'http://' + constants.domain],
-      'autoStartStopServer': false,
-      'debug': false
+      configFile: paths.e2eTests + '/protractor-config.js',
+      args: ['--baseUrl', 'http://' + constants.domain],
+      autoStartStopServer: true,
+      debug: false
     }))
     .on('error', function (e) {
       throw e

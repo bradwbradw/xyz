@@ -1,0 +1,30 @@
+connected to: mongodb:27017
+{ "principalType" : "USER", "principalId" : "5817f43f0c36ca000b443283", "roleId" : { "$oid" : "5817f43f0c36ca000b443284" }, "_id" : { "$oid" : "5817f43f0c36ca000b443285" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "5818ef4022237e000b5dd010" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "582110da2d04e20d00dad295" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "582159c22ddede0e001434cb" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "58234dba835bd70a0041f82e" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "582412cf6d92ed09003cd2a1" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "5827cee4bee3d60d00a61242" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "58476a02d14e190e00e94fe7" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "58476d6dd49b4409002ca99a" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "585063ad0bc8ac0900cf203c" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "58506e41921b990e008311f5" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "585724611591c20d000158ba" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "585725541d48da0e003e1010" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "58572576531a990a006c7c69" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "585725f3222a880900d0e07a" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "5858351ba6b03a0900435782" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "58632dcf34109c0e0048d646" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "5865c55cedfec70a00bf6db2" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "586c909188b14f0c00059ee2" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "586c92c55da3580e00d99bfb" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "5872bbc8b391db0d00afb1b2" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "58735bff45d9d20e004c6c10" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "5881e96e010e460900352c5a" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "5884be0a6dfeeb0d00767035" } }
+exported 28 records
+{ "principalType" : "USER", "_id" : { "$oid" : "5884be25a9fa4f0b009b7c95" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "5884bf23e0da4e0900466697" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "58a0fb9495fc010a00d999ae" } }
+{ "principalType" : "USER", "_id" : { "$oid" : "58a2368c5e89c50900ea8c77" } }

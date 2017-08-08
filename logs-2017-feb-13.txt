@@ -1,0 +1,35 @@
+00:19:26 web.1  | started with pid 10
+00:19:29 web.1  | ip is  localhost
+00:19:29 web.1  | api / built app port is  5000
+00:19:31 web.1  | djs settings.validateUpsert was overriden to false
+00:19:31 web.1  | Songs settings.validateUpsert was overriden to false
+00:19:31 web.1  | Spaces settings.validateUpsert was overriden to false
+00:19:31 web.1  | (node:10) DeprecationWarning: sys is deprecated. Use util instead.
+00:19:31 web.1  | --- xyz app on port 5000-----
+00:19:32 web.1  | admin user has already been created:
+00:19:32 web.1  | the admin account:  { name: 'bradmin',
+00:19:32 web.1  |   email: 'brad+admin@xyz.gs',
+00:19:32 web.1  |   password: '$2a$10$jbB8PfcneDF5Ff9CO/IiOO/WWH4h815tp/ixxuCT5ySxR6NlYgEbG',
+00:19:32 web.1  |   createdAt: 2017-02-13T00:19:32.055Z,
+00:19:32 web.1  |   updatedAt: 2017-02-13T00:19:32.057Z }
+00:19:32 web.1  | admin role has already been created: 
+00:19:32 web.1  | the admin role:  { name: 'admin',
+00:19:32 web.1  |   modified: 2017-02-13T00:19:32.104Z,
+00:19:32 web.1  |   created: 2017-02-13T00:19:32.104Z }
+00:19:32 web.1  | assigned user to admin role:  { name: 'bradmin',
+00:19:32 web.1  |   email: 'brad+admin@xyz.gs',
+00:19:32 web.1  |   password: '$2a$10$jbB8PfcneDF5Ff9CO/IiOO/WWH4h815tp/ixxuCT5ySxR6NlYgEbG',
+00:19:32 web.1  |   createdAt: 2017-02-13T00:19:32.055Z,
+00:19:32 web.1  |   updatedAt: 2017-02-13T00:19:32.057Z }
+07:33:47 web.1  | ::ffff:172.17.42.1 - - [13/Feb/2017:07:33:47 +0000] "GET / HTTP/1.1" 200 1564 "https://resonate.is/profile/1426/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:51.0) Gecko/20100101 Firefox/51.0"
+07:33:47 web.1  | ::ffff:172.17.42.1 - - [13/Feb/2017:07:33:47 +0000] "GET /css/main-fc5b6191c7.min.css HTTP/1.1" 200 18092 "https://xyz.gs/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:51.0) Gecko/20100101 Firefox/51.0"
+07:33:47 web.1  | ::ffff:172.17.42.1 - - [13/Feb/2017:07:33:47 +0000] "GET /scripts/scripts-f58c118d2c.js HTTP/1.1" 200 425195 "https://xyz.gs/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:51.0) Gecko/20100101 Firefox/51.0"
+07:33:47 web.1  | ::ffff:172.17.42.1 - - [13/Feb/2017:07:33:47 +0000] "GET /scripts/vendor-b1c7cea855.js HTTP/1.1" 200 2295138 "https://xyz.gs/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:51.0) Gecko/20100101 Firefox/51.0"
+07:33:47 web.1  | ::ffff:172.17.42.1 - - [13/Feb/2017:07:33:47 +0000] "GET /images/favicon.ico HTTP/1.1" 200 318 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:51.0) Gecko/20100101 Firefox/51.0"
+07:33:49 web.1  | Mon, 13 Feb 2017 07:33:49 GMT loopback deprecated loopback#context middleware is deprecated. See https://docs.strongloop.com/display/APIC/Using%20current%20context for more details. at node_modules/loopback/server/middleware/rest.js:60:32
+07:33:49 web.1  | ::ffff:172.17.42.1 - - [13/Feb/2017:07:33:49 +0000] "GET /api/Spaces?filter=%7B%22include%22:%5B%22owner%22,%22songs%22,%22contributors%22%5D,%22where%22:%7B%22public%22:true%7D%7D HTTP/1.1" 500 156 "https://xyz.gs/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:51.0) Gecko/20100101 Firefox/51.0"
+07:33:50 web.1  | ::ffff:172.17.42.1 - - [13/Feb/2017:07:33:50 +0000] "GET /api/Spaces?filter=%7B%22include%22:%5B%22owner%22,%22songs%22,%22contributors%22%5D,%22where%22:%7B%22public%22:true%7D%7D HTTP/1.1" 200 182733 "https://xyz.gs/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:51.0) Gecko/20100101 Firefox/51.0"
+07:33:51 web.1  | ::ffff:172.17.42.1 - - [13/Feb/2017:07:33:51 +0000] "GET /images/logo.png HTTP/1.1" 200 15377 "https://xyz.gs/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:51.0) Gecko/20100101 Firefox/51.0"
+12:07:13 web.1  | ::ffff:172.17.42.1 - - [13/Feb/2017:12:07:13 +0000] "GET / HTTP/1.1" 200 1564 "-" "Mozilla / 5.0(Windows NT 10.0; WOW64; Trident / 7.0; Touch; LCTE; rv: 11.0) like Gecko"
+16:26:17 web.1  | ::ffff:172.17.42.1 - - [13/Feb/2017:16:26:17 +0000] "GET /space/5839facebee3d60d00a61254/ HTTP/1.1" 200 1564 "-" "-"
+16:26:18 web.1  | ::ffff:172.17.42.1 - - [13/Feb/2017:16:26:18 +0000] "GET / HTTP/1.1" 200 1564 "-" "-"

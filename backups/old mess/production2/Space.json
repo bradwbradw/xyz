@@ -1,0 +1,23 @@
+{ "ownerId" : { "$oid" : "568a12b97885db0e00cb1046" }, "name" : "test", "_id" : { "$oid" : "568a12cb7885db0e00cb1047" } }
+{ "ownerId" : { "$oid" : "568a12b97885db0e00cb1046" }, "name" : "mix", "_id" : { "$oid" : "5693c5fb6b7c090c0000a8f3" } }
+{ "ownerId" : { "$oid" : "568a12b97885db0e00cb1046" }, "name" : "new zone", "_id" : { "$oid" : "569519216b7c090c0000a8f4" } }
+{ "ownerId" : { "$oid" : "56953c7cdd323f0a00eebdf4" }, "name" : "nice albums", "_id" : { "$oid" : "56953c8edd323f0a00eebdf5" } }
+{ "ownerId" : { "$oid" : "569671e0dd323f0a00eebe04" }, "name" : "B", "_id" : { "$oid" : "569671f8dd323f0a00eebe05" } }
+{ "ownerId" : { "$oid" : "56a0faedc515dd0d00be11bf" }, "name" : "brad", "_id" : { "$oid" : "56a0fb5dc515dd0d00be11c0" } }
+{ "ownerId" : { "$oid" : "56a598ec1fbcea0b00864da9" }, "name" : "dope", "_id" : { "$oid" : "56a598f31fbcea0b00864daa" } }
+{ "_id" : { "$oid" : "56a63cde4113240e00b56d38" }, "firstSong" : "580f7bdc07ba93000e72e364", "id" : { "$oid" : "56a63cde4113240e00b56d38" }, "name" : "cyberspa", "ownerId" : { "$oid" : "56a598ec1fbcea0b00864da9" }, "pic" : "https://i1.sndcdn.com/artworks-000189393413-fsz8vh-large.jpg", "public" : true, "startTime" : "2016-02-19T15:26:48.743Z" }
+{ "ownerId" : { "$oid" : "56b21e165dd0f80900090480" }, "name" : "short", "_id" : { "$oid" : "56b21e1b5dd0f80900090481" } }
+{ "_id" : { "$oid" : "56c52374edc69b09004b3992" }, "name" : "short sc", "ownerId" : { "$oid" : "56b21e165dd0f80900090480" }, "startTime" : "2016-02-18T01:52:22.292Z" }
+{ "ownerId" : { "$oid" : "56c8eb9fedc69b09004b3999" }, "name" : "wide open", "_id" : { "$oid" : "56c8ebaaedc69b09004b399a" } }
+{ "ownerId" : { "$oid" : "56a0faedc515dd0d00be11bf" }, "name" : "seapunk", "_id" : { "$oid" : "57449d0ae5d7660e0020ee1a" } }
+{ "ownerId" : { "$oid" : "57c28d78b258be0009eb0940" }, "name" : "cyberspa", "_id" : { "$oid" : "57c28d89b258be0009eb0941" } }
+{ "_id" : { "$oid" : "57cdc843abd770000bd67156" }, "firstSong" : "57d71d77b4fe19000d3b5189", "id" : { "$oid" : "57cdc843abd770000bd67156" }, "name" : "techno", "ownerId" : "57cdc705abd770000bd67155", "pic" : "https://i.ytimg.com/vi/qesB_KstuFo/hqdefault.jpg", "public" : true, "startTime" : "2016-09-05T19:58:26.209Z", "updatedAt" : { "$date" : 1478562804427 } }
+{ "_id" : { "$oid" : "57fcb464fbeb2c000cb0b2b2" }, "firstSong" : "57fcb793fbeb2c000cb0b2bb", "id" : { "$oid" : "57fcb464fbeb2c000cb0b2b2" }, "name" : "rap sheets", "ownerId" : { "$oid" : "57fcad74fbeb2c000cb0b2b1" }, "pic" : "https://i.ytimg.com/vi/BfIjIVLmhAI/hqdefault.jpg", "public" : false }
+{ "ownerId" : { "$oid" : "57fcad74fbeb2c000cb0b2b1" }, "name" : "hi there", "_id" : { "$oid" : "57fd77c2fbeb2c000cb0b2bf" } }
+{ "ownerId" : { "$oid" : "58058968fbeb2c000cb0b2c6" }, "name" : "ambient treasure", "_id" : { "$oid" : "58058976fbeb2c000cb0b2c7" } }
+{ "_id" : { "$oid" : "580f9ced07ba93000e72e376" }, "firstSong" : "YT-dtDeAdul6z4~YJoY", "name" : "HALLOWEEN PROM", "ownerId" : { "$oid" : "56a598ec1fbcea0b00864da9" }, "pic" : "https://i.ytimg.com/vi/dtDeAdul6z4/hqdefault.jpg", "public" : false }
+{ "_id" : { "$oid" : "580fa75007ba93000e72e379" }, "firstSong" : "YT-dtDeAdul6z4~KYTr", "name" : "Halloween Prom", "ownerId" : { "$oid" : "580fa74907ba93000e72e378" }, "pic" : "https://i.ytimg.com/vi/dtDeAdul6z4/hqdefault.jpg", "public" : true }
+{ "ownerId" : { "$oid" : "57fcad74fbeb2c000cb0b2b1" }, "createdAt" : { "$date" : 1478029055005 }, "updatedAt" : { "$date" : 1478029055020 }, "public" : false, "_id" : { "$oid" : "5818eeff0c36ca000b443286" } }
+{ "_id" : { "$oid" : "581baa4a22237e000b5dd013" }, "createdAt" : { "$date" : 1478208074800 }, "firstSong" : "SC-262271341~A86H", "name" : "squee", "ownerId" : { "$oid" : "581baa3b22237e000b5dd012" }, "pic" : "https://i1.sndcdn.com/artworks-000161183999-8r6b3a-large.jpg", "public" : false, "updatedAt" : { "$date" : 1478208646011 } }
+{ "ownerId" : { "$oid" : "581baa3b22237e000b5dd012" }, "createdAt" : { "$date" : 1478566789090 }, "updatedAt" : { "$date" : 1478566789090 }, "public" : false, "_id" : { "$oid" : "582123852d04e20d00dad296" } }
+{ "_id" : { "$oid" : "582525ac6d92ed09003cd2a3" }, "createdAt" : { "$date" : 1478829484365 }, "firstSong" : "YT-lgk3pJQOYVw~WfAE", "name" : "Crunchy Toast", "ownerId" : { "$oid" : "582525a76d92ed09003cd2a2" }, "pic" : "https://i.ytimg.com/vi/lgk3pJQOYVw/hqdefault.jpg", "public" : true, "updatedAt" : { "$date" : 1478829548021 } }
