@@ -19,9 +19,10 @@ var annotateOptions = {
   single_quotes: true
 };
 
-require('dotenv').config('.env');
 
 if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config('.env');
+
   var jasmine = require('gulp-jasmine');
 
   var docs = require('gulp-ngdocs');
