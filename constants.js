@@ -21,9 +21,9 @@ var ip = process.env.IP || 'localhost';
 console.log('app ip will be ', ip);
 console.log('the api and the minified version of the app will be available on port ', port);
 
-var loggingUrl = process.env.LOGGING_URL || 'logs5.papertrailapp.com:29706';
-var loggingHost = _.first(loggingUrl.split(':'));
-var loggingPort = _.last(loggingUrl.split(':'))*1;
+var loggingUrl = process.env.LOGGING_URL;// || 'logs5.papertrailapp.com:29706';
+var loggingHost = loggingUrl? _.first(loggingUrl.split(':')) : null;
+var loggingPort = loggingUrl? _.last(loggingUrl.split(':'))*1 : null;
 
 module.exports = {
   api: {
