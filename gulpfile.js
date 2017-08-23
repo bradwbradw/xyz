@@ -113,7 +113,7 @@ console.log('domain is ', constants.domain);
 
 gulp.task('loopback', function (done) {
 
-  let command = `lb-ng -u ${process.env.API_URL_BASE || '/api/3'} ./server/server.js ./client/scripts/services/lb-services.js`;
+  let command = `./node_modules/loopback-sdk-angular-cli/bin/lb-ng.js -u ${process.env.API_URL_BASE || '/api/3'} ./server/server.js ./client/scripts/services/lb-services.js`;
   require('child_process')
     .exec(command, function (err, stdout, stderr) {
       console.log(stdout);
