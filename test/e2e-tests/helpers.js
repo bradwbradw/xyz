@@ -1,9 +1,15 @@
 'use strict';
 
-var fs = require('fs');
+const fs = require('fs'),
+  request = require('request'),
+  when = require('when');
 
-var writeScreenShot = function (data, filename) {
-  var stream = fs.createWriteStream(filename);
+const constants = require('../../constants');
+
+const apiUrl = 'http://' + (constants.api.host || 'localhost') + ':' + constants.api.port + constants.api.path;
+
+const writeScreenShot = function (data, filename) {
+  const stream = fs.createWriteStream(filename);
   stream.write(new Buffer(data, 'base64'));
   stream.end();
 };
@@ -48,14 +54,26 @@ module.exports = {
   screenshot: function (browser, filename) {
 
     return browser.takeScreenshot().then(function (png) {
-      writeScreenShot(png, __dirname+ '/screenshots/'+filename);
+      writeScreenShot(png, __dirname + '/screenshots/' + filename);
     });
+  },
+  getSpace: function () {
+    return when.promise(function (resolve, reject) {
+      request.get(apiUrl + 'Spaces', {
+        json: true,
+        params: {
+          filter: {"where": {"public": true}}
+        }
+      }, function (err, result) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result.body[0]);
+        }
+      })
+
+    })
   }
-
-
-
-
-
 
 
 };
