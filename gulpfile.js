@@ -19,9 +19,8 @@ var annotateOptions = {
   single_quotes: true
 };
 
-
+require('dotenv').config('.env');
 if (process.env.NODE_ENV === 'development') {
-  require('dotenv').config('.env');
 
   var jasmine = require('gulp-jasmine');
 
@@ -33,6 +32,7 @@ if (process.env.NODE_ENV === 'development') {
   var nodemon = require('gulp-nodemon');
   var historyApiFallback = require('connect-history-api-fallback');
   var browserSync = require('browser-sync').create();
+  var proxy = require('http-proxy-middleware');
 
   var protractor = require('gulp-angular-protractor');
   var karmaServer = require('karma').Server;
@@ -236,7 +236,12 @@ gulp.task('browserSync:client', function (done) {
     server: {
       baseDir: 'client',
       index: 'index.html',
-      middleware: [historyApiFallback()],
+      middleware: [
+        {
+          route: "/api",
+          handle: proxy({target: 'http://localhost:5005'})
+        },
+        historyApiFallback()],
       routes: {
         "/xyz-player-component": "xyz-player-component",
         "/client": "client",
