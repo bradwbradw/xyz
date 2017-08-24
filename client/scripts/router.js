@@ -6,14 +6,14 @@ xyzApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     .state('base', {
       templateUrl: 'base.html',
       resolve: {
-        spacesResolve: function (Spaces, User, user, $location) {
+        spacesResolve: function (Spaces, User, user, $window) {
           // depending on user is important, because internally,
           // Spaces checks for user ID from User service
           return Spaces.get()
             .catch(function(){
               User.logout()
                 .then(function(){
-                  $location.reload();
+                  $window.location.reload();
                 });
             });
         },
