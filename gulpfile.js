@@ -394,12 +394,12 @@ gulp.task('build:admin', gulp.series(
 );
 
 gulp.task('build',
-  gulp.series('clean', 'loopback', 'sass', 'bower', 'templates', 'build:admin',
+  gulp.series('clean', /*'loopback',*/ 'sass', 'bower', 'templates', 'build:admin',
     gulp.parallel('useref:main', 'copyImages'),
     gulp.parallel('useref:stream', 'copyCss:stream'))
 );
 
-gulp.task('serve', gulp.parallel('loopback', 'bower', 'sass', 'browserSync:client', 'watch'));
+gulp.task('serve', gulp.parallel(/*'loopback',*/ 'bower', 'sass', 'browserSync:client', 'watch'));
 
 gulp.task('default', gulp.parallel('build', 'serve'));
 
