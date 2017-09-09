@@ -1,7 +1,7 @@
 node_modules
 dist
 stream-dist
-backups/json/*
+backups
 
 client/vendor
 .idea
