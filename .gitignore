@@ -1,6 +1,7 @@
 node_modules
 dist
 stream-dist
+backups
 client/vendor
 .idea
 .tmp
