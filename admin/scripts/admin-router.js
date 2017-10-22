@@ -4,7 +4,7 @@ angular.module('xyzAdmin')
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
 
-//noinspection JSUnresolvedVariable
+//noinspection JSUnresolvedVariable,JSUnusedGlobalSymbols
     $stateProvider
       .state('base', {
         url: '/',
@@ -26,9 +26,10 @@ angular.module('xyzAdmin')
               }).catch(function (err) {
                 $log.error(err);
                 return false;
-            });
+              });
           },
           user: function (Dj, isAdmin) {
+
             if (isAdmin) {
               return Dj.getCurrent();
             }
@@ -36,9 +37,13 @@ angular.module('xyzAdmin')
         },
         onEnter: function ($window, isAdmin) {
           if (isAdmin) {
+            console.warn('you are an admin');
+
           } else {
-            $window.alert('Welcome to XYZ! Redirecting to the app');
-            $window.location.assign('/');
+            console.warn('should redirect, but admin check is temporariy disabled');
+            // workaround for problematic
+            // $window.alert('!Welcome to XYZ! Redirecting to the app.');
+            // $window.location.assign('/');
           }
         }
 
@@ -59,32 +64,30 @@ angular.module('xyzAdmin')
       })
 
 
-
-    .state('base.spaces',{
-      url:'spaces/',
-      views:{
-        main:{
-          templateUrl: 'components/spaces.html', 
-          controller:'SpacesController'
-        }
-      }, 
-      resolve: {
+      .state('base.spaces', {
+        url: 'spaces/',
+        views: {
+          main: {
+            templateUrl: 'components/spaces.html',
+            controller: 'SpacesController'
+          }
+        },
+        resolve: {
           userMap: function (Dj) {
             return Dj.find().$promise
-              .then(function(result){
+              .then(function (result) {
                 var map = {};
-                _.each(result, function(user){
+                _.each(result, function (user) {
                   map[user.id] = user;
                 });
                 return map;
               });
-          }, 
+          },
           spaces: function (Space) {
-            return Space.find({filter:{include:['owner','contributors']}}).$promise;
+            return Space.find({filter: {include: ['owner', 'contributors']}}).$promise;
           }
         }
-    });
+      });
 
-;
     $urlRouterProvider.otherwise('/');
   });

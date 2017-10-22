@@ -7,6 +7,10 @@ var _ = require('lodash'), when = require('when');
 
 var passwordResetUrl = 'https://' + constants.domain + '/account';
 
+// FIXME this does not seem to work
+// it seems to be that the startup env var that is supposed
+// to set a user as admin is failing
+// determined by inspecting the db collection
 var userIdIsAdmin = function (id) {
 
   return when.promise(function (resolve, reject) {
@@ -14,7 +18,7 @@ var userIdIsAdmin = function (id) {
     //console.log('is user with id ' + id + ' an admin?');
     RoleMapping.find({where: {principalId: id}}, function (err, roleMappings) {
 
-      //console.log('got roleMappings ', roleMappings);
+      console.log('got roleMappings ', roleMappings);
       if (err) {
         reject(err);
       }
@@ -131,5 +135,25 @@ module.exports = function (Dj) {
         console.error(err);
         return err;
       })
+  });
+
+  Dj.isAdmin = (userId, cb) => {
+    console.log('checking user id ', userId);
+    userIdIsAdmin(userId)
+      .then(result => {
+
+        console.log('result', result);
+        cb(null, result);
+      })
+      .catch(err => {
+
+        cb(err, false);
+      });
+  };
+
+  Dj.remoteMethod('isAdmin', {
+    http: {path: '/is-admin', verb: 'get'},
+    accepts: {arg: 'userId', type: 'string'},
+    returns: {arg: 'isAdmin', type: 'boolean'}
   });
 };
