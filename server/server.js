@@ -2,8 +2,7 @@ const loopback = require('loopback'),
   boot = require('loopback-boot'),
   path = require('path'),
   bodyParser = require('body-parser'),
-  fs = require('fs'),
-  morgan = require('morgan');
+  fs = require('fs');
 
 const config = require('../constants');
 
@@ -20,9 +19,13 @@ app.use(bodyParser.json());
 
 app.use('/stream', loopback.static(path.resolve(__dirname, '../stream-dist')));
 app.use('/images', loopback.static(path.resolve(__dirname, '../images')));
-app.use('/admin', loopback.static(path.resolve(__dirname, '../admin-dist')));
-app.use('/admin/spaces', loopback.static(path.resolve(__dirname, '../admin-dist')));
-app.use('/admin/users', loopback.static(path.resolve(__dirname, '../admin-dist')));
+
+if (process.env.ENABLE_ADMIN) {
+  app.use('/admin', loopback.static(path.resolve(__dirname, '../admin-dist')));
+  app.use('/admin/spaces', loopback.static(path.resolve(__dirname, '../admin-dist')));
+  app.use('/admin/users', loopback.static(path.resolve(__dirname, '../admin-dist')));
+}
+
 app.use('/space*', loopback.static(path.resolve(__dirname, '../dist')));
 app.use('/xyz-player-component', loopback.static(path.resolve(__dirname, '../xyz-player-component')));
 app.use('/stream/xyz-player-component', loopback.static(path.resolve(__dirname, '../xyz-player-component')));
