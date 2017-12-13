@@ -1,3 +1,6 @@
+// try again to install properly
+// https://github.com/fortesinformatica/Sideshow/issues/27
+
 angular.module('xyzApp')
   .run(function ($location, $window, Content) {
 
