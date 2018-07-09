@@ -80,13 +80,6 @@ var paths = {
   unitTests: 'test/unit-tests'
 };
 
-function templateHeader(appName) {
-
-  return '\'use strict\';' +
-    'var app = window.angular.module(\'' + appName + '\');'
-    + 'app.run([\'$templateCache\', function($templateCache) {';
-}
-
 function reloadBrowsers(done) {
   browserSync.reload();
   done();
@@ -333,7 +326,8 @@ gulp.task('templates', function () {
   var templateCache = require('gulp-angular-templatecache');
 
   return gulp.src(paths.src.views)
-    .pipe(templateCache({templateHeader: templateHeader('xyzApp')}))
+    .pipe(templateCache({module: 'xyzApp'}))
+    .pipe(replace(/templateCache.put\('\//g, "templateCache.put('"))
     .on("error", notify.onError(reportError))
     .pipe(gulp.dest(paths.src.scripts));
 });
@@ -342,7 +336,8 @@ gulp.task('templates:admin', function () {
   var templateCache = require('gulp-angular-templatecache');
 
   return gulp.src(paths.src.adminViews)
-    .pipe(templateCache({templateHeader: templateHeader('xyzAdmin')}))
+    .pipe(templateCache({module: 'xyzAdmin'}))
+    .pipe(replace(/templateCache.put\('\//g, "templateCache.put('"))
     .on("error", notify.onError(reportError))
     .pipe(gulp.dest(paths.src.adminScripts));
 });
