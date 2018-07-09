@@ -167,4 +167,4 @@ Including getters, setters, querying, etc.
 
 ##Download staging db
 
-`gulp copy-staging-db` will download the staging server database and overwrite your local version with it
+`gulp copy-staging-db-to-local` will download the staging server database and overwrite your local version with it
